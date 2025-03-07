@@ -14,9 +14,9 @@ public class TestMessagesStack : MonoBehaviour
         Instantiate(buttonPrefab, new Vector3(0, 0, 0), Quaternion.identity, transform);
     }
 
-    public void RemoveMessage(MessageStruct message)
+    public void RemoveMessage()
     {
-        messages.Remove(message);
+        messages.RemoveAt(0);
     }
 
 }
