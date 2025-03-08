@@ -1,6 +1,7 @@
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random=UnityEngine.Random;
 public class ShipManager : MonoBehaviour
@@ -8,6 +9,7 @@ public class ShipManager : MonoBehaviour
     [Header("Parameters")]
     [SerializeField] float attackRange;
     [SerializeField] int movementRange;
+    [SerializeField] int shipsToSelect;
     public List<String> shipNames=new List<String>();
     private List<Ship>allies;
     private List<Ship>enemies;
@@ -43,9 +45,13 @@ public class ShipManager : MonoBehaviour
         }
     }
 
-    void ChooseAttackers(){
-        allyAttacker=allies.OrderBy(k => Random.value).First();
-        enemyAttacker=enemies.OrderBy(k=> Random.value).First();
+    void ChooseShips(){
+        for(int i=0; i<shipsToSelect; i++){
+            
+            int index=Random.Range(0,allies.Count-1);
+            
+        }
+        
     }
 
     void CallAttack(){
@@ -62,6 +68,6 @@ public class ShipManager : MonoBehaviour
 
     }
     void OrderMovement(){
-        
+
     }
 }
