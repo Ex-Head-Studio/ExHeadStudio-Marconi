@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b27948efe944a24588277d8eaf83f17, type: 3}
-  m_Name: OnMessageReceived
+  m_Script: {fileID: 11500000, guid: 7ee4a502c523b84408c0b8a6e439c28d, type: 3}
+  m_Name: EndedTurnEventSO
   m_EditorClassIdentifier: 
   testingValue:
-    result: 1
-    receiver: Todaro
+    value: 0

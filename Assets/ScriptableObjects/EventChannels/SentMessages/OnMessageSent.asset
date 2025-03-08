@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: OnMessageSent
   m_EditorClassIdentifier: 
   testingValue:
-    message: Pippo
+    message: Carri Ariete combattono!
     sender: Paperino

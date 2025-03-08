@@ -9,9 +9,8 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b27948efe944a24588277d8eaf83f17, type: 3}
-  m_Name: OnMessageReceived
+  m_Script: {fileID: 11500000, guid: a0475d60f46992546a933a81d3f14845, type: 3}
+  m_Name: MessagesStackSO
   m_EditorClassIdentifier: 
-  testingValue:
-    result: 1
-    receiver: Todaro
+  buttonPrefab: {fileID: 8913359995726766536, guid: 1b5610d97cb160746ac31553252bbc3c, type: 3}
+  messages: []
