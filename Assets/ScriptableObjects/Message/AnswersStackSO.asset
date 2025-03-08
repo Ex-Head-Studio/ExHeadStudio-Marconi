@@ -9,13 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: a0475d60f46992546a933a81d3f14845, type: 3}
-  m_Name: MessagesStackSO
+  m_Script: {fileID: 11500000, guid: f7ba5507b8e07a1428ce8a31d0345632, type: 3}
+  m_Name: AnswersStackSO
   m_EditorClassIdentifier: 
-  directions:
-  - up
-  - down
-  - left
-  - right
-  togglePrefab: {fileID: 2985266290775673929, guid: 0f60c4eeddf55564fb8cd988b97b41d0, type: 3}
-  messages: []
+  answers: []

@@ -27,7 +27,9 @@ public enum Directions
 public class MessagesStack : ScriptableObject
 {
     public string[] directions = new string[] {"up", "down", "left", "right"};
-    [SerializeField] public Button buttonPrefab;
+    //[SerializeField] public Button buttonPrefab;
+    [SerializeField] public Toggle togglePrefab;
+
     public List<MessageStruct> messages = new List<MessageStruct>();
 
     public void AddMessage(MessageStruct message, Transform parent)

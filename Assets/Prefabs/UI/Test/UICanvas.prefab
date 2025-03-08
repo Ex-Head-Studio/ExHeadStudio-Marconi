@@ -12,6 +12,7 @@ GameObject:
   - component: {fileID: 2833649669357898777}
   - component: {fileID: 3086267339559124968}
   - component: {fileID: 1587525983952198500}
+  - component: {fileID: 5088716867027008043}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -120,7 +121,32 @@ MonoBehaviour:
   m_TargetGraphic: {fileID: 3086267339559124968}
   m_OnClick:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: 5088716867027008043}
+        m_TargetAssemblyTypeName: EndTurnButton, Assembly-CSharp
+        m_MethodName: EndTurn
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &5088716867027008043
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 336560260091708922}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fa985c55d5aeef45a01dd269dd65abf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endedTurnEvent: {fileID: 11400000, guid: bbc7cca08e679134487cfec6f8259024, type: 2}
 --- !u!1 &2120699780759185723
 GameObject:
   m_ObjectHideFlags: 0
@@ -345,6 +371,7 @@ GameObject:
   - component: {fileID: 8228319457056165255}
   - component: {fileID: 2639828826005869738}
   - component: {fileID: 4992540493220254907}
+  - component: {fileID: 7163711640795307083}
   m_Layer: 5
   m_Name: EnemyPanel
   m_TagString: Untagged
@@ -435,6 +462,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &7163711640795307083
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4639964344047268251}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!1 &5698257791408840553
 GameObject:
   m_ObjectHideFlags: 0
@@ -448,6 +488,7 @@ GameObject:
   - component: {fileID: 4505565868649033982}
   - component: {fileID: 5311936675672191528}
   - component: {fileID: 7910729771940817017}
+  - component: {fileID: 7010882690811808395}
   - component: {fileID: 8177724774813327048}
   m_Layer: 5
   m_Name: UICanvas
@@ -569,6 +610,46 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &7010882690811808395
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 5698257791408840553}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 915cb9b51fdf28447b109893119c064d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: bbc7cca08e679134487cfec6f8259024, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8177724774813327048}
+        m_TargetAssemblyTypeName: DisplayMessages, Assembly-CSharp
+        m_MethodName: RemoveAllMessages
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+      - m_Target: {fileID: 8177724774813327048}
+        m_TargetAssemblyTypeName: DisplayMessages, Assembly-CSharp
+        m_MethodName: sendAsnwers
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &8177724774813327048
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -582,8 +663,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   allyStackTransform: {fileID: 36672996168078963}
+  allyToggleGroup: {fileID: 9091939149804438987}
   enemyStackTransform: {fileID: 885271196839480233}
+  enemyToggleGroup: {fileID: 7163711640795307083}
   messagesStack: {fileID: 11400000, guid: 74f00b27aae28cf46b0c721ccf170c14, type: 2}
+  answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
 --- !u!1 &6067707419803758140
 GameObject:
   m_ObjectHideFlags: 0
@@ -596,6 +680,7 @@ GameObject:
   - component: {fileID: 4551704148198795609}
   - component: {fileID: 2184268207987677419}
   - component: {fileID: 3439705969536822165}
+  - component: {fileID: 9091939149804438987}
   m_Layer: 5
   m_Name: AllyPanel
   m_TagString: Untagged
@@ -686,6 +771,19 @@ MonoBehaviour:
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
+--- !u!114 &9091939149804438987
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6067707419803758140}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_AllowSwitchOff: 0
 --- !u!1 &6476374742505632323
 GameObject:
   m_ObjectHideFlags: 0
