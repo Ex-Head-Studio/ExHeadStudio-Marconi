@@ -369,11 +369,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8339811996535638378, guid: 6f06f7ecf95bbdd439cb14574c5f6a87, type: 3}
       propertyPath: entity
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8339811996535638378, guid: 6f06f7ecf95bbdd439cb14574c5f6a87, type: 3}
       propertyPath: sender
-      value: Vespucci
+      value: Arcadia
       objectReference: {fileID: 0}
     - target: {fileID: 8339811996535638378, guid: 6f06f7ecf95bbdd439cb14574c5f6a87, type: 3}
       propertyPath: direction
@@ -381,7 +381,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8339811996535638378, guid: 6f06f7ecf95bbdd439cb14574c5f6a87, type: 3}
       propertyPath: messageType
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 6415018983208906019, guid: 6f06f7ecf95bbdd439cb14574c5f6a87, type: 3}
@@ -613,17 +613,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &800628147 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 9091939149804438987, guid: 121c3bb71626f914da5813313e9c05f1, type: 3}
-  m_PrefabInstance: {fileID: 3404010955992108688}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fafe2cfe61f6974895a912c3755e8f1, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!114 &2044891230 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 7163711640795307083, guid: 121c3bb71626f914da5813313e9c05f1, type: 3}
@@ -724,23 +713,7 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 2985266290775673929, guid: 0f60c4eeddf55564fb8cd988b97b41d0, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.size
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2985266290775673929, guid: 0f60c4eeddf55564fb8cd988b97b41d0, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_Mode
-      value: 1
-      objectReference: {fileID: 0}
-    - target: {fileID: 2985266290775673929, guid: 0f60c4eeddf55564fb8cd988b97b41d0, type: 3}
-      propertyPath: onValueChanged.m_PersistentCalls.m_Calls.Array.data[0].m_CallState
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 3425423580394950025, guid: 0f60c4eeddf55564fb8cd988b97b41d0, type: 3}
-      propertyPath: allyToggleGroup
-      value: 
-      objectReference: {fileID: 800628147}
-    - target: {fileID: 3425423580394950025, guid: 0f60c4eeddf55564fb8cd988b97b41d0, type: 3}
-      propertyPath: enemyToggleGroup
+      propertyPath: m_Group
       value: 
       objectReference: {fileID: 2044891230}
     - target: {fileID: 6059894534612082139, guid: 0f60c4eeddf55564fb8cd988b97b41d0, type: 3}
@@ -840,6 +813,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5088716867027008043, guid: 121c3bb71626f914da5813313e9c05f1, type: 3}
+      propertyPath: answerStack
+      value: 
+      objectReference: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
     - target: {fileID: 5698257791408840553, guid: 121c3bb71626f914da5813313e9c05f1, type: 3}
       propertyPath: m_Name
       value: UICanvas

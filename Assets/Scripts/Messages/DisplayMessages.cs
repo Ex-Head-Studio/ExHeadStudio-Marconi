@@ -8,6 +8,8 @@ public class DisplayMessages : MonoBehaviour
 
     [SerializeField] private Transform allyStackTransform;
     [SerializeField] private Transform enemyStackTransform;
+    [SerializeField] private ToggleGroup allyToggleGroup;
+    [SerializeField] private ToggleGroup enemyToggleGroup;
     [SerializeField] private MessagesStack messagesStack; 
     [SerializeField] private AnswerStack answerStack;
 
@@ -51,17 +53,17 @@ public class DisplayMessages : MonoBehaviour
 
         if(message.entity == (int)Entity.ally)
         {
-            togglePrefab.group = answerStack.allyToggleGroup;
+            togglePrefab.group = allyToggleGroup;
         }
         else
         {
-            togglePrefab.group = answerStack.enemyToggleGroup;
+            togglePrefab.group = enemyToggleGroup;
         }
 
+        togglePrefab?.GetComponent<ToggleInformations>().SetInformations(message.sender, message.entity, message.direction, message.messageType);
         tmpToggle = Instantiate(togglePrefab, parent.position  , Quaternion.identity, parent);
-
-
         toggles.Add(tmpToggle);
+        messagesStack.AddMessage(message, parent);
     }
 
     public void RemoveAllMessages()

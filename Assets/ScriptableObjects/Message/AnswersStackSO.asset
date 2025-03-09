@@ -12,4 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f7ba5507b8e07a1428ce8a31d0345632, type: 3}
   m_Name: AnswersStackSO
   m_EditorClassIdentifier: 
+  answerSentEvent: {fileID: 0}
   answers: []

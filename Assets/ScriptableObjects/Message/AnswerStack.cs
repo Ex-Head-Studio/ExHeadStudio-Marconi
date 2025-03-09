@@ -6,14 +6,20 @@ using TMPro;
 [CreateAssetMenu(fileName = "AnswersStack", menuName = "Scriptable Objects/AnswersStack")]
 public class AnswerStack : ScriptableObject
 {
+
+    //inserimento in coda e cancellazione in testa per le Liste
     [SerializeField] private MessageReceivedEvent answerSentEvent;
-    [SerializeField] public ToggleGroup allyToggleGroup;
-    [SerializeField] public ToggleGroup enemyToggleGroup;
     public List<AnswerStruct> answers = new List<AnswerStruct>();
 
     public void AddAnswer(AnswerStruct answer)
     {
         answers.Add(answer);
+    }
+
+    
+    public void RemoveAnswer(string sender)
+    {
+        answers.Remove(answers.Find(x => x.receiver == sender));
     }
 
     public void SendAnswers()
