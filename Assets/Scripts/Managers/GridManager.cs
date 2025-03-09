@@ -32,27 +32,47 @@ public class GridManager : MonoBehaviour {
             for (int y = 0; y < _height; y++) {
                 var spawnedTile = Instantiate(_tilePrefab, new Vector3(x,y), Quaternion.identity);
                 spawnedTile.name = $"Tile {Mathf.Abs(y-4)} {x}";
+                
 
                 var isOffset = (x + y) % 2 == 1;
                 spawnedTile.Init(isOffset);
 
                 _tiles[new Vector2(x, y)] = spawnedTile;
+                
             }
         }
 
-        _cam.transform.position = new Vector3((float)_width/2 - 0.5f, (float)_height/2 - 0.5f, -10);
+        _cam.transform.position = new Vector3((float)_width/2 - 0.5f, (float)_height/2 - 0.5f, -5);
 
-        // GameManager.Instance.ChangeState(GameState.SpawnShips);
-            
+        
     }
 
-    // public Tile GetShipSpawnTile() {
-    //     return _tiles.Where(t => t.Value.Placeable).OrderBy(t => Random.value).First().Value;
-    // }
+    public Tile GetTileAtPosition(Vector2 position) {
+        return _tiles.ContainsKey(position) ? _tiles[position] : null;
+    }
 
-    // public Tile GetTileAtPosition(Vector2 pos)
-    // {
-    //     if (_tiles.TryGetValue(pos, out var tile)) return tile;
-    //     return null;
-    // }
+    public void SwapTileTypes(Tile selectedTile) {
+        if (selectedTile == null) return;
+
+        Vector2 currentPos = new Vector2(selectedTile.transform.position.x, selectedTile.transform.position.y);
+        Vector2[] adjacentPositions = {
+            currentPos + Vector2.up,
+            currentPos + Vector2.down,
+            currentPos + Vector2.left,
+            currentPos + Vector2.right
+        };
+
+        adjacentPositions = adjacentPositions.OrderBy(x => UnityEngine.Random.value).ToArray();
+
+        foreach (var pos in adjacentPositions) {
+            Tile adjacentTile = GetTileAtPosition(pos);
+            if (adjacentTile != null && adjacentTile.IsEmpty()) {
+                adjacentTile.SetType(selectedTile.GetType());
+                selectedTile.SetTypeEmpty();
+                break;
+            }
+        }
+    }
+
+    
 }

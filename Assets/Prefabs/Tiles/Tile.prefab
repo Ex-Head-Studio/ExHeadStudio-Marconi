@@ -237,7 +237,9 @@ MonoBehaviour:
   _offsetColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
   _allyColor: {r: 0.46786526, g: 1, b: 0.3726415, a: 1}
   _enemyColor: {r: 1, g: 0.36320752, b: 0.36320752, a: 1}
-  _emptyColor: {r: 1, g: 0.9981252, b: 0.5613208, a: 1}
+  _emptyColor: {r: 0, g: 0, b: 0, a: 1}
+  _allyMaterial: {fileID: 2100000, guid: a94580fbbd0956044a0645f7b91e7197, type: 2}
+  _enemyMaterial: {fileID: 2100000, guid: 08241c99f6fdb814c9a1cf8d55ee7669, type: 2}
   _mesh: {fileID: 5641372172382555127}
   _highlight: {fileID: 1479984600342189217}
 --- !u!65 &-1841351686871509975
