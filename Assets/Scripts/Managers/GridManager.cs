@@ -10,6 +10,8 @@ public class GridManager : MonoBehaviour {
     public static GridManager Instance;
 
     [SerializeField] private int _width, _height;
+    [SerializeField] public int Width => _width;
+    [SerializeField] public int Height => _height; 
 
     [SerializeField] private Tile _tilePrefab;
 

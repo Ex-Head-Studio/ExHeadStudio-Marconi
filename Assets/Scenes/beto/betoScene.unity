@@ -401,8 +401,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43c86aef1c476740b875676c2938b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 5
-  _height: 5
+  _width: 6
+  _height: 6
   _tilePrefab: {fileID: 8449598450516919117, guid: b7bc4d5932a267f40a299d2751cdd372, type: 3}
   _cam: {fileID: 1089613982}
 --- !u!1 &1089613979
@@ -775,7 +775,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!64 &1577325807
 MeshCollider:
   m_ObjectHideFlags: 0
@@ -821,7 +821,7 @@ MeshRenderer:
   m_RenderingLayerMask: 1
   m_RendererPriority: 0
   m_Materials:
-  - {fileID: 2100000, guid: 08241c99f6fdb814c9a1cf8d55ee7669, type: 2}
+  - {fileID: 2100000, guid: d2d7718654360a84b8d241f04be62848, type: 2}
   m_StaticBatchInfo:
     firstSubMesh: 0
     subMeshCount: 0
