@@ -17,10 +17,21 @@ public class EndTurnButton : MonoBehaviour
     {
         if(answerStack.answers.Count <2)
         {
+            button.image.color = Color.red;
             Debug.Log("You cannot end the turn without sending at least 2 answers");
-            return;
         }
-        VoidEvent voidEvent =  new VoidEvent(0);
-        endedTurnEvent?.Invoke(voidEvent);
+        else
+        {
+            button.image.color = Color.green;
+            VoidEvent voidEvent =  new VoidEvent(0);
+            endedTurnEvent?.Invoke(voidEvent);
+            sendAsnwers();
+        }
+
+    }
+
+    public void sendAsnwers()
+    {
+        answerStack.SendAnswers();
     }
 }
