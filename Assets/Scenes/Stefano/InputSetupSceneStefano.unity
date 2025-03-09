@@ -746,10 +746,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 5088716867027008043, guid: 121c3bb71626f914da5813313e9c05f1, type: 3}
-      propertyPath: answerStack
-      value: 
-      objectReference: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
     - target: {fileID: 5698257791408840553, guid: 121c3bb71626f914da5813313e9c05f1, type: 3}
       propertyPath: m_Name
       value: UICanvas
