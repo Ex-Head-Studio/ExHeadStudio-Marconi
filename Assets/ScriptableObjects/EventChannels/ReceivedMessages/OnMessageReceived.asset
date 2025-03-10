@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: OnMessageReceived
   m_EditorClassIdentifier: 
   testingValue:
-    result: 1
-    receiver: Todaro
+    result: 0
+    receiver: 
