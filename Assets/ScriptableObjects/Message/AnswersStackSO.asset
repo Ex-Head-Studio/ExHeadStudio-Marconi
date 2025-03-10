@@ -9,9 +9,11 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b27948efe944a24588277d8eaf83f17, type: 3}
-  m_Name: OnMessageReceived
+  m_Script: {fileID: 11500000, guid: f7ba5507b8e07a1428ce8a31d0345632, type: 3}
+  m_Name: AnswersStackSO
   m_EditorClassIdentifier: 
-  testingValue:
-    result: 1
-    receiver: Todaro
+  answerSentEvent: {fileID: 11400000, guid: 0f63c89a9841f2b4eb35a359bdfcd2af, type: 2}
+  answers:
+  - result: 1
+    receiver: Ottobre Rosso
+    entity: 0

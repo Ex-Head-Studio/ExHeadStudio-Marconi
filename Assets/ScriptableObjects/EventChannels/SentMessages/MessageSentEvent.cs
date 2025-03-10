@@ -8,19 +8,17 @@ public class MessageSentEvent : AbstractEventSO<MessageStruct>
 [System.Serializable]
 public struct MessageStruct
 {
-    public string message;
     public string sender;
 
-    public MessageStruct(string message, string sender)
+    public int messageType;
+    public int entity;
+    public int direction;
+
+    public MessageStruct(string sender, int messageType, int entity, int direction)
     {
-        this.message = message;
         this.sender = sender;
-
-        //altrimenti
-        /*
-        message = _message;
-        sender = _sender;
-
-        */
+        this.messageType = messageType;
+        this.entity = entity;
+        this.direction = direction;
     }
 }
