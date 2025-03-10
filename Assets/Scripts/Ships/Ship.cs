@@ -1,25 +1,30 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Random=UnityEngine.Random;
 public class Ship : MonoBehaviour
 {
     [Header("Ship Parameters")]
     [SerializeField] float nearbyShipSearchRadius;
+    [SerializeField] private Vector2 position;
+
     public enum ShipState{
-        Waiting,
+        Attacking,
         Moving,
-        Attacking
+        Waiting
     }
-    string shipName;
-    Vector2 position;
-    Vector2 nextPos;
-    ShipState currentState=ShipState.Waiting;
-    Vector2 targetPos;
+    public string shipName;
+    ShipManager manager;
+    
+    public Vector2 nextPos;
+    public ShipState currentState=ShipState.Waiting;
+    public Vector2 targetPos;
     bool canMove;
     bool canAttack;
-    private bool isAlly;
-    public Ship(string name){
+    public bool isAlly;
+    public Ship(string name, ShipManager manager){
         this.name=name;
+        this.manager=manager;
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
@@ -29,7 +34,7 @@ public class Ship : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        
+
     }
     public void SetupMessage(){
         //TODO: metodo che genera il messaggio da inviare in base alla mossa scelta dalla nave
@@ -58,8 +63,9 @@ public class Ship : MonoBehaviour
         return canAttack;
     }   
     //Allo stesso tempo, la nave controlla anche se ha spazio per muoversi, così da essere pronta a muoversi se non trova navi nemiche
-    public void LookForMovement(List<Ship> ships){
+    public bool LookForMovement(List<Ship> ships){
         canMove=false;
+
         List<int> xOffsets=new List<int>(){-1, 0, 1};
         List<int> yOffsets=new List<int>(){-1, 0, 1};
         //Seleziona le navi vicine a quella attuale e prendi tutte quelle navi che hanno già selezionato la loro prossima posizione, per verificare che la nave attuale non scelga posizioni già occupate
@@ -68,10 +74,23 @@ public class Ship : MonoBehaviour
         //TODO: controllare che la nave non vada su una casella già occupata e che rimanga nella mappa
 
         xOffsets.Where(p=> nearbyShips.Contains(new Vector2(position.x+p, position.y))==false);
-      
-        int xOrY=Random.Range(0,1);
+        yOffsets.Where(p=> nearbyShips.Contains(new Vector2(position.x, position.y+p))==false);
+        //Se la nave ha spazio per muoversi, può muoversi
+        if(xOffsets.Count>0){
+            canMove=true;
+            return true;
+        }
+        //int xOrY=Mathf.Round(Random.Range(0, 1));
        //Da
+        return false; 
+    }
+    public void SetAlly(bool isAlly){
+        this.isAlly=isAlly;
+    }
 
-        
+    void OnDestroy()
+    {
+        manager.RemoveShip(this, isAlly);
+        //Invia evento per UI
     }
 }

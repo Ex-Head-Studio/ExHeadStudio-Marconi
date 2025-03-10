@@ -23,7 +23,6 @@ public class Tile : MonoBehaviour {
 
     private TileType _type;
     
-   
     private static int allyCount = 0;
     private static int enemyCount = 0;
     private static Material _currentMaterial;
@@ -126,6 +125,7 @@ public class Tile : MonoBehaviour {
         return _type == TileType.Empty;
     }
 
+    //Occhio a scrivere nomi di metodi già presenti nella classe padre, rischiamo di sovrascrivere metodi importanti
     public TileType GetType() {
         return _type;
     }

@@ -9,6 +9,7 @@ public class GridManager : MonoBehaviour {
 
     public static GridManager Instance;
 
+    [Header("Grid Parameters")]
     [SerializeField] private int _width, _height;
     [SerializeField] public int Width => _width;
     [SerializeField] public int Height => _height; 
@@ -16,15 +17,19 @@ public class GridManager : MonoBehaviour {
     [SerializeField] private Tile _tilePrefab;
 
     [SerializeField] private Transform _cam;
+    [SerializeField] private ShipManager _shipManager;
 
     private Dictionary<Vector2, Tile> _tiles;
-
+    private Dictionary<int, Ship> _ships;
     void Start(){
         GenerateGrid();
     }
 
     void Awake() {
         Instance = this;
+        //_tilePrefab = GetComponent<Tile>();
+        //_cam= FindObjectsByType<Camera>()[0];
+        //_shipManager = GetComponent<ShipManager>();
     }
 
     public void GenerateGrid() {
@@ -32,7 +37,7 @@ public class GridManager : MonoBehaviour {
         
         for (int x = 0; x < _width; x++) {
             for (int y = 0; y < _height; y++) {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x,y), Quaternion.identity);
+                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x,y), Quaternion.identity, transform);
                 spawnedTile.name = $"Tile {Mathf.Abs(y-4)} {x}";
                 
 
@@ -76,5 +81,23 @@ public class GridManager : MonoBehaviour {
         }
     }
 
+
+    public void MoveShip(Ship ship){
+        //FindInGrid(ship.position);
+
+        /*idTile=_tiles[ship.position];
+        if(_ships[idTile].GetInstanceID() == ship.GetInstanceID()){
+            _ships[idTile]=null;
+        }
+        else if{ships[idTile].GetInstanceID() != ship.GetInstanceID()}{
+            nextTile=_tiles[ship.nextPos];
+            _ships[nextTile]=ship;
+        }
+        */
+        
+        
+        //TODO: la nave si sposta nel nuovo tile e il tile precedente viene svuotato
+
+    }
     
 }

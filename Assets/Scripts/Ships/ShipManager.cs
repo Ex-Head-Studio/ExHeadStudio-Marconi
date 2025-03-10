@@ -10,90 +10,162 @@ public class ShipManager : MonoBehaviour
     [SerializeField] float attackRange;
     [SerializeField] int movementRange;
     [SerializeField] int shipsToSelect;
+    [SerializeField] private MessageSentEvent messageSentEvent;
     public List<String> shipNames=new List<String>();
-    private List<Ship>enemies;
 
-    private List<Ship>allies;
-    private List<Ship> allyAttackers;
-    private List<Ship> enemyAttackers;
-
+    private List<Ship>enemies=new List<Ship>();
+    private List<Ship>allies=new List<Ship>();
+    private List<Ship> allyAttackers=new List<Ship>();
+    private List<Ship> movingAllies=new List<Ship>();
+    private List<Ship> enemyAttackers=new List<Ship>();
+    private List<Ship> movingEnemies=new List<Ship>();
+    private static int allyCount = 1;
     List<Ship> ships;
+    
+    
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake(){
         
         ships = new List<Ship>();
         shipNames.OrderBy(x => Random.value);
-        foreach (string shipName in shipNames){
-            ships.Add(new Ship(shipName));
-        }
+        
     }
     void Start()
     {
-        int listIndex = Random.Range(0, shipNames.Count-1);
-        for(int i=0; i<shipNames.Count;i++){
-            if(listIndex==shipNames.Count){
-                listIndex=0;
-            }
-            if(i<shipNames.Count/2){
-                allies.Add(ships[listIndex]);
-            }
-            else{
-                enemies.Add(ships[listIndex]);
-            }
-            InstantiateInMap(ships[listIndex]);
-            listIndex++;
+       foreach (string shipName in shipNames){
+            InstantiateInMap(shipName);
         }
     }
-
+    void Update()
+    {
+    }
+    void InstantiateInMap(string shipName){
+        //TODO: istanzia la nave nella mappa, di Beto
+        Ship newShip=Instantiate(new Ship(shipName, this), transform.position, Quaternion.identity);
+        ships.Add(newShip);
+        //Decide se la nave è alleata o nemica
+        if(allyCount<ships.Count/2){
+            newShip.SetAlly(true);
+            allies.Add(newShip);
+            allyCount++;
+        }
+        else{
+            newShip.SetAlly(true);
+            enemies.Add(newShip);
+        }
+        
+        Debug.Log("Navi alleate: "+allies.Count);
+        Debug.Log("Navi nemiche: "+enemies.Count);
+    }
     public void ChooseShips(){
+
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
-        List<Ship> selectedAllies = allies.Where(x => x.LookForObjectives(enemies)==true).ToList();
-        List<Ship> selectedEnemies = enemies.Where(x => x.LookForObjectives(allies)==true).ToList();
-        foreach(Ship ship in ships){
-            ship.LookForMovement(ships);
+        allyAttackers = allies.Where(x => x.LookForObjectives(enemies)==true).ToList();
+        enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)==true).ToList();
+        List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement(ships)==true).ToList();
+        List<Ship> movableAllies = allies.Where(x => x.LookForMovement(ships)==true).ToList();
+        
+        int allyDecision, enemyDecision;
+        if(allyAttackers.Count>1 && movableAllies.Count>1){
+            allyDecision=Random.Range(0, 2);
         }
-        if(selectedAllies.Count>0){
-            selectedAllies.OrderBy(x => Random.value);
-            for(int i=0; i<Random.Range(1, shipsToSelect);i++){
-                allyAttackers.Add(selectedAllies[i]);
-            }
+        else if(allyAttackers.Count>1 && movableAllies.Count==1){
+            allyDecision=Random.Range(1, 2);
+        }
+        else if(allyAttackers.Count==1 && movableAllies.Count>1){
+            allyDecision=Random.Range(0, 1);
         }
         else{
-            allies.OrderBy(x => Random.value);
-            for(int i=0; i<Random.Range(1, shipsToSelect);i++){
-                allies[i].SetState(Ship.ShipState.Moving);
-            }
+            allyDecision=0;
+        }
+        
+        if(enemyAttackers.Count>1 && movableEnemies.Count>1){
+            enemyDecision=Random.Range(0, 2);
+        }
+        else if(enemyAttackers.Count>1 && movableEnemies.Count==1){
+            enemyDecision=Random.Range(1, 2);
+        }
+        else if(enemyAttackers.Count==1 && movableEnemies.Count>1){
+            enemyDecision=Random.Range(0, 1);
+        }
+        else{
+            enemyDecision=0;
         }
 
-        
-        if(selectedEnemies.Count>0){
-            selectedEnemies.OrderBy(x => Random.value);
-            for(int i=0; i<Random.Range(1, shipsToSelect);i++){
-                enemyAttackers.Add(selectedEnemies[i]);
-            }
+        switch(allyDecision){
+            case 0:
+                movingAllies=movableAllies.OrderBy(x=> Random.value).Take(2).ToList();
+                movingAllies.ForEach(x => x.SetState(Ship.ShipState.Moving));
+                allyAttackers.Clear();
+                break;
+            case 1:
+                allyAttackers=allyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
+                allyAttackers[0].SetState(Ship.ShipState.Attacking);
+                movableAllies.Remove(allyAttackers[0]);
+                movingAllies=movableAllies.OrderBy(x=> Random.value).Take(1).ToList();
+                movingAllies[0].SetState(Ship.ShipState.Moving);
+                break;
+            case 2:
+                allyAttackers=allyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
+                allyAttackers.ForEach(x => x.SetState(Ship.ShipState.Attacking));
+                movableAllies.Clear();
+                movingAllies.Clear();
+                break;
+            default:
+                break;
         }
-        else{
-            allies.OrderBy(x => Random.value);
-            for(int i=0; i<Random.Range(1, shipsToSelect);i++){
-                allies[i].SetState(Ship.ShipState.Moving);
-            }
+
+        switch(enemyDecision){
+            case 0:
+                //Non ci sono nemici che possono attaccare, scelgo solo mosse di movimento 
+                movingEnemies=movableEnemies.OrderBy(x=> Random.value).Take(2).ToList();
+                movingEnemies.ForEach(x => x.SetState(Ship.ShipState.Moving));
+                enemyAttackers.Clear();
+                break;
+            case 1:
+                //Ci sono abbastanza nemici per scegliere un attacco e un movimento
+                enemyAttackers=enemyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
+                enemyAttackers[0].SetState(Ship.ShipState.Attacking);
+                movableEnemies.Remove(enemyAttackers[0]);
+                movingEnemies=movableEnemies.OrderBy(x=> Random.value).Take(1).ToList();
+                movingEnemies[0].SetState(Ship.ShipState.Moving);
+                break;
+            case 2:
+                //Non ci sono nemici che possono muoversi, scelgo solo attacchi
+                enemyAttackers=enemyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
+                enemyAttackers.ForEach(x => x.SetState(Ship.ShipState.Attacking));
+                movableEnemies.Clear();
+                movingEnemies.Clear();
+                break;
+            default:
+                break;
         }
-        
+
+        movingAllies.Concat(allyAttackers);
+        movingEnemies.Concat(enemyAttackers);
     }
-
+    void SendMessages(){
+        //movingAllies.ForEach(x => messageSentEvent.Invoke(new MessageStruct(x.shipName, x.shipState, !x.isAlly, )));
+        //movingEnemies.ForEach(x => messageSentEvent.Invoke(new MessageStruct(x.shipName, x.shipState, !x.isAlly)));
+        //messageSentEvent.Invoke();
+    }
     void CallAttack(){
         
     }
     // Update is called once per frame
-    void Update()
-    {
-        
+    
+    
+    void OrderMovement(Ship ship){
+        //MoveShip(ship);
     }
 
-    void InstantiateInMap(Ship ship){
-        //TODO: istanzia la nave nella mappa, di Beto
-    }
-    void OrderMovement(){
-
+    public void RemoveShip(Ship ship, bool isAlly){
+        if(isAlly){
+            allies.Remove(ship);
+        }
+        else{
+            enemies.Remove(ship);
+        }
+        ships.Remove(ship);
     }
 }
