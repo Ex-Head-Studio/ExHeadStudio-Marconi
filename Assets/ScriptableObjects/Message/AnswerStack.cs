@@ -11,6 +11,11 @@ public class AnswerStack : ScriptableObject
     [SerializeField] private MessageReceivedEvent answerSentEvent;
     public List<AnswerStruct> answers = new List<AnswerStruct>();
 
+
+    private void Start()
+    {
+        RemoveAllAnswers();
+    }
     public void AddAnswer(AnswerStruct answer)
     {
         answers.Add(answer);

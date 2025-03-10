@@ -17,7 +17,7 @@ public class ShipMessageInvoker : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             MessageStruct message = new MessageStruct();
-            message.sender = "Vespucci";
+            message.sender = sender;
             message.messageType = messageType;
             message.entity = 0;
             message.direction = direction;

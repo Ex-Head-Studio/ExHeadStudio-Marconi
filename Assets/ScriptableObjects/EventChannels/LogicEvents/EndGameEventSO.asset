@@ -9,8 +9,7 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ba5507b8e07a1428ce8a31d0345632, type: 3}
-  m_Name: AnswersStackSO
+  m_Script: {fileID: 11500000, guid: 50c9c898c96005a49bce92f4f40cf922, type: 3}
+  m_Name: EndGameEventSO
   m_EditorClassIdentifier: 
-  answerSentEvent: {fileID: 11400000, guid: 0f63c89a9841f2b4eb35a359bdfcd2af, type: 2}
-  answers: []
+  testingValue: 0

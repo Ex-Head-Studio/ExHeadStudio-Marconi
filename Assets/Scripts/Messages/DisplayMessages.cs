@@ -76,11 +76,6 @@ public class DisplayMessages : MonoBehaviour
         }
         toggles.Clear();
     }
-
-    public void sendAsnwers()
-    {
-        answerStack.SendAnswers();
-    }
     
     /*private List<Button> buttons = new List<Button>();
     private Button buttonPrefab;

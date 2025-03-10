@@ -20,13 +20,13 @@ public class ToggleMessage : MonoBehaviour
     }
 
     //questa va capita un po' meglio
-    private void Update()
+    /*private void Update()
     {
         if (toggle.isOn)
             toggle.image.sprite = toggle.spriteState.highlightedSprite;
         else 
             toggle.image.sprite = toggle.spriteState.disabledSprite;
-    }
+    }*/
 
 
     public void SetAnswer()

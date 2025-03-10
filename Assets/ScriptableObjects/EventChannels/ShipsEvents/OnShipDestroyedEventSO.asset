@@ -9,8 +9,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: f7ba5507b8e07a1428ce8a31d0345632, type: 3}
-  m_Name: AnswersStackSO
+  m_Script: {fileID: 11500000, guid: 6133f9bd82c50894984255f1099034e9, type: 3}
+  m_Name: OnShipDestroyedEventSO
   m_EditorClassIdentifier: 
-  answerSentEvent: {fileID: 11400000, guid: 0f63c89a9841f2b4eb35a359bdfcd2af, type: 2}
-  answers: []
+  testingValue:
+    shipName: pi
+    entity: 1
+    gridPosition: {x: 0, y: 0}
