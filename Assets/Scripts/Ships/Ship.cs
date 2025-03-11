@@ -9,9 +9,10 @@ public class Ship : MonoBehaviour
 {
     [Header("Ship Parameters")]
     [SerializeField] float nearbyShipSearchRadius;
-    [SerializeField] private Vector2 position;
+    [SerializeField] public Vector2 position;
     [SerializeField] private MessageSentEvent messageSentEvent;
     [SerializeField] private OnShipDestroyedEvent shipDestroyedEvent;
+    [SerializeField] private OnShipAttackEvent attackEvent;
     [SerializeField] private GridManager gridManager;
     private LayerMask shipLayer;
     public enum ShipState{
@@ -31,7 +32,7 @@ public class Ship : MonoBehaviour
     
     void Awake()
     {
-        
+        gridManager= FindFirstObjectByType<GridManager>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
    
@@ -87,11 +88,12 @@ public class Ship : MonoBehaviour
 
     }
     
-    public void ExecuteInstructions(bool answer, int faction){
+    public void ExecuteInstructions(bool answer){
         if(this.faction==0){
             if(answer){
                 if(currentState==ShipState.Attacking){
                     //TODO: evento dove si dichiara la posizione 2D della nave avversaria da colpire
+                    attackEvent.Invoke(new ShipAttackStruct(targetPos));
                 }
                 else if(currentState==ShipState.Moving){
                     position=nextPos;

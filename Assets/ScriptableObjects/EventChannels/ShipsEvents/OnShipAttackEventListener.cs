@@ -2,9 +2,11 @@ using UnityEngine;
 
 public class OnShipAttackEventListener : AbstractEventListenerSO<ShipAttackStruct>
 {
+    Ship ship;
     public void OnShipAttackEvent(ShipAttackStruct value)
     {
-        Debug.Log($"Ship at {value.gridPosition} has been attacked!");
+        if(value.gridPosition==ship.position)
+            Debug.Log($"Ship at {value.gridPosition} has been attacked!");
     }
 }
 

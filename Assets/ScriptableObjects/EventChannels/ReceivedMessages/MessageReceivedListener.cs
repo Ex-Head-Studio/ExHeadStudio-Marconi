@@ -7,7 +7,7 @@ public class MessageReceivedListener : AbstractEventListenerSO<AnswerStruct>
     {
         if(answer.receiver==ship.name)
         {
-            ship.ExecuteInstructions(answer.result, answer.entity);
+            ship.ExecuteInstructions(answer.result);
         }
     }
 }
