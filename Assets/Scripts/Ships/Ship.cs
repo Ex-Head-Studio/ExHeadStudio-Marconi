@@ -11,6 +11,7 @@ public class Ship : MonoBehaviour
     [SerializeField] float nearbyShipSearchRadius;
     [SerializeField] private Vector2 position;
     [SerializeField] private MessageSentEvent messageSentEvent;
+    [SerializeField] private OnShipDestroyedEvent shipDestroyedEvent;
     [SerializeField] private GridManager gridManager;
     private LayerMask shipLayer;
     public enum ShipState{

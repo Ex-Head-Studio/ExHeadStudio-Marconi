@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class OnShipAttackEventListener : AbstractEventSO<ShipAttackStruct>
+public class OnShipAttackEventListener : AbstractEventListenerSO<ShipAttackStruct>
 {
     public void OnShipAttackEvent(ShipAttackStruct value)
     {
