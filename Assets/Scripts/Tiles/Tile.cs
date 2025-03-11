@@ -38,10 +38,10 @@ public class Tile : MonoBehaviour {
     // public bool Placeable => _isPlaceable && OccupiedShip == null;
 
     void Awake() {
-
+        /* 
         int gridWidth = _gridManager._width;
         int gridHeight = _gridManager._height;
-        
+       
         Debug.Log($"La griglia è {gridWidth}x{gridHeight}");
 
         if (transform.position.x + transform.position.y < gridWidth - 1) { // Con questo codice non verifica che ci siano SEMPRE 3 ally e 3 enemy 
@@ -66,12 +66,13 @@ public class Tile : MonoBehaviour {
             _mesh.material.color = _emptyColor;
             _type = TileType.Empty;
         }
+       */
     }
 
     // void OnMouseOver () {
     //     if (Input.GetMouseButtonUpAsButton(0)) if (_type != TileType.Empty) GridManager.Instance.SwapTileTypes(this);
     // }
-    
+
     void OnMouseEnter() {
         _highlight.SetActive(true);
 

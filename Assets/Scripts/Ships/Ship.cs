@@ -98,6 +98,7 @@ public class Ship : MonoBehaviour
                 else if(currentState==ShipState.Moving){
                     position=nextPos;
                     //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
+                    gridManager.MoveShip(position, nextPos);
                     nextPos=Vector2.negativeInfinity;
                 }
             }

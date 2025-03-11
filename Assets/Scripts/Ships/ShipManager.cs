@@ -37,7 +37,7 @@ public class ShipManager : MonoBehaviour
 
 
     //TODO trovare il modo di referenziare correttamente il grid manager, qui è fatto veloce
-    [SerializeField] private GridManager gridManager;
+    private GridManager gridManager;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -45,17 +45,18 @@ public class ShipManager : MonoBehaviour
         
         ships = new List<Ship>();
         shipNames.OrderBy(x => Random.value);
+        gridManager = FindFirstObjectByType<GridManager>();
 
     }
-    void Start()
+    private void Start()
     {
-       foreach (string shipName in shipNames){
+        foreach (string shipName in shipNames)
+        {
             InstantiateInMap(shipName);
         }
     }
-    void Update()
-    {
-    }
+
+    
     void InstantiateInMap(string shipName){
         
 
