@@ -10,12 +10,6 @@ public class AnswerStack : ScriptableObject
     //inserimento in coda e cancellazione in testa per le Liste
     [SerializeField] private MessageReceivedEvent answerSentEvent;
     public List<AnswerStruct> answers = new List<AnswerStruct>();
-
-
-    private void Start()
-    {
-        RemoveAllAnswers();
-    }
     public void AddAnswer(AnswerStruct answer)
     {
         answers.Add(answer);

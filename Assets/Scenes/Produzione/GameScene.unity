@@ -503,17 +503,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
---- !u!114 &1663826999 stripped
-MonoBehaviour:
-  m_CorrespondingSourceObject: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
-  m_PrefabInstance: {fileID: 1663826998}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e43c86aef1c476740b875676c2938b32, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
 --- !u!1001 &1762290328
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -525,42 +514,6 @@ PrefabInstance:
     - target: {fileID: 1313830103093164223, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
       propertyPath: m_Name
       value: ShipManager
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: shipPrefab
-      value: 
-      objectReference: {fileID: 6176163466115431475, guid: 1fb0b5eb286bf534391fd387aa510554, type: 3}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: gridManager
-      value: 
-      objectReference: {fileID: 1663826999}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: shipNames.Array.size
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: 'shipNames.Array.data[0]'
-      value: Vespucci
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: 'shipNames.Array.data[1]'
-      value: Todaro
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: 'shipNames.Array.data[2]'
-      value: Bismark
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: 'shipNames.Array.data[3]'
-      value: Yamato
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: 'shipNames.Array.data[4]'
-      value: Halifax
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: 'shipNames.Array.data[5]'
-      value: Endurance
       objectReference: {fileID: 0}
     - target: {fileID: 5104236288274845499, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
       propertyPath: m_LocalPosition.x
@@ -757,10 +710,6 @@ PrefabInstance:
     - target: {fileID: 3150286848206024544, guid: df0cdf3b98d671447afc7139a98fd2f5, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 3839077405440709284, guid: df0cdf3b98d671447afc7139a98fd2f5, type: 3}
-      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
-      value: SendAnswers
       objectReference: {fileID: 0}
     - target: {fileID: 6797700564411409303, guid: df0cdf3b98d671447afc7139a98fd2f5, type: 3}
       propertyPath: m_AnchorMax.y

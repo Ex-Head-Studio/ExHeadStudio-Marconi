@@ -4,6 +4,9 @@ MonoImporter:
   externalObjects: {}
   serializedVersion: 2
   defaultReferences:
+  - shipPrefab: {fileID: 6176163466115431475, guid: 1fb0b5eb286bf534391fd387aa510554, type: 3}
+  - allyMaterial: {fileID: 2100000, guid: a94580fbbd0956044a0645f7b91e7197, type: 2}
+  - enemyMaterial: {fileID: 2100000, guid: 08241c99f6fdb814c9a1cf8d55ee7669, type: 2}
   - attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
   - shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
   - messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}

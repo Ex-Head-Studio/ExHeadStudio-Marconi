@@ -7,10 +7,6 @@ using Random=UnityEngine.Random;
 public class ShipManager : MonoBehaviour
 {
     [Header("Parameters")]
-    //[SerializeField] float attackRange;
-    //[SerializeField] int movementRange;
-    //[SerializeField] int shipsToSelect;
-
     public List<String> shipNames=new List<String>();
     List<Ship> ships;
 
@@ -22,8 +18,11 @@ public class ShipManager : MonoBehaviour
     private List<Ship> enemyAttackers=new List<Ship>();
     private List<Ship> movingEnemies=new List<Ship>();
     private static int allyCount = 1;
+    private static int enemyCount = 1;
     
     [SerializeField] private GameObject shipPrefab;
+    [SerializeField] private Material allyMaterial;
+    [SerializeField] private Material enemyMaterial;
 
     [Header("Events")]
     [SerializeField] private OnShipAttackEvent attackEvent;
@@ -31,9 +30,8 @@ public class ShipManager : MonoBehaviour
     [SerializeField] private MessageSentEvent messageSentEvent;
     [SerializeField] private MessageReceivedEvent messageReceivedEvent;
 
-    //TODO vedere dove inserire l'evento di distruzione nave
-
     //TODO bisogna linkare il numero di navi con la UI (Stefano)
+    //questa cosa va fatta usando un SO per i contatori
 
 
     //TODO trovare il modo di referenziare correttamente il grid manager, qui è fatto veloce
@@ -41,7 +39,8 @@ public class ShipManager : MonoBehaviour
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Awake(){
+    void Awake()
+    {
         
         ships = new List<Ship>();
         shipNames.OrderBy(x => Random.value);
@@ -69,10 +68,13 @@ public class ShipManager : MonoBehaviour
             newShip.SetFaction(0);
             allies.Add(newShip);
             allyCount++;
+            newShip.GetComponent<MeshRenderer>().material=allyMaterial;
         }
         else{
             newShip.SetFaction(1);
             enemies.Add(newShip);
+            enemyCount++;
+            newShip.GetComponent<MeshRenderer>().material=enemyMaterial;
         }
         
         //chiamata al metodo che piazza la nave nella griglia
@@ -82,6 +84,8 @@ public class ShipManager : MonoBehaviour
         Debug.Log("Navi alleate: "+allies.Count);
         Debug.Log("Navi nemiche: "+enemies.Count);
     }
+
+    //questa funzione va rivista perchè non viene mai chiamata, la collego all'evento di inzio turno
     public void ChooseShips(){
 
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
@@ -168,6 +172,10 @@ public class ShipManager : MonoBehaviour
         //le liste moving contengono le navi che proporranno un movimento o un attacco al giocatore
         movingAllies.Concat(allyAttackers);
         movingEnemies.Concat(enemyAttackers);
+
+        //prova
+        SendMessages();
+        CallAttack();
     }
     void SendMessages(){
         movingAllies.ForEach(x => x.SendMessage());

@@ -103,6 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e17717ee360c934e9e19434537cb361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  timeBeforeStart: 2
+  timeBetweenRounds: 2
+  startedTurnEvent: {fileID: 11400000, guid: 3853f00209eb0c642a9389baec0e5283, type: 2}
+  messagesStack: {fileID: 0}
+  answerStack: {fileID: 0}
 --- !u!1 &6498117003030704917
 GameObject:
   m_ObjectHideFlags: 0

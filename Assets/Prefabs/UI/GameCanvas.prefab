@@ -2537,7 +2537,7 @@ Canvas:
   serializedVersion: 3
   m_RenderMode: 1
   m_Camera: {fileID: 0}
-  m_PlaneDistance: 100
+  m_PlaneDistance: 2
   m_PixelPerfect: 0
   m_ReceivesEvents: 1
   m_OverrideSorting: 0
@@ -2647,7 +2647,7 @@ MonoBehaviour:
         m_CallState: 2
       - m_Target: {fileID: 2087982292692077337}
         m_TargetAssemblyTypeName: DisplayMessages, Assembly-CSharp
-        m_MethodName: sendAsnwers
+        m_MethodName: SendAnswers
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}

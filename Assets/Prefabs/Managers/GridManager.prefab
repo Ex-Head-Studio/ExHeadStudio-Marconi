@@ -44,8 +44,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e43c86aef1c476740b875676c2938b32, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _width: 6
-  _height: 6
-  _tilePrefab: {fileID: 8449598450516919117, guid: b7bc4d5932a267f40a299d2751cdd372, type: 3}
+  _width: 8
+  _height: 8
+  _camX: 0
+  _camY: 0
+  _camZ: -10
+  _tilePrefab: {fileID: 8046514618781660489, guid: b7bc4d5932a267f40a299d2751cdd372, type: 3}
   _cam: {fileID: 0}
   _shipManager: {fileID: 0}

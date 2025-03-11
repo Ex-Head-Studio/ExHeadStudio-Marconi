@@ -9,7 +9,6 @@ public class Ship : MonoBehaviour
 {
     [Header("Ship Parameters")]
     [SerializeField] float nearbyShipSearchRadius;
-    [SerializeField] private Vector2 position;
     [SerializeField] public Vector2 position;
     [SerializeField] private MessageSentEvent messageSentEvent;
     [SerializeField] private OnShipDestroyedEvent shipDestroyedEvent;
@@ -38,7 +37,8 @@ public class Ship : MonoBehaviour
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
    
-    public void SendMessage(){
+    public void SendMessage()
+    {
         //TODO: La nave manda un messaggio al giocatore per dirgli cosa intende fare
         Vector2 direction;
         switch(currentState){
@@ -87,7 +87,10 @@ public class Ship : MonoBehaviour
 
     }
     
-        if(this.faction==0){
+    public void ExecuteInstructions(bool answer, int entity)
+    {
+        if (this.faction == 0)
+        {
             if(answer){
                 if(currentState==ShipState.Attacking){
                     //evento dove si dichiara la posizione 2D della nave avversaria da colpire

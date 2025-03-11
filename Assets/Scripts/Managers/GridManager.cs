@@ -15,6 +15,12 @@ public class GridManager : MonoBehaviour
     public int _width;
     public int _height;
 
+    [Header("Camera relative position")]
+
+    [SerializeField] private float _camX =0;
+    [SerializeField] private float _camY = 0;
+    [SerializeField] private float _camZ = -10;
+
     [SerializeField] private GameObject _tilePrefab;
     
 
@@ -58,7 +64,7 @@ public class GridManager : MonoBehaviour
             }
         }
 
-        _cam.transform.position = new Vector3((float)_width/2 - 0.5f, (float)_height/2 - 0.5f, -5);
+        _cam.transform.position = new Vector3((float)_width/2 - 0.5f + _camX, (float)_height/2 - 0.5f + _camY, _camZ);
 
         
         

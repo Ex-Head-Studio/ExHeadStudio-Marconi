@@ -73,6 +73,8 @@ public class Tile : MonoBehaviour {
     //     if (Input.GetMouseButtonUpAsButton(0)) if (_type != TileType.Empty) GridManager.Instance.SwapTileTypes(this);
     // }
 
+
+    //di tutta questa parte dobbiamo capire cosa serve e cosa no (stefano)
     void OnMouseEnter() {
         _highlight.SetActive(true);
 
