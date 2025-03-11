@@ -10,6 +10,7 @@ public class Ship : MonoBehaviour
     [Header("Ship Parameters")]
     [SerializeField] float nearbyShipSearchRadius;
     [SerializeField] private Vector2 position;
+    [SerializeField] public Vector2 position;
     [SerializeField] private MessageSentEvent messageSentEvent;
     [SerializeField] private OnShipDestroyedEvent shipDestroyedEvent;
     [SerializeField] private OnShipAttackEvent attackEvent;
@@ -33,6 +34,7 @@ public class Ship : MonoBehaviour
     void Awake()
     {
         
+        gridManager= FindFirstObjectByType<GridManager>();
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
    
@@ -85,7 +87,6 @@ public class Ship : MonoBehaviour
 
     }
     
-    public void ExecuteInstructions(bool answer, int faction){
         if(this.faction==0){
             if(answer){
                 if(currentState==ShipState.Attacking){
@@ -97,6 +98,7 @@ public class Ship : MonoBehaviour
                     position=nextPos;
 
                     //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
+                    gridManager.MoveShip(position, nextPos);
                     nextPos=Vector2.negativeInfinity;
                 }
             }

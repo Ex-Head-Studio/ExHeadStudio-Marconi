@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -11,9 +12,11 @@ public class GridManager : MonoBehaviour
     public static GridManager Instance;
 
     [Header("Grid Parameters")]
-    public int _width, _height;
+    public int _width;
+    public int _height;
 
-    [SerializeField] private Tile _tilePrefab;
+    [SerializeField] private GameObject _tilePrefab;
+    
 
     [SerializeField] private Transform _cam;
     [SerializeField] private ShipManager _shipManager;
@@ -26,7 +29,11 @@ public class GridManager : MonoBehaviour
 
 
     void Awake() {
-        Instance = this;
+        if(!Instance) {
+            Instance = this;
+        } else {
+            Destroy(gameObject);
+        }
         //_tilePrefab = GetComponent<Tile>();
         //_cam= FindObjectsByType<Camera>()[0];
         //_shipManager = GetComponent<ShipManager>();
@@ -37,7 +44,9 @@ public class GridManager : MonoBehaviour
         
         for (int x = 0; x < _width; x++) {
             for (int y = 0; y < _height; y++) {
-                var spawnedTile = Instantiate(_tilePrefab, new Vector3(x,y), Quaternion.identity, transform);
+                //Nell'istanziare, prende il GameObject a cui il tile è attaccato
+                Tile spawnedTile = Instantiate(_tilePrefab, new Vector3(x,y), Quaternion.identity, transform).GetComponent<Tile>();
+
                 spawnedTile.name = $"Tile {Mathf.Abs(y-4)} {x}";
                 
 
@@ -51,6 +60,7 @@ public class GridManager : MonoBehaviour
 
         _cam.transform.position = new Vector3((float)_width/2 - 0.5f, (float)_height/2 - 0.5f, -5);
 
+        
         
     }
 
@@ -66,6 +76,7 @@ public class GridManager : MonoBehaviour
                 //fare un controllo su questa logica
                 Tile tile = GetTileAtPosition(position);
                 tile.SetShip(ship.gameObject);
+                ship.position = position;
                 break;
             }
 
