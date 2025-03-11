@@ -157,8 +157,8 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2801926606480406335}
-        m_TargetAssemblyTypeName: MessageReceivedListener, Assembly-CSharp
+      - m_Target: {fileID: 1859968559501134016}
+        m_TargetAssemblyTypeName: ShipMessageReceiver, Assembly-CSharp
         m_MethodName: OnMessageReceived
         m_Mode: 0
         m_Arguments:
