@@ -17,7 +17,7 @@ public class Ship : MonoBehaviour
         Waiting
     }
     public string shipName;
-    ShipManager manager;
+    public ShipManager manager;
     
     public Vector2 nextPos;
     public ShipState currentState=ShipState.Waiting;
@@ -25,24 +25,13 @@ public class Ship : MonoBehaviour
     bool canMove;
     bool canAttack;
     public int faction;
-    public Ship(string name, ShipManager manager){
-        this.name=name;
-        this.manager=manager;
-    }
+    
     void Awake()
     {
         
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
-    {
-        
-    }
-    // Update is called once per frame
-    void Update()
-    {
-
-    }
+   
     public void SetupMessage(){
         //TODO: metodo che genera il messaggio da inviare in base alla mossa scelta dalla nave
     }
@@ -103,7 +92,6 @@ public class Ship : MonoBehaviour
                 }
                 else if(currentState==ShipState.Moving){
                     position=nextPos;
-                    
                     //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
                     nextPos=Vector2.negativeInfinity;
                 }

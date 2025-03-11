@@ -12,14 +12,16 @@ public class ShipManager : MonoBehaviour
     [SerializeField] int shipsToSelect;
 
     public List<String> shipNames=new List<String>();
-    private List<Ship>enemies=new List<Ship>();
-    private List<Ship>allies=new List<Ship>();
+    List<Ship> ships;
+    public List<Ship>enemies=new List<Ship>();
+    public List<Ship>allies=new List<Ship>();
     private List<Ship> allyAttackers=new List<Ship>();
     private List<Ship> movingAllies=new List<Ship>();
     private List<Ship> enemyAttackers=new List<Ship>();
     private List<Ship> movingEnemies=new List<Ship>();
     private static int allyCount = 1;
-    List<Ship> ships;
+    
+    GameObject shipPrefab;
 
     [Header("Events")]
     [SerializeField] private OnShipAttackEvent attackEvent;
@@ -36,7 +38,7 @@ public class ShipManager : MonoBehaviour
         
         ships = new List<Ship>();
         shipNames.OrderBy(x => Random.value);
-        
+        shipPrefab=Resources.Load<GameObject>("Ship");
     }
     void Start()
     {
@@ -49,8 +51,11 @@ public class ShipManager : MonoBehaviour
     }
     void InstantiateInMap(string shipName){
         //TODO: istanzia la nave nella mappa, di Beto
-        Ship newShip=Instantiate(new Ship(shipName, this), transform.position, Quaternion.identity);
-        ships.Add(newShip);
+
+        Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.identity).GetComponent<Ship>();
+        newShip.name=shipName;
+        newShip.manager=this;
+        ships.Add(newShip);    
         //Decide se la nave è alleata o nemica
         if(allyCount<ships.Count/2){
             newShip.SetFaction(0);
