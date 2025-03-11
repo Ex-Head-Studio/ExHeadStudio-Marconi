@@ -6,7 +6,7 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class GridManager : MonoBehaviour {
-
+/*
     public static GridManager Instance;
 
     [Header("Grid Parameters")]
@@ -25,14 +25,15 @@ public class GridManager : MonoBehaviour {
         GenerateGrid();
     }
 
+
     void Awake() {
         Instance = this;
         //_tilePrefab = GetComponent<Tile>();
         //_cam= FindObjectsByType<Camera>()[0];
         //_shipManager = GetComponent<ShipManager>();
-    }
-
-    public void GenerateGrid() {
+    }*/
+/*
+   public void GenerateGrid() {
         _tiles = new Dictionary<Vector2, Tile>();
         
         for (int x = 0; x < _width; x++) {
@@ -80,7 +81,7 @@ public class GridManager : MonoBehaviour {
             }
         }
     }
-
+*/
 
     public void MoveShip(Ship ship){
         //FindInGrid(ship.position);
