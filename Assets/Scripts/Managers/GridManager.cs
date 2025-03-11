@@ -5,7 +5,8 @@ using System.Linq;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class GridManager : MonoBehaviour {
+public class GridManager : MonoBehaviour 
+{
 
     public static GridManager Instance;
 
@@ -53,16 +54,32 @@ public class GridManager : MonoBehaviour {
         
     }
 
-    public void InsertShips(Ship ship){
-        //TODO: inserire la nave passata dallo Ship Manager nella posizione corretta in caso sia alleata o nemica, 
-        //viene passata la nave e le si sceglie una posizione iniziale
-        //si deve passare la nave alla tile corrispondente tramite il metodo SetShip e centrare la nave nella tile
-        //consiglio: ogni oggetto ha un transform, che indica la sua posizione, rotazione e scala nel sistema di riferimento globale
-        //esiste un modo per copiare il transform della tile nel transform della nave, così dovrebbero centrarsi, ma sempre meglio provare
-    
+    public void InsertShips(Ship ship)
+    {
+        int attempts = 0;
+        //brutto, da rifare appena abbiamo tempo
+        while(true)
+        {
+            Vector2 position = new Vector2(Random.Range(0, _width), Random.Range(0, _height));
+            if(IsValidPosition(position) && attempts < (_width * _height))
+            {
+                //fare un controllo su questa logica
+                Tile tile = GetTileAtPosition(position);
+                tile.SetShip(ship.gameObject);
+                break;
+            }
+
+            if(attempts >= (_width * _height))
+            {
+                Debug.LogError("Non c'è spazio per la nave");
+                break;
+            } 
+            attempts++;
+        }        
     }
 
-    public Tile GetTileAtPosition(Vector2 position) {
+    public Tile GetTileAtPosition(Vector2 position) 
+    {
         return _tiles.ContainsKey(position) ? _tiles[position] : null;
     }
     public void MoveShip(Vector2 currentPosition, Vector2 newPosition){
@@ -71,16 +88,19 @@ public class GridManager : MonoBehaviour {
         if(currentTile == null || newTile == null) return;
 
         newTile.SetType(currentTile.GetType());
-        newTile.SetShip(currentTile.GetShip());
+        newTile.SetShip(currentTile.GetShip().gameObject);
 
         currentTile.SetTypeEmpty();
         currentTile.SetShip(null);
         
     }
 
-    public bool IsValidPosition(Vector2 position) {
+    public bool IsValidPosition(Vector2 position)
+     {
         return _tiles.ContainsKey(position);
     }
+
+    //serve ancora questo metodo? (Stefano)
     public void SwapTileTypes(Tile selectedTile) {
        /* if (selectedTile == null) return;
 

@@ -144,6 +144,7 @@ public class Tile : MonoBehaviour {
 
     public void SetShip(GameObject ship) {
         _ship = ship;
+        ship.transform.position = transform.position; //+ eventuale offset e controlli world-space
     }
     public GameObject GetShip(){
         if(_ship==null){

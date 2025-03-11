@@ -7,12 +7,14 @@ using Random=UnityEngine.Random;
 public class ShipManager : MonoBehaviour
 {
     [Header("Parameters")]
-    [SerializeField] float attackRange;
-    [SerializeField] int movementRange;
-    [SerializeField] int shipsToSelect;
+    //[SerializeField] float attackRange;
+    //[SerializeField] int movementRange;
+    //[SerializeField] int shipsToSelect;
 
     public List<String> shipNames=new List<String>();
     List<Ship> ships;
+
+    [Header("Lists for debug, don't touch")]
     public List<Ship>enemies=new List<Ship>();
     public List<Ship>allies=new List<Ship>();
     private List<Ship> allyAttackers=new List<Ship>();
@@ -21,7 +23,7 @@ public class ShipManager : MonoBehaviour
     private List<Ship> movingEnemies=new List<Ship>();
     private static int allyCount = 1;
     
-    GameObject shipPrefab;
+    [SerializeField] private GameObject shipPrefab;
 
     [Header("Events")]
     [SerializeField] private OnShipAttackEvent attackEvent;
@@ -31,6 +33,11 @@ public class ShipManager : MonoBehaviour
 
     //TODO vedere dove inserire l'evento di distruzione nave
 
+    //TODO bisogna linkare il numero di navi con la UI (Stefano)
+
+
+    //TODO trovare il modo di referenziare correttamente il grid manager, qui è fatto veloce
+    [SerializeField] private GridManager gridManager;
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -38,6 +45,7 @@ public class ShipManager : MonoBehaviour
         
         ships = new List<Ship>();
         shipNames.OrderBy(x => Random.value);
+
     }
     void Start()
     {
@@ -66,6 +74,10 @@ public class ShipManager : MonoBehaviour
             enemies.Add(newShip);
         }
         
+        //chiamata al metodo che piazza la nave nella griglia
+        gridManager.InsertShips(newShip);
+
+
         Debug.Log("Navi alleate: "+allies.Count);
         Debug.Log("Navi nemiche: "+enemies.Count);
     }
