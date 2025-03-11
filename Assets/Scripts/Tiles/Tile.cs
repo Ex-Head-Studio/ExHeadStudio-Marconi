@@ -12,7 +12,7 @@ public enum TileType {
 }
 
 public class Tile : MonoBehaviour {
-    [SerializeField] private Color _baseColor, _offsetColor, _allyColor, _enemyColor, _emptyColor;
+    /*[SerializeField] private Color _baseColor, _offsetColor, _allyColor, _enemyColor, _emptyColor;
     [SerializeField] private Material _allyMaterial, _enemyMaterial;
     [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private GameObject _highlight;
@@ -27,7 +27,7 @@ public class Tile : MonoBehaviour {
     private static int enemyCount = 0;
     private static Material _currentMaterial;
     int width = GridManager.Instance.Width;
-    int height = GridManager.Instance.Height;
+    int height = GridManager.Instance.Height;*/
 
    
 
@@ -36,7 +36,7 @@ public class Tile : MonoBehaviour {
     // public BaseShip OccupiedShip;
     // public bool Placeable => _isPlaceable && OccupiedShip == null;
 
-    public void Init(bool isOffset) {
+   /* public void Init(bool isOffset) {
 
         int gridWidth = GridManager.Instance.Width;
         int gridHeight = GridManager.Instance.Height;
@@ -65,13 +65,13 @@ public class Tile : MonoBehaviour {
             _mesh.material.color = _emptyColor;
             _type = TileType.Empty;
         }
-    }
+    }*/
 
     // void OnMouseOver () {
     //     if (Input.GetMouseButtonUpAsButton(0)) if (_type != TileType.Empty) GridManager.Instance.SwapTileTypes(this);
     // }
     
-    void OnMouseEnter() {
+   /* void OnMouseEnter() {
         _highlight.SetActive(true);
 
         if (_isRightClicking) {
@@ -144,5 +144,5 @@ public class Tile : MonoBehaviour {
     public void SetTypeEmpty() {
         _type = TileType.Empty;
         _mesh.material.color = _emptyColor;
-    }
+    }*/
 }
