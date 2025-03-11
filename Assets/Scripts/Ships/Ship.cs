@@ -11,6 +11,8 @@ public class Ship : MonoBehaviour
     [SerializeField] float nearbyShipSearchRadius;
     [SerializeField] private Vector2 position;
     [SerializeField] private MessageSentEvent messageSentEvent;
+    [SerializeField] private GridManager gridManager;
+    private LayerMask shipLayer;
     public enum ShipState{
         Attacking,
         Moving,
@@ -116,25 +118,37 @@ public class Ship : MonoBehaviour
         return canAttack;
     }   
     //Allo stesso tempo, la nave controlla anche se ha spazio per muoversi, così da essere pronta a muoversi se non trova navi nemiche
-    public bool LookForMovement(List<Ship> ships){
+    public bool LookForMovement(){
         canMove=false;
 
         List<int> xOffsets=new List<int>(){-1, 0, 1};
         List<int> yOffsets=new List<int>(){-1, 0, 1};
-        //Seleziona le navi vicine a quella attuale e prendi tutte quelle navi che hanno già selezionato la loro prossima posizione, per verificare che la nave attuale non scelga posizioni già occupate
-        List<Vector2> nearbyShips = Physics.OverlapSphere(transform.position, nearbyShipSearchRadius).Select(x => x.GetComponent<Ship>()).Where(x => x.nextPos!=Vector2.negativeInfinity).Select(x=>x.nextPos).ToList();
+        //Seleziona le navi vicine a quella attuale e prendi tutte le posizioni attuali e future di ciascuna nave trovata
+        List<Vector2> nearbyShips = Physics.OverlapSphere(transform.position, nearbyShipSearchRadius, shipLayer).Select(x => x.GetComponent<Ship>().position).ToList();
+        nearbyShips.Concat(Physics.OverlapSphere(transform.position, nearbyShipSearchRadius, shipLayer).Select(x => x.GetComponent<Ship>().nextPos)
+                    .Where(x => x!=Vector2.negativeInfinity).ToList());
         //La nave mantiene solo gli offset che non la farebbero uscire dalla mappa e che non la farebbero andare su una casella già occupata
-        //TODO: controllare che la nave non vada su una casella già occupata e che rimanga nella mappa
 
-        xOffsets.Where(p=> nearbyShips.Contains(new Vector2(position.x+p, position.y))==false);
-        yOffsets.Where(p=> nearbyShips.Contains(new Vector2(position.x, position.y+p))==false);
-        //Se la nave ha spazio per muoversi, può muoversi
-        if(xOffsets.Count>0){
+        //Rimuove gli offset che farebbero passare la nave su una posizione già prenotata o già occupata
+
+        List<Vector2> possibleMoves=new List<Vector2>();
+        foreach(int x in xOffsets){
+                possibleMoves.Add(new Vector2(position.x+x, position.y));
+        }
+        foreach(int y in yOffsets){
+                possibleMoves.Add(new Vector2(position.x, position.y+y));
+        }
+
+        possibleMoves.Where(p => nearbyShips.Contains(p)==false).Where(p => gridManager.IsValidPosition(p)==true);
+        //possibleMoves contiene tutte le possibili mosse rimaste alla nave, se è vuota, significa che non ha mosse a disposizione
+        if(possibleMoves.Count>0){
             canMove=true;
+            nextPos=possibleMoves.OrderBy(x => Random.value).Take(1).ToList()[0];
             return true;
         }
         //int xOrY=Mathf.Round(Random.Range(0, 1));
        //Da
+       currentState=ShipState.Waiting;
         return false; 
     }
     public void SetFaction(int faction){

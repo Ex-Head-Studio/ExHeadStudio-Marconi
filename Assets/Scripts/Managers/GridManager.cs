@@ -53,8 +53,13 @@ public class GridManager : MonoBehaviour {
         
     }
 
-    public void InsertShips(){
-        
+    public void InsertShips(Ship ship){
+        //TODO: inserire la nave passata dallo Ship Manager nella posizione corretta in caso sia alleata o nemica, 
+        //viene passata la nave e le si sceglie una posizione iniziale
+        //si deve passare la nave alla tile corrispondente tramite il metodo SetShip e centrare la nave nella tile
+        //consiglio: ogni oggetto ha un transform, che indica la sua posizione, rotazione e scala nel sistema di riferimento globale
+        //esiste un modo per copiare il transform della tile nel transform della nave, così dovrebbero centrarsi, ma sempre meglio provare
+    
     }
 
     public Tile GetTileAtPosition(Vector2 position) {
@@ -71,6 +76,10 @@ public class GridManager : MonoBehaviour {
         currentTile.SetTypeEmpty();
         currentTile.SetShip(null);
         
+    }
+
+    public bool IsValidPosition(Vector2 position) {
+        return _tiles.ContainsKey(position);
     }
     public void SwapTileTypes(Tile selectedTile) {
        /* if (selectedTile == null) return;

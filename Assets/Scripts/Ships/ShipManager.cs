@@ -49,7 +49,7 @@ public class ShipManager : MonoBehaviour
     {
     }
     void InstantiateInMap(string shipName){
-        //TODO: istanzia la nave nella mappa, di Beto
+        
 
         Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.identity).GetComponent<Ship>();
         newShip.name=shipName;
@@ -74,8 +74,8 @@ public class ShipManager : MonoBehaviour
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
         allyAttackers = allies.Where(x => x.LookForObjectives(enemies)==true).ToList();
         enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)==true).ToList();
-        List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement(ships)==true).ToList();
-        List<Ship> movableAllies = allies.Where(x => x.LookForMovement(ships)==true).ToList();
+        List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()==true).ToList();
+        List<Ship> movableAllies = allies.Where(x => x.LookForMovement()==true).ToList();
         
         int allyDecision, enemyDecision;
         if(allyAttackers.Count>1 && movableAllies.Count>1){
@@ -152,7 +152,7 @@ public class ShipManager : MonoBehaviour
             default:
                 break;
         }
-
+        //le liste moving contengono le navi che proporranno un movimento o un attacco al giocatore
         movingAllies.Concat(allyAttackers);
         movingEnemies.Concat(enemyAttackers);
     }
