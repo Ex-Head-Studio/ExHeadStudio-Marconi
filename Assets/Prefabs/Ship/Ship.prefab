@@ -16,6 +16,7 @@ GameObject:
   - component: {fileID: -4852508221431556249}
   - component: {fileID: -9118910404063520334}
   - component: {fileID: -2272004941987113915}
+  - component: {fileID: 7435426860006337803}
   - component: {fileID: 2577486974177261344}
   - component: {fileID: 1963909778314875985}
   m_Layer: 0
@@ -130,6 +131,7 @@ MonoBehaviour:
   position: {x: 0, y: 0}
   messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
   shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
+  attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
   gridManager: {fileID: 0}
   shipName: 
   manager: {fileID: 0}
@@ -184,7 +186,31 @@ MonoBehaviour:
   eventToListen: {fileID: 11400000, guid: 0f63c89a9841f2b4eb35a359bdfcd2af, type: 2}
   onEvent:
     m_PersistentCalls:
-      m_Calls: []
+      m_Calls:
+      - m_Target: {fileID: -2272004941987113915}
+        m_TargetAssemblyTypeName: MessageReceivedListener, Assembly-CSharp
+        m_MethodName: OnMessageReceived
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &7435426860006337803
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6176163466115431475}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0ea6f0d652116654b9959e0394950957, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!114 &2577486974177261344
 MonoBehaviour:
   m_ObjectHideFlags: 0

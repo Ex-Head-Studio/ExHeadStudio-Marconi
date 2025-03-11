@@ -31,8 +31,9 @@ public class ToggleMessage : MonoBehaviour
 
     public void SetAnswer()
     {
-        //devo ragionare sulla logica per i controlli, è fatto in fretta
-        if(toggle.isOn && !previousState)
+        //devo ragionare sulla logica per i controlli, è fatto in fretta, verificare se serve tenere il previous state
+        //se il toggle è attivo aggiungo la risposta alla lista, altrimenti la rimuovo
+        if(toggle.isOn)
         {
             Debug.Log("Toggle changed:\nSender: " + toggleInfo.GetToggleSender() + " Entity: " + toggleInfo.GetToggleEntity());
             answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));

@@ -12,6 +12,7 @@ public class Ship : MonoBehaviour
     [SerializeField] private Vector2 position;
     [SerializeField] private MessageSentEvent messageSentEvent;
     [SerializeField] private OnShipDestroyedEvent shipDestroyedEvent;
+    [SerializeField] private OnShipAttackEvent attackEvent;
     [SerializeField] private GridManager gridManager;
     private LayerMask shipLayer;
     public enum ShipState{
@@ -35,9 +36,6 @@ public class Ship : MonoBehaviour
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
    
-    public void SetupMessage(){
-        //TODO: metodo che genera il messaggio da inviare in base alla mossa scelta dalla nave
-    }
     public void SendMessage(){
         //TODO: La nave manda un messaggio al giocatore per dirgli cosa intende fare
         Vector2 direction;
@@ -91,10 +89,13 @@ public class Ship : MonoBehaviour
         if(this.faction==0){
             if(answer){
                 if(currentState==ShipState.Attacking){
-                    //TODO: evento dove si dichiara la posizione 2D della nave avversaria da colpire
+                    //evento dove si dichiara la posizione 2D della nave avversaria da colpire
+                    attackEvent?.Invoke(new ShipAttackStruct(targetPos));
+
                 }
                 else if(currentState==ShipState.Moving){
                     position=nextPos;
+
                     //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
                     nextPos=Vector2.negativeInfinity;
                 }
@@ -159,6 +160,6 @@ public class Ship : MonoBehaviour
     void OnDestroy()
     {
         manager.RemoveShip(this, faction);
-        //Invia evento per UI
+        shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(name, faction, position));
     }
 }
