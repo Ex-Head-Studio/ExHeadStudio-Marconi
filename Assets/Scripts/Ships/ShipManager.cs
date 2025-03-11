@@ -20,6 +20,15 @@ public class ShipManager : MonoBehaviour
     private List<Ship> movingEnemies=new List<Ship>();
     private static int allyCount = 1;
     List<Ship> ships;
+
+    [Header("Events")]
+    [SerializeField] private OnShipAttackEvent attackEvent;
+    [SerializeField] private OnShipDestroyedEvent shipDestroyedEvent;
+    [SerializeField] private MessageSentEvent messageSentEvent;
+    [SerializeField] private MessageReceivedEvent messageReceivedEvent;
+
+    //TODO vedere dove inserire l'evento di distruzione nave
+
     
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
@@ -146,10 +155,13 @@ public class ShipManager : MonoBehaviour
     void SendMessages(){
         movingAllies.ForEach(x => x.SendMessage());
         movingEnemies.ForEach(x => x.SendMessage());
-        //messageSentEvent.Invoke();
+        //TODO riempire la struct per l'invio del messaggio
+        //messageSentEvent.Invoke(new MessageStruct());
     }
-    void CallAttack(){
-        
+    void CallAttack()
+    {
+        //TODO riempire la struct per l'invio dell'attacco con le cooridaate del bersaglio
+        //attackEvent.Invoke(new ShipAttackStruct());
     }
     // Update is called once per frame
     
