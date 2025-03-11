@@ -12,7 +12,6 @@ public class ShipManager : MonoBehaviour
     [SerializeField] int shipsToSelect;
 
     public List<String> shipNames=new List<String>();
-
     private List<Ship>enemies=new List<Ship>();
     private List<Ship>allies=new List<Ship>();
     private List<Ship> allyAttackers=new List<Ship>();
@@ -45,12 +44,12 @@ public class ShipManager : MonoBehaviour
         ships.Add(newShip);
         //Decide se la nave è alleata o nemica
         if(allyCount<ships.Count/2){
-            newShip.SetAlly(true);
+            newShip.SetFaction(0);
             allies.Add(newShip);
             allyCount++;
         }
         else{
-            newShip.SetAlly(true);
+            newShip.SetFaction(1);
             enemies.Add(newShip);
         }
         
@@ -147,7 +146,6 @@ public class ShipManager : MonoBehaviour
     void SendMessages(){
         movingAllies.ForEach(x => x.SendMessage());
         movingEnemies.ForEach(x => x.SendMessage());
-        //movingEnemies.ForEach(x => messageSentEvent.Invoke(new MessageStruct(x.shipName, x.shipState, !x.isAlly)));
         //messageSentEvent.Invoke();
     }
     void CallAttack(){
@@ -160,8 +158,8 @@ public class ShipManager : MonoBehaviour
         //MoveShip(ship);
     }
 
-    public void RemoveShip(Ship ship, bool isAlly){
-        if(isAlly){
+    public void RemoveShip(Ship ship, int isAlly){
+        if(isAlly==0){
             allies.Remove(ship);
         }
         else{
