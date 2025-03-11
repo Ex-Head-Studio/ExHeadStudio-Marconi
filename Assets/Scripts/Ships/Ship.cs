@@ -7,7 +7,7 @@ public class Ship : MonoBehaviour
     [Header("Ship Parameters")]
     [SerializeField] float nearbyShipSearchRadius;
     [SerializeField] private Vector2 position;
-
+    [SerializeField] private MessageSentEvent messageSentEvent;
     public enum ShipState{
         Attacking,
         Moving,
@@ -39,8 +39,9 @@ public class Ship : MonoBehaviour
     public void SetupMessage(){
         //TODO: metodo che genera il messaggio da inviare in base alla mossa scelta dalla nave
     }
-    void SendMessage(){
+    public void SendMessage(){
         //TODO: La nave manda un messaggio al giocatore per dirgli cosa intende fare
+
     }
     
     void ExecuteInstructions(){

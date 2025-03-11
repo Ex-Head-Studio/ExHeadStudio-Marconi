@@ -10,7 +10,7 @@ public class ShipManager : MonoBehaviour
     [SerializeField] float attackRange;
     [SerializeField] int movementRange;
     [SerializeField] int shipsToSelect;
-    [SerializeField] private MessageSentEvent messageSentEvent;
+
     public List<String> shipNames=new List<String>();
 
     private List<Ship>enemies=new List<Ship>();
@@ -145,7 +145,8 @@ public class ShipManager : MonoBehaviour
         movingEnemies.Concat(enemyAttackers);
     }
     void SendMessages(){
-        //movingAllies.ForEach(x => messageSentEvent.Invoke(new MessageStruct(x.shipName, x.shipState, !x.isAlly, )));
+        movingAllies.ForEach(x => x.SendMessage());
+        movingEnemies.ForEach(x => x.SendMessage());
         //movingEnemies.ForEach(x => messageSentEvent.Invoke(new MessageStruct(x.shipName, x.shipState, !x.isAlly)));
         //messageSentEvent.Invoke();
     }
