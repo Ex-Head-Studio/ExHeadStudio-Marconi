@@ -2,6 +2,7 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
+using UnityEditor.PackageManager;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
@@ -12,7 +13,7 @@ public enum TileType {
 }
 
 public class Tile : MonoBehaviour {
-    /*[SerializeField] private Color _baseColor, _offsetColor, _allyColor, _enemyColor, _emptyColor;
+    [SerializeField] private Color _baseColor, _offsetColor, _allyColor, _enemyColor, _emptyColor;
     [SerializeField] private Material _allyMaterial, _enemyMaterial;
     [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private GameObject _highlight;
@@ -20,15 +21,15 @@ public class Tile : MonoBehaviour {
     private bool _isSelected = false;
     private static bool _isRightClicking = false;
     private static List<Tile> _selectedTiles = new List<Tile>();
-
+    private GridManager _gridManager;
     private TileType _type;
     
     private static int allyCount = 0;
     private static int enemyCount = 0;
     private static Material _currentMaterial;
-    int width = GridManager.Instance.Width;
-    int height = GridManager.Instance.Height;*/
-
+    int width;
+    int height;
+    private GameObject _ship;
    
 
     // [SerializeField] private bool _isPlaceable;
@@ -36,10 +37,10 @@ public class Tile : MonoBehaviour {
     // public BaseShip OccupiedShip;
     // public bool Placeable => _isPlaceable && OccupiedShip == null;
 
-   /* public void Init(bool isOffset) {
+    void Awake() {
 
-        int gridWidth = GridManager.Instance.Width;
-        int gridHeight = GridManager.Instance.Height;
+        int gridWidth = _gridManager._width;
+        int gridHeight = _gridManager._height;
         
         Debug.Log($"La griglia è {gridWidth}x{gridHeight}");
 
@@ -65,13 +66,13 @@ public class Tile : MonoBehaviour {
             _mesh.material.color = _emptyColor;
             _type = TileType.Empty;
         }
-    }*/
+    }
 
     // void OnMouseOver () {
     //     if (Input.GetMouseButtonUpAsButton(0)) if (_type != TileType.Empty) GridManager.Instance.SwapTileTypes(this);
     // }
     
-   /* void OnMouseEnter() {
+    void OnMouseEnter() {
         _highlight.SetActive(true);
 
         if (_isRightClicking) {
@@ -86,7 +87,7 @@ public class Tile : MonoBehaviour {
     void OnMouseUpAsButton() {
 		if (Input.GetMouseButtonUp(0))
 		{
-			if (_type != TileType.Empty) GridManager.Instance.SwapTileTypes(this);
+			if (_type != TileType.Empty) _gridManager.SwapTileTypes(this);
 			return;
 		}
     }
@@ -126,23 +127,36 @@ public class Tile : MonoBehaviour {
     }
 
     //Occhio a scrivere nomi di metodi già presenti nella classe padre, rischiamo di sovrascrivere metodi importanti
-    public TileType GetType() {
+    public new TileType GetType() {
         return _type;
     }
 
     public void SetType(TileType type) {
-        if (type == TileType.Ally) {
+        /*if (type == TileType.Ally) {
             _type = TileType.Ally;
             _mesh.material = _allyMaterial;
         }
         else if (type == TileType.Enemy) {
             _type = TileType.Enemy;
             _mesh.material = _enemyMaterial;
-        }
+        }*/
     }
 
+    public void SetShip(GameObject ship) {
+        _ship = ship;
+    }
+    public GameObject GetShip(){
+        if(_ship==null){
+            Debug.Log("La nave non è presente");
+            return null;
+        }
+        else{
+            return _ship;
+        }
+        
+    }
     public void SetTypeEmpty() {
         _type = TileType.Empty;
         _mesh.material.color = _emptyColor;
-    }*/
+    }
 }

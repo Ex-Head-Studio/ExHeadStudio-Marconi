@@ -2,8 +2,12 @@ using UnityEngine;
 
 public class MessageReceivedListener : AbstractEventListenerSO<AnswerStruct>
 {
+    Ship ship;
     public void OnMessageReceived(AnswerStruct answer)
     {
-        Debug.Log("Message received: " + answer.result + " by: " + answer.receiver);
+        if(answer.receiver==ship.name)
+        {
+            ship.ExecuteInstructions(answer.result, answer.entity);
+        }
     }
 }

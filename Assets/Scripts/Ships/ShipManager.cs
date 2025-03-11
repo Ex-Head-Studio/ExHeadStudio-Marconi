@@ -38,7 +38,6 @@ public class ShipManager : MonoBehaviour
         
         ships = new List<Ship>();
         shipNames.OrderBy(x => Random.value);
-        shipPrefab=Resources.Load<GameObject>("Ship");
     }
     void Start()
     {

@@ -6,13 +6,11 @@ using UnityEngine;
 using Random = UnityEngine.Random;
 
 public class GridManager : MonoBehaviour {
-/*
+
     public static GridManager Instance;
 
     [Header("Grid Parameters")]
-    [SerializeField] private int _width, _height;
-    [SerializeField] public int Width => _width;
-    [SerializeField] public int Height => _height; 
+    public int _width, _height;
 
     [SerializeField] private Tile _tilePrefab;
 
@@ -31,8 +29,8 @@ public class GridManager : MonoBehaviour {
         //_tilePrefab = GetComponent<Tile>();
         //_cam= FindObjectsByType<Camera>()[0];
         //_shipManager = GetComponent<ShipManager>();
-    }*/
-/*
+    }
+
    public void GenerateGrid() {
         _tiles = new Dictionary<Vector2, Tile>();
         
@@ -42,9 +40,9 @@ public class GridManager : MonoBehaviour {
                 spawnedTile.name = $"Tile {Mathf.Abs(y-4)} {x}";
                 
 
-                var isOffset = (x + y) % 2 == 1;
+                /*var isOffset = (x + y) % 2 == 1;
                 spawnedTile.Init(isOffset);
-
+                */
                 _tiles[new Vector2(x, y)] = spawnedTile;
                 
             }
@@ -55,12 +53,27 @@ public class GridManager : MonoBehaviour {
         
     }
 
+    public void InsertShips(){
+        
+    }
+
     public Tile GetTileAtPosition(Vector2 position) {
         return _tiles.ContainsKey(position) ? _tiles[position] : null;
     }
+    public void MoveShip(Vector2 currentPosition, Vector2 newPosition){
+        Tile currentTile = GetTileAtPosition(currentPosition);
+        Tile newTile = GetTileAtPosition(newPosition);
+        if(currentTile == null || newTile == null) return;
 
+        newTile.SetType(currentTile.GetType());
+        newTile.SetShip(currentTile.GetShip());
+
+        currentTile.SetTypeEmpty();
+        currentTile.SetShip(null);
+        
+    }
     public void SwapTileTypes(Tile selectedTile) {
-        if (selectedTile == null) return;
+       /* if (selectedTile == null) return;
 
         Vector2 currentPos = new Vector2(selectedTile.transform.position.x, selectedTile.transform.position.y);
         Vector2[] adjacentPositions = {
@@ -80,25 +93,7 @@ public class GridManager : MonoBehaviour {
                 break;
             }
         }
-    }
-*/
-
-    public void MoveShip(Ship ship){
-        //FindInGrid(ship.position);
-
-        /*idTile=_tiles[ship.position];
-        if(_ships[idTile].GetInstanceID() == ship.GetInstanceID()){
-            _ships[idTile]=null;
-        }
-        else if{ships[idTile].GetInstanceID() != ship.GetInstanceID()}{
-            nextTile=_tiles[ship.nextPos];
-            _ships[nextTile]=ship;
-        }
         */
-        
-        
-        //TODO: la nave si sposta nel nuovo tile e il tile precedente viene svuotato
-
     }
     
 }
