@@ -5,7 +5,7 @@ public class GameMenuManager : MonoBehaviour
 {
 
     [SerializeField] private GameObject endGamePanel;
-    [SerializeField] private GameObject pausePanel;
+    [SerializeField] private GameObject pauseCanvas;
     [SerializeField] private InputActionAsset inputs;
 
     private void Start()
@@ -17,7 +17,7 @@ public class GameMenuManager : MonoBehaviour
     private void Awake()
     {
         endGamePanel.SetActive(false);
-        pausePanel.SetActive(false);
+        pauseCanvas.SetActive(false);
     }
 
 
@@ -29,7 +29,8 @@ public class GameMenuManager : MonoBehaviour
 
     public void OnPause()
     {
-        pausePanel.SetActive(true);
+        Time.timeScale = 0;
+        pauseCanvas.SetActive(true);
         Debug.Log("Pause, GameMenuManager");
     }
 
