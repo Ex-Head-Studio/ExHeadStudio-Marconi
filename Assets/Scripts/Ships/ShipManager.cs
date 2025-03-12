@@ -100,7 +100,12 @@ public class ShipManager : MonoBehaviour
         enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)==true).ToList();
         List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()==true).ToList();
         List<Ship> movableAllies = allies.Where(x => x.LookForMovement()==true).ToList();
-       
+
+        //Una volta che le navi sono state selezionate, si decide cosa far fare a una fazione a seconda di quante navi ha a disposizione
+        //per attaccare e per muoversi
+        // 0 = solo movimento, 1 = movimento e attacco, 2 = solo attacco
+        //Verificare che il Range non tronchi il numero con la virgola, altrimenti 2 non esce mai, ma solo 0 e 1
+        // Verificare che poi nella lista delle navi che eseguiranno qualcosa ci sia il numero giusto di navi
         int allyDecision, enemyDecision;
         if(allyAttackers.Count>1 && movableAllies.Count>1){
             
@@ -128,8 +133,8 @@ public class ShipManager : MonoBehaviour
         else{
             enemyDecision=0;
         }
-        Debug.Log("Decisione nemica: " + enemyDecision);
-        Debug.Log("Decisione alleata: " + allyDecision);
+ 
+
         switch(allyDecision){
             case 0:
                 movingAllies=movableAllies.OrderBy(x=> Random.value).Take(2).ToList();
