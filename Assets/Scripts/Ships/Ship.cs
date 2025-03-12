@@ -118,9 +118,10 @@ public class Ship : MonoBehaviour
     public bool LookForObjectives(List<Ship> possibleTargets){
         canAttack=false;
         //Cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione tra le navi nemiche
-        targetPos=possibleTargets.Where(k => k.position.x==position.x || k.position.y==position.y).OrderBy(x => Random.value).Take(1).ToList()[0].position;
-        if(targetPos!=null){
+        List<Ship> targets=possibleTargets.Where(k => k.position.x==position.x || k.position.y==position.y).OrderBy(x => Random.value).Take(1).ToList();
+        if(targets.Count>0){
             canAttack=true;
+            targetPos=targets.OrderBy(x=>Random.value).Take(1).ToList()[0].position;
         }
         return canAttack;
     }   

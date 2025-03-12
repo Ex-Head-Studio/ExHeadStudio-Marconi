@@ -53,9 +53,17 @@ public class ShipManager : MonoBehaviour
         {
             InstantiateInMap(shipName);
         }
+        Debug.Log("Navi alleate: " + allies.Count);
+        Debug.Log("Navi nemiche: " + enemies.Count);
+    }
+    private void Update()
+    {
+        if(Input.GetKeyDown(KeyCode.Space))
+        {
+            ChooseShips();
+        }
     }
 
-    
     void InstantiateInMap(string shipName){
         
 
@@ -64,7 +72,7 @@ public class ShipManager : MonoBehaviour
         newShip.manager=this;
         ships.Add(newShip);    
         //Decide se la nave è alleata o nemica
-        if(allyCount<ships.Count/2){
+        if(allyCount<=ships.Count/2){
             newShip.SetFaction(0);
             allies.Add(newShip);
             allyCount++;
@@ -81,8 +89,7 @@ public class ShipManager : MonoBehaviour
         gridManager.InsertShips(newShip);
 
 
-        Debug.Log("Navi alleate: "+allies.Count);
-        Debug.Log("Navi nemiche: "+enemies.Count);
+        
     }
 
     //questa funzione va rivista perchè non viene mai chiamata, la collego all'evento di inzio turno
@@ -93,7 +100,8 @@ public class ShipManager : MonoBehaviour
         enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)==true).ToList();
         List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()==true).ToList();
         List<Ship> movableAllies = allies.Where(x => x.LookForMovement()==true).ToList();
-        
+        Debug.Log("Attaccanti alleati: " + allyAttackers.Count);
+        Debug.Log("Attaccanti nemici: "+ enemyAttackers.Count);
         int allyDecision, enemyDecision;
         if(allyAttackers.Count>1 && movableAllies.Count>1){
             allyDecision=Random.Range(0, 2);
