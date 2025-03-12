@@ -53,8 +53,7 @@ public class ShipManager : MonoBehaviour
         {
             InstantiateInMap(shipName);
         }
-        Debug.Log("Navi alleate: " + allies.Count);
-        Debug.Log("Navi nemiche: " + enemies.Count);
+
     }
     private void Update()
     {
@@ -68,6 +67,7 @@ public class ShipManager : MonoBehaviour
         
 
         Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.identity).GetComponent<Ship>();
+        newShip.shipName=shipName;
         newShip.name=shipName;
         newShip.manager=this;
         ships.Add(newShip);    
@@ -100,10 +100,10 @@ public class ShipManager : MonoBehaviour
         enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)==true).ToList();
         List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()==true).ToList();
         List<Ship> movableAllies = allies.Where(x => x.LookForMovement()==true).ToList();
-        Debug.Log("Attaccanti alleati: " + allyAttackers.Count);
-        Debug.Log("Attaccanti nemici: "+ enemyAttackers.Count);
+       
         int allyDecision, enemyDecision;
         if(allyAttackers.Count>1 && movableAllies.Count>1){
+            
             allyDecision=Random.Range(0, 2);
         }
         else if(allyAttackers.Count>1 && movableAllies.Count==1){
@@ -128,7 +128,8 @@ public class ShipManager : MonoBehaviour
         else{
             enemyDecision=0;
         }
-
+        Debug.Log("Decisione nemica: " + enemyDecision);
+        Debug.Log("Decisione alleata: " + allyDecision);
         switch(allyDecision){
             case 0:
                 movingAllies=movableAllies.OrderBy(x=> Random.value).Take(2).ToList();
@@ -181,6 +182,8 @@ public class ShipManager : MonoBehaviour
         movingAllies.Concat(allyAttackers);
         movingEnemies.Concat(enemyAttackers);
 
+        Debug.Log("Nemici che fanno cose:" + movingEnemies.Count);
+        Debug.Log("Alleati che fanno cose: "+ movingAllies.Count);
         //prova
         SendMessages();
         CallAttack();

@@ -2,9 +2,6 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Random=UnityEngine.Random;
-using System.Data.Common;
-using System;
-using UnityEditor.Experimental.GraphView;
 public class Ship : MonoBehaviour
 {
     [Header("Ship Parameters")]
@@ -34,6 +31,8 @@ public class Ship : MonoBehaviour
     {
         
         gridManager= FindFirstObjectByType<GridManager>();
+        shipLayer=LayerMask.GetMask("Ship");
+
     }
     // Start is called once before the first execution of Update after the MonoBehaviour is created
    
@@ -129,12 +128,12 @@ public class Ship : MonoBehaviour
     public bool LookForMovement(){
         canMove=false;
 
-        List<int> xOffsets=new List<int>(){-1, 0, 1};
-        List<int> yOffsets=new List<int>(){-1, 0, 1};
+        List<int> xOffsets=new List<int>(){-1, 1};
+        List<int> yOffsets=new List<int>(){-1, 1};
         //Seleziona le navi vicine a quella attuale e prendi tutte le posizioni attuali e future di ciascuna nave trovata
         List<Vector2> nearbyShips = Physics.OverlapSphere(transform.position, nearbyShipSearchRadius, shipLayer).Select(x => x.GetComponent<Ship>().position).ToList();
-        nearbyShips.Concat(Physics.OverlapSphere(transform.position, nearbyShipSearchRadius, shipLayer).Select(x => x.GetComponent<Ship>().nextPos)
-                    .Where(x => x!=Vector2.negativeInfinity).ToList());
+        nearbyShips = nearbyShips.Concat(Physics.OverlapSphere(transform.position, nearbyShipSearchRadius, shipLayer).Select(x => x.GetComponent<Ship>().nextPos)
+                    .Where(x => x!=Vector2.negativeInfinity).ToList()).ToList();
         //La nave mantiene solo gli offset che non la farebbero uscire dalla mappa e che non la farebbero andare su una casella già occupata
 
         //Rimuove gli offset che farebbero passare la nave su una posizione già prenotata o già occupata
@@ -146,17 +145,20 @@ public class Ship : MonoBehaviour
         foreach(int y in yOffsets){
                 possibleMoves.Add(new Vector2(position.x, position.y+y));
         }
-
-        possibleMoves.Where(p => nearbyShips.Contains(p)==false).Where(p => gridManager.IsValidPosition(p)==true);
+        
+        possibleMoves = possibleMoves.Where(p => !nearbyShips.Contains(p) && gridManager.IsValidPosition(p)).ToList();
         //possibleMoves contiene tutte le possibili mosse rimaste alla nave, se è vuota, significa che non ha mosse a disposizione
+        Debug.Log(shipName+ ": "+possibleMoves.Count);
         if(possibleMoves.Count>0){
             canMove=true;
             nextPos=possibleMoves.OrderBy(x => Random.value).Take(1).ToList()[0];
+           // Debug.Log("Nave: " + shipName + " si sposta da " + position + " a " + nextPos);
             return true;
         }
         //int xOrY=Mathf.Round(Random.Range(0, 1));
-       //Da
-       currentState=ShipState.Waiting;
+        //Da
+       // Debug.Log("Nave: " + shipName + " non trova posizioni valide");
+        currentState=ShipState.Waiting;
         return false; 
     }
     public void SetFaction(int faction){

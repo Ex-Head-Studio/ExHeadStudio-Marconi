@@ -27,7 +27,7 @@ public class GridManager : MonoBehaviour
     [SerializeField] private Transform _cam;
     [SerializeField] private ShipManager _shipManager;
 
-    private Dictionary<Vector2, Tile> _tiles;
+    public Dictionary<Vector2, Tile> _tiles;
     private Dictionary<int, Ship> _ships;
     void Start(){
         GenerateGrid();
@@ -50,7 +50,7 @@ public class GridManager : MonoBehaviour
         
         for (int x = 0; x < _width; x++) {
             for (int y = 0; y < _height; y++) {
-                //Nell'istanziare, prende il GameObject a cui il tile è attaccato
+                //Nell'istanziare, prende lo script Tile attaccato all'oggetto creato
                 Tile spawnedTile = Instantiate(_tilePrefab, new Vector3(x,y), Quaternion.identity, transform).GetComponent<Tile>();
 
                 spawnedTile.name = $"Tile {Mathf.Abs(y-4)} {x}";
@@ -114,7 +114,12 @@ public class GridManager : MonoBehaviour
 
     public bool IsValidPosition(Vector2 position)
      {
-        return _tiles.ContainsKey(position);
+        //Debug.Log(position + "è valida: "+_tiles.ContainsKey(position));
+        if(_tiles.ContainsKey(position))
+        {
+            return true;
+        }
+        return false;
     }
 
     //serve ancora questo metodo? (Stefano)
