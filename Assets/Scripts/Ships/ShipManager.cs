@@ -30,7 +30,7 @@ public class ShipManager : MonoBehaviour
     [SerializeField] private MessageSentEvent messageSentEvent;
     [SerializeField] private MessageReceivedEvent messageReceivedEvent;
 
-    //TODO bisogna linkare il numero di navi con la UI (Stefano)
+    //TODO bisogna linkare il numero di navi con la UI (Stefano), verifica se serve anche in funzione delle luci
     //questa cosa va fatta usando un SO per i contatori
 
 
@@ -57,10 +57,11 @@ public class ShipManager : MonoBehaviour
     }
     private void Update()
     {
-        if(Input.GetKeyDown(KeyCode.Space))
+        //non è più necessario
+        /*if(Input.GetKeyDown(KeyCode.Space))
         {
             ChooseShips();
-        }
+        }*/
     }
 
     void InstantiateInMap(string shipName){
@@ -87,13 +88,11 @@ public class ShipManager : MonoBehaviour
         
         //chiamata al metodo che piazza la nave nella griglia
         gridManager.InsertShips(newShip);
-
-
-        
     }
 
     //questa funzione va rivista perchè non viene mai chiamata, la collego all'evento di inzio turno
-    public void ChooseShips(){
+    public void ChooseShips()
+    {
 
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
         allyAttackers = allies.Where(x => x.LookForObjectives(enemies)==true).ToList();
@@ -104,7 +103,9 @@ public class ShipManager : MonoBehaviour
         //Una volta che le navi sono state selezionate, si decide cosa far fare a una fazione a seconda di quante navi ha a disposizione
         //per attaccare e per muoversi
         // 0 = solo movimento, 1 = movimento e attacco, 2 = solo attacco
-        //Verificare che il Range non tronchi il numero con la virgola, altrimenti 2 non esce mai, ma solo 0 e 1
+
+        //Edit: Random.Range ha gli estremi INCLUSI
+
         // Verificare che poi nella lista delle navi che eseguiranno qualcosa ci sia il numero giusto di navi
         int allyDecision, enemyDecision;
         if(allyAttackers.Count>1 && movableAllies.Count>1){
@@ -191,9 +192,9 @@ public class ShipManager : MonoBehaviour
         Debug.Log("Alleati che fanno cose: "+ movingAllies.Count);
         //prova
         SendMessages();
-        CallAttack();
     }
-    void SendMessages(){
+    void SendMessages()
+    {
         movingAllies.ForEach(x => x.SendMessage());
         movingEnemies.ForEach(x => x.SendMessage());
         //TODO riempire la struct per l'invio del messaggio
@@ -207,8 +208,10 @@ public class ShipManager : MonoBehaviour
     // Update is called once per frame
     
     
-    void OrderMovement(Ship ship){
+    void OrderMovement(Ship ship)
+    {
         //MoveShip(ship);
+        CallAttack();
     }
 
     public void RemoveShip(Ship ship, int isAlly){

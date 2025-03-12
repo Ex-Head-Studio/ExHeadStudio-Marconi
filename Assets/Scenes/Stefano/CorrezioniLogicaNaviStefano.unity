@@ -171,6 +171,34 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 5940471526766903116, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940471526766903116, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Mode
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940471526766903116, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Target
+      value: 
+      objectReference: {fileID: 439301999}
+    - target: {fileID: 5940471526766903116, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[1].m_CallState
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940471526766903116, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[1].m_MethodName
+      value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940471526766903116, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[1].m_TargetAssemblyTypeName
+      value: ShipManager, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 5940471526766903116, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[1].m_Arguments.m_ObjectArgumentAssemblyTypeName
+      value: UnityEngine.Object, UnityEngine
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

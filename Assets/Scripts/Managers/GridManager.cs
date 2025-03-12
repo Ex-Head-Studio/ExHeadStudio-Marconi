@@ -29,6 +29,10 @@ public class GridManager : MonoBehaviour
 
     public Dictionary<Vector2, Tile> _tiles;
     private Dictionary<int, Ship> _ships;
+
+
+    //mi serve a tenere traccia del numero di tentativi per il riposizionamento
+    int attempts = 0;
     void Start(){
         GenerateGrid();
     }
@@ -72,7 +76,7 @@ public class GridManager : MonoBehaviour
 
     public void InsertShips(Ship ship)
     {
-        int attempts = 0;
+
         //brutto, da rifare appena abbiamo tempo
         while(true)
         {
