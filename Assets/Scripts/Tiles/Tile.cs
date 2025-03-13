@@ -6,7 +6,8 @@ using UnityEditor.PackageManager;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public enum TileType {
+public enum TileType 
+{
     Empty,
     Ally,
     Enemy

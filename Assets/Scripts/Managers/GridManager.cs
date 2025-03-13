@@ -33,12 +33,14 @@ public class GridManager : MonoBehaviour
 
     //mi serve a tenere traccia del numero di tentativi per il riposizionamento
     int attempts = 0;
-    void Start(){
+    void Start()
+    {
         GenerateGrid();
     }
 
 
-    void Awake() {
+    void Awake()
+    {
         if(!Instance) {
             Instance = this;
         } else {
@@ -120,7 +122,7 @@ public class GridManager : MonoBehaviour
         Debug.Log("GridManager, moveship, tmpShip: " + tmpShip.GetComponent<Ship>().shipName);
         //TODO da capire se funziona
         newTile.SetType(currentTile.GetType(), entity);
-        
+
         //qui ho rimosso un GetShip().gameObject (stefano)
         if(tmpShip != null)
         {
