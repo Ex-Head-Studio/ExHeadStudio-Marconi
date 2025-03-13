@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine.UI;
 using TMPro;
 
@@ -21,6 +22,11 @@ public class AnswerStack : ScriptableObject
         answers.Remove(answers.Find(x => x.receiver == sender));
     }
 
+    public void RemoveAnswerByFaction(int faction)
+    {
+        answers.RemoveAll(x => x.entity == faction);
+    }
+
     public void SendAnswers()
     {
         foreach(AnswerStruct answer in answers)
@@ -28,6 +34,11 @@ public class AnswerStack : ScriptableObject
             answerSentEvent?.Invoke(answer);
         }
         RemoveAllAnswers();
+    }
+
+    public int CountEntity(int entityEnumValue)
+    {
+        return answers.Count(x => x.entity == entityEnumValue);
     }
     public void RemoveAllAnswers()
     {

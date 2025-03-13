@@ -49,7 +49,8 @@ public class GridManager : MonoBehaviour
         //_shipManager = GetComponent<ShipManager>();
     }
 
-   public void GenerateGrid() {
+   public void GenerateGrid() 
+   {
         _tiles = new Dictionary<Vector2, Tile>();
         
         for (int x = 0; x < _width; x++) {
@@ -57,6 +58,7 @@ public class GridManager : MonoBehaviour
                 //Nell'istanziare, prende lo script Tile attaccato all'oggetto creato
                 Tile spawnedTile = Instantiate(_tilePrefab, new Vector3(x,y), Quaternion.identity, transform).GetComponent<Tile>();
 
+                //non è corretto, i nomi non corrispondo alle posizioni
                 spawnedTile.name = $"Tile {Mathf.Abs(y-4)} {x}";
                 
 
@@ -69,14 +71,10 @@ public class GridManager : MonoBehaviour
         }
 
         _cam.transform.position = new Vector3((float)_width/2 - 0.5f + _camX, (float)_height/2 - 0.5f + _camY, _camZ);
-
-        
-        
     }
 
     public void InsertShips(Ship ship)
     {
-
         //brutto, da rifare appena abbiamo tempo
         while(true)
         {
@@ -85,6 +83,7 @@ public class GridManager : MonoBehaviour
             {
                 //fare un controllo su questa logica
                 Tile tile = GetTileAtPosition(position);
+                tile.SetType(tile.GetType(), ship.faction);
                 tile.SetShip(ship.gameObject);
                 ship.position = position;
                 break;
@@ -103,23 +102,34 @@ public class GridManager : MonoBehaviour
     {
         return _tiles.ContainsKey(position) ? _tiles[position] : null;
     }
-    public void MoveShip(Vector2 currentPosition, Vector2 newPosition){
+    public void MoveShip(Vector2 currentPosition, Vector2 newPosition, int entity)
+    {
+        
+        GameObject tmpShip;
         Tile currentTile = GetTileAtPosition(currentPosition);
         Tile newTile = GetTileAtPosition(newPosition);
-        if(currentTile == null || newTile == null) return;
 
-        newTile.SetType(currentTile.GetType());
-        newTile.SetShip(currentTile.GetShip().gameObject);
+        if(currentTile == null || newTile == null) 
+        {
+            Debug.Log("La nave non può muoversi in questa posizione");
+            return;
+        }
 
-        currentTile.SetTypeEmpty();
-        currentTile.SetShip(null);
-        
+        tmpShip = currentTile.GetShip();
+        newTile.SetType(currentTile.GetType(), entity);
+        //qui ho rimosso un GetShip().gameObject (stefano)
+        if(tmpShip != null)
+        {
+            newTile.SetShip(tmpShip);
+            currentTile.SetTypeEmpty();
+            currentTile.SetShip(null);
+        }
     }
 
     public bool IsValidPosition(Vector2 position)
      {
         //Debug.Log(position + "è valida: "+_tiles.ContainsKey(position));
-        if(_tiles.ContainsKey(position))
+        if(_tiles.ContainsKey(position) && _tiles[position].GetType() == TileType.Empty)
         {
             return true;
         }

@@ -12,7 +12,8 @@ public enum TileType {
     Enemy
 }
 
-public class Tile : MonoBehaviour {
+public class Tile : MonoBehaviour 
+{
     [SerializeField] private Color _baseColor, _offsetColor, _allyColor, _enemyColor, _emptyColor;
     [SerializeField] private Material _allyMaterial, _enemyMaterial;
     [SerializeField] private MeshRenderer _mesh;
@@ -22,14 +23,18 @@ public class Tile : MonoBehaviour {
     private static bool _isRightClicking = false;
     private static List<Tile> _selectedTiles = new List<Tile>();
     private GridManager _gridManager;
-    private TileType _type;
+
+    //messo public per debug
+    public TileType _type;
     
     private static int allyCount = 0;
     private static int enemyCount = 0;
     private static Material _currentMaterial;
     int width;
     int height;
-    private GameObject _ship;
+
+    //messo public per debug
+    public GameObject _ship;
    
 
     // [SerializeField] private bool _isPlaceable;
@@ -37,7 +42,8 @@ public class Tile : MonoBehaviour {
     // public BaseShip OccupiedShip;
     // public bool Placeable => _isPlaceable && OccupiedShip == null;
 
-    void Awake() {
+    void Awake() 
+    {
         /* 
         int gridWidth = _gridManager._width;
         int gridHeight = _gridManager._height;
@@ -75,7 +81,9 @@ public class Tile : MonoBehaviour {
 
 
     //di tutta questa parte dobbiamo capire cosa serve e cosa no (stefano)
-    void OnMouseEnter() {
+    //Edit: commento le funzioni di hover sulle tiles per non far capire che sono interagibili (stefano)
+    /*void OnMouseEnter() 
+    {
         _highlight.SetActive(true);
 
         if (_isRightClicking) {
@@ -110,7 +118,7 @@ public class Tile : MonoBehaviour {
             _isRightClicking = false;
             ApplySelectionColor();
         }
-    }
+    }*/
 
     private void SelectTile() {
         if (!_selectedTiles.Contains(this)) {
@@ -125,36 +133,49 @@ public class Tile : MonoBehaviour {
         _selectedTiles.Clear();
     }
 
-    public bool IsEmpty() {
+    public bool IsEmpty() 
+    {
         return _type == TileType.Empty;
     }
 
     //Occhio a scrivere nomi di metodi già presenti nella classe padre, rischiamo di sovrascrivere metodi importanti
-    public new TileType GetType() {
+    public new TileType GetType() 
+    {
         return _type;
     }
 
-    public void SetType(TileType type) {
-        /*if (type == TileType.Ally) {
+    //ho dovuto modificare questo metodo perchè non viene registrato correttamente il tipo di tyle
+    public void SetType(TileType type, int entity) 
+    {
+        if (entity == (int)Entity.ally) {
             _type = TileType.Ally;
-            _mesh.material = _allyMaterial;
+           // _mesh.material = _allyMaterial;
         }
-        else if (type == TileType.Enemy) {
+        else if (entity == (int)Entity.enemy) {
             _type = TileType.Enemy;
-            _mesh.material = _enemyMaterial;
-        }*/
+           // _mesh.material = _enemyMaterial;
+        }
+        else
+        {
+            _type = TileType.Empty;
+            //_mesh.material = _emptyMaterial;
+        }
     }
 
-    public void SetShip(GameObject ship) {
+    public void SetShip(GameObject ship) 
+    {
         _ship = ship;
         ship.transform.position = transform.position; //+ eventuale offset e controlli world-space
     }
-    public GameObject GetShip(){
-        if(_ship==null){
+    public GameObject GetShip()
+    {
+        if(_ship==null)
+        {
             Debug.Log("La nave non è presente");
             return null;
         }
-        else{
+        else
+        {
             return _ship;
         }
         

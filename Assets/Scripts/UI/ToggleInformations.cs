@@ -7,6 +7,7 @@ public class ToggleInformations : MonoBehaviour
     private int enemy, direction, messageType;
 
     private Toggle toggle;
+    private ToggleGroup toggleGroup;
 
     private void Start()
     {
@@ -28,6 +29,16 @@ public class ToggleInformations : MonoBehaviour
              Debug.Log("Sender: " + sender + " Enemy: " + enemy + " Direction: " + direction + " MessageType: " + messageType);
         }
        
+    }
+
+    public Toggle GetToggle()
+    {
+        return toggle;
+    }
+
+    public ToggleGroup GetToggleGroup()
+    {
+        return toggle.group;
     }
 
     public int GetToggleEntity()

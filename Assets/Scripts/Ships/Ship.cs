@@ -109,30 +109,36 @@ public class Ship : MonoBehaviour
                     position=nextPos;
 
                     //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
-                    gridManager.MoveShip(position, nextPos);
+                    gridManager.MoveShip(position, nextPos, entity);
                     nextPos=Vector2.negativeInfinity;
                 }
             }
+            else
+            {
+                //se non dichiaro nulla mica succede qualcosa giusto?
+            }
+
         }
         else
         {
-
             //da sistemare
-            if(answer)
+            if(!answer)
             {
                 if(currentState==ShipState.Attacking)
                 {
+                    Debug.Log("Attacco Nemico");
                     //evento dove si dichiara la posizione 2D della nave avversaria da colpire
                     attackEvent?.Invoke(new ShipAttackStruct(targetPos));
 
                 }
                 else if(currentState==ShipState.Moving)
                 {
+                    Debug.Log("Movimento Nemico");
                     //qui siamo sicuri di non dover chiamare un metodo?
                     position=nextPos;
 
                     //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
-                    gridManager.MoveShip(position, nextPos);
+                    gridManager.MoveShip(position, nextPos, entity);
                     nextPos=Vector2.negativeInfinity;
                 }
             }

@@ -45,6 +45,7 @@ public class ShipManager : MonoBehaviour
         
         ships = new List<Ship>();
         shipNames.OrderBy(x => Random.value);
+        //TODO rivedere questa cosa
         gridManager = FindFirstObjectByType<GridManager>();
 
     }
@@ -59,13 +60,14 @@ public class ShipManager : MonoBehaviour
     private void Update()
     {
         //non è più necessario
-        /*if(Input.GetKeyDown(KeyCode.Space))
+        if(Input.GetKeyDown(KeyCode.Space))
         {
             ChooseShips();
-        }*/
+        }
     }
 
-    void InstantiateInMap(string shipName){
+    void InstantiateInMap(string shipName)
+    {
         
 
         Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.identity).GetComponent<Ship>();
@@ -126,7 +128,8 @@ public class ShipManager : MonoBehaviour
         else if(allyAttackers.Count==1 && movableAllies.Count>1){
             allyDecision=Random.Range(0, 1);
         }
-        else{
+        else
+        {
             allyDecision=0;
         }
         

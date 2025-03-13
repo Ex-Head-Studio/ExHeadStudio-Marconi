@@ -10,6 +10,8 @@ public class MessageReceivedListener : AbstractEventListenerSO<AnswerStruct>
     }
     public void OnMessageReceived(AnswerStruct answer)
     {
+
+        //TODO bisogna controllare questa logica
     
         //chiama un bug sull'if
         if(answer.receiver==ship.name)
@@ -18,8 +20,14 @@ public class MessageReceivedListener : AbstractEventListenerSO<AnswerStruct>
         }
         else
         {
-            //Devo aggiungere un else, altrimenti tutte le altri navi non sapranno cosa fare
-            ship.ExecuteInstructions(true, ship.faction);
+            if(ship.faction == (int)Entity.ally)
+            {
+                ship.ExecuteInstructions(false, ship.faction);
+            }
+            else
+            {
+                ship.ExecuteInstructions(true, ship.faction);
+            }
         }
     }
 }
