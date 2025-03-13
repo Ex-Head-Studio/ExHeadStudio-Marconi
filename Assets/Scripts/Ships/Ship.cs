@@ -96,9 +96,10 @@ public class Ship : MonoBehaviour
         bool answer = answerStruct.result;
         //True per gli alleati CONFERMA l'azione
         //True per i nemici NEGA l'azione
-        if (this.faction == (int)Entity.ally)
+
+        if(this.faction == (int)Entity.ally)
         {
-            if(answer)
+            if(shipName == answerStruct.receiver)
             {
                 if(currentState==ShipState.Attacking)
                 {
@@ -115,38 +116,34 @@ public class Ship : MonoBehaviour
             }
             else
             {
-                SetState(ShipState.Waiting);
+                currentState = ShipState.Moving;
             }
         }
         else
         {
-            //da sistemare
-            if(!answer)
+            if(shipName == answerStruct.receiver)
             {
-                if(currentState==ShipState.Attacking)
-                {
-                    Debug.Log("Attacco Nemico");
-                    //evento dove si dichiara la posizione 2D della nave avversaria da colpire
-                    attackEvent?.Invoke(new ShipAttackStruct(targetPos));
-
-                }
-                else if(currentState==ShipState.Moving)
-                {
-                    Debug.Log("Movimento Nemico");
-                    //qui siamo sicuri di non dover chiamare un metodo?
-
-                    gridManager.MoveShip(position, nextPos, entity);
-                    position=nextPos;
-                    nextPos=Vector2.negativeInfinity;
-                }
-                
+                currentState = ShipState.Waiting;
             }
             else
             {
-                SetState(ShipState.Waiting);
+                    if(currentState==ShipState.Attacking)
+                    {
+                        Debug.Log("Attacco Nemico");
+                        //evento dove si dichiara la posizione 2D della nave avversaria da colpire
+                        attackEvent?.Invoke(new ShipAttackStruct(targetPos));
+
+                    }
+                    else if(currentState==ShipState.Moving)
+                    {
+                        Debug.Log("Movimento Nemico");
+                        //qui siamo sicuri di non dover chiamare un metodo?
+                        gridManager.MoveShip(position, nextPos, entity);
+                        position=nextPos;
+                        nextPos=Vector2.negativeInfinity;
+                    }
             }
         }
-
     }
     /*void SetNextPosition(Vector2 newPos)
     {

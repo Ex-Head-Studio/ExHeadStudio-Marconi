@@ -22,7 +22,6 @@ public class GameManagerDebug : MonoBehaviour
     {
         Debug.Log("Turn Ends, game manager registered");
         StartCoroutine(WaitNextRound());
-        Debug.Log("Start event called by OnTurnEndes");
     }
 
     public void OnTurnStarted()
@@ -45,5 +44,6 @@ public class GameManagerDebug : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBetweenRounds);
         startedTurnEvent?.Invoke(new VoidEvent(0));
+        Debug.Log("Start event called by OnTurnEnded");
     }
 }

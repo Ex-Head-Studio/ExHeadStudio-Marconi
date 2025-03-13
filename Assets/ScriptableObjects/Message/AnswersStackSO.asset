@@ -15,23 +15,8 @@ MonoBehaviour:
   answerSentEvent: {fileID: 11400000, guid: 0f63c89a9841f2b4eb35a359bdfcd2af, type: 2}
   answers:
   - result: 1
-    receiver: Ardito
-    entity: 1
-  - result: 1
-    receiver: Todaro
-    entity: 0
-  - result: 1
     receiver: Halifax
     entity: 1
   - result: 1
-    receiver: Ardito
-    entity: 1
-  - result: 1
-    receiver: Ardito
-    entity: 1
-  - result: 1
     receiver: Endurance
-    entity: 0
-  - result: 1
-    receiver: Todaro
     entity: 0

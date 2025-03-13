@@ -35,7 +35,7 @@ public class Tile : MonoBehaviour
     int height;
 
     //messo public per debug
-    public GameObject _ship;
+    public GameObject tileShip;
    
 
     // [SerializeField] private bool _isPlaceable;
@@ -166,19 +166,23 @@ public class Tile : MonoBehaviour
     //TODO capire come legge il transform e se capita qualcosa
     public void SetShip(GameObject ship) 
     {
-        _ship = ship;
-        ship.transform.position = transform.position; //+ eventuale offset e controlli world-space
+        if(ship != null)
+        {
+             tileShip = ship;
+        tileShip.transform.position = gameObject.transform.position;
+        }
+       
     }
     public GameObject GetShip()
     {
-        if(_ship==null)
+        if(tileShip==null)
         {
             Debug.Log("La nave non è presente");
             return null;
         }
         else
         {
-            return _ship;
+            return tileShip;
         }
         
     }
