@@ -14,5 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testingValue:
     result: 1
-    receiver: Endurance
+    receiver: Todaro
     entity: 0

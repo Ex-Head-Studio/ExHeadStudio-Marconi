@@ -6,7 +6,7 @@ public class ShipMessageReceiver : MonoBehaviour
     public void OnMessageReceived(AnswerStruct answer)
     {
         shipScript = GetComponent<Ship>();
-        if(shipScript == null)
+       /* if(shipScript == null)
         {
             Debug.LogError("Ship script not found on object: " + gameObject.name);
             return;
@@ -16,7 +16,7 @@ public class ShipMessageReceiver : MonoBehaviour
             Debug.Log("Answer received by:" + gameObject.name + "with value: " + answer.result);
             //entity è un parametro ridondante
             shipScript.ExecuteInstructions(answer.result, answer.entity);
-        }
+        }*/
 
     }
 }

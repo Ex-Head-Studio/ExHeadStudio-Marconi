@@ -28,14 +28,14 @@ public class GameManagerDebug : MonoBehaviour
         StartCoroutine(WaitNextRound());
 
         //bisogna verificare il corretto ordine di esecuzione delle chiamate
-        answerStack.RemoveAllAnswers();
-        messagesStack.RemoveAllMessages();
         startedTurnEvent?.Invoke(new VoidEvent(0));
 
     }
 
     public void OnTurnStarted()
     {
+        answerStack.RemoveAllAnswers();
+        messagesStack.RemoveAllMessages();
         Debug.Log("Turn Started, game manager registered");
         numberOfRounds++;
         Debug.Log("Next turn started, count: " + numberOfRounds);

@@ -88,9 +88,11 @@ public class Ship : MonoBehaviour
     
     //il metodo viene chiamato quando la nave registra una risposta a lei associata
     
-   public void ExecuteInstructions(bool answer, int entity)
+   public void ExecuteInstructions(AnswerStruct answerStruct)
     {
-
+        Debug.Log("Esecuzione ordini");
+        int entity = answerStruct.entity;
+        bool answer = answerStruct.result;
         //True per gli alleati CONFERMA l'azione
         //True per i nemici NEGA l'azione
         if (this.faction == (int)Entity.ally)

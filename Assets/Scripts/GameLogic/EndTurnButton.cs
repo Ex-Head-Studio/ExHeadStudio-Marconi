@@ -32,6 +32,7 @@ public class EndTurnButton : MonoBehaviour
 
     public void sendAsnwers()
     {
+        Debug.Log("Ordini confermati, invio le risposte");
         answerStack.SendAnswers();
     }
 }

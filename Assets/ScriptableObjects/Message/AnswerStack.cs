@@ -31,9 +31,10 @@ public class AnswerStack : ScriptableObject
     {
         foreach(AnswerStruct answer in answers)
         {
+            Debug.Log("Invio risposta a: " + answer.receiver);
             answerSentEvent?.Invoke(answer);
         }
-        RemoveAllAnswers();
+        //RemoveAllAnswers();
     }
 
     public int CountEntity(int entityEnumValue)

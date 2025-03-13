@@ -8,7 +8,7 @@ public class MessageReceivedListener : AbstractEventListenerSO<AnswerStruct>
     {
         ship = GetComponent<Ship>();
     }
-    public void OnMessageReceived(AnswerStruct answer)
+    /*public void OnMessageReceived(AnswerStruct answer)
     {
 
         //TODO bisogna controllare questa logica
@@ -29,5 +29,5 @@ public class MessageReceivedListener : AbstractEventListenerSO<AnswerStruct>
                 ship.ExecuteInstructions(true, ship.faction);
             }
         }
-    }
+    }*/
 }
