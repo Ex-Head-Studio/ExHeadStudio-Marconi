@@ -13,7 +13,7 @@ public class TestMessagesCanvas : MonoBehaviour
     }
     public void SetUpText(MessageStruct message)
     {
-        text.text = "Message: " + message.message + " from: " + message.sender;
+        text.text = "Message: " + message.messageType + " from: " + message.sender;
 
         //controllare sintassi
         receiver = message.sender;
@@ -27,15 +27,4 @@ public class TestMessagesCanvas : MonoBehaviour
         gameObject.SetActive(false);
     }
 
-    public void DeclineAction()
-    {
-        messageReceivedEvent?.Invoke(new AnswerStruct(false, receiver));
-        CloseCanvas();
-    }
-
-    public void ConfirmAction()
-    {
-        messageReceivedEvent?.Invoke(new AnswerStruct(true, receiver));
-        CloseCanvas();
-    }
 }

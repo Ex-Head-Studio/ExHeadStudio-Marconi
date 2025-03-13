@@ -10,7 +10,7 @@ public class TestEventInvoker : MonoBehaviour
         if(Input.GetKeyDown(KeyCode.Space))
         {
             MessageStruct message = new MessageStruct();
-            message.message = "Hello World!";
+            message.messageType = 1;
             message.sender = "TestEventInvoker";
             messageSentEvent?.Invoke(message);
         }

@@ -12,6 +12,6 @@ public class DebugTextEditor : MonoBehaviour
     }
     public void UpdateText(MessageStruct message)
     {
-        debugText.text = "Message: " + message.message + " from: " + message.sender;
+        debugText.text = "Message: " + message.messageType + " from: " + message.sender;
     }
 }
