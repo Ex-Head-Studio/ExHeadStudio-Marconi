@@ -23,16 +23,13 @@ public class Ship : MonoBehaviour
     public Vector2 nextPos;
     public ShipState currentState=ShipState.Waiting;
     public Vector2 targetPos;
-    bool canMove;
     bool canAttack;
     public int faction;
     
     void Awake()
     {
-        
         gridManager= FindFirstObjectByType<GridManager>();
         shipLayer=LayerMask.GetMask("Ship");
-
     }
 
    
@@ -46,18 +43,18 @@ public class Ship : MonoBehaviour
                 direction=targetPos-position;
                 if(direction.y==0){
                     if(direction.x>0){
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 3));
+                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 3));
                     }
                     else{
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 2));
+                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 2));
                     }
                 }
                 else{
                     if(direction.y>0){
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 0));
+                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 0));
                     }
                     else{
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 1));
+                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 1));
                     }
                 }
                 break;
@@ -65,23 +62,23 @@ public class Ship : MonoBehaviour
                 direction=nextPos-position;
                 if(direction.y==0){
                     if(direction.x>0){
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 3));
+                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 3));
                     }
                     else{
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 2));
+                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 2));
                     }
                 }
                 else{
                     if(direction.y>0){
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 0));
+                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 0));
                     }
                     else{
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 1));
+                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 1));
                     }
                 }
                 break;
             default:
-                messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 1));
+                messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 1));
                 break;
         }
 
@@ -89,7 +86,7 @@ public class Ship : MonoBehaviour
     
     //il metodo viene chiamato quando la nave registra una risposta a lei associata
     
-   public void ExecuteInstructions(AnswerStruct answerStruct)
+    public void ExecuteInstructions(AnswerStruct answerStruct)
     {
         Debug.Log("Esecuzione ordini");
         int entity = answerStruct.entity;
@@ -97,7 +94,7 @@ public class Ship : MonoBehaviour
         //True per gli alleati CONFERMA l'azione
         //True per i nemici NEGA l'azione
 
-        if(this.faction == (int)Entity.ally)
+        if(this.faction == entity && this.faction==(int)Entity.ally)
         {
             if(shipName == answerStruct.receiver)
             {
@@ -111,15 +108,15 @@ public class Ship : MonoBehaviour
                 {
                     gridManager.MoveShip(position, nextPos, entity);
                     position=nextPos;
-                    nextPos=Vector2.negativeInfinity;
+                   // nextPos=Vector2.negativeInfinity;
                 }
             }
             else
             {
-                currentState = ShipState.Moving;
+                currentState = ShipState.Waiting;
             }
         }
-        else
+        else if(this.faction == entity && this.faction==(int)Entity.enemy)
         {
             if(shipName == answerStruct.receiver)
             {
@@ -140,10 +137,10 @@ public class Ship : MonoBehaviour
                         //qui siamo sicuri di non dover chiamare un metodo?
                         gridManager.MoveShip(position, nextPos, entity);
                         position=nextPos;
-                        nextPos=Vector2.negativeInfinity;
+                        //nextPos=Vector2.negativeInfinity;
                     }
             }
-        }
+        } 
     }
     /*void SetNextPosition(Vector2 newPos)
     {
@@ -171,8 +168,7 @@ public class Ship : MonoBehaviour
     //TODO Gabriele controllare che inserisca giusto e non cancelli cosa serve
     //Allo stesso tempo, la nave controlla anche se ha spazio per muoversi, così da essere pronta a muoversi se non trova navi nemiche
     public bool LookForMovement(){
-        canMove=false;
-
+        //canMove=false;
         List<int> xOffsets=new List<int>(){-1, 1};
         List<int> yOffsets=new List<int>(){-1, 1};
         //Seleziona le navi vicine a quella attuale e prendi tutte le posizioni attuali e future di ciascuna nave trovata
@@ -195,7 +191,7 @@ public class Ship : MonoBehaviour
         //possibleMoves contiene tutte le possibili mosse rimaste alla nave, se è vuota, significa che non ha mosse a disposizione
         //Debug.Log(shipName+ ": "+possibleMoves.Count);
         if(possibleMoves.Count>0){
-            canMove=true;
+            //canMove=true;
 
             //TODO qui siamo sicuri che faccia assegnazione? Non dobbiamo chiamare il metodo SetNextPos()?
             nextPos=possibleMoves.OrderBy(x => Random.value).Take(1).ToList()[0];
@@ -218,7 +214,7 @@ public class Ship : MonoBehaviour
         {
             Debug.Log("Nave colpita");
             manager.RemoveShip(this, faction);
-            shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(name, faction, position));
+            shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
         }
     }
 }
