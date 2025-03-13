@@ -1,5 +1,6 @@
 using System.Collections;
 using Unity.Burst.Intrinsics;
+using Unity.VisualScripting;
 using UnityEngine;
 
 public class GameManagerDebug : MonoBehaviour
@@ -8,9 +9,11 @@ public class GameManagerDebug : MonoBehaviour
     [SerializeField] private float timeBetweenRounds = 2f;
 
     private int numberOfRounds = 0;
+    [Header("Game Events")]
     [SerializeField] private StartedTurnEvent startedTurnEvent;
     [SerializeField] private MessagesStack messagesStack;
     [SerializeField] private AnswerStack answerStack;
+    [SerializeField] private OnClearEvent clearEvent;
     private void Start()
     {
         answerStack.RemoveAllAnswers();
@@ -21,6 +24,8 @@ public class GameManagerDebug : MonoBehaviour
     public void OnTurnEnded()
     {
         Debug.Log("Turn Ends, game manager registered");
+        //qui bisogna passare un evento vuoto "fittizio"
+        clearEvent?.Invoke(new VoidEvent(0));
         StartCoroutine(WaitNextRound());
     }
 

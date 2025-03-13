@@ -15,9 +15,9 @@ public class ShipManager : MonoBehaviour
     public List<Ship>enemies=new List<Ship>();
     public List<Ship>allies=new List<Ship>();
     public List<Ship> allyAttackers=new List<Ship>();
-    public List<Ship> movingAllies=new List<Ship>();
+    public List<Ship> activeAllies=new List<Ship>();
     public List<Ship> enemyAttackers=new List<Ship>();
-    public List<Ship> movingEnemies=new List<Ship>();
+    public List<Ship> activeEnemies=new List<Ship>();
     private static int allyCount = 1;
     private static int enemyCount = 1;
     
@@ -118,18 +118,20 @@ public class ShipManager : MonoBehaviour
         // 0 = solo movimento, 1 = movimento e attacco, 2 = solo attacco
 
         // Verificare che poi nella lista delle navi che eseguiranno qualcosa ci sia il numero giusto di navi
-        //TODO correggere l'if a zero
+        
         int allyDecision, enemyDecision;
+        Debug.Log(allyAttackers.Count);
+        Debug.Log(movableAllies.Count);
         if(allyAttackers.Count>1 && movableAllies.Count>1){
             
-            allyDecision=Random.Range(0, 2);
+            allyDecision=Random.Range(0, 3);
 
         }
         else if(allyAttackers.Count>1 && movableAllies.Count==1){
-            allyDecision=Random.Range(1, 2);
+            allyDecision=Random.Range(1, 3);
         }
         else if(allyAttackers.Count==1 && movableAllies.Count>1){
-            allyDecision=Random.Range(0, 1);
+            allyDecision=Random.Range(0, 2);
         }
         else
         {
@@ -137,13 +139,14 @@ public class ShipManager : MonoBehaviour
         }
         
         if(enemyAttackers.Count>1 && movableEnemies.Count>1){
-            enemyDecision=Random.Range(0, 2);
+            
+            enemyDecision=Random.Range(0, 3);
         }
         else if(enemyAttackers.Count>1 && movableEnemies.Count==1){
-            enemyDecision=Random.Range(1, 2);
+            enemyDecision=Random.Range(1, 3);
         }
         else if(enemyAttackers.Count==1 && movableEnemies.Count>1){
-            enemyDecision=Random.Range(0, 1);
+            enemyDecision=Random.Range(0, 2);
         }
         else{
             enemyDecision=0;
@@ -152,22 +155,21 @@ public class ShipManager : MonoBehaviour
 
         switch(allyDecision){
             case 0:
-                movingAllies=movableAllies.OrderBy(x=> Random.value).Take(2).ToList();
-                movingAllies.ForEach(x => x.SetState(Ship.ShipState.Moving));
+                activeAllies=movableAllies.OrderBy(x=> Random.value).Take(2).ToList();
                 allyAttackers.Clear();
                 break;
             case 1:
-                allyAttackers=allyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
-                allyAttackers[0].SetState(Ship.ShipState.Attacking);
-                movableAllies.Remove(allyAttackers[0]);
-                movingAllies=movableAllies.OrderBy(x=> Random.value).Take(1).ToList();
-                movingAllies[0].SetState(Ship.ShipState.Moving);
+                activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
+                activeAllies[0].SetState(Ship.ShipState.Attacking);
+                movableAllies.Remove(activeAllies[0]);
+                activeAllies.Add(movableAllies.OrderBy(x=> Random.value).Take(1).ToList()[0]);
+                activeAllies[1].SetState(Ship.ShipState.Moving);
                 break;
             case 2:
-                allyAttackers=allyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
-                allyAttackers.ForEach(x => x.SetState(Ship.ShipState.Attacking));
+                activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
+                activeAllies.ForEach(x => x.SetState(Ship.ShipState.Attacking));
                 movableAllies.Clear();
-                movingAllies.Clear();
+                
                 break;
             default:
                 break;
@@ -176,41 +178,39 @@ public class ShipManager : MonoBehaviour
         switch(enemyDecision){
             case 0:
                 //Non ci sono nemici che possono attaccare, scelgo solo mosse di movimento 
-                movingEnemies=movableEnemies.OrderBy(x=> Random.value).Take(2).ToList();
-                movingEnemies.ForEach(x => x.SetState(Ship.ShipState.Moving));
+                activeEnemies=movableEnemies.OrderBy(x=> Random.value).Take(2).ToList();
+                activeEnemies.ForEach(x => x.SetState(Ship.ShipState.Moving));
                 enemyAttackers.Clear();
                 break;
             case 1:
                 //Ci sono abbastanza nemici per scegliere un attacco e un movimento
-                enemyAttackers=enemyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
-                enemyAttackers[0].SetState(Ship.ShipState.Attacking);
-                movableEnemies.Remove(enemyAttackers[0]);
-                movingEnemies=movableEnemies.OrderBy(x=> Random.value).Take(1).ToList();
-                movingEnemies[0].SetState(Ship.ShipState.Moving);
+                activeEnemies = enemyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
+                activeEnemies[0].SetState(Ship.ShipState.Attacking);
+                movableEnemies.Remove(activeEnemies[0]);
+                activeEnemies.Add(movableEnemies.OrderBy(x=> Random.value).Take(1).ToList()[0]);
+                activeEnemies[1].SetState(Ship.ShipState.Moving);
                 break;
             case 2:
                 //Non ci sono nemici che possono muoversi, scelgo solo attacchi
-                enemyAttackers=enemyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
-                enemyAttackers.ForEach(x => x.SetState(Ship.ShipState.Attacking));
+                activeEnemies=enemyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
+                activeEnemies.ForEach(x => x.SetState(Ship.ShipState.Attacking));
+                //movableEnemies.Clear();
                 movableEnemies.Clear();
-                movingEnemies.Clear();
                 break;
             default:
                 break;
         }
         //le liste moving contengono le navi che proporranno un movimento o un attacco al giocatore
-        movingAllies.Concat(allyAttackers);
-        movingEnemies.Concat(enemyAttackers);
 
-        Debug.Log("Nemici che fanno cose:" + movingEnemies.Count);
-        Debug.Log("Alleati che fanno cose: "+ movingAllies.Count);
+        Debug.Log("Nemici che fanno cose:" + activeEnemies.Count);
+        Debug.Log("Alleati che fanno cose: "+ activeAllies.Count);
 
         SendMessages();
     }
     void SendMessages()
     {
-        movingAllies.ForEach(x => x.SendMessage());
-        movingEnemies.ForEach(x => x.SendMessage());
+        activeAllies.ForEach(x => x.SendMessage());
+        activeEnemies.ForEach(x => x.SendMessage());
     }
     
     //cosa fa questo metodo? Da chi toglie cosa?
