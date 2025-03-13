@@ -9,7 +9,7 @@ public class ShipManager : MonoBehaviour
     [Header("Parameters")]
     public List<String> shipNames=new List<String>();
     List<Ship> ships;
-
+    
     [Header("Lists for debug, don't touch")]
     //le ho messe tutte pubbliche altimenti non posso fare debug
     public List<Ship>enemies=new List<Ship>();
@@ -227,7 +227,9 @@ public class ShipManager : MonoBehaviour
         //io in realtà vorrei distruggerlo, non me lo lascia fare (stefano)
         //TODO controllare che non venga più cercato lo scritt
         //TODO aggiungere la pulizia della griglia
-        ship.gameObject.SetActive(false);
+        shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(ship.shipName, ship.faction, ship.position));
+        Destroy(ship.gameObject);
+        
         ship.enabled = false;
     }
 }

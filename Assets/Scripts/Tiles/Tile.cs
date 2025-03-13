@@ -168,8 +168,8 @@ public class Tile : MonoBehaviour
     {
         if(ship != null)
         {
-             tileShip = ship;
-        tileShip.transform.position = gameObject.transform.position;
+            tileShip = ship;
+            tileShip.transform.position = gameObject.transform.position;
         }
        
     }
