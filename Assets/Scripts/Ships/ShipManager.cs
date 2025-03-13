@@ -70,7 +70,7 @@ public class ShipManager : MonoBehaviour
     {
         
 
-        Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.identity).GetComponent<Ship>();
+        Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
         newShip.shipName=shipName;
         newShip.name=shipName;
         newShip.manager=this;
