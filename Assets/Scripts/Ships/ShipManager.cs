@@ -11,12 +11,13 @@ public class ShipManager : MonoBehaviour
     List<Ship> ships;
 
     [Header("Lists for debug, don't touch")]
+    //le ho messe tutte pubbliche altimenti non posso fare debug
     public List<Ship>enemies=new List<Ship>();
     public List<Ship>allies=new List<Ship>();
-    private List<Ship> allyAttackers=new List<Ship>();
-    private List<Ship> movingAllies=new List<Ship>();
-    private List<Ship> enemyAttackers=new List<Ship>();
-    private List<Ship> movingEnemies=new List<Ship>();
+    public List<Ship> allyAttackers=new List<Ship>();
+    public List<Ship> movingAllies=new List<Ship>();
+    public List<Ship> enemyAttackers=new List<Ship>();
+    public List<Ship> movingEnemies=new List<Ship>();
     private static int allyCount = 1;
     private static int enemyCount = 1;
     
@@ -25,7 +26,7 @@ public class ShipManager : MonoBehaviour
     [SerializeField] private Material enemyMaterial;
 
     [Header("Events")]
-    [SerializeField] private OnShipAttackEvent attackEvent;
+    //[SerializeField] private OnShipAttackEvent attackEvent;
     [SerializeField] private OnShipDestroyedEvent shipDestroyedEvent;
     [SerializeField] private MessageSentEvent messageSentEvent;
     [SerializeField] private MessageReceivedEvent messageReceivedEvent;
@@ -91,11 +92,18 @@ public class ShipManager : MonoBehaviour
     }
 
     //questa funzione va rivista perchè non viene mai chiamata, la collego all'evento di inzio turno
+    //BUG le liste non vengono aggiornate, è il primo problema da risolvere
     public void ChooseShips()
     {
 
+        //TODO le lamba non vengono chiamate!!!!!
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
         allyAttackers = allies.Where(x => x.LookForObjectives(enemies)==true).ToList();
+        /*Debug.Log("Numero: " + allyAttackers.Count());
+        foreach(Ship ship in allyAttackers)
+        {
+            Debug.Log("Allyatt: " + ship.shipName);
+        }*/
         enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)==true).ToList();
         List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()==true).ToList();
         List<Ship> movableAllies = allies.Where(x => x.LookForMovement()==true).ToList();
@@ -190,30 +198,35 @@ public class ShipManager : MonoBehaviour
 
         Debug.Log("Nemici che fanno cose:" + movingEnemies.Count);
         Debug.Log("Alleati che fanno cose: "+ movingAllies.Count);
-        //prova
+        
+        //Gabriele tutte le navi mandano un messaggio? Dobbiamo selezionare solo 2 per parte
         SendMessages();
     }
     void SendMessages()
     {
         movingAllies.ForEach(x => x.SendMessage());
         movingEnemies.ForEach(x => x.SendMessage());
-        //TODO riempire la struct per l'invio del messaggio
-        //messageSentEvent.Invoke(new MessageStruct());
     }
-    void CallAttack()
+    
+    //La funzione la devo chiamare sulla singola nave, altrimenti non ho la posizione di chi attaccare
+    /*void CallAttack()
     {
         //TODO riempire la struct per l'invio dell'attacco con le cooridaate del bersaglio
-        //attackEvent.Invoke(new ShipAttackStruct());
-    }
+        //aggiungere il vector2 dell'attaco
+        attackEvent.Invoke(new ShipAttackStruct());
+    }*/
     // Update is called once per frame
     
     
+    //serve questa funzione? La nave non si muove già con un altro un metodo?
     void OrderMovement(Ship ship)
     {
         //MoveShip(ship);
-        CallAttack();
+        //CallAttack();
     }
 
+
+    //cosa fa questo metodo? Da chi toglie cosa?
     public void RemoveShip(Ship ship, int isAlly){
         if(isAlly==0){
             allies.Remove(ship);
@@ -222,5 +235,9 @@ public class ShipManager : MonoBehaviour
             enemies.Remove(ship);
         }
         ships.Remove(ship);
+
+        //io in realtà vorrei distruggerlo, non me lo lascia fare
+        ship.gameObject.SetActive(false);
+        ship.enabled = false;
     }
 }

@@ -14,4 +14,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   testingValue:
     result: 1
-    receiver: Todaro
+    receiver: Vespucci
+    entity: 0

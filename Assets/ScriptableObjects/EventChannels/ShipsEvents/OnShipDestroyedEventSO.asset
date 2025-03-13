@@ -13,6 +13,6 @@ MonoBehaviour:
   m_Name: OnShipDestroyedEventSO
   m_EditorClassIdentifier: 
   testingValue:
-    shipName: pi
-    entity: 0
-    gridPosition: {x: 0, y: 0}
+    shipName: Halifax
+    entity: 1
+    gridPosition: {x: 0, y: 7}

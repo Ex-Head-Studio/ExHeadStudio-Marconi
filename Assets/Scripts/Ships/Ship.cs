@@ -80,23 +80,55 @@ public class Ship : MonoBehaviour
                 }
                 break;
             default:
-                //messageSentEvent.Raise(new MessageStruct(name, 2, faction, 0));
+                messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 1));
                 break;
         }
 
     }
     
-    public void ExecuteInstructions(bool answer, int entity)
+    //il metodo viene chiamato quando la nave registra una risposta a lei associata
+    
+   public void ExecuteInstructions(bool answer, int entity)
     {
-        if (this.faction == 0)
+
+        //True per gli alleati CONFERMA l'azione
+        //True per i nemici NEGA l'azione
+        if (this.faction == (int)Entity.ally)
         {
-            if(answer){
-                if(currentState==ShipState.Attacking){
+            if(answer)
+            {
+                if(currentState==ShipState.Attacking)
+                {
                     //evento dove si dichiara la posizione 2D della nave avversaria da colpire
                     attackEvent?.Invoke(new ShipAttackStruct(targetPos));
 
                 }
-                else if(currentState==ShipState.Moving){
+                else if(currentState==ShipState.Moving)
+                {
+                    //qui siamo sicuri di non dover chiamare un metodo?
+                    position=nextPos;
+
+                    //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
+                    gridManager.MoveShip(position, nextPos);
+                    nextPos=Vector2.negativeInfinity;
+                }
+            }
+        }
+        else
+        {
+
+            //da sistemare
+            if(answer)
+            {
+                if(currentState==ShipState.Attacking)
+                {
+                    //evento dove si dichiara la posizione 2D della nave avversaria da colpire
+                    attackEvent?.Invoke(new ShipAttackStruct(targetPos));
+
+                }
+                else if(currentState==ShipState.Moving)
+                {
+                    //qui siamo sicuri di non dover chiamare un metodo?
                     position=nextPos;
 
                     //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
@@ -114,10 +146,13 @@ public class Ship : MonoBehaviour
         currentState=newState;
     }
     //La nave cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione
-    public bool LookForObjectives(List<Ship> possibleTargets){
+    public bool LookForObjectives(List<Ship> possibleTargets)
+    {
+        Debug.Log("Ma che ooooo");
         canAttack=false;
         //Cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione tra le navi nemiche
-        List<Ship> targets=possibleTargets.Where(k => k.position.x==position.x || k.position.y==position.y).OrderBy(x => Random.value).Take(1).ToList();
+        //SIAMO SICURI DELL'ORDINE DEI METODI?
+        List<Ship> targets=possibleTargets.Where(k => k.position.x==position.x || k.position.y==position.y).OrderBy(x => Random.value).Take(1).ToList();        
         if(targets.Count>0){
             canAttack=true;
             targetPos=targets.OrderBy(x=>Random.value).Take(1).ToList()[0].position;
@@ -151,6 +186,8 @@ public class Ship : MonoBehaviour
         Debug.Log(shipName+ ": "+possibleMoves.Count);
         if(possibleMoves.Count>0){
             canMove=true;
+
+            //TODO qui siamo sicuri che faccia assegnazione? Non dobbiamo chiamare il metodo SetNextPos()?
             nextPos=possibleMoves.OrderBy(x => Random.value).Take(1).ToList()[0];
            // Debug.Log("Nave: " + shipName + " si sposta da " + position + " a " + nextPos);
             return true;
@@ -165,9 +202,17 @@ public class Ship : MonoBehaviour
         this.faction=faction;
     }
 
+    public void OnAttacked(ShipAttackStruct attackPosition)
+    {
+        if(position.x == attackPosition.gridPosition.x && position.y == attackPosition.gridPosition.y)
+        {
+            Debug.Log("Nave colpita");
+            manager.RemoveShip(this, faction);
+            shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(name, faction, position));
+        }
+    }
     void OnDestroy()
     {
-        manager.RemoveShip(this, faction);
-        shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(name, faction, position));
+
     }
 }

@@ -31,13 +31,14 @@ public class GameManagerDebug : MonoBehaviour
         answerStack.RemoveAllAnswers();
         messagesStack.RemoveAllMessages();
         startedTurnEvent?.Invoke(new VoidEvent(0));
-        Debug.Log("Next turn started, count: ");
+
     }
 
     public void OnTurnStarted()
     {
         Debug.Log("Turn Started, game manager registered");
         numberOfRounds++;
+        Debug.Log("Next turn started, count: " + numberOfRounds);
     }
 
     private IEnumerator StartGame()
