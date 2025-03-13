@@ -22,9 +22,15 @@ public abstract class AbstractEventSO<T>: ScriptableObject
 
     public void Invoke(T value)
     {
-        foreach(AbstractEventListenerSO<T> listener in listeners)
+        /*foreach(AbstractEventListenerSO<T> listener in listeners)
         {
             listener.Listen(value);
+        }*/
+        for (int i = 0; i < listeners.Count; i++)
+        {
+            AbstractEventListenerSO<T> listener = listeners[i];
+            listener.Listen(value);
+
         }
     }
 }

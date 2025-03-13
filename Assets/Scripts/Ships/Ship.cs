@@ -111,7 +111,7 @@ public class Ship : MonoBehaviour
                 {
                     gridManager.MoveShip(position, nextPos, entity);
                     position=nextPos;
-                    nextPos=Vector2.negativeInfinity;
+                    //nextPos=Vector2.negativeInfinity;
                 }
             }
             else
@@ -140,7 +140,7 @@ public class Ship : MonoBehaviour
                         //qui siamo sicuri di non dover chiamare un metodo?
                         gridManager.MoveShip(position, nextPos, entity);
                         position=nextPos;
-                        nextPos=Vector2.negativeInfinity;
+                        //nextPos=Vector2.negativeInfinity;
                     }
             }
         }

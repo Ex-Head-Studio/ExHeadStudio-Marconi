@@ -106,6 +106,11 @@ public class GridManager : MonoBehaviour
     }
     public void MoveShip(Vector2 currentPosition, Vector2 newPosition, int entity)
     {
+        if(currentPosition == Vector2.negativeInfinity || newPosition == Vector2.negativeInfinity)
+        {
+            return;
+        }
+
         Debug.Log("La nave in posizione: " + currentPosition.x + " " + currentPosition.y +"\n"+
         "muove in: "+ newPosition.x + " " + newPosition.y);
 
