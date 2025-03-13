@@ -110,7 +110,7 @@ public class ToggleMessage : MonoBehaviour
             }
  
 
-            Debug.Log($"Toggle changed:\nSender: {toggleInfo.GetToggleSender()} Entity: {toggleInfo.GetToggleEntity()}");
+            //Debug.Log($"Toggle changed:\nSender: {toggleInfo.GetToggleSender()} Entity: {toggleInfo.GetToggleEntity()}");
             
         }
         //Aggiorno gli stati

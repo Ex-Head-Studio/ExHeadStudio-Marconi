@@ -107,8 +107,8 @@ public class GridManager : MonoBehaviour
         Debug.Log("La nave in posizione: " + currentPosition.x + " " + currentPosition.y +"\n"+
         "muove in: "+ newPosition.x + " " + newPosition.y);
         GameObject tmpShip;
-        Tile currentTile = GetTileAtPosition(currentPosition);
-        Tile newTile = GetTileAtPosition(newPosition);
+        Tile currentTile = _tiles[currentPosition];//  GetTileAtPosition(currentPosition);
+        Tile newTile =  _tiles[newPosition];//  GetTileAtPosition(newPosition);
 
         if(currentTile == null || newTile == null) 
         {
@@ -117,7 +117,10 @@ public class GridManager : MonoBehaviour
         }
 
         tmpShip = currentTile.GetShip();
+        Debug.Log("GridManager, moveship, tmpShip: " + tmpShip.GetComponent<Ship>().shipName);
+        //TODO da capire se funziona
         newTile.SetType(currentTile.GetType(), entity);
+        
         //qui ho rimosso un GetShip().gameObject (stefano)
         if(tmpShip != null)
         {

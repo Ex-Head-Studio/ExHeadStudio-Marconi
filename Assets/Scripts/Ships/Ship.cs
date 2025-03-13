@@ -34,11 +34,12 @@ public class Ship : MonoBehaviour
         shipLayer=LayerMask.GetMask("Ship");
 
     }
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+
    
+
+   //TODO Gabriele controllare
     public void SendMessage()
     {
-        //TODO: La nave manda un messaggio al giocatore per dirgli cosa intende fare
         Vector2 direction;
         switch(currentState){
             case ShipState.Attacking:
@@ -107,19 +108,15 @@ public class Ship : MonoBehaviour
                 }
                 else if(currentState==ShipState.Moving)
                 {
-                    //qui siamo sicuri di non dover chiamare un metodo?
-                    position=nextPos;
-
-                    //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
                     gridManager.MoveShip(position, nextPos, entity);
+                    position=nextPos;
                     nextPos=Vector2.negativeInfinity;
                 }
             }
             else
             {
-                //se non dichiaro nulla mica succede qualcosa giusto?
+                SetState(ShipState.Waiting);
             }
-
         }
         else
         {
@@ -137,26 +134,32 @@ public class Ship : MonoBehaviour
                 {
                     Debug.Log("Movimento Nemico");
                     //qui siamo sicuri di non dover chiamare un metodo?
-                    position=nextPos;
 
-                    //TODO: indicare alla griglia di spostare la nave dalla posizione corrente alla posizione successiva
                     gridManager.MoveShip(position, nextPos, entity);
+                    position=nextPos;
                     nextPos=Vector2.negativeInfinity;
                 }
+                
+            }
+            else
+            {
+                SetState(ShipState.Waiting);
             }
         }
 
     }
-    void SetNextPosition(Vector2 newPos){
+    /*void SetNextPosition(Vector2 newPos)
+    {
         nextPos=newPos;
-    }
-    public void SetState(ShipState newState){
+    }*/
+    public void SetState(ShipState newState)
+    {
         currentState=newState;
     }
+
     //La nave cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione
     public bool LookForObjectives(List<Ship> possibleTargets)
     {
-        Debug.Log("Ma che ooooo");
         canAttack=false;
         //Cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione tra le navi nemiche
         //SIAMO SICURI DELL'ORDINE DEI METODI?
@@ -167,6 +170,8 @@ public class Ship : MonoBehaviour
         }
         return canAttack;
     }   
+
+    //TODO Gabriele controllare che inserisca giusto e non cancelli cosa serve
     //Allo stesso tempo, la nave controlla anche se ha spazio per muoversi, così da essere pronta a muoversi se non trova navi nemiche
     public bool LookForMovement(){
         canMove=false;
@@ -191,7 +196,7 @@ public class Ship : MonoBehaviour
         
         possibleMoves = possibleMoves.Where(p => !nearbyShips.Contains(p) && gridManager.IsValidPosition(p)).ToList();
         //possibleMoves contiene tutte le possibili mosse rimaste alla nave, se è vuota, significa che non ha mosse a disposizione
-        Debug.Log(shipName+ ": "+possibleMoves.Count);
+        //Debug.Log(shipName+ ": "+possibleMoves.Count);
         if(possibleMoves.Count>0){
             canMove=true;
 
@@ -218,9 +223,5 @@ public class Ship : MonoBehaviour
             manager.RemoveShip(this, faction);
             shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(name, faction, position));
         }
-    }
-    void OnDestroy()
-    {
-
     }
 }

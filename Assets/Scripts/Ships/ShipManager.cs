@@ -95,10 +95,13 @@ public class ShipManager : MonoBehaviour
 
     //questa funzione va rivista perchè non viene mai chiamata, la collego all'evento di inzio turno
     //BUG le liste non vengono aggiornate, è il primo problema da risolvere
+
+    //TODO debug passo passo
+    //TODO non compaiono attacchi
     public void ChooseShips()
     {
 
-        //TODO le lamba non vengono chiamate!!!!!
+        //TODO le lamba non vengono chiamate, con l'invocazione tramite evento!!!!!
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
         allyAttackers = allies.Where(x => x.LookForObjectives(enemies)==true).ToList();
         /*Debug.Log("Numero: " + allyAttackers.Count());
@@ -114,13 +117,13 @@ public class ShipManager : MonoBehaviour
         //per attaccare e per muoversi
         // 0 = solo movimento, 1 = movimento e attacco, 2 = solo attacco
 
-        //Edit: Random.Range ha gli estremi INCLUSI
-
         // Verificare che poi nella lista delle navi che eseguiranno qualcosa ci sia il numero giusto di navi
+        //TODO correggere l'if a zero
         int allyDecision, enemyDecision;
         if(allyAttackers.Count>1 && movableAllies.Count>1){
             
             allyDecision=Random.Range(0, 2);
+
         }
         else if(allyAttackers.Count>1 && movableAllies.Count==1){
             allyDecision=Random.Range(1, 2);
@@ -201,8 +204,7 @@ public class ShipManager : MonoBehaviour
 
         Debug.Log("Nemici che fanno cose:" + movingEnemies.Count);
         Debug.Log("Alleati che fanno cose: "+ movingAllies.Count);
-        
-        //Gabriele tutte le navi mandano un messaggio? Dobbiamo selezionare solo 2 per parte
+
         SendMessages();
     }
     void SendMessages()
@@ -211,26 +213,9 @@ public class ShipManager : MonoBehaviour
         movingEnemies.ForEach(x => x.SendMessage());
     }
     
-    //La funzione la devo chiamare sulla singola nave, altrimenti non ho la posizione di chi attaccare
-    /*void CallAttack()
-    {
-        //TODO riempire la struct per l'invio dell'attacco con le cooridaate del bersaglio
-        //aggiungere il vector2 dell'attaco
-        attackEvent.Invoke(new ShipAttackStruct());
-    }*/
-    // Update is called once per frame
-    
-    
-    //serve questa funzione? La nave non si muove già con un altro un metodo?
-    void OrderMovement(Ship ship)
-    {
-        //MoveShip(ship);
-        //CallAttack();
-    }
-
-
     //cosa fa questo metodo? Da chi toglie cosa?
-    public void RemoveShip(Ship ship, int isAlly){
+    public void RemoveShip(Ship ship, int isAlly)
+    {
         if(isAlly==0){
             allies.Remove(ship);
         }
@@ -239,7 +224,9 @@ public class ShipManager : MonoBehaviour
         }
         ships.Remove(ship);
 
-        //io in realtà vorrei distruggerlo, non me lo lascia fare
+        //io in realtà vorrei distruggerlo, non me lo lascia fare (stefano)
+        //TODO controllare che non venga più cercato lo scritt
+        //TODO aggiungere la pulizia della griglia
         ship.gameObject.SetActive(false);
         ship.enabled = false;
     }

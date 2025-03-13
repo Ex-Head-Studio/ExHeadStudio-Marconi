@@ -162,6 +162,7 @@ public class Tile : MonoBehaviour
         }
     }
 
+    //TODO capire come legge il transform e se capita qualcosa
     public void SetShip(GameObject ship) 
     {
         _ship = ship;
