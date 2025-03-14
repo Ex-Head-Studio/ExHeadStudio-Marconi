@@ -1,12 +1,16 @@
 using UnityEngine;
 using UnityEngine.UI;
 using UnityEngine.EventSystems;
+using FMODUnity;
 
 public class OnHoverConfirm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 
     [SerializeField] private GameObject confirmButton;
     private Outline outline;
+
+    [EventRef]
+    public string confirmButtonSound = "event:/UI/BigButton";
 
     void Start()
     {
@@ -27,6 +31,7 @@ public class OnHoverConfirm : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         Debug.Log("Sto cambiando il colore dell'outline");
         outline.outlineColor = Color.blue;
         outline.needsUpdate = true;
+        RuntimeManager.PlayOneShot(confirmButtonSound);
     }
 
     public void OnPointerExit(PointerEventData eventData)
