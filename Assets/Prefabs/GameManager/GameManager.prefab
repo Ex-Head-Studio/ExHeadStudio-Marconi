@@ -103,8 +103,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 7e17717ee360c934e9e19434537cb361, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforeStart: 5
-  timeBetweenRounds: 5
+  timeBeforeStart: 2
+  timeBetweenRounds: 2
   startedTurnEvent: {fileID: 11400000, guid: 3853f00209eb0c642a9389baec0e5283, type: 2}
   messagesStack: {fileID: 11400000, guid: 74f00b27aae28cf46b0c721ccf170c14, type: 2}
   answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}

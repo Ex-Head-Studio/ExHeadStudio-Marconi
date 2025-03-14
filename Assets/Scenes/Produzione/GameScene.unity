@@ -192,6 +192,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 82fe82d4183f14c4e93fbc2a9eca4968, type: 3}
+--- !u!108 &84109676 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 6867946820624370346, guid: 8285dbfa8924f494cbd08fdd80f6e1cc, type: 3}
+  m_PrefabInstance: {fileID: 832896262}
+  m_PrefabAsset: {fileID: 0}
 --- !u!224 &85874822 stripped
 RectTransform:
   m_CorrespondingSourceObject: {fileID: 5530900176377448659, guid: df0cdf3b98d671447afc7139a98fd2f5, type: 3}
@@ -469,6 +474,16 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: c7c3f2b0e03b0ac47924db486505c4f0, type: 3}
+--- !u!108 &188982101 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 6867946820624370346, guid: 8285dbfa8924f494cbd08fdd80f6e1cc, type: 3}
+  m_PrefabInstance: {fileID: 608680120}
+  m_PrefabAsset: {fileID: 0}
+--- !u!108 &364897895 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 7596301402030058093, guid: 27d3e13592370d948b1b14fedcfb2b78, type: 3}
+  m_PrefabInstance: {fileID: 1217339255}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &377047630 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1345674658998081823, guid: ff1bc81c891766043867c0411a06df5a, type: 3}
@@ -645,14 +660,6 @@ PrefabInstance:
     - target: {fileID: 7529141041467457163, guid: 787395ea4eab4ee4eb67ee33bbebb02b, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
-      objectReference: {fileID: 0}
-    - target: {fileID: 7706314155841478119, guid: 787395ea4eab4ee4eb67ee33bbebb02b, type: 3}
-      propertyPath: timeBeforeStart
-      value: 2
-      objectReference: {fileID: 0}
-    - target: {fileID: 7706314155841478119, guid: 787395ea4eab4ee4eb67ee33bbebb02b, type: 3}
-      propertyPath: timeBetweenRounds
-      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -1175,6 +1182,11 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!108 &1153608710 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 6867946820624370346, guid: 8285dbfa8924f494cbd08fdd80f6e1cc, type: 3}
+  m_PrefabInstance: {fileID: 1889924582}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1197127716
 GameObject:
   m_ObjectHideFlags: 0
@@ -1417,6 +1429,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27d3e13592370d948b1b14fedcfb2b78, type: 3}
+--- !u!108 &1545175306 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 7596301402030058093, guid: 27d3e13592370d948b1b14fedcfb2b78, type: 3}
+  m_PrefabInstance: {fileID: 400214341}
+  m_PrefabAsset: {fileID: 0}
 --- !u!4 &1582962678 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 1243902475674763209, guid: 8285dbfa8924f494cbd08fdd80f6e1cc, type: 3}
@@ -1924,6 +1941,11 @@ Transform:
   m_Children: []
   m_Father: {fileID: 1005697640}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!108 &2019381045 stripped
+Light:
+  m_CorrespondingSourceObject: {fileID: 7596301402030058093, guid: 27d3e13592370d948b1b14fedcfb2b78, type: 3}
+  m_PrefabInstance: {fileID: 1368715141}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1001 &2044429632
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -2218,6 +2240,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2092772960}
+  - component: {fileID: 2092772962}
+  - component: {fileID: 2092772961}
   m_Layer: 0
   m_Name: Parte Alta Pannello di controllo
   m_TagString: Untagged
@@ -2243,6 +2267,54 @@ Transform:
   - {fileID: 1658888560}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2092772961
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092772959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c1f3156ee248b4ab39fc1bf645501e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2092772962}
+        m_TargetAssemblyTypeName: LightManager, Assembly-CSharp
+        m_MethodName: OnShipDestroyedSwitchLight
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2092772962
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2092772959}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6c8a3a5fdcd3004458b8371ab647d6aa, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  allyLights:
+  - {fileID: 1545175306}
+  - {fileID: 364897895}
+  - {fileID: 2019381045}
+  enemyLights:
+  - {fileID: 84109676}
+  - {fileID: 1153608710}
+  - {fileID: 188982101}
 --- !u!4 &2127200713 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 9097271480161836342, guid: 27d3e13592370d948b1b14fedcfb2b78, type: 3}

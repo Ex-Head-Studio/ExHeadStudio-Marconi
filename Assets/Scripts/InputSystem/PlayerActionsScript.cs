@@ -162,6 +162,15 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ViewNames"",
+                    ""type"": ""Button"",
+                    ""id"": ""06a16859-3af2-4d58-bd5c-239a6c1d3446"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -527,6 +536,28 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
                     ""action"": ""PauseGame"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e30fe9cf-6a37-41db-9b29-c2922780dff6"",
+                    ""path"": ""<Keyboard>/leftShift"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ViewNames"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""74999082-6ece-4a24-9c59-78609a7fcc9a"",
+                    ""path"": ""<Gamepad>/rightTrigger"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ViewNames"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -604,6 +635,7 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
         m_UI_MiddleClick = m_UI.FindAction("MiddleClick", throwIfNotFound: true);
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_PauseGame = m_UI.FindAction("PauseGame", throwIfNotFound: true);
+        m_UI_ViewNames = m_UI.FindAction("ViewNames", throwIfNotFound: true);
     }
 
     ~@PlayerActionsScript()
@@ -692,6 +724,7 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_MiddleClick;
     private readonly InputAction m_UI_ScrollWheel;
     private readonly InputAction m_UI_PauseGame;
+    private readonly InputAction m_UI_ViewNames;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -735,6 +768,10 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/PauseGame".
         /// </summary>
         public InputAction @PauseGame => m_Wrapper.m_UI_PauseGame;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/ViewNames".
+        /// </summary>
+        public InputAction @ViewNames => m_Wrapper.m_UI_ViewNames;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -785,6 +822,9 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
             @PauseGame.started += instance.OnPauseGame;
             @PauseGame.performed += instance.OnPauseGame;
             @PauseGame.canceled += instance.OnPauseGame;
+            @ViewNames.started += instance.OnViewNames;
+            @ViewNames.performed += instance.OnViewNames;
+            @ViewNames.canceled += instance.OnViewNames;
         }
 
         /// <summary>
@@ -820,6 +860,9 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
             @PauseGame.started -= instance.OnPauseGame;
             @PauseGame.performed -= instance.OnPauseGame;
             @PauseGame.canceled -= instance.OnPauseGame;
+            @ViewNames.started -= instance.OnViewNames;
+            @ViewNames.performed -= instance.OnViewNames;
+            @ViewNames.canceled -= instance.OnViewNames;
         }
 
         /// <summary>
@@ -981,5 +1024,12 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnPauseGame(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ViewNames" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnViewNames(InputAction.CallbackContext context);
     }
 }
