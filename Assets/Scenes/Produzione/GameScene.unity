@@ -646,6 +646,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7706314155841478119, guid: 787395ea4eab4ee4eb67ee33bbebb02b, type: 3}
+      propertyPath: timeBeforeStart
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 7706314155841478119, guid: 787395ea4eab4ee4eb67ee33bbebb02b, type: 3}
+      propertyPath: timeBetweenRounds
+      value: 2
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1532,6 +1540,14 @@ PrefabInstance:
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: _cam
       value: 
+      objectReference: {fileID: 1053332623}
+    - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
+      propertyPath: _width
+      value: 6
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
+      propertyPath: _height
+      value: 6
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: _shipManager
@@ -1598,22 +1614,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShipManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1313830103093164223, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: m_Layer
-      value: 6
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: shipPrefab
-      value: 
-      objectReference: {fileID: 6176163466115431475, guid: 1fb0b5eb286bf534391fd387aa510554, type: 3}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: allyMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: fd2002976a6e2fd42859a524ad6636ed, type: 2}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: enemyMaterial
-      value: 
-      objectReference: {fileID: 2100000, guid: 02818fd892aef0d4e931c3948c532433, type: 2}
     - target: {fileID: 5104236288274845499, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -2192,7 +2192,8 @@ PrefabInstance:
       propertyPath: m_AnchoredPosition.y
       value: 0
       objectReference: {fileID: 0}
-    m_RemovedComponents: []
+    m_RemovedComponents:
+    - {fileID: 3015353932147590977, guid: df0cdf3b98d671447afc7139a98fd2f5, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects:
     - targetCorrespondingSourceObject: {fileID: 5530900176377448659, guid: df0cdf3b98d671447afc7139a98fd2f5, type: 3}

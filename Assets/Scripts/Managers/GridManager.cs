@@ -14,17 +14,8 @@ public class GridManager : MonoBehaviour
     [Header("Grid Parameters")]
     public int _width;
     public int _height;
-
-    [Header("Camera relative position")]
-
-    [SerializeField] private float _camX =0;
-    [SerializeField] private float _camY = 0;
-    [SerializeField] private float _camZ = -10;
-
     [SerializeField] private GameObject _tilePrefab;
-    
 
-    [SerializeField] private Transform _cam;
     [SerializeField] private ShipManager _shipManager;
 
     public Dictionary<Vector2, Tile> _tiles;
@@ -71,8 +62,6 @@ public class GridManager : MonoBehaviour
                 
             }
         }
-
-        _cam.transform.position = new Vector3((float)_width/2 - 0.5f + _camX, (float)_height/2 - 0.5f + _camY, _camZ);
     }
 
     public void InsertShips(Ship ship)

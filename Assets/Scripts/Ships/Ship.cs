@@ -98,7 +98,6 @@ public class Ship : MonoBehaviour
     
     //il metodo viene chiamato quando la nave registra una risposta a lei associata
     
-   public void ExecuteInstructions(AnswerStruct answerStruct)
     public void ExecuteInstructions(AnswerStruct answerStruct)
     {
         Debug.Log("Esecuzione ordini");
@@ -107,7 +106,6 @@ public class Ship : MonoBehaviour
         //True per gli alleati CONFERMA l'azione
         //True per i nemici NEGA l'azione
 
-        if(this.faction == (int)Entity.ally)
         if(this.faction == entity && this.faction==(int)Entity.ally)
         {
             if(shipName == answerStruct.receiver)
@@ -131,7 +129,6 @@ public class Ship : MonoBehaviour
                 currentState = ShipState.Waiting;
             }
         }
-        else
         else if(this.faction == entity && this.faction==(int)Entity.enemy)
         {
             if(shipName == answerStruct.receiver)
@@ -157,16 +154,20 @@ public class Ship : MonoBehaviour
                     }
             }
         }
-        } 
+        
     }
+    
     /*void SetNextPosition(Vector2 newPos)
     {
         nextPos=newPos;
     }*/
+
     public void SetState(ShipState newState)
     {
         currentState=newState;
     }
+
+
 
     //La nave cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione
     public bool LookForObjectives(List<Ship> possibleTargets)

@@ -100,8 +100,6 @@ public class ShipManager : MonoBehaviour
     //TODO non compaiono attacchi
     public void ChooseShips()
     {
-
-        //TODO le lamba non vengono chiamate, con l'invocazione tramite evento!!!!!
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
         allyAttackers = allies.Where(x => x.LookForObjectives(enemies)==true).ToList();
         /*Debug.Log("Numero: " + allyAttackers.Count());
@@ -224,12 +222,7 @@ public class ShipManager : MonoBehaviour
         }
         ships.Remove(ship);
 
-        //io in realtà vorrei distruggerlo, non me lo lascia fare (stefano)
-        //TODO controllare che non venga più cercato lo scritt
-        //TODO aggiungere la pulizia della griglia
         shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(ship.shipName, ship.faction, ship.position));
         Destroy(ship.gameObject);
-        
-        ship.enabled = false;
     }
 }

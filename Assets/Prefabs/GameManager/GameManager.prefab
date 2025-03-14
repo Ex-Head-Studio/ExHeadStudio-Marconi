@@ -108,6 +108,7 @@ MonoBehaviour:
   startedTurnEvent: {fileID: 11400000, guid: 3853f00209eb0c642a9389baec0e5283, type: 2}
   messagesStack: {fileID: 11400000, guid: 74f00b27aae28cf46b0c721ccf170c14, type: 2}
   answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
+  clearEvent: {fileID: 11400000, guid: 26523e0c8046a6148b981eb4b90557c5, type: 2}
 --- !u!1 &6498117003030704917
 GameObject:
   m_ObjectHideFlags: 0
