@@ -1,7 +1,7 @@
 using System;
+using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
-using Unity.VisualScripting;
 using UnityEngine;
 using Random=UnityEngine.Random;
 public class ShipManager : MonoBehaviour
@@ -49,21 +49,16 @@ public class ShipManager : MonoBehaviour
         gridManager = FindFirstObjectByType<GridManager>();
 
     }
+    
     private void Start()
     {
-        foreach (string shipName in shipNames)
-        {
-            InstantiateInMap(shipName);
-        }
-
+        
+        StartCoroutine(ShipGeneration());
     }
     private void Update()
     {
         //non è più necessario
-        if(Input.GetKeyDown(KeyCode.Space))
-        {
-            ChooseShips();
-        }
+        
     }
 
     void InstantiateInMap(string shipName)
@@ -101,15 +96,15 @@ public class ShipManager : MonoBehaviour
     public void ChooseShips()
     {
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
-        allyAttackers = allies.Where(x => x.LookForObjectives(enemies)==true).ToList();
+        allyAttackers = allies.Where(x => x.LookForObjectives(enemies)).ToList();
         /*Debug.Log("Numero: " + allyAttackers.Count());
         foreach(Ship ship in allyAttackers)
         {
             Debug.Log("Allyatt: " + ship.shipName);
         }*/
-        enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)==true).ToList();
-        List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()==true).ToList();
-        List<Ship> movableAllies = allies.Where(x => x.LookForMovement()==true).ToList();
+        enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)).ToList();
+        List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()).ToList();
+        List<Ship> movableAllies = allies.Where(x => x.LookForMovement()).ToList();
 
         //Una volta che le navi sono state selezionate, si decide cosa far fare a una fazione a seconda di quante navi ha a disposizione
         //per attaccare e per muoversi
@@ -153,7 +148,14 @@ public class ShipManager : MonoBehaviour
 
         switch(allyDecision){
             case 0:
-                activeAllies=movableAllies.OrderBy(x=> Random.value).Take(2).ToList();
+                if(movableAllies.Count>1){
+                    activeAllies=movableAllies.OrderBy(x=> Random.value).Take(2).ToList();
+                }
+                else
+                {
+                    activeAllies=movableAllies.OrderBy(x=> Random.value).Take(1).ToList();
+                }
+                activeAllies.ForEach(x => x.SetState(Ship.ShipState.Moving));
                 allyAttackers.Clear();
                 break;
             case 1:
@@ -164,7 +166,12 @@ public class ShipManager : MonoBehaviour
                 activeAllies[1].SetState(Ship.ShipState.Moving);
                 break;
             case 2:
-                activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
+                if(allyAttackers.Count>1){
+                    activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
+                }
+                else{
+                    activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
+                }
                 activeAllies.ForEach(x => x.SetState(Ship.ShipState.Attacking));
                 movableAllies.Clear();
                 
@@ -176,7 +183,12 @@ public class ShipManager : MonoBehaviour
         switch(enemyDecision){
             case 0:
                 //Non ci sono nemici che possono attaccare, scelgo solo mosse di movimento 
-                activeEnemies=movableEnemies.OrderBy(x=> Random.value).Take(2).ToList();
+                if(movableEnemies.Count>1){
+                    activeEnemies=movableEnemies.OrderBy(x=> Random.value).Take(2).ToList();
+                }
+                else{
+                    activeEnemies=movableEnemies.OrderBy(x=> Random.value).Take(1).ToList();
+                }
                 activeEnemies.ForEach(x => x.SetState(Ship.ShipState.Moving));
                 enemyAttackers.Clear();
                 break;
@@ -190,7 +202,12 @@ public class ShipManager : MonoBehaviour
                 break;
             case 2:
                 //Non ci sono nemici che possono muoversi, scelgo solo attacchi
-                activeEnemies=enemyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
+                if(enemyAttackers.Count>1){
+                    activeEnemies=enemyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
+                }
+                else{
+                    activeEnemies=enemyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
+                }
                 activeEnemies.ForEach(x => x.SetState(Ship.ShipState.Attacking));
                 //movableEnemies.Clear();
                 movableEnemies.Clear();
@@ -224,5 +241,12 @@ public class ShipManager : MonoBehaviour
 
         shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(ship.shipName, ship.faction, ship.position));
         Destroy(ship.gameObject);
+    }
+    private IEnumerator ShipGeneration(){
+        yield return new WaitForSeconds(1);
+        foreach (string shipName in shipNames)
+        {
+            InstantiateInMap(shipName);
+        }
     }
 }

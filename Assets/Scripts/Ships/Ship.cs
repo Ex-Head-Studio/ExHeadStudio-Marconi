@@ -46,21 +46,21 @@ public class Ship : MonoBehaviour
                 direction=targetPos-position;
                 if(direction.y==0){
                     if(direction.x>0){
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 3));
+                        
                         messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 3));
                     }
                     else{
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 2));
+                        
                         messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 2));
                     }
                 }
                 else{
                     if(direction.y>0){
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 0));
+                       
                         messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 0));
                     }
                     else{
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 1));
+                        
                         messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 1));
                     }
                 }
@@ -69,28 +69,28 @@ public class Ship : MonoBehaviour
                 direction=nextPos-position;
                 if(direction.y==0){
                     if(direction.x>0){
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 3));
+                        
                         messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 3));
                     }
                     else{
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 2));
+                        
                         messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 2));
                     }
                 }
                 else{
                     if(direction.y>0){
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 0));
+                        
                         messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 0));
                     }
                     else{
-                        messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 1));
+                        
                         messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 1));
                     }
                 }
                 break;
             default:
-                messageSentEvent?.Invoke(new MessageStruct(name, (int) currentState, faction, 1));
-                messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 1));
+               
+                //messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 1));
                 break;
         }
 

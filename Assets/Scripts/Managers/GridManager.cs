@@ -64,6 +64,15 @@ public class GridManager : MonoBehaviour
         }
     }
 
+    public bool IsValidPosition(Vector2 position)
+     {
+        //Debug.Log(position + "è valida: "+_tiles.ContainsKey(position));
+        if(_tiles.ContainsKey(position) && _tiles[position].GetType() == TileType.Empty)
+        {
+            return true;
+        }
+        return false;
+    }
     public void InsertShips(Ship ship)
     {
         //brutto, da rifare appena abbiamo tempo
@@ -129,15 +138,7 @@ public class GridManager : MonoBehaviour
         }
     }
 
-    public bool IsValidPosition(Vector2 position)
-     {
-        //Debug.Log(position + "è valida: "+_tiles.ContainsKey(position));
-        if(_tiles.ContainsKey(position) && _tiles[position].GetType() == TileType.Empty)
-        {
-            return true;
-        }
-        return false;
-    }
+    
 
     //serve ancora questo metodo? (Stefano)
     /*public void SwapTileTypes(Tile selectedTile) {
