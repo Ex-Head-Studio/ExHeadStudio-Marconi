@@ -42,7 +42,7 @@ public class AudioManager : MonoBehaviour
             UnityEngine.Debug.LogError("Ambience event not found");
             return;
         }
-        ambianceEventInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
+        // ambianceEventInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
         ambianceEventInstance.start();
     }
 

@@ -924,6 +924,42 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 771096018689533847, guid: df0cdf3b98d671447afc7139a98fd2f5, type: 3}
   m_PrefabInstance: {fileID: 2044429632}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &1026601739 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 2031548802358452602, guid: ff1bc81c891766043867c0411a06df5a, type: 3}
+  m_PrefabInstance: {fileID: 1878382258}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1026601740
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1026601739}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9a6610d2e704f1648819acc8d7460285, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  CollisionTag: 
+  EventReference:
+    Guid:
+      Data1: 31503239
+      Data2: 1211520247
+      Data3: 1095488157
+      Data4: -1296638779
+    Path: event:/Musica/Radio
+  Event: 
+  EventPlayTrigger: 1
+  EventStopTrigger: 0
+  AllowFadeout: 1
+  TriggerOnce: 1
+  Preload: 0
+  NonRigidbodyVelocity: 0
+  Params: []
+  OverrideAttenuation: 1
+  OverrideMinDistance: 1
+  OverrideMaxDistance: 20
 --- !u!1 &1042057955
 GameObject:
   m_ObjectHideFlags: 0
@@ -1057,6 +1093,7 @@ GameObject:
   - component: {fileID: 1053332622}
   - component: {fileID: 1053332621}
   - component: {fileID: 1053332624}
+  - component: {fileID: 1053332625}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -1182,6 +1219,25 @@ MonoBehaviour:
     m_MipBias: 0
     m_VarianceClampScale: 0.9
     m_ContrastAdaptiveSharpening: 0
+--- !u!114 &1053332625
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1053332620}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e5d30993f99a32641a2bb054d5b9b485, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <controlAmbience>k__BackingField:
+    Guid:
+      Data1: -967482553
+      Data2: 1198801021
+      Data3: -881561694
+      Data4: -1806178501
+    Path: event:/Ambience/Ambientes
 --- !u!108 &1153608710 stripped
 Light:
   m_CorrespondingSourceObject: {fileID: 6867946820624370346, guid: 8285dbfa8924f494cbd08fdd80f6e1cc, type: 3}
@@ -1754,7 +1810,10 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 2031548802358452602, guid: ff1bc81c891766043867c0411a06df5a, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1026601740}
   m_SourcePrefab: {fileID: 100100000, guid: ff1bc81c891766043867c0411a06df5a, type: 3}
 --- !u!1001 &1889924582
 PrefabInstance:

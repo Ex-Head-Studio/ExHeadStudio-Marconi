@@ -233,11 +233,11 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   <controlAmbience>k__BackingField:
     Guid:
-      Data1: 65173833
-      Data2: 1249175715
-      Data3: -1411954560
-      Data4: -748145910
-    Path: event:/Ambience/Ambiente
+      Data1: 920036405
+      Data2: 1172111540
+      Data3: 93698986
+      Data4: 67850416
+    Path: event:/Ambience/AmbienteMenuIniziale
 --- !u!114 &465166335
 MonoBehaviour:
   m_ObjectHideFlags: 0
