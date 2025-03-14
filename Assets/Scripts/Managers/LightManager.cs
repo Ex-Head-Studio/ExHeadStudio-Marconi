@@ -37,8 +37,8 @@ public class LightManager : MonoBehaviour {
 
     public void OnShipDestroyedSwitchLight(ShipDestroyedStruct shipDestroyed) 
     {
-        Debug.Log("Ship destroyed");
-        if(shipDestroyed.entity == (int)Entity.ally)
+        Debug.Log("Ship destroyed, light manager registered");
+        /*if(shipDestroyed.entity == (int)Entity.ally)
         {
             int index = allyLights.Count;
             allyLights[index].enabled = false;
@@ -49,7 +49,7 @@ public class LightManager : MonoBehaviour {
             int index = enemyLights.Count;
             enemyLights[index].enabled = false;
             enemyLights.RemoveAt(index);
-        }
+        }*/
 
     }
 }
