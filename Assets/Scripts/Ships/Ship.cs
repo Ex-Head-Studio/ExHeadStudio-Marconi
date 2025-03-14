@@ -206,8 +206,12 @@ public class Ship : MonoBehaviour
         foreach(int y in yOffsets){
                 possibleMoves.Add(new Vector2(position.x, position.y+y));
         }
+        if(nearbyShips.Count>0){
+            List<Vector2> notValid= possibleMoves.Where(p => nearbyShips.Contains(p) ).ToList();
+            possibleMoves=possibleMoves.Except(notValid).ToList();
+            //possibleMoves = possibleMoves.Where(p => !nearbyShips.Contains(p) && gridManager.IsValidPosition(p)).ToList();
+        }
         
-        possibleMoves = possibleMoves.Where(p => !nearbyShips.Contains(p) && gridManager.IsValidPosition(p)).ToList();
         //possibleMoves contiene tutte le possibili mosse rimaste alla nave, se è vuota, significa che non ha mosse a disposizione
         //Debug.Log(shipName+ ": "+possibleMoves.Count);
         if(possibleMoves.Count>0){
