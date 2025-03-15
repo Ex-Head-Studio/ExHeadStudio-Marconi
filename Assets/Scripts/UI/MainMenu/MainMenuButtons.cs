@@ -25,7 +25,7 @@ public class MainMenuButtons : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene(SceneManager.GetSceneByBuildIndex(1).name);
+        SceneManager.LoadScene("GameScene");
         AudioManager.PlayOneShot(startButtonSound, this.transform.position);
     }
 
