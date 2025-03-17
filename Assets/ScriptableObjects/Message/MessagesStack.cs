@@ -14,19 +14,20 @@ public enum MessageType
     movement
 }
 
+
+//se viene aggiornata, aggiornare anche l'array di stringhe sotto
 public enum Directions
 {
     up,
     down, 
     left,
-    right
+    right,
 }
 
 [CreateAssetMenu(fileName = "MessagesStack", menuName = "Scriptable Objects/MessagesStack")]
 public class MessagesStack : ScriptableObject
 {
     public string[] directions = new string[] {"up", "down", "left", "right"};
-    //[SerializeField] public Button buttonPrefab;
     [SerializeField] public Toggle togglePrefab;
 
     public List<MessageStruct> messages = new List<MessageStruct>();

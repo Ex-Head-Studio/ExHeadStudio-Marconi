@@ -9,6 +9,8 @@ public class MessageReceivedEvent : AbstractEventSO<AnswerStruct>
 [System.Serializable]
 public struct AnswerStruct
 {
+
+    //TODO valutare se cambiare i nomi
     public bool result;
     public string receiver;
 

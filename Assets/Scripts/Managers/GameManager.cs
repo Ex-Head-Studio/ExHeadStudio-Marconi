@@ -3,21 +3,30 @@ using Unity.Burst.Intrinsics;
 using Unity.VisualScripting;
 using UnityEngine;
 
-public class GameManagerDebug : MonoBehaviour
+
+public class GameManager : MonoBehaviour
 {
     /// <summary>
-    /// Classe temporanea, effettuo migrazione in GameManager, eliminare non appena è fintio
+    /// Il game manager si occupa della gestione dei tempi e dei turni di gioco
     /// </summary>
     [SerializeField] private float timeBeforeStart = 10f;
     [SerializeField] private float timeBetweenRounds = 2f;
 
     private int numberOfRounds = 0;
-
-    [Header("Game Events")]
+    
+    [Header("Game Events to call")]
+    [Tooltip("Evento di inzio turno")]
     [SerializeField] private StartedTurnEvent startedTurnEvent;
-    [SerializeField] private MessagesStack messagesStack;
-    [SerializeField] private AnswerStack answerStack;
+    [Tooltip("Evento di reset")]
     [SerializeField] private OnClearEvent clearEvent;
+
+    [Header("Stack dei messaggi")]
+
+    [Tooltip("Messaggi inviati alle navi")]
+    [SerializeField] private MessagesStack messagesStack;
+    [Tooltip("Risposte inviate dal giocatore")]
+    [SerializeField] private AnswerStack answerStack;
+
     private void Start()
     {
         answerStack.RemoveAllAnswers();
@@ -25,21 +34,28 @@ public class GameManagerDebug : MonoBehaviour
         StartCoroutine(StartGame());
     }
 
+
     public void OnTurnEnded()
     {
         Debug.Log("Turn Ends, game manager registered");
-        //qui bisogna passare un evento vuoto "fittizio"
+
+        //qui bisogna passare un evento vuoto "fittizio" (stefano)
         clearEvent?.Invoke(new VoidEvent(0));
+
+
+        //la coroutine serve a dare il tempo al sistema di eseguire tutte le operazioni 
+        // prima del prossimo turno
         StartCoroutine(WaitNextRound());
     }
 
     public void OnTurnStarted()
     {
+        Debug.Log("Turn starts, game manager registered, count: " + numberOfRounds);
+
         answerStack.RemoveAllAnswers();
         messagesStack.RemoveAllMessages();
-        Debug.Log("Turn Started, game manager registered");
+
         numberOfRounds++;
-        Debug.Log("Next turn started, count: " + numberOfRounds);
     }
 
     private IEnumerator StartGame()
@@ -53,6 +69,5 @@ public class GameManagerDebug : MonoBehaviour
     {
         yield return new WaitForSeconds(timeBetweenRounds);
         startedTurnEvent?.Invoke(new VoidEvent(0));
-        Debug.Log("Start event called by OnTurnEnded");
     }
 }

@@ -2491,7 +2491,6 @@ GameObject:
   - component: {fileID: 3021276274163516463}
   - component: {fileID: 3839077405440709284}
   - component: {fileID: 2087982292692077337}
-  - component: {fileID: 3015353932147590977}
   - component: {fileID: 1264465359511643872}
   - component: {fileID: 7227710414068803988}
   m_Layer: 5
@@ -2675,34 +2674,6 @@ MonoBehaviour:
   enemyToggleGroup: {fileID: 6265811134862481590}
   messagesStack: {fileID: 11400000, guid: 74f00b27aae28cf46b0c721ccf170c14, type: 2}
   answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
---- !u!114 &3015353932147590977
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 8052339897583284648}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: c20dbc8a33684d74bba9fbfc40e51d94, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventToListen: {fileID: 11400000, guid: c53a1745388f2804c9205b827ea0f31b, type: 2}
-  onEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 1264465359511643872}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
-        m_MethodName: OnEndGame
-        m_Mode: 3
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &1264465359511643872
 MonoBehaviour:
   m_ObjectHideFlags: 0

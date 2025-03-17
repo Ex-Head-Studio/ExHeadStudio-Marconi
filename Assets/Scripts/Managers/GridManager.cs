@@ -114,6 +114,8 @@ public class GridManager : MonoBehaviour
 
         GameObject tmpShip;
         Tile currentTile = _tiles[currentPosition];//  GetTileAtPosition(currentPosition);
+
+        //qui lancia un'eccezione
         Tile newTile =  _tiles[newPosition];//  GetTileAtPosition(newPosition);
 
         if(currentTile == null || newTile == null) 

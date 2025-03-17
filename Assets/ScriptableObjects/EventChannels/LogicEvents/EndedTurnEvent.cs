@@ -9,6 +9,7 @@ public class EndedTurnEvent : AbstractEventSO<VoidEvent>
 
 //devo dichiare una struct vuota perchè non posso passare dati di tipo void
 [System.Serializable]
+[Tooltip("Non ha nessun valore il parametro passato")]
 public struct VoidEvent
 {
     public int value;

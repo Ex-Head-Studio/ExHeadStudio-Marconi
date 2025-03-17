@@ -2,21 +2,34 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.UI;
 using TMPro;
+using System.Diagnostics;
 
+
+/// <summary>
+/// La classe si occupa del display dei messaggi nella UI e della compilazione delle risposte
+/// </summary>
 public class DisplayMessages : MonoBehaviour
 {
-
+    [Header("Messages Panel")]
+    [Tooltip("Bisogna inserire i pannelli sui quali devono comparire i messaggi")]
     [SerializeField] private Transform allyStackTransform;
     [SerializeField] private Transform enemyStackTransform;
+    [Header("Toggle Groups")]
     [SerializeField] private ToggleGroup allyToggleGroup;
     [SerializeField] private ToggleGroup enemyToggleGroup;
+    [Header("Toggle values")]
+    [SerializeField] Color allyColor;
+    [SerializeField] Color enemyColor;
+    
+    [Header("Stack dei messaggi")]
     [SerializeField] private MessagesStack messagesStack; 
     [SerializeField] private AnswerStack answerStack;
 
-    private string[] directions;
-    
-    private Transform parent;
+    //cache dei dati
+    private string[] directions;    
 
+    //serve per determinare a quale toggle group appartnegono
+    private Transform parent;
     private List<Toggle> toggles = new List<Toggle>();
     private Toggle togglePrefab;
     private Toggle tmpToggle;
@@ -29,44 +42,56 @@ public class DisplayMessages : MonoBehaviour
 
      public void DisplayMessage(MessageStruct message)
     {
-        if(message.entity == (int)Entity.ally)
-        {
-            togglePrefab.GetComponentInChildren<Image>().color = Color.green;
-            parent = allyStackTransform;
-        }
-        else
-        {
-            togglePrefab.GetComponentInChildren<Image>().color = Color.red;
-            parent = enemyStackTransform;
-        }
-
-        if(message.messageType == (int)MessageType.attack)
-        {
-            togglePrefab.GetComponentInChildren<TMP_Text>().text = 
-            message.sender + " attacks " + directions[message.direction];
-        }
-        else if(message.messageType == (int)MessageType.movement)
-        {
-            togglePrefab.GetComponentInChildren<TMP_Text>().text = 
-            message.sender + " moves " + directions[message.direction]; 
-        }
-
-        if(message.entity == (int)Entity.ally)
-        {
-            togglePrefab.group = allyToggleGroup;
-        }
-        else
-        {
-            togglePrefab.group = enemyToggleGroup;
-        }
+        SetMessageColorAndTransform(message);
+        SetMessageText(message);
 
         togglePrefab?.GetComponent<ToggleInformations>().SetInformations(message.sender, message.entity, message.direction, message.messageType);
         tmpToggle = Instantiate(togglePrefab, parent.position  , Quaternion.identity, parent);
+
+        //TODO controllare se la riga successiva serve davvero
         tmpToggle?.GetComponent<ToggleInformations>().SetInformations(message.sender, message.entity, message.direction, message.messageType);
         toggles.Add(tmpToggle);
         messagesStack.AddMessage(message, parent);
     }
 
+    private void SetMessageColorAndTransform(MessageStruct message)
+    {
+        if(message.entity == (int)Entity.ally)
+        {
+            togglePrefab.GetComponentInChildren<Image>().color = allyColor;
+            parent = allyStackTransform;
+            togglePrefab.group = allyToggleGroup;        
+        }
+        else
+        {
+            togglePrefab.GetComponentInChildren<Image>().color = enemyColor;
+            parent = enemyStackTransform;
+            togglePrefab.group = enemyToggleGroup;
+        }
+    }
+
+    private void SetMessageText(MessageStruct message)
+    {
+        int messageType = message.messageType;
+        switch(messageType)
+        {
+            case (int)MessageType.attack:
+                togglePrefab.GetComponentInChildren<TMP_Text>().text = 
+                message.sender + " attacks " + directions[message.direction];
+                break;
+
+            case (int)MessageType.movement:
+
+                togglePrefab.GetComponentInChildren<TMP_Text>().text = 
+                message.sender + " moves " + directions[message.direction]; 
+                break;
+
+            default:
+                togglePrefab.GetComponentInChildren<TMP_Text>().text = 
+                "Error, control switch statement in DisplayMessages"; 
+                break;
+        }
+    }
     public void RemoveAllMessages()
     {
         messagesStack.RemoveAllMessages();
@@ -83,53 +108,4 @@ public class DisplayMessages : MonoBehaviour
         answerStack.SendAnswers();
     }
     
-    /*private List<Button> buttons = new List<Button>();
-    private Button buttonPrefab;
-
-
-
-    private void Start()
-    {
-        buttonPrefab = messagesStack.buttonPrefab;
-        directions = messagesStack.directions;
-    }
-    public void DisplayMessage(MessageStruct message)
-    {
-        if(message.entity == (int)Entity.ally)
-        {
-            buttonPrefab.GetComponentInChildren<Image>().color = Color.green;
-            parent = allyStackTransform;
-        }
-        else
-        {
-            buttonPrefab.GetComponentInChildren<Image>().color = Color.red;
-            parent = enemyStackTransform;
-        }
-
-        if(message.messageType == (int)MessageType.attack)
-        {
-            buttonPrefab.GetComponentInChildren<TMP_Text>().text = 
-            message.sender + " attacks " + directions[message.direction];
-        }
-        else if(message.messageType == (int)MessageType.movement)
-        {
-            buttonPrefab.GetComponentInChildren<TMP_Text>().text = 
-            message.sender + " moves " + directions[message.direction]; 
-        }
-
-        buttons.Add(Instantiate(buttonPrefab, parent.position  , Quaternion.identity, parent));
-    }
-
-    public void RemoveAllMessages()
-    {
-        messagesStack.RemoveAllMessages();
-        if(buttons.Count == 0) return;  
-        foreach(Button button in buttons)
-        {
-            Destroy(button.gameObject);
-        
-        }
-        buttons.Clear();
-    }*/
-
 }

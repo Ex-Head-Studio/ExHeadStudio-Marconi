@@ -10,6 +10,7 @@ public class OnShipAttackEvent : AbstractEventSO<ShipAttackStruct>
 public struct ShipAttackStruct
 {
     //la struct contiene le coordinate della nave attaccata
+    //TODO questa forse non deve essere pubblica
     public Vector2 gridPosition;
 
     public ShipAttackStruct(Vector2 gridPosition)

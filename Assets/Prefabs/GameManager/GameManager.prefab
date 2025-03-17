@@ -11,7 +11,7 @@ GameObject:
   - component: {fileID: 7529141041467457163}
   - component: {fileID: 6333629882367847753}
   - component: {fileID: 2497574681337763592}
-  - component: {fileID: 7706314155841478119}
+  - component: {fileID: 8693453419971122585}
   m_Layer: 0
   m_Name: GameManager
   m_TagString: Untagged
@@ -51,8 +51,8 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7706314155841478119}
-        m_TargetAssemblyTypeName: GameManagerDebug, Assembly-CSharp
+      - m_Target: {fileID: 8693453419971122585}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnTurnStarted
         m_Mode: 1
         m_Arguments:
@@ -79,8 +79,8 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 7706314155841478119}
-        m_TargetAssemblyTypeName: GameManagerDebug, Assembly-CSharp
+      - m_Target: {fileID: 8693453419971122585}
+        m_TargetAssemblyTypeName: GameManager, Assembly-CSharp
         m_MethodName: OnTurnEnded
         m_Mode: 1
         m_Arguments:
@@ -91,7 +91,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &7706314155841478119
+--- !u!114 &8693453419971122585
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -100,15 +100,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3180780146340020120}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 7e17717ee360c934e9e19434537cb361, type: 3}
+  m_Script: {fileID: 11500000, guid: f1d9bb66949b3b04880326539e9321ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforeStart: 2
-  timeBetweenRounds: 2
+  timeBeforeStart: 5
+  timeBetweenRounds: 3
   startedTurnEvent: {fileID: 11400000, guid: 3853f00209eb0c642a9389baec0e5283, type: 2}
+  clearEvent: {fileID: 11400000, guid: 26523e0c8046a6148b981eb4b90557c5, type: 2}
   messagesStack: {fileID: 11400000, guid: 74f00b27aae28cf46b0c721ccf170c14, type: 2}
   answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
-  clearEvent: {fileID: 11400000, guid: 26523e0c8046a6148b981eb4b90557c5, type: 2}
 --- !u!1 &6498117003030704917
 GameObject:
   m_ObjectHideFlags: 0

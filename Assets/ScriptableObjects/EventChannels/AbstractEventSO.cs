@@ -3,6 +3,7 @@ using System.Collections.Generic;
 
 public abstract class AbstractEventSO<T>: ScriptableObject
 {
+    //TODO qui c'è un errore con la lista alla fine, bisogna trovare una soluzione
     public T testingValue;
     private List<AbstractEventListenerSO<T>> listeners;
 

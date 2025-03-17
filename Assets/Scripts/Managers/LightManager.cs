@@ -1,15 +1,15 @@
 using UnityEngine;
 using System.Collections.Generic;
 
-public class LightManager : MonoBehaviour {
-
-    //public GameObject lightPrefab;
-
+public class LightManager : MonoBehaviour
+{
+    [Tooltip("Nelle due liste devono essere inserite le luci associate alla navi")]
     [SerializeField] private List<Light> allyLights = new List<Light>();
     [SerializeField] private List<Light> enemyLights = new List<Light>();
 
+    private int index;
 
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
+    //public GameObject lightPrefab;
     void Start()
     {
         foreach(Light light in allyLights)
@@ -20,9 +20,11 @@ public class LightManager : MonoBehaviour {
         {
             light.enabled = true;
         }
-        //GenerateLights();
     }
 
+
+    //TODO valutare se questo metodo serve ancora. Se si, come settarlo correttamente con il numero di navi
+    //TODO e come istanziare le luci sulla plancia
     void GenerateLights() 
     {
         /*
@@ -34,22 +36,27 @@ public class LightManager : MonoBehaviour {
             _lights.Add(light.GetComponentInChildren<Light>());
         }*/
     }
-
     public void OnShipDestroyedSwitchLight(ShipDestroyedStruct shipDestroyed) 
     {
         Debug.Log("Ship destroyed, light manager registered");
-        /*if(shipDestroyed.entity == (int)Entity.ally)
+        if(shipDestroyed.entity == (int)Entity.ally)
         {
-            int index = allyLights.Count;
-            allyLights[index].enabled = false;
-            allyLights.RemoveAt(index);
+            index = allyLights.Count;
+            if(index > 0)
+            {
+                allyLights[index-1].enabled = false;
+                allyLights.RemoveAt(index);
+            }
+
         }
         else
         {
             int index = enemyLights.Count;
+            if(index > 0)
+            {
             enemyLights[index].enabled = false;
             enemyLights.RemoveAt(index);
-        }*/
-
+            }
+        }
     }
 }

@@ -661,14 +661,6 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
-    - target: {fileID: 7706314155841478119, guid: 787395ea4eab4ee4eb67ee33bbebb02b, type: 3}
-      propertyPath: timeBeforeStart
-      value: 5
-      objectReference: {fileID: 0}
-    - target: {fileID: 7706314155841478119, guid: 787395ea4eab4ee4eb67ee33bbebb02b, type: 3}
-      propertyPath: timeBetweenRounds
-      value: 3
-      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -3051,7 +3043,7 @@ MonoBehaviour:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2092772959}
-  m_Enabled: 0
+  m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 6c8a3a5fdcd3004458b8371ab647d6aa, type: 3}
   m_Name: 
@@ -3078,9 +3070,9 @@ SceneRoots:
   - {fileID: 1042057958}
   - {fileID: 552795417}
   - {fileID: 1762290328}
+  - {fileID: 1663826998}
   - {fileID: 2044429632}
   - {fileID: 1399292469}
-  - {fileID: 1663826998}
   - {fileID: 402355091}
   - {fileID: 2092772960}
   - {fileID: 89874494}

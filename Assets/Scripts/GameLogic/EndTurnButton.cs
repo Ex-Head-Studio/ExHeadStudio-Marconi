@@ -3,6 +3,13 @@ using UnityEngine.UI;
 
 public class EndTurnButton : MonoBehaviour
 {
+    /// <summary>
+    /// Lo script viene associato al tasto di conferma delle azioni
+    /// </summary>
+    /// /// 
+
+    [Header("Events")]
+    [Tooltip("L'evento viene chiamato alla fine di ogni turno, con la conferma del giocatore")] 
     [SerializeField] private EndedTurnEvent endedTurnEvent;
     [SerializeField] private AnswerStack answerStack;
 
@@ -23,8 +30,12 @@ public class EndTurnButton : MonoBehaviour
         else
         {
             button.image.color = Color.green;
+
+            //chiama l'evento di fine turno
             VoidEvent voidEvent =  new VoidEvent(0);
             endedTurnEvent?.Invoke(voidEvent);
+
+            //TODO controllare che sia corretto l'ordine di escuzione
             sendAsnwers();
         }
 
