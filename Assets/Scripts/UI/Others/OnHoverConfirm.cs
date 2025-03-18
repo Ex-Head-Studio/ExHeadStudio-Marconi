@@ -6,18 +6,25 @@ using FMODUnity;
 public class OnHoverConfirm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 
+    //Serve davvero associarlo al bottone? Possiamo inserirlo nel manager?
     [SerializeField] private GameObject confirmButton;
     private Outline outline;
 
+
+    //OCCHIO A USARE FUNZIONI SUGLI INPUT
+    //se l'input non è usato correttamente non funziona da controller
+
+    //TODO verificare se si può usare questo attributo
     [EventRef]
     public string confirmButtonSound = "event:/UI/BigButton";
 
     void Start()
     {
         outline = confirmButton.GetComponent<Outline>();
-        
     } 
 
+
+    //TODO rimuovere i log
     public void OnPointerEnter(PointerEventData eventData)
     {
         outline.outlineColor = Color.green;

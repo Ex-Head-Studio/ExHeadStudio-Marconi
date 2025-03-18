@@ -8,7 +8,9 @@ public class MainMenuButtons : MonoBehaviour
     /// <summary>
     /// Lo script si occupa di gestire i pulsanti del menu principale, viene associato al canvas parent
     /// </summary>
+
     [Header("Main Menu Panels")]
+ 
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject optionsPanel;
@@ -25,7 +27,8 @@ public class MainMenuButtons : MonoBehaviour
     }
     public void StartGame()
     {
-        SceneManager.LoadScene("GameScene");
+        //carica la scena di indice 1 nella lista, possiamo anche modifcare questa cosa se vogliamo
+        SceneManager.LoadScene(1);
         AudioManager.PlayOneShot(startButtonSound, this.transform.position);
     }
 

@@ -45,7 +45,7 @@ public class LightManager : MonoBehaviour
             if(index > 0)
             {
                 allyLights[index-1].enabled = false;
-                allyLights.RemoveAt(index);
+                allyLights.RemoveAt(index-1);
             }
 
         }
@@ -54,8 +54,8 @@ public class LightManager : MonoBehaviour
             int index = enemyLights.Count;
             if(index > 0)
             {
-            enemyLights[index].enabled = false;
-            enemyLights.RemoveAt(index);
+            enemyLights[index-1].enabled = false;
+            enemyLights.RemoveAt(index-1);
             }
         }
     }

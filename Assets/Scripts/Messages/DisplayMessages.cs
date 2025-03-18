@@ -48,7 +48,7 @@ public class DisplayMessages : MonoBehaviour
         togglePrefab?.GetComponent<ToggleInformations>().SetInformations(message.sender, message.entity, message.direction, message.messageType);
         tmpToggle = Instantiate(togglePrefab, parent.position  , Quaternion.identity, parent);
 
-        //TODO controllare se la riga successiva serve davvero
+        //Non modificare l'ordine di queste due righe
         tmpToggle?.GetComponent<ToggleInformations>().SetInformations(message.sender, message.entity, message.direction, message.messageType);
         toggles.Add(tmpToggle);
         messagesStack.AddMessage(message, parent);
