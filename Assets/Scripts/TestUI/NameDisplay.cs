@@ -6,16 +6,18 @@ using UnityEngine.InputSystem;
 
 public class NameDisplay : MonoBehaviour 
 {
-    [SerializeField] private GameObject canvas;
+
+    //Modifica: lo script non lavora direttamente sul shipNameText, ma sull'elemento della UI (Stefano)
+    [SerializeField] private GameObject shipNameText;
     private Camera mainCamera;
     [SerializeField] private InputActionAsset actionMap;
 
     void Start() {
         mainCamera = Camera.main;
         Ship ship = gameObject.GetComponent<Ship>();
-        if (canvas != null) 
+        if (shipNameText != null) 
         {
-            TMP_Text nameText = canvas.GetComponentInChildren<TMP_Text>();
+            TMP_Text nameText = shipNameText.GetComponentInChildren<TMP_Text>();
             if (nameText != null) {
                 if (ship != null) {
                     nameText.text = ship.shipName;
@@ -24,22 +26,30 @@ public class NameDisplay : MonoBehaviour
 
         }
 
-        //assegno la main camera come event camera del canvas
-        canvas.GetComponent<Canvas>().worldCamera = Camera.main;
-        canvas.SetActive(false);
+        //assegno la main camera come event camera del shipNameText
+        //Modifica: aggiunta ricerca del componente nel padre (Stefano)
+        shipNameText.GetComponentInParent<Canvas>().worldCamera = Camera.main;
+        shipNameText.SetActive(false);
 
         //input modificato
-        actionMap.FindActionMap("UI").FindAction("ViewNames").performed += ctx => canvas.SetActive(true);
-        actionMap.FindAction("ViewNames").canceled += ctx => canvas.SetActive(false);
+        actionMap.FindActionMap("UI").FindAction("ViewNames").performed += ctx => shipNameText.SetActive(true);
+        actionMap.FindAction("ViewNames").canceled += ctx => shipNameText.SetActive(false);
     }
 
     //gestione della billboard
     void Update() 
     {
-        if (mainCamera != null && canvas != null) 
+        if (mainCamera != null && shipNameText != null) 
         {
-            canvas.transform.LookAt(mainCamera.transform);
-            canvas.transform.Rotate(0, 180, 0); 
+            shipNameText.transform.LookAt(mainCamera.transform);
+            shipNameText.transform.Rotate(0, 180, 0); 
         }
     }
+
+
+
+    //aggiunta sezione per il display della direzione
+
+
+
 }
