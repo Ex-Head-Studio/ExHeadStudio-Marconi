@@ -7,9 +7,11 @@ using Random=UnityEngine.Random;
 public class ShipManager : MonoBehaviour
 {
     [Header("Parameters")]
-    public List<String> shipNames=new List<String>();
+    [Tooltip("Nomi delle navi, indica anche il max di navi spawnabili")]public List<String> shipNames=new List<String>();
+    [Tooltip("Indica quante navi alleate spawnare")][SerializeField] private int numberOfAllies;
+    [Tooltip("Indica quante navi nemiche spawnare")][SerializeField] private int numberOfEnemies;
     List<Ship> ships;
-    
+
     [Header("Lists for debug, don't touch")]
     //le ho messe tutte pubbliche altimenti non posso fare debug
     public List<Ship>enemies=new List<Ship>();
@@ -18,8 +20,8 @@ public class ShipManager : MonoBehaviour
     public List<Ship> activeAllies=new List<Ship>();
     public List<Ship> enemyAttackers=new List<Ship>();
     public List<Ship> activeEnemies=new List<Ship>();
-    private static int allyCount = 1;
-    private static int enemyCount = 1;
+    private static int allyCount = 0;
+    private static int enemyCount = 0;
     
     [SerializeField] private GameObject shipPrefab;
     [SerializeField] private Material allyMaterial;
@@ -52,40 +54,48 @@ public class ShipManager : MonoBehaviour
     
     private void Start()
     {
-        
         StartCoroutine(ShipGeneration());
     }
-    private void Update()
-    {
-        //non è più necessario
-        
-    }
-
     void InstantiateInMap(string shipName)
     {
-        
+        if(numberOfAllies+numberOfEnemies>shipNames.Count){
+            Debug.LogError("Not enough ships for the number of allies and enemies");
+            return;
+        }
 
-        Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
-        newShip.shipName=shipName;
-        newShip.name=shipName;
-        newShip.manager=this;
-        ships.Add(newShip);    
+        //Adesso si possono scegliere quante navi alleate o nemiche far spawnare
+           
         //Decide se la nave è alleata o nemica
-        if(allyCount<=ships.Count/2){
+        if(allyCount<numberOfAllies){
+            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
+            newShip.shipName=shipName;
+            newShip.name=shipName;
+            newShip.manager=this;
+            ships.Add(newShip);
             newShip.SetFaction(0);
             allies.Add(newShip);
             allyCount++;
             newShip.GetComponent<MeshRenderer>().material=allyMaterial;
+            gridManager.InsertShips(newShip);
+            return;
         }
-        else{
+
+        if(enemyCount<numberOfEnemies){
+            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
+            newShip.shipName=shipName;
+            newShip.name=shipName;
+            newShip.manager=this;
+            ships.Add(newShip);
             newShip.SetFaction(1);
             enemies.Add(newShip);
             enemyCount++;
             newShip.GetComponent<MeshRenderer>().material=enemyMaterial;
+            gridManager.InsertShips(newShip);
+            return;
         }
         
-        //chiamata al metodo che piazza la nave nella griglia
-        gridManager.InsertShips(newShip);
+       
+        
     }
 
     //questa funzione va rivista perchè non viene mai chiamata, la collego all'evento di inzio turno
@@ -97,6 +107,7 @@ public class ShipManager : MonoBehaviour
     {
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
         allyAttackers = allies.Where(x => x.LookForObjectives(enemies)).ToList();
+        List<Ship> movableAllies = allies.Where(x => x.LookForMovement()).ToList();
         /*Debug.Log("Numero: " + allyAttackers.Count());
         foreach(Ship ship in allyAttackers)
         {
@@ -104,7 +115,7 @@ public class ShipManager : MonoBehaviour
         }*/
         enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)).ToList();
         List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()).ToList();
-        List<Ship> movableAllies = allies.Where(x => x.LookForMovement()).ToList();
+        
 
         //Una volta che le navi sono state selezionate, si decide cosa far fare a una fazione a seconda di quante navi ha a disposizione
         //per attaccare e per muoversi
