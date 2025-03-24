@@ -23,6 +23,7 @@ public abstract class AbstractEventSO<T>: ScriptableObject
 
     public void Invoke(T value)
     {
+        //righe commentate per evitare errori sulle iterazioni
         /*foreach(AbstractEventListenerSO<T> listener in listeners)
         {
             listener.Listen(value);

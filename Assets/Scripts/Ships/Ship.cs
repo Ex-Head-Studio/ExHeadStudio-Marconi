@@ -239,6 +239,7 @@ public class Ship : MonoBehaviour
         {
             Debug.Log("Nave colpita");
             manager.RemoveShip(this, faction);
+                
             shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(name, faction, position));
             shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
         }

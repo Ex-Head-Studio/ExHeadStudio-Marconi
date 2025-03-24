@@ -22,11 +22,12 @@ public class GameMenuManager : MonoBehaviour
     [Tooltip("Input Actions Asset, permette la mappatura degli input da altri dispositivi")]
     [SerializeField] private InputActionAsset inputs;
 
+    //TODO da cambiare, bisogna linkarli allo SO dell navi;
+
+    [SerializeField] private int enemyShips = 3;
+    [SerializeField] private int allyShips = 3;
 
 
-
-
-    
     private void Start()
     {
         //TODO verificare se può essere fatto meglio e senza stringhe
@@ -59,6 +60,24 @@ public class GameMenuManager : MonoBehaviour
         pausePanel.SetActive(true);
         displayPanel.SetActive(false);
         confirmPanel.SetActive(false);
+    }
+
+    public void UpdateShipsCount(ShipDestroyedStruct shipDestroyed)
+    {
+        if(shipDestroyed.entity == (int)Entity.ally)
+        {
+            allyShips -= 1;
+        }
+        else
+        {
+            enemyShips -= 1;
+        }
+
+        if(enemyShips == 0 || allyShips == 0)
+        {
+            //passiamo il perdente
+            OnEndGame(enemyShips == 0 ? (int)Entity.enemy : (int)Entity.ally);
+        }
     }
 
 
@@ -102,6 +121,5 @@ public class GameMenuManager : MonoBehaviour
     {
         Application.Quit();
     }
-
 
 }

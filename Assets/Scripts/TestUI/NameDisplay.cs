@@ -12,6 +12,9 @@ public class NameDisplay : MonoBehaviour
     private Camera mainCamera;
     [SerializeField] private InputActionAsset actionMap;
 
+
+    //TODO possiamo aggiungere anche un modificatore del colore della nave in base alla fazione
+
     void Start() {
         mainCamera = Camera.main;
         Ship ship = gameObject.GetComponent<Ship>();
@@ -34,16 +37,18 @@ public class NameDisplay : MonoBehaviour
         //input modificato
         actionMap.FindActionMap("UI").FindAction("ViewNames").performed += ctx => shipNameText.SetActive(true);
         actionMap.FindAction("ViewNames").canceled += ctx => shipNameText.SetActive(false);
+
+         
     }
 
     //gestione della billboard
     void Update() 
     {
-        if (mainCamera != null && shipNameText != null) 
+        /*if (mainCamera != null && shipNameText != null) 
         {
             shipNameText.transform.LookAt(mainCamera.transform);
-            shipNameText.transform.Rotate(0, 180, 0); 
-        }
+            shipNameText.transform.Rotate(0, 0, 180); 
+        }*/
     }
 
 

@@ -64,6 +64,7 @@ public class ShipManager : MonoBehaviour
         }
 
         //Adesso si possono scegliere quante navi alleate o nemiche far spawnare
+        //Sono sicuro si possa mostrare in inspector un errore se la somma di navi eccede i limiti (stefano)
            
         //Decide se la nave è alleata o nemica
         if(allyCount<numberOfAllies){

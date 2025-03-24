@@ -1560,6 +1560,7 @@ GameObject:
   - component: {fileID: 7304808638750184308}
   - component: {fileID: 5898486102090136269}
   - component: {fileID: 2398932702815304891}
+  - component: {fileID: 402426156512524300}
   m_Layer: 5
   m_Name: PostJamGameCanvas
   m_TagString: Untagged
@@ -1673,6 +1674,8 @@ MonoBehaviour:
   displayPanel: {fileID: 3489120974789908492}
   confirmPanel: {fileID: 8243181709778234693}
   inputs: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
+  enemyShips: 3
+  allyShips: 3
 --- !u!114 &7304808638750184308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1759,8 +1762,36 @@ MonoBehaviour:
   enemyToggleGroup: {fileID: 4178245445840695062}
   allyColor: {r: 0.21568629, g: 0.886, b: 0.21568629, a: 1}
   enemyColor: {r: 0.784, g: 0, b: 0, a: 1}
-  messagesStack: {fileID: 11400000, guid: 74f00b27aae28cf46b0c721ccf170c14, type: 2}
+  messagesStack: {fileID: 11400000, guid: 0089ed49510cec842a0fac693ced129a, type: 2}
   answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
+--- !u!114 &402426156512524300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4870401875397307769}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c1f3156ee248b4ab39fc1bf645501e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 4712459035336583460}
+        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+        m_MethodName: UpdateShipsCount
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &5251198433715884133
 GameObject:
   m_ObjectHideFlags: 0

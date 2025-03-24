@@ -502,6 +502,14 @@ PrefabInstance:
       propertyPath: shipPrefab
       value: 
       objectReference: {fileID: 7409743080964778017, guid: aebd5cb8756e42641926e1082d5ef9b0, type: 3}
+    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: numberOfAllies
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: numberOfEnemies
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5104236288274845499, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -754,10 +762,6 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
-    - target: {fileID: 2398932702815304891, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
-      propertyPath: messagesStack
-      value: 
-      objectReference: {fileID: 11400000, guid: 0089ed49510cec842a0fac693ced129a, type: 2}
     - target: {fileID: 2536171111192032010, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: m_Camera
       value: 
@@ -849,10 +853,6 @@ PrefabInstance:
     - target: {fileID: 4870401875397307769, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: m_Name
       value: GameCanvas
-      objectReference: {fileID: 0}
-    - target: {fileID: 4870401875397307769, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
-      propertyPath: m_IsActive
-      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

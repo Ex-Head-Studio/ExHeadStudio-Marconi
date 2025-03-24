@@ -10,15 +10,17 @@ public class DirectionIndicatorTest : MonoBehaviour, IPointerEnterHandler, IPoin
     //della nave selezionata
     private ToggleInformations toggleInformations;
     private string shipName;
+    private int directionIndicator;
+    private int messageType;
 
-    //uso uno unityevents, bisogna vedere se c'è qualcosa di migliore
-
-    public static event Action<string> OnPointerEnterEvent;
+    public static event Action<string, int, int> OnPointerEnterEvent;
     public static event Action<string> OnPointerExitEvent;
     private void Start()
     {
         toggleInformations = GetComponent<ToggleInformations>();
         shipName = toggleInformations.GetToggleSender();
+        directionIndicator = toggleInformations.GetToggleDirection();
+        messageType = toggleInformations.GetToggleMessageType();
     }
 
 
@@ -31,7 +33,7 @@ public class DirectionIndicatorTest : MonoBehaviour, IPointerEnterHandler, IPoin
 
     public void OnPointerEnter(PointerEventData eventData)
     {
-        OnPointerEnterEvent?.Invoke(shipName);
+        OnPointerEnterEvent?.Invoke(shipName, directionIndicator, messageType);
         Debug.Log("Pointer Enter, ship: " + shipName);
     }
 
