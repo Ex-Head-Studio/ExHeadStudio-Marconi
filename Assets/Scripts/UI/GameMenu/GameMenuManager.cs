@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
@@ -15,6 +16,8 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [Tooltip("Panello delle opzioni, mostra le opzioni di gioco")]
     [SerializeField] private GameObject optionsPanel;
+
+    [Header("Messages panels")]
     [SerializeField] private GameObject displayPanel;
     [SerializeField] private GameObject confirmPanel;
 
@@ -22,17 +25,19 @@ public class GameMenuManager : MonoBehaviour
     [Tooltip("Input Actions Asset, permette la mappatura degli input da altri dispositivi")]
     [SerializeField] private InputActionAsset inputs;
 
-    //TODO da cambiare, bisogna linkarli allo SO dell navi;
+    [Header("Ship number SO")]
+    [SerializeField] private ShipManagerSO shipManagerSo;
 
-    [SerializeField] private int enemyShips = 3;
-    [SerializeField] private int allyShips = 3;
-
+    private int enemyShips;
+    private int allyShips;
 
     private void Start()
     {
         //TODO verificare se può essere fatto meglio e senza stringhe
         //TODO verificare se è possibile usare ancora esc per muoversi tra i menu
         inputs.FindActionMap("UI").FindAction("PauseGame").performed += ctx => OnPause();
+        enemyShips = shipManagerSo.GetEnemyShips();
+        allyShips = shipManagerSo.GetAllyShips();
     }
 
 
@@ -75,11 +80,17 @@ public class GameMenuManager : MonoBehaviour
 
         if(enemyShips == 0 || allyShips == 0)
         {
-            //passiamo il perdente
-            OnEndGame(enemyShips == 0 ? (int)Entity.enemy : (int)Entity.ally);
+            StartCoroutine(EndGame());
         }
     }
 
+
+    private IEnumerator EndGame()
+    {
+        yield return new WaitForSeconds(2);
+        OnEndGame(enemyShips == 0 ? (int)Entity.enemy : (int)Entity.ally);
+        //SceneManager.LoadScene(0);
+    }
 
 
 

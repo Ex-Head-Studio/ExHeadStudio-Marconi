@@ -7,6 +7,9 @@ using Random=UnityEngine.Random;
 public class ShipManager : MonoBehaviour
 {
     [Header("Parameters")]
+    [SerializeField] private ShipManagerSO shipManagerSO;
+    //te li ho messi anche nell'SO
+
     [Tooltip("Nomi delle navi, indica anche il max di navi spawnabili")]public List<String> shipNames=new List<String>();
     [Tooltip("Indica quante navi alleate spawnare")][SerializeField] private int numberOfAllies;
     [Tooltip("Indica quante navi nemiche spawnare")][SerializeField] private int numberOfEnemies;
@@ -23,6 +26,8 @@ public class ShipManager : MonoBehaviour
     private static int allyCount = 0;
     private static int enemyCount = 0;
     
+
+    //questo forse si può togliere se lo associamo ad ogni nave, cioè possiamo spostare il metodo che istanzia il prefab
     [SerializeField] private GameObject shipPrefab;
     [SerializeField] private Material allyMaterial;
     [SerializeField] private Material enemyMaterial;
@@ -34,7 +39,6 @@ public class ShipManager : MonoBehaviour
     [SerializeField] private MessageReceivedEvent messageReceivedEvent;
 
     //TODO bisogna linkare il numero di navi con la UI (Stefano), verifica se serve anche in funzione delle luci
-    //questa cosa va fatta usando un SO per i contatori
 
 
     //TODO trovare il modo di referenziare correttamente il grid manager, qui è fatto veloce
@@ -67,7 +71,10 @@ public class ShipManager : MonoBehaviour
         //Sono sicuro si possa mostrare in inspector un errore se la somma di navi eccede i limiti (stefano)
            
         //Decide se la nave è alleata o nemica
-        if(allyCount<numberOfAllies){
+        if(allyCount<numberOfAllies)
+        {
+            //tipo questa cosa potremmo spostarla in un metodo che istanzia il prefab, all'interno dello script della nave
+            //Se facciamo così ogni nave istanzierà il proprio prefab e si posizionerà da sola se gli passiamo le coordinate
             Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
             newShip.shipName=shipName;
             newShip.name=shipName;

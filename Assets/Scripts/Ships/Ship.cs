@@ -4,6 +4,9 @@ using System.Linq;
 using Random=UnityEngine.Random;
 public class Ship : MonoBehaviour
 {
+    [Header("Scriptable Objects")]
+    [SerializeField] private ShipSO shipSO;
+
     [Header("Ship Parameters")]
     [SerializeField] float nearbyShipSearchRadius;
     [SerializeField] public Vector2 position;
@@ -17,9 +20,13 @@ public class Ship : MonoBehaviour
         Moving,
         Waiting
     }
+    
     public string shipName;
     public ShipManager manager;
     
+
+    // questa va inserita nella logica delle navi
+    private int health;
     public Vector2 nextPos;
     public ShipState currentState=ShipState.Waiting;
     public Vector2 targetPos;
@@ -29,7 +36,6 @@ public class Ship : MonoBehaviour
     
     void Awake()
     {
-        
         gridManager= FindFirstObjectByType<GridManager>();
         shipLayer=LayerMask.GetMask("Ship");
 
@@ -100,7 +106,6 @@ public class Ship : MonoBehaviour
     
     public void ExecuteInstructions(AnswerStruct answerStruct)
     {
-        Debug.Log("Esecuzione ordini");
         int entity = answerStruct.entity;
         bool answer = answerStruct.result;
         //True per gli alleati CONFERMA l'azione
@@ -125,7 +130,6 @@ public class Ship : MonoBehaviour
             }
             else
             {
-                currentState = ShipState.Moving;
                 currentState = ShipState.Waiting;
             }
         }
@@ -139,14 +143,12 @@ public class Ship : MonoBehaviour
             {
                     if(currentState==ShipState.Attacking)
                     {
-                        Debug.Log("Attacco Nemico");
                         //evento dove si dichiara la posizione 2D della nave avversaria da colpire
                         attackEvent?.Invoke(new ShipAttackStruct(targetPos));
 
                     }
                     else if(currentState==ShipState.Moving)
                     {
-                        Debug.Log("Movimento Nemico");
                         //qui siamo sicuri di non dover chiamare un metodo?
                         gridManager.MoveShip(position, nextPos, entity);
                         position=nextPos;
@@ -233,15 +235,19 @@ public class Ship : MonoBehaviour
         this.faction=faction;
     }
 
+
+    //possiamo valutare se passare anche il danno nella shipAttackStruct
     public void OnAttacked(ShipAttackStruct attackPosition)
     {
         if(position.x == attackPosition.gridPosition.x && position.y == attackPosition.gridPosition.y)
         {
-            Debug.Log("Nave colpita");
+            //per ora decrementiamo di uno la vita
+            health--;
+            if(health<=0)
+            {
+                shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
+            }
             manager.RemoveShip(this, faction);
-                
-            shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(name, faction, position));
-            shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
         }
     }
 }

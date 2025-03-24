@@ -45,6 +45,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ac74ef68c2a3f4f40a53ad9110493e5f, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  shipManagerSO: {fileID: 11400000, guid: 1a848b7233ca7ea4397d47d8102625a1, type: 2}
   shipNames:
   - Ardito
   - Intrepido
@@ -52,13 +53,15 @@ MonoBehaviour:
   - Roma
   - Garibaldi
   - Cavour
+  numberOfAllies: 3
+  numberOfEnemies: 3
   enemies: []
   allies: []
   allyAttackers: []
   activeAllies: []
   enemyAttackers: []
   activeEnemies: []
-  shipPrefab: {fileID: 6176163466115431475, guid: 1fb0b5eb286bf534391fd387aa510554, type: 3}
+  shipPrefab: {fileID: 7409743080964778017, guid: aebd5cb8756e42641926e1082d5ef9b0, type: 3}
   allyMaterial: {fileID: 2100000, guid: fd2002976a6e2fd42859a524ad6636ed, type: 2}
   enemyMaterial: {fileID: 2100000, guid: 02818fd892aef0d4e931c3948c532433, type: 2}
   shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}

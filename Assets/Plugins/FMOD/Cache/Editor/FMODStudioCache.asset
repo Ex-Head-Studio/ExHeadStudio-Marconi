@@ -42,10 +42,10 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.strings.bank
   Name: Desktop/Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638776339407963618
+  lastModified: 638784360623624399
   FileSizes:
   - Name: 
-    Value: 1026
+    Value: 1132
   Exists: 1
 --- !u!114 &-7545578330973327430
 MonoBehaviour:
@@ -62,7 +62,7 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.bank
   Name: Desktop/Master
   StudioPath: bank:/Master
-  lastModified: 638776339407933626
+  lastModified: 638784360623609228
   FileSizes: []
   Exists: 1
 --- !u!114 &-6303109462738554844
@@ -83,6 +83,33 @@ MonoBehaviour:
   lastModified: 638774618386710125
   FileSizes: []
   Exists: 1
+--- !u!114 &-5048089156616822725
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/MessageHover
+  m_EditorClassIdentifier: 
+  Path: event:/UI/MessageHover
+  Guid:
+    Data1: 1632396922
+    Data2: 1077733705
+    Data3: 1523311242
+    Data4: 1641239830
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1000
 --- !u!114 &-2412686949106737192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -213,12 +240,14 @@ MonoBehaviour:
   - {fileID: -883375222632384933}
   - {fileID: -134278303666386650}
   - {fileID: 7728109848283919040}
+  - {fileID: -5048089156616822725}
+  - {fileID: 2474632994682864173}
   EditorParameters: []
   MasterBanks:
   - {fileID: -7545578330973327430}
   StringsBanks:
   - {fileID: -8517476599244968727}
-  cacheTime: 638776339407963618
+  cacheTime: 638784360623624399
   cacheVersion: 131846
 --- !u!114 &246142633262423928
 MonoBehaviour:
@@ -247,6 +276,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 280364
+--- !u!114 &2474632994682864173
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/UI/MessageSelection
+  m_EditorClassIdentifier: 
+  Path: event:/UI/MessageSelection
+  Guid:
+    Data1: -1167904880
+    Data2: 1111545895
+    Data3: -1667886677
+    Data4: 779259820
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1000
 --- !u!114 &5625964929855728779
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -109,6 +109,14 @@ public class GridManager : MonoBehaviour
             return;
         }
 
+
+        //aggiunto per evitare l'eccezione lanciata alla riga 127
+        if(!_tiles.ContainsKey(currentPosition) || !_tiles.ContainsKey(newPosition))
+        {
+            Debug.Log("La nave non può muoversi in questa posizione");
+            return;
+        }
+
         Debug.Log("La nave in posizione: " + currentPosition.x + " " + currentPosition.y +"\n"+
         "muove in: "+ newPosition.x + " " + newPosition.y);
 

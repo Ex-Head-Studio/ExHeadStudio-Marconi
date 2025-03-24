@@ -498,18 +498,6 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShipManager
       objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: shipPrefab
-      value: 
-      objectReference: {fileID: 7409743080964778017, guid: aebd5cb8756e42641926e1082d5ef9b0, type: 3}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: numberOfAllies
-      value: 3
-      objectReference: {fileID: 0}
-    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
-      propertyPath: numberOfEnemies
-      value: 3
-      objectReference: {fileID: 0}
     - target: {fileID: 5104236288274845499, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -850,6 +838,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4712459035336583460, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      propertyPath: shipManagerSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 1a848b7233ca7ea4397d47d8102625a1, type: 2}
     - target: {fileID: 4870401875397307769, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: m_Name
       value: GameCanvas
@@ -1957,6 +1949,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: GridCamera
       objectReference: {fileID: 0}
+    - target: {fileID: 8358718897167728164, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
+      propertyPath: m_TagString
+      value: Untagged
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
@@ -1966,12 +1962,12 @@ PrefabInstance:
 SceneRoots:
   m_ObjectHideFlags: 0
   m_Roots:
-  - {fileID: 1377033168}
-  - {fileID: 1436878745}
   - {fileID: 2354926320008286107}
   - {fileID: 1846428340}
   - {fileID: 1388919910}
   - {fileID: 1101342052}
+  - {fileID: 1436878745}
+  - {fileID: 1377033168}
   - {fileID: 952986211}
   - {fileID: 594546404}
   - {fileID: 985681636}

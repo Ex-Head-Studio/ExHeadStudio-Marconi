@@ -35,7 +35,7 @@ public class NameDisplay : MonoBehaviour
         shipNameText.SetActive(false);
 
         //input modificato
-        actionMap.FindActionMap("UI").FindAction("ViewNames").performed += ctx => shipNameText.SetActive(true);
+        actionMap.FindActionMap("UI").FindAction("ViewNames").performed += ctx => shipNameText?.SetActive(true);
         actionMap.FindAction("ViewNames").canceled += ctx => shipNameText.SetActive(false);
 
          
