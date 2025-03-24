@@ -14,9 +14,7 @@ public class AudioManager : MonoBehaviour
     [field: SerializeField] public EventReference controlAmbience { get; private set; }
 
 
-    //private EventInstance musicInstance;
-    //[field: Header("Music")]
-    //[field: SerializeField] public EventReference music { get; private set; }
+    
     private void Awake()
     {
         if (instance != null)
@@ -42,8 +40,13 @@ public class AudioManager : MonoBehaviour
             UnityEngine.Debug.LogError("Ambience event not found");
             return;
         }
-        // ambianceEventInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
         ambianceEventInstance.start();
+    }
+
+    public void OnDestroy()
+    {
+        ambianceEventInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+        ambianceEventInstance.release();
     }
 
     //private void InitializeMusic(EventReference eventReference)
@@ -57,4 +60,7 @@ public class AudioManager : MonoBehaviour
     //    musicInstance.setParameterByName("Stato Musica", (float)state);
     //}
 
+    //private EventInstance musicInstance;
+        //[field: Header("Music")]
+        //[field: SerializeField] public EventReference music { get; private set; }
 }
