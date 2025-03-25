@@ -1590,7 +1590,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: -186, y: -1.1}
+  m_AnchoredPosition: {x: -186, y: -1.0999756}
   m_SizeDelta: {x: 1920, y: 1080}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!223 &2536171111192032010
@@ -1638,7 +1638,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!114 &3550800056539705815
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1674,8 +1674,7 @@ MonoBehaviour:
   displayPanel: {fileID: 3489120974789908492}
   confirmPanel: {fileID: 8243181709778234693}
   inputs: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  enemyShips: 3
-  allyShips: 3
+  shipManagerSo: {fileID: 11400000, guid: 1a848b7233ca7ea4397d47d8102625a1, type: 2}
 --- !u!114 &7304808638750184308
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1762,7 +1761,7 @@ MonoBehaviour:
   enemyToggleGroup: {fileID: 4178245445840695062}
   allyColor: {r: 0.21568629, g: 0.886, b: 0.21568629, a: 1}
   enemyColor: {r: 0.784, g: 0, b: 0, a: 1}
-  messagesStack: {fileID: 11400000, guid: 0089ed49510cec842a0fac693ced129a, type: 2}
+  messagesStack: {fileID: 11400000, guid: 7cb46817945bbc545a0c7ca530f617fe, type: 2}
   answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
 --- !u!114 &402426156512524300
 MonoBehaviour:

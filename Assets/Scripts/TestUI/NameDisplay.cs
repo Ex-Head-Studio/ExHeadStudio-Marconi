@@ -15,6 +15,21 @@ public class NameDisplay : MonoBehaviour
 
     //TODO possiamo aggiungere anche un modificatore del colore della nave in base alla fazione
 
+
+    //input modificato
+
+
+    private void OnEnable() 
+    {
+        actionMap.FindActionMap("UI").FindAction("ViewNames").performed += ctx => shipNameText?.SetActive(true);
+        actionMap.FindAction("ViewNames").canceled += ctx => shipNameText.SetActive(false);
+    }
+
+    private void OnDisable() 
+    {
+        actionMap.FindActionMap("UI").FindAction("ViewNames").performed -= ctx => shipNameText?.SetActive(true);
+        actionMap.FindAction("ViewNames").canceled -= ctx => shipNameText.SetActive(false); 
+    }
     void Start() {
         mainCamera = Camera.main;
         Ship ship = gameObject.GetComponent<Ship>();
@@ -34,9 +49,7 @@ public class NameDisplay : MonoBehaviour
         shipNameText.GetComponentInParent<Canvas>().worldCamera = Camera.main;
         shipNameText.SetActive(false);
 
-        //input modificato
-        actionMap.FindActionMap("UI").FindAction("ViewNames").performed += ctx => shipNameText?.SetActive(true);
-        actionMap.FindAction("ViewNames").canceled += ctx => shipNameText.SetActive(false);
+
 
          
     }

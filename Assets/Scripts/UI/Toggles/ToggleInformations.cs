@@ -3,9 +3,8 @@ using UnityEngine.UI;
 
 public class ToggleInformations : MonoBehaviour
 {
-    [SerializeField] private string sender;
+    private string sender;
     private int enemy, direction, messageType;
-
     private Toggle toggle;
     private ToggleGroup toggleGroup;
 
@@ -22,7 +21,7 @@ public class ToggleInformations : MonoBehaviour
         this.messageType = messageType;
     }
 
-    public void PrintInformations(bool value)
+    public void PrintInformations()
     {
         if(toggle.isOn)
         {

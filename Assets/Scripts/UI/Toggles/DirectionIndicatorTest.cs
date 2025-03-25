@@ -34,7 +34,7 @@ public class DirectionIndicatorTest : MonoBehaviour, IPointerEnterHandler, IPoin
     public void OnPointerEnter(PointerEventData eventData)
     {
         OnPointerEnterEvent?.Invoke(shipName, directionIndicator, messageType);
-        Debug.Log("Pointer Enter, ship: " + shipName);
+        Debug.Log("Pointer Enter, ship and direction: " + shipName + " " + directionIndicator); 
     }
 
 

@@ -6,7 +6,7 @@ public class toggleSounds : MonoBehaviour
 {
     private FMOD.Studio.EventInstance hoverMessage;
 
-    private void Playhover()
+    public void Playhover()
     {
         hoverMessage = FMODUnity.RuntimeManager.CreateInstance("event:/UI/MessageHover");
         hoverMessage.start();
@@ -14,7 +14,7 @@ public class toggleSounds : MonoBehaviour
     }
 
     private FMOD.Studio.EventInstance selectMessage;
-    private void PlaySelect()
+    public void PlaySelect()
     {
         selectMessage = FMODUnity.RuntimeManager.CreateInstance("event:/UI/MessageSelection");
         selectMessage.start();
