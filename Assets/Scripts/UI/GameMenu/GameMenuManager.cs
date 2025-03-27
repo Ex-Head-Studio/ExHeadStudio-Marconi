@@ -21,6 +21,10 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] private GameObject displayPanel;
     [SerializeField] private GameObject confirmPanel;
 
+    [Header("Objects panels")]
+    [SerializeField] private GameObject objectPanel;
+    [SerializeField] private GameObject objectDescriptionPanel;
+
     [Header("Input Actions")]
     [Tooltip("Input Actions Asset, permette la mappatura degli input da altri dispositivi")]
     [SerializeField] private InputActionAsset inputs;
@@ -48,6 +52,8 @@ public class GameMenuManager : MonoBehaviour
         optionsPanel.SetActive(false);
         displayPanel.SetActive(true);
         confirmPanel.SetActive(true);
+        objectPanel.SetActive(false);
+        objectDescriptionPanel.SetActive(false);   
     }
 
 
@@ -63,6 +69,14 @@ public class GameMenuManager : MonoBehaviour
     {
         Time.timeScale = 0;
         pausePanel.SetActive(true);
+        displayPanel.SetActive(false);
+        confirmPanel.SetActive(false);
+    }
+
+    public void OnObjectDisplay()
+    {
+        objectPanel.SetActive(true);
+        objectDescriptionPanel.SetActive(true);
         displayPanel.SetActive(false);
         confirmPanel.SetActive(false);
     }
