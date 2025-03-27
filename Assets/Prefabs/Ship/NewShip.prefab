@@ -323,7 +323,6 @@ GameObject:
   - component: {fileID: 769094900928462760}
   - component: {fileID: 4609333468072637937}
   - component: {fileID: 5147647407383077810}
-  - component: {fileID: 2941105610232887662}
   - component: {fileID: 1085708604119113370}
   - component: {fileID: 3556178522352949066}
   - component: {fileID: 5232831309842758109}
@@ -333,8 +332,9 @@ GameObject:
   - component: {fileID: 2364815438390352066}
   - component: {fileID: 2907398998449270009}
   - component: {fileID: 5563981382519112349}
+  - component: {fileID: 8862446472114975571}
   m_Layer: 6
-  m_Name: ShipWithDirectionIndicator
+  m_Name: NewShip
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -430,33 +430,6 @@ SphereCollider:
   serializedVersion: 3
   m_Radius: 0.5
   m_Center: {x: 0, y: 0, z: 0}
---- !u!114 &2941105610232887662
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7409743080964778017}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9d2d094c3fc39d84b96d1f251cc20b3a, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipSO: {fileID: 11400000, guid: 2fbe1eeb15352c841b681056495d7110, type: 2}
-  nearbyShipSearchRadius: 3
-  position: {x: 0, y: 0}
-  shipInfluence: 0
-  messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
-  shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
-  attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
-  gridManager: {fileID: 0}
-  shipName: 
-  manager: {fileID: 0}
-  currentState: 2
-  targetPos:
-  - {x: 877767520, y: 320}
-  - {x: 877765120, y: 320}
-  faction: 0
 --- !u!114 &1085708604119113370
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -505,7 +478,7 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2941105610232887662}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ship, Assembly-CSharp
         m_MethodName: ExecuteInstructions
         m_Mode: 0
@@ -573,7 +546,7 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2941105610232887662}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: Ship, Assembly-CSharp
         m_MethodName: OnAttacked
         m_Mode: 0
@@ -629,3 +602,31 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directionIndicatorImage: {fileID: 2658613635904989003}
   gridCamera: {fileID: 8288683419973744189, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
+--- !u!114 &8862446472114975571
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409743080964778017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d77cd057ffbcee45afab5b3cd69ebcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipSO: {fileID: 11400000, guid: 5028460dd36551949a087a7dd00fc112, type: 2}
+  nearbyShipSearchRadius: 0
+  position: {x: 0, y: 0}
+  shipInfluence: 0
+  messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
+  shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
+  attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
+  gridManager: {fileID: 0}
+  shipLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  shipName: 
+  manager: {fileID: 0}
+  currentState: 2
+  targetPos: []
+  faction: 0

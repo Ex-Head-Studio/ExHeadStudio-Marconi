@@ -45,6 +45,7 @@ public class GameManager : MonoBehaviour
 
         //la coroutine serve a dare il tempo al sistema di eseguire tutte le operazioni 
         // prima del prossimo turno
+        
         StartCoroutine(WaitNextRound());
     }
 

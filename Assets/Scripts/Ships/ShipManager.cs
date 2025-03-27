@@ -6,17 +6,15 @@ using UnityEngine;
 using Random=UnityEngine.Random;
 public class ShipManager : MonoBehaviour
 {
+    
     [Header("Parameters")]
     [SerializeField] private ShipManagerSO shipManagerSO;
-    //te li ho messi anche nell'SO
-
-    [Tooltip("Nomi delle navi, indica anche il max di navi spawnabili")]public List<String> shipNames=new List<String>();
-    [Tooltip("Indica quante navi alleate spawnare")][SerializeField] private int numberOfAllies;
-    [Tooltip("Indica quante navi nemiche spawnare")][SerializeField] private int numberOfEnemies;
     List<Ship> ships;
+    public List<ShipSO> shipChoice;
 
     [Header("Lists for debug, don't touch")]
     //le ho messe tutte pubbliche altimenti non posso fare debug
+    public InfluenceMap influenceMap;
     public List<Ship>enemies=new List<Ship>();
     public List<Ship>allies=new List<Ship>();
     public List<Ship> allyAttackers=new List<Ship>();
@@ -31,6 +29,7 @@ public class ShipManager : MonoBehaviour
     [SerializeField] private GameObject shipPrefab;
     [SerializeField] private Material allyMaterial;
     [SerializeField] private Material enemyMaterial;
+     
 
     [Header("Events")]
     //[SerializeField] private OnShipAttackEvent attackEvent;
@@ -50,19 +49,20 @@ public class ShipManager : MonoBehaviour
     {
         
         ships = new List<Ship>();
-        shipNames.OrderBy(x => Random.value);
+        shipManagerSO.RandomizeShips();
         //TODO rivedere questa cosa
         gridManager = FindFirstObjectByType<GridManager>();
-
+        influenceMap = new InfluenceMap(gridManager._width, gridManager._height, shipManagerSO.influenceDecay, shipManagerSO.decayMomentum);
+        //shipChoice = AssetBundle.LoadFromFile("Assets/AssetBundle/shipchoices").LoadAllAssets<ShipSO>().ToList();
     }
     
     private void Start()
     {
         StartCoroutine(ShipGeneration());
     }
-    void InstantiateInMap(string shipName)
+    protected void InstantiateInMap(string shipName)
     {
-        if(numberOfAllies+numberOfEnemies>shipNames.Count){
+        if(shipManagerSO.allyShips+shipManagerSO.enemyShips>shipManagerSO.startingShips.Count){
             Debug.LogError("Not enough ships for the number of allies and enemies");
             return;
         }
@@ -71,34 +71,42 @@ public class ShipManager : MonoBehaviour
         //Sono sicuro si possa mostrare in inspector un errore se la somma di navi eccede i limiti (stefano)
            
         //Decide se la nave è alleata o nemica
-        if(allyCount<numberOfAllies)
+        if(allyCount<shipManagerSO.allyShips)
         {
             //tipo questa cosa potremmo spostarla in un metodo che istanzia il prefab, all'interno dello script della nave
             //Se facciamo così ogni nave istanzierà il proprio prefab e si posizionerà da sola se gli passiamo le coordinate
-            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
+            NewShip newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<NewShip>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
             ships.Add(newShip);
             newShip.SetFaction(0);
+            newShip.shipSO = shipChoice[Random.Range(0,4)];
+            newShip.shipLayer=LayerMask.GetMask("Enemy");
+            newShip.shipInfluence=1;
             allies.Add(newShip);
             allyCount++;
             newShip.GetComponent<MeshRenderer>().material=allyMaterial;
             gridManager.InsertShips(newShip);
+            influenceMap.RegisterPropagator(newShip);
+
             return;
         }
-
-        if(enemyCount<numberOfEnemies){
-            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
+        if(enemyCount<shipManagerSO.enemyShips){
+            NewShip newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<NewShip>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
             ships.Add(newShip);
             newShip.SetFaction(1);
+            newShip.shipSO = shipChoice[Random.Range(0,4)];
+            newShip.shipLayer=LayerMask.GetMask("Ally");
+            newShip.shipInfluence=-1;
             enemies.Add(newShip);
             enemyCount++;
             newShip.GetComponent<MeshRenderer>().material=enemyMaterial;
             gridManager.InsertShips(newShip);
+            influenceMap.RegisterPropagator(newShip);
             return;
         }
         
@@ -246,6 +254,10 @@ public class ShipManager : MonoBehaviour
         activeAllies.ForEach(x => x.SendMessage());
         activeEnemies.ForEach(x => x.SendMessage());
     }
+
+    public void EndTurn(){
+        influenceMap.Propagate();
+    }
     
     //cosa fa questo metodo? Da chi toglie cosa?
     public void RemoveShip(Ship ship, int isAlly)
@@ -257,15 +269,17 @@ public class ShipManager : MonoBehaviour
             enemies.Remove(ship);
         }
         ships.Remove(ship);
-
+        influenceMap.UnregisterPropagator(ship);
         shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(ship.shipName, ship.faction, ship.position));
         Destroy(ship.gameObject);
+        influenceMap.Propagate();
     }
     private IEnumerator ShipGeneration(){
         yield return new WaitForSeconds(1);
-        foreach (string shipName in shipNames)
+        foreach (string ship in shipManagerSO.startingShips)
         {
-            InstantiateInMap(shipName);
+            InstantiateInMap(ship);
         }
+        influenceMap.Propagate();
     }
 }
