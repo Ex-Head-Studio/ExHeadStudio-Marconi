@@ -3,19 +3,20 @@ using UnityEngine.UI;
 
 public abstract class AbstractObject : MonoBehaviour
 {
-    [SerializeField] private AbstractObjectDataSO objSO;
+    private AbstractObjectDataSO abstractObjectDataSO;
 
     public string objectName;
     public string objectDescription;
     public Image objectIllustration;
     private void Start()
     {
-        objectName = objSO.objectName;
-        objectDescription = objSO.objectDescription;
-        objectIllustration = objSO.objectIllustration;
+        abstractObjectDataSO = Resources.Load<AbstractObjectDataSO>("ScriptableObjects/AbstractObjectDataSO");
+        objectName = abstractObjectDataSO.objectName;
+        objectDescription = abstractObjectDataSO.objectDescription;
+        objectIllustration = abstractObjectDataSO.objectIllustration;
     }
 
-
+    //funzione che tutti gli oggetti devono implementare
     public abstract void ObjectAction();
     public virtual void ObjectDebug()
     {

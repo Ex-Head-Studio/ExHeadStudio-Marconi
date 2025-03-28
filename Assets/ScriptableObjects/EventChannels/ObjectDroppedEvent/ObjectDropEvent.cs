@@ -4,3 +4,4 @@ using UnityEngine;
 public class ObjectDropEvent : AbstractEventSO<AbstractObject>
 {
 }
+

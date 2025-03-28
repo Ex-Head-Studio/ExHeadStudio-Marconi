@@ -12,5 +12,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: caf6cf43eff4c1948b596e26f7288dd3, type: 3}
   m_Name: ObjectsStackSO
   m_EditorClassIdentifier: 
-  objectPrefab: {fileID: 5154699822698099101, guid: be5281facfd84e9449ef8510331e03aa, type: 3}
-  messages: []
+  UIobjectPrefab: {fileID: 5154699822698099101, guid: be5281facfd84e9449ef8510331e03aa, type: 3}
+  objects: []

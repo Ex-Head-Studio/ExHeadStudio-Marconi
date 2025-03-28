@@ -1,6 +1,7 @@
 using UnityEngine;
 
-     public enum DropEntity{
+     public enum DropEntity
+     {
         ally,
         enemy,
         obstacle
@@ -8,5 +9,5 @@ using UnityEngine;
 
 public interface Idroppable
 {
-    public abstract void Drop();
+    public abstract void DropConsumable(ConsumableObject consObj);
 }

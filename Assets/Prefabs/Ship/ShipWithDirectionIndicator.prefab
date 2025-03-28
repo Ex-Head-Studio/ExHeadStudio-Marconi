@@ -641,4 +641,6 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   dropEvent: {fileID: 11400000, guid: e400011d5724ec54c9623c62a0a0d41e, type: 2}
-  consumableObject: {fileID: 6648697927679063206, guid: 65dbbff81715edf43bef5956731c530f, type: 3}
+  consumableObject:
+  - {fileID: 11400000, guid: 5b56d2e6d5c7e464390e02479d52df7e, type: 2}
+  - {fileID: 11400000, guid: a96bdfd06b9987a40938a7f2ebbe0755, type: 2}

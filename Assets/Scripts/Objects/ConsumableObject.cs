@@ -2,17 +2,12 @@ using UnityEngine;
 
 public class ConsumableObject : AbstractObject
 {
-   [SerializeField] private ConsumableObjectData consumableObjectData;
 
-   private int dropEntity;
-
+   private int enityDrop;
    private void Start()
    {
       //sono variabili ereditate
-      objectName = consumableObjectData.objectName;
-      objectDescription = consumableObjectData.objectDescription;
-      objectIllustration = consumableObjectData.objectIllustration;
-      dropEntity = consumableObjectData.GetEntityDrop();
+
    }
 
    public override void ObjectAction()
@@ -21,6 +16,15 @@ public class ConsumableObject : AbstractObject
    }
    public int GetEntityDrop()
    {
-      return dropEntity;
+      return enityDrop;
+   }
+
+   public ConsumableObject(ConsumableObjectData data)
+   {
+      objectName = data.objectName;
+      objectDescription = data.objectDescription;
+      objectIllustration = data.objectIllustration;
+      enityDrop = data.GetEntityDrop();
+
    }
 }

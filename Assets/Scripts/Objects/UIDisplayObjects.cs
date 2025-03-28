@@ -18,7 +18,7 @@ public class UIDisplayObjects : MonoBehaviour
     //prefab dell'oggetto da visualizzare in UI, è diverso dalla classe AbstractObject
     private GameObject UIobjectPrefab;
     private GameObject tmpObject;
-    private AbstractObject objScript;
+    private UIObjectScript tmpObjectScript;
 
     private void Awake()
     {
@@ -32,25 +32,16 @@ public class UIDisplayObjects : MonoBehaviour
     }
     private void DisplayObject(AbstractObject obj)
     {
-
         // TODO QUESTA COSA VA SISTEMATA, bisogna asseganre uno script al prefab che faccia le operazioni
-        objScript = obj.GetComponent<AbstractObject>();
         //devo settare i parametri del prefab
         //devo prendere i children e settare i parametri
         //il figlio zero è il nome e la parte intergibile
         //il figlio uno è la descrizione
         tmpObject = Instantiate(UIobjectPrefab, objectsStackTransform);
-        tmpObject.name = objScript.objectName;
-        tmpObject.GetComponent<AbstractObject>().SetObjectName(objScript.objectName);
-        tmpObject.transform.GetChild(0).GetComponentInChildren<UnityEngine.UI.Text>().text = objScript.objectName;
-
-        tmpObject.GetComponent<AbstractObject>().SetObjectIllustration(objScript.GetObjectIllustration());
-
-        tmpObject.GetComponent<AbstractObject>().objectDescription = objScript.objectDescription;
-        tmpObject.transform.GetChild(1).GetComponentInChildren<UnityEngine.UI.Text>().text = objScript.objectDescription;
-
-        //da capire sta cosa perchè non sono convinto
-        tmpObject.transform.GetChild(1).SetParent(objectsDescriptionTransform);
+        tmpObject.name = obj.objectName;
+        tmpObjectScript = tmpObject.GetComponent<UIObjectScript>();
+        tmpObjectScript.SetObjectDisplay(obj.GetObjectName(), obj.GetObjectDescription(), obj.GetObjectIllustration());
+        tmpObjectScript.SetDescriptionParent(objectsDescriptionTransform);
     }
 
     public void RemoveObject()
@@ -62,15 +53,9 @@ public class UIDisplayObjects : MonoBehaviour
     public void UseObject()
     {
         //uso dell'oggetto
-        objScript.ObjectAction();
+        //objScript.ObjectAction();
         RemoveObject();
     }
-
-    private void SetUIPrefab()
-    {
-
-    }
-
     private IEnumerator WaitBeforeDestroy(AbstractObject obj)
     {
         yield return new WaitForSeconds(1);

@@ -3,7 +3,7 @@ using UnityEngine;
 [CreateAssetMenu(fileName = "ConsumableObjectData", menuName = "Scriptable Objects/ConsumableObjectData")]
 public class ConsumableObjectData : AbstractObjectDataSO
 {
-   [SerializeField] public DropEntity dropEntity;
+   [SerializeField] private DropEntity dropEntity;
 
     public int GetEntityDrop()
     {
