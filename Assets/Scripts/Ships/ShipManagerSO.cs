@@ -15,8 +15,8 @@ public class ShipManagerSO : ScriptableObject
 
     private void OnEnable()
     {
-        enemyShips = 3;
-        allyShips = 3;
+        enemyShips = initialEnemyShips;
+        allyShips = initialAllyShips;
     }
 
     public int GetEnemyShips()

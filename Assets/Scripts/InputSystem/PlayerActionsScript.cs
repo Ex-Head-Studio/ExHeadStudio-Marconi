@@ -171,6 +171,24 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ShowObjectsMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""e0d588a1-5a67-4524-8810-d417438aabd6"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
+                },
+                {
+                    ""name"": ""ExitMenu"",
+                    ""type"": ""Button"",
+                    ""id"": ""c8b1d755-f885-4383-b978-4d6d0bece5e8"",
+                    ""expectedControlType"": """",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -580,6 +598,50 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
                     ""action"": ""ViewNames"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""e50a8f01-9ddd-4894-bba5-4380252d3048"",
+                    ""path"": ""<Keyboard>/e"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ShowObjectsMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""4749c8d2-0d89-4a44-8ed5-49a7aa8a11bb"",
+                    ""path"": ""<Gamepad>/buttonWest"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ShowObjectsMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""5cb45c2c-ada1-49f2-9c99-a3e9c07d48a7"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Keyboard&Mouse"",
+                    ""action"": ""ExitMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""355a2efd-0e2d-4826-b0f7-314e996be5ac"",
+                    ""path"": ""<Gamepad>/buttonEast"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": "";Gamepad"",
+                    ""action"": ""ExitMenu"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -658,6 +720,8 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
         m_UI_ScrollWheel = m_UI.FindAction("ScrollWheel", throwIfNotFound: true);
         m_UI_PauseGame = m_UI.FindAction("PauseGame", throwIfNotFound: true);
         m_UI_ViewNames = m_UI.FindAction("ViewNames", throwIfNotFound: true);
+        m_UI_ShowObjectsMenu = m_UI.FindAction("ShowObjectsMenu", throwIfNotFound: true);
+        m_UI_ExitMenu = m_UI.FindAction("ExitMenu", throwIfNotFound: true);
     }
 
     ~@PlayerActionsScript()
@@ -747,6 +811,8 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
     private readonly InputAction m_UI_ScrollWheel;
     private readonly InputAction m_UI_PauseGame;
     private readonly InputAction m_UI_ViewNames;
+    private readonly InputAction m_UI_ShowObjectsMenu;
+    private readonly InputAction m_UI_ExitMenu;
     /// <summary>
     /// Provides access to input actions defined in input action map "UI".
     /// </summary>
@@ -794,6 +860,14 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
         /// Provides access to the underlying input action "UI/ViewNames".
         /// </summary>
         public InputAction @ViewNames => m_Wrapper.m_UI_ViewNames;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/ShowObjectsMenu".
+        /// </summary>
+        public InputAction @ShowObjectsMenu => m_Wrapper.m_UI_ShowObjectsMenu;
+        /// <summary>
+        /// Provides access to the underlying input action "UI/ExitMenu".
+        /// </summary>
+        public InputAction @ExitMenu => m_Wrapper.m_UI_ExitMenu;
         /// <summary>
         /// Provides access to the underlying input action map instance.
         /// </summary>
@@ -847,6 +921,12 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
             @ViewNames.started += instance.OnViewNames;
             @ViewNames.performed += instance.OnViewNames;
             @ViewNames.canceled += instance.OnViewNames;
+            @ShowObjectsMenu.started += instance.OnShowObjectsMenu;
+            @ShowObjectsMenu.performed += instance.OnShowObjectsMenu;
+            @ShowObjectsMenu.canceled += instance.OnShowObjectsMenu;
+            @ExitMenu.started += instance.OnExitMenu;
+            @ExitMenu.performed += instance.OnExitMenu;
+            @ExitMenu.canceled += instance.OnExitMenu;
         }
 
         /// <summary>
@@ -885,6 +965,12 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
             @ViewNames.started -= instance.OnViewNames;
             @ViewNames.performed -= instance.OnViewNames;
             @ViewNames.canceled -= instance.OnViewNames;
+            @ShowObjectsMenu.started -= instance.OnShowObjectsMenu;
+            @ShowObjectsMenu.performed -= instance.OnShowObjectsMenu;
+            @ShowObjectsMenu.canceled -= instance.OnShowObjectsMenu;
+            @ExitMenu.started -= instance.OnExitMenu;
+            @ExitMenu.performed -= instance.OnExitMenu;
+            @ExitMenu.canceled -= instance.OnExitMenu;
         }
 
         /// <summary>
@@ -1053,5 +1139,19 @@ public partial class @PlayerActionsScript: IInputActionCollection2, IDisposable
         /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
         /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
         void OnViewNames(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ShowObjectsMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnShowObjectsMenu(InputAction.CallbackContext context);
+        /// <summary>
+        /// Method invoked when associated input action "ExitMenu" is either <see cref="UnityEngine.InputSystem.InputAction.started" />, <see cref="UnityEngine.InputSystem.InputAction.performed" /> or <see cref="UnityEngine.InputSystem.InputAction.canceled" />.
+        /// </summary>
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.started" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.performed" />
+        /// <seealso cref="UnityEngine.InputSystem.InputAction.canceled" />
+        void OnExitMenu(InputAction.CallbackContext context);
     }
 }

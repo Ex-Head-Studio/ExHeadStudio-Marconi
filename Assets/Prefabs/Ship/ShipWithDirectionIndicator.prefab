@@ -333,6 +333,7 @@ GameObject:
   - component: {fileID: 2364815438390352066}
   - component: {fileID: 2907398998449270009}
   - component: {fileID: 5563981382519112349}
+  - component: {fileID: -8728377234537810871}
   m_Layer: 6
   m_Name: ShipWithDirectionIndicator
   m_TagString: Untagged
@@ -627,3 +628,17 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   directionIndicatorImage: {fileID: 2658613635904989003}
   gridCamera: {fileID: 8288683419973744189, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
+--- !u!114 &-8728377234537810871
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409743080964778017}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 5b248a14c8c61a84e9871fe612ad56a2, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  dropEvent: {fileID: 11400000, guid: e400011d5724ec54c9623c62a0a0d41e, type: 2}
+  consumableObject: {fileID: 6648697927679063206, guid: 65dbbff81715edf43bef5956731c530f, type: 3}

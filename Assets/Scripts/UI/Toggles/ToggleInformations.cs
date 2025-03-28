@@ -25,7 +25,7 @@ public class ToggleInformations : MonoBehaviour
     {
         if(toggle.isOn)
         {
-             Debug.Log("Sender: " + sender + " Enemy: " + enemy + " Direction: " + direction + " MessageType: " + messageType);
+            //Debug.Log("Sender: " + sender + " Enemy: " + enemy + " Direction: " + direction + " MessageType: " + messageType);
         }
        
     }

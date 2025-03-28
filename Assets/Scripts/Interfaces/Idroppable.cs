@@ -8,7 +8,5 @@ using UnityEngine;
 
 public interface Idroppable
 {
-
-
     public abstract void Drop();
 }

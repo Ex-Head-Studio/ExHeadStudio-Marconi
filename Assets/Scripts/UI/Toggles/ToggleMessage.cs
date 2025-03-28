@@ -83,11 +83,11 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
     //lancia delle eccezioni
     public void OnPointerEnter(PointerEventData eventData)
     {
-        toggleSounds.Playhover();
+       // toggleSounds.PlayHover();
     }
 
     public void OnSubmit(BaseEventData eventData)
     {
-        toggleSounds.PlaySelect();
+        //toggleSounds.PlaySelect();
     }
 }

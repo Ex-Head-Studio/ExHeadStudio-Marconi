@@ -8,7 +8,7 @@ public class GameMenuManager : MonoBehaviour
 
     //TODO provare ad inserire un contextmenu per le funzioni dei bottoni
 
-
+#region Game Menu Panels
     [Header("Game Menu Panels")]
     [Tooltip("Panello di fine partita, mostra il vincitore")]
     [SerializeField] private GameObject endGamePanel;
@@ -16,15 +16,19 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [Tooltip("Panello delle opzioni, mostra le opzioni di gioco")]
     [SerializeField] private GameObject optionsPanel;
-
+#endregion
+#region Messages panels
     [Header("Messages panels")]
     [SerializeField] private GameObject displayPanel;
+    [SerializeField] private GameObject allyPanel;
+    [SerializeField] private GameObject enemyPanel;
     [SerializeField] private GameObject confirmPanel;
-
+#endregion
+#region Objects panels
     [Header("Objects panels")]
     [SerializeField] private GameObject objectPanel;
     [SerializeField] private GameObject objectDescriptionPanel;
-
+#endregion
     [Header("Input Actions")]
     [Tooltip("Input Actions Asset, permette la mappatura degli input da altri dispositivi")]
     [SerializeField] private InputActionAsset inputs;
@@ -35,11 +39,26 @@ public class GameMenuManager : MonoBehaviour
     private int enemyShips;
     private int allyShips;
 
+    //TODO verificare se può essere fatto meglio e senza stringhe        
+    //TODO verificare se è possibile usare ancora esc per muoversi tra i menu (edit: non tanto)
+
+
+    private void OnEnable()
+    {
+        inputs.FindActionMap("UI").FindAction("PauseGame").performed += ctx => OnPause();
+        inputs.FindActionMap("UI").FindAction("ShowObjectsMenu").performed += ctx => OnObjectDisplay();
+        inputs.FindActionMap("UI").FindAction("ExitMenu").performed += ctx => OnObjectHide();
+    }
+
+    private void OnDisable()
+    {
+        inputs.FindActionMap("UI").FindAction("PauseGame").performed -= ctx => OnPause();
+        inputs.FindActionMap("UI").FindAction("ShowObjectsMenu").performed -= ctx => OnObjectDisplay();  
+        inputs.FindActionMap("UI").FindAction("ExitMenu").performed -= ctx => OnObjectHide();
+    }
+
     private void Start()
     {
-        //TODO verificare se può essere fatto meglio e senza stringhe
-        //TODO verificare se è possibile usare ancora esc per muoversi tra i menu
-        inputs.FindActionMap("UI").FindAction("PauseGame").performed += ctx => OnPause();
         enemyShips = shipManagerSo.GetEnemyShips();
         allyShips = shipManagerSo.GetAllyShips();
     }
@@ -77,8 +96,18 @@ public class GameMenuManager : MonoBehaviour
     {
         objectPanel.SetActive(true);
         objectDescriptionPanel.SetActive(true);
-        displayPanel.SetActive(false);
+        allyPanel.SetActive(false);
+        enemyPanel.SetActive(false);
         confirmPanel.SetActive(false);
+    }
+
+    public void OnObjectHide()
+    {
+        objectPanel.SetActive(false);
+        objectDescriptionPanel.SetActive(false);
+        allyPanel.SetActive(true);
+        enemyPanel.SetActive(true);
+        confirmPanel.SetActive(true);
     }
 
     public void UpdateShipsCount(ShipDestroyedStruct shipDestroyed)
@@ -99,6 +128,16 @@ public class GameMenuManager : MonoBehaviour
     }
 
 
+    public int GetAllyShipsbumber()
+    {
+        return allyShips;
+    }
+
+    public int GetEnemyShipsNumber()
+    {
+        return enemyShips;
+    }
+
     private IEnumerator EndGame()
     {
         yield return new WaitForSeconds(2);
@@ -106,6 +145,9 @@ public class GameMenuManager : MonoBehaviour
         //SceneManager.LoadScene(0);
     }
 
+
+
+#region Bottoni
 
 
 //BOTTONI
@@ -146,5 +188,6 @@ public class GameMenuManager : MonoBehaviour
     {
         Application.Quit();
     }
+    #endregion
 
 }

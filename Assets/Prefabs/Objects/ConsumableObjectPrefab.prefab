@@ -44,5 +44,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 143f00229e3314549b1c34bc68f3e72c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  objectName: 
-  objectDescription: 
+  objectName: Attacco negato!
+  objectDescription: "Nessuna nave pu\xF2 attaccare durante questo turno"
+  objectIllustration: {fileID: 2355179987827854565, guid: 447b0cd9093ad0a44b100e7755677f3d, type: 3}
+  dropEntity: 0
