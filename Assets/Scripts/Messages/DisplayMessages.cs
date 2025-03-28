@@ -40,6 +40,20 @@ public class DisplayMessages : MonoBehaviour
         directions = messagesStack.directions;
     }
 
+
+    //qui mi iscrivo agli eventi
+
+    //iscrizione all'evento che, attraverso il consumabile, permette di disabilitare i toggle
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
      public void DisplayMessage(MessageStruct message)
     {
         SetMessageColorAndTransform(message);
@@ -106,6 +120,14 @@ public class DisplayMessages : MonoBehaviour
     public void SendAnswers()
     {
         answerStack.SendAnswers();
+    }
+
+    private void DisableToggles()
+    {
+        foreach(Toggle t in toggles)
+        {
+            t.GetComponent<ToggleMessage>().OnToggleDisable();
+        }
     }
     
 }

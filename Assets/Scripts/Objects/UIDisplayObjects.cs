@@ -40,6 +40,7 @@ public class UIDisplayObjects : MonoBehaviour
         tmpObject = Instantiate(UIobjectPrefab, objectsStackTransform);
         tmpObject.name = obj.objectName;
         tmpObjectScript = tmpObject.GetComponent<UIObjectScript>();
+        tmpObjectScript.SetObjectReference(obj);
         tmpObjectScript.SetObjectDisplay(obj.GetObjectName(), obj.GetObjectDescription(), obj.GetObjectIllustration());
         tmpObjectScript.SetDescriptionParent(objectsDescriptionTransform);
     }

@@ -90,4 +90,11 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
     {
         //toggleSounds.PlaySelect();
     }
+
+    public void OnToggleDisable()
+    {
+        //da modificare con la grafica
+        toggle.interactable = false;
+        toggle.colors.normalColor.Equals(Color.white);
+    }
 }
