@@ -49,7 +49,9 @@ public class GridManager : MonoBehaviour
         for (int x = 0; x < _width; x++) {
             for (int y = 0; y < _height; y++) {
                 //Nell'istanziare, prende lo script Tile attaccato all'oggetto creato
-                Tile spawnedTile = Instantiate(_tilePrefab, new Vector3(x,y), Quaternion.identity, transform).GetComponent<Tile>();
+                Tile spawnedTile = Instantiate(_tilePrefab, transform.position + new Vector3(x*transform.localScale.x, 0, y*transform.localScale.x), Quaternion.Euler(90,0,0), transform).GetComponent<Tile>();
+                //spawnedTile.transform.SetParent(pivotGrid.transform);
+                spawnedTile.transform.localScale = Vector3.one;
 
                 //non è corretto, i nomi non corrispondo alle posizioni
                 spawnedTile.name = $"Tile {Mathf.Abs(y-4)} {x}";
@@ -86,6 +88,7 @@ public class GridManager : MonoBehaviour
                 tile.SetType(tile.GetType(), ship.faction);
                 tile.SetShip(ship.gameObject);
                 ship.position = position;
+                ship.transform.localScale = ship.transform.localScale * transform.localScale.x;
                 break;
             }
 

@@ -26,7 +26,7 @@ Transform:
   m_GameObject: {fileID: 4245839775738993004}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 67.11325, y: 42.507904, z: -62.36992}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -46,9 +46,5 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _width: 8
   _height: 8
-  _camX: 0
-  _camY: 0
-  _camZ: -10
   _tilePrefab: {fileID: 8046514618781660489, guid: b7bc4d5932a267f40a299d2751cdd372, type: 3}
-  _cam: {fileID: 0}
   _shipManager: {fileID: 0}

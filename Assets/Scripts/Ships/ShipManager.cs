@@ -75,7 +75,7 @@ public class ShipManager : MonoBehaviour
         {
             //tipo questa cosa potremmo spostarla in un metodo che istanzia il prefab, all'interno dello script della nave
             //Se facciamo così ogni nave istanzierà il proprio prefab e si posizionerà da sola se gli passiamo le coordinate
-            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
+            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(-90,0,0)).GetComponent<Ship>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
@@ -89,7 +89,7 @@ public class ShipManager : MonoBehaviour
         }
 
         if(enemyCount<numberOfEnemies){
-            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
+            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(-90,0,0)).GetComponent<Ship>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
