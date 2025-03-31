@@ -3,6 +3,9 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using FMODUnity;
 
+
+[RequireComponent(typeof(Outline))]
+
 public class OnHoverConfirm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
 {
 

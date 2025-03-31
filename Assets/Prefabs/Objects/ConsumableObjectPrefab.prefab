@@ -47,4 +47,3 @@ MonoBehaviour:
   objectName: Attacco negato!
   objectDescription: "Nessuna nave pu\xF2 attaccare durante questo turno"
   objectIllustration: {fileID: 2355179987827854565, guid: 447b0cd9093ad0a44b100e7755677f3d, type: 3}
-  dropEntity: 0

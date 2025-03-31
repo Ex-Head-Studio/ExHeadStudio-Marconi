@@ -16,7 +16,6 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
     [Header("Bisogna sistemare un problema con le sprite")]
     private Toggle toggle;
     private ToggleInformations toggleInfo;
-    private toggleSounds toggleSounds;
 
     private bool previousState;
     private ToggleGroup currentGroup;
@@ -83,12 +82,12 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
     //lancia delle eccezioni
     public void OnPointerEnter(PointerEventData eventData)
     {
-       // toggleSounds.PlayHover();
+       Playhover();
     }
 
     public void OnSubmit(BaseEventData eventData)
     {
-        //toggleSounds.PlaySelect();
+        PlaySelect();
     }
 
     public void OnToggleDisable()
@@ -96,5 +95,25 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
         //da modificare con la grafica
         toggle.interactable = false;
         toggle.colors.normalColor.Equals(Color.white);
+    }
+
+
+
+
+    private FMOD.Studio.EventInstance hoverMessage;
+
+    public void Playhover()
+    {
+        hoverMessage = FMODUnity.RuntimeManager.CreateInstance("event:/UI/MessageHover");
+        hoverMessage.start();
+        hoverMessage.release();
+    }
+
+    private FMOD.Studio.EventInstance selectMessage;
+    public void PlaySelect()
+    {
+        selectMessage = FMODUnity.RuntimeManager.CreateInstance("event:/UI/MessageSelection");
+        selectMessage.start();
+        selectMessage.release();
     }
 }
