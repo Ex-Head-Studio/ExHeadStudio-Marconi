@@ -10,6 +10,6 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 3c448a209c7428d41a7bf0d24d4783ca, type: 3}
-  m_Name: ObjectDropEventSO
+  m_Name: TestDropEventA
   m_EditorClassIdentifier: 
-  testingValue: {fileID: 6648697927679063206, guid: 65dbbff81715edf43bef5956731c530f, type: 3}
+  testingValue: {fileID: 0}

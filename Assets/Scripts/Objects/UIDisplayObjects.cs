@@ -1,6 +1,7 @@
 using System.Collections;
+using FMOD;
 using UnityEngine;
-
+using UnityEngine.UI;
 public class UIDisplayObjects : MonoBehaviour
 {
 /// <summary>
@@ -32,34 +33,19 @@ public class UIDisplayObjects : MonoBehaviour
     }
     private void DisplayObject(AbstractObject obj)
     {
-        // TODO QUESTA COSA VA SISTEMATA, bisogna asseganre uno script al prefab che faccia le operazioni
-        //devo settare i parametri del prefab
-        //devo prendere i children e settare i parametri
-        //il figlio zero è il nome e la parte intergibile
-        //il figlio uno è la descrizione
+        string objectName = obj.GetObjectName();
+        string objectDescription = obj.GetObjectDescription();
+        Image objectIllustration = obj.GetObjectIllustration();
+
         tmpObject = Instantiate(UIobjectPrefab, objectsStackTransform);
         tmpObject.name = obj.objectName;
         tmpObjectScript = tmpObject.GetComponent<UIObjectScript>();
         tmpObjectScript.SetObjectReference(obj);
-        tmpObjectScript.SetObjectDisplay(obj.GetObjectName(), obj.GetObjectDescription(), obj.GetObjectIllustration());
+        tmpObjectScript.SetObjectDisplay(objectName, objectDescription, objectIllustration);
         tmpObjectScript.SetDescriptionParent(objectsDescriptionTransform);
+        tmpObjectScript.DisableDescription();
+        tmpObjectScript.DisableConfirmationPanel();
     }
 
-    public void RemoveObject()
-    {
-        //TODO eliminazione dalla UI
-        StartCoroutine(WaitBeforeDestroy(this.GetComponent<AbstractObject>()));
-    }
 
-    public void UseObject()
-    {
-        //uso dell'oggetto
-        //objScript.ObjectAction();
-        RemoveObject();
-    }
-    private IEnumerator WaitBeforeDestroy(AbstractObject obj)
-    {
-        yield return new WaitForSeconds(1);
-        objectsStack.RemoveObject(obj);
-    }
 }

@@ -6,7 +6,7 @@ using FMODUnity;
 
 [RequireComponent(typeof(Outline))]
 
-public class OnHoverConfirm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, IPointerClickHandler
+public class OnHoverConfirm : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler, ISubmitHandler//, IPointerClickHandler
 {
 
     //Serve davvero associarlo al bottone? Possiamo inserirlo nel manager?
@@ -36,13 +36,20 @@ public class OnHoverConfirm : MonoBehaviour, IPointerEnterHandler, IPointerExitH
          outline.needsUpdate = true;
     }
 
-    public void OnPointerClick(PointerEventData eventData)
+    public void OnSubmit(BaseEventData eventData)
+    {
+        outline.outlineColor = Color.blue;
+        outline.needsUpdate = true;
+        RuntimeManager.PlayOneShot(confirmButtonSound);
+    }
+
+    /*public void OnPointerClick(PointerEventData eventData)
     {
         //Debug.Log("Sto cambiando il colore dell'outline");
         outline.outlineColor = Color.blue;
         outline.needsUpdate = true;
         RuntimeManager.PlayOneShot(confirmButtonSound);
-    }
+    }*/
 
     public void OnPointerExit(PointerEventData eventData)
     {

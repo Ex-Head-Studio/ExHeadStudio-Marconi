@@ -11,9 +11,6 @@ using UnityEngine.UI;
 
 public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
 {
-    
-
-    [Header("Bisogna sistemare un problema con le sprite")]
     private Toggle toggle;
     private ToggleInformations toggleInfo;
 
@@ -78,8 +75,6 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
     }
 
     
-
-    //lancia delle eccezioni
     public void OnPointerEnter(PointerEventData eventData)
     {
        Playhover();

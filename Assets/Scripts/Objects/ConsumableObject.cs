@@ -4,11 +4,6 @@ public class ConsumableObject : AbstractObject
 {
 
    private int enityDrop;
-   private void Start()
-   {
-      //sono variabili ereditate
-
-   }
 
    public override void ObjectAction()
    {

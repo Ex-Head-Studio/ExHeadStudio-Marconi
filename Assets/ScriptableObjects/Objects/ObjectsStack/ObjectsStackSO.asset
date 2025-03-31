@@ -13,4 +13,7 @@ MonoBehaviour:
   m_Name: ObjectsStackSO
   m_EditorClassIdentifier: 
   UIobjectPrefab: {fileID: 5154699822698099101, guid: be5281facfd84e9449ef8510331e03aa, type: 3}
-  objects: []
+  objects:
+  - {fileID: 0}
+  - {fileID: 0}
+  - {fileID: 0}

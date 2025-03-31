@@ -2,11 +2,15 @@ using TMPro;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
-
-public class UIObjectScript : MonoBehaviour, ISubmitHandler, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
+using System.Collections;
+public class UIObjectScript : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
 {
     [SerializeField] private GameObject nameChildren;
     [SerializeField] private GameObject descriptionChildren;
+    [SerializeField] private GameObject confirmationPanel;
+
+    [Header("Stack degli oggeti")]
+    [SerializeField] private ObjectsStack objectsStack;
 
     private AbstractObject abstractObject;
 
@@ -14,22 +18,25 @@ public class UIObjectScript : MonoBehaviour, ISubmitHandler, IPointerExitHandler
     //inserire i bottoni e gli eventi legati per chiamare la funzione del consumabile
 
 
-
     private TMP_Text objectNameText;
     private TMP_Text objectDescriptionText;
     private Image objectIllustrationImage;
 
+    private Image objectImage;
 
-    private void Awake()
+    private void Start()
     {
-        objectNameText = nameChildren.GetComponent<TMP_Text>();
-        objectDescriptionText = descriptionChildren.GetComponent<TMP_Text>();
-        objectIllustrationImage = GetComponent<Image>();
+        objectImage = nameChildren.GetComponent<Image>();
     }
-
-
     public void SetObjectDisplay(string objectName, string objectDescription, Image objectIllustration)
     {
+
+        //questi getter non vanno spostati, altrimenti non funziona lo script
+        objectNameText = nameChildren?.GetComponentInChildren<TMP_Text>();
+        objectDescriptionText = descriptionChildren?.GetComponentInChildren<TMP_Text>();
+        objectIllustrationImage = descriptionChildren?.GetComponentInChildren<Image>();
+
+
         objectNameText.text = objectName;
         objectDescriptionText.text = objectDescription;
         objectIllustrationImage.sprite = objectIllustration.sprite;
@@ -49,18 +56,39 @@ public class UIObjectScript : MonoBehaviour, ISubmitHandler, IPointerExitHandler
         abstractObject = obj;
     }
 
+    public void DisableDescription()
+    {
+        descriptionChildren.SetActive(false);
+    }
+
+    public void DisableConfirmationPanel()
+    {
+        confirmationPanel.SetActive(false);
+    }
+
+    public void EnableConfirmationPanel()
+    {
+        confirmationPanel.SetActive(true);
+    }
+
+    public void EnableDescription()
+    {
+        descriptionChildren.SetActive(true);
+    }
 
     public void OnPointerEnter(PointerEventData pointerEventData)
     {
         //cambiare colore dell'immagine
-        //attivare immagine
+        objectImage.enabled = true;
+        EnableDescription();
 
     }
 
     public void OnPointerExit(PointerEventData pointerEventData)
     {
         //cambiare colore dell'imagine
-        //disattivare immagine
+        objectImage.enabled = false;
+        DisableDescription();
         
     }
 
@@ -68,13 +96,31 @@ public class UIObjectScript : MonoBehaviour, ISubmitHandler, IPointerExitHandler
 
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        //aprire pannello di conferma
+        EnableConfirmationPanel();
     }
 
-    public void OnSubmit(BaseEventData baseEventData)
+
+
+    //?
+    public void UseObject()
     {
-        Debug.Log("Oggetto attivato");
-        //attiva pannello di conferma
+        //uso dell'oggetto
+        abstractObject.ObjectAction();
+        RemoveObject();
+    }
+    
+    public void RemoveObject()
+    {
+        //TODO eliminazione dalla UI
+        StartCoroutine(WaitBeforeDestroy(this.GetComponent<AbstractObject>()));
+
+    }   
+    private IEnumerator WaitBeforeDestroy(AbstractObject obj)
+    {
+        yield return new WaitForSeconds(1);
+        objectsStack.RemoveObject(obj);
+        Destroy(descriptionChildren);
+        Destroy(this.gameObject);
     }
 
 }
