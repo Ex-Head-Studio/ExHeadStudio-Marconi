@@ -24,8 +24,8 @@ public class EndTurnButton : MonoBehaviour
     {
         if(answerStack.answers.Count <2)
         {
+            //TODO Rob modifica il colore
             button.image.color = Color.red;
-            Debug.Log("You cannot end the turn without sending at least 2 answers");
         }
         else
         {
@@ -43,7 +43,6 @@ public class EndTurnButton : MonoBehaviour
 
     public void sendAsnwers()
     {
-        Debug.Log("Ordini confermati, invio le risposte");
         answerStack.SendAnswers();
     }
 }

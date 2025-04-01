@@ -15,3 +15,5 @@ MonoBehaviour:
   initialEnemyShips: 3
   initialAllyShips: 3
   shipNames: []
+  shipSOarray:
+  - {fileID: 11400000, guid: a6a74b98722011c488fca974bf86454b, type: 2}

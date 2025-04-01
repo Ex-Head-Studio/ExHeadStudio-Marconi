@@ -10,6 +10,7 @@ public class TestShipDrop : MonoBehaviour, Idroppable
     private int index = 0;
     private AbstractObjectDataSO tmpObjectDataSO;
     private ConsumableObjectData tmpConsumableObjectDataSO;
+ 
 
     private void Start()
     {
@@ -45,5 +46,10 @@ public class TestShipDrop : MonoBehaviour, Idroppable
         //l'evento deve essere ricevuto dalla UI, che lo visualizza sui pannelli necessari
         dropEvent.Invoke(consObj);
         Debug.Log("Dropped by the test ship");
+    }
+
+    public void DeathAnimation()
+    {
+        Debug.Log("Death animation called");
     }
 }

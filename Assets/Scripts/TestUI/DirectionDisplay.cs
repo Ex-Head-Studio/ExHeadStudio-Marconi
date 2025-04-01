@@ -20,14 +20,19 @@ public class DirectionDisplay : MonoBehaviour
     private Ship shipScript;
     private void OnEnable()
     {
+        //tutti gli eventi sotto vengono dichiarati in Directionindicator
         DirectionIndicatorTest.OnPointerEnterEvent += DisplayDirection;
         DirectionIndicatorTest.OnPointerExitEvent += HideDirection;
+        DirectionIndicatorTest.OnToggleSelectedEvent += DisplayDirection;
+        DirectionIndicatorTest.OnToggleDeselectedEvent += HideDirection;
     }
 
     private void OnDisable()
     {
         DirectionIndicatorTest.OnPointerEnterEvent -= DisplayDirection;
         DirectionIndicatorTest.OnPointerExitEvent -= HideDirection;
+        DirectionIndicatorTest.OnToggleSelectedEvent -= DisplayDirection;
+        DirectionIndicatorTest.OnToggleDeselectedEvent -= HideDirection;
         
     }
 
@@ -95,6 +100,8 @@ public class DirectionDisplay : MonoBehaviour
         }
     }
 
+
+
     private void HideDirection(string shipName)
     {
         if(shipName == shipScript.shipName)
@@ -106,5 +113,14 @@ public class DirectionDisplay : MonoBehaviour
             //directionIndicatorImage.SetActive(false);
             Debug.Log("Pointer Exit");
         }
+    }
+
+    public void HideDirection()
+    {
+        upArrow.SetActive(false);
+        downArrow.SetActive(false);
+        leftArrow.SetActive(false);
+        rightArrow.SetActive(false);
+        //directionIndicatorImage.SetActive(false);
     }
 }

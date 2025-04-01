@@ -10,6 +10,8 @@ public class ShipManagerSO : ScriptableObject
     //vedi tu se usare questi
     [SerializeField] private string[] shipNames; 
 
+    [SerializeField] private ShipSO[] shipSOarray;
+
     private int enemyShips;
     private int allyShips;
 

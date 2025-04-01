@@ -75,6 +75,8 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
     }
 
     
+
+    #region Suoni
     public void OnPointerEnter(PointerEventData eventData)
     {
        Playhover();
@@ -111,4 +113,6 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
         selectMessage.start();
         selectMessage.release();
     }
+
+    #endregion
 }

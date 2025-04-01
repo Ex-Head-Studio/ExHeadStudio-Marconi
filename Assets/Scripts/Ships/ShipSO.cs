@@ -8,4 +8,6 @@ public class ShipSO : ScriptableObject
     [SerializeField] public int attackPower;
     [SerializeField] public int health;
     [SerializeField] public GameObject shipModelPrefab;
+    [SerializeField] public Mesh shipNameMesh;
+    [SerializeField] public Mesh shipClassMesh;
 }
