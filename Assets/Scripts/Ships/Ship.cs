@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using Random=UnityEngine.Random;
+using System;
 public class Ship : MonoBehaviour
 {
     protected enum StrategyState{
@@ -14,9 +15,9 @@ public class Ship : MonoBehaviour
     [SerializeField] float nearbyShipSearchRadius;
     [SerializeField] public Vector2Int position;
     public float shipInfluence;
-    [SerializeField] private MessageSentEvent messageSentEvent;
-    [SerializeField] private OnShipDestroyedEvent shipDestroyedEvent;
-    [SerializeField] private OnShipAttackEvent attackEvent;
+    [SerializeField] protected MessageSentEvent messageSentEvent;
+    [SerializeField] protected OnShipDestroyedEvent shipDestroyedEvent;
+    [SerializeField] protected OnShipAttackEvent attackEvent;
     [SerializeField] protected GridManager gridManager;
     protected int mapWidth;
     protected int mapHeight;
@@ -32,12 +33,13 @@ public class Ship : MonoBehaviour
     
 
     // questa va inserita nella logica delle navi
-    private int health;
+    protected int health;
     
 
     protected List<Vector2Int> nextPos;
     public ShipState currentState=ShipState.Waiting;
     public List<Vector2Int> targetPos;
+    public List<Move> shipMoves;
     protected bool canMove;
     protected bool canAttack;
     public int faction;
@@ -58,53 +60,53 @@ public class Ship : MonoBehaviour
 
 
     //TODO Gabriele controllare
-    public void SendMessage()
+    public void SendMessage(Move move)
     {
         Vector2Int direction;
-        switch(currentState){
-            case ShipState.Attacking:
-                direction= targetPos[0]-position;
+        switch(move.GetMessageType()){
+            case MessageType.attack:
+                direction = move.GetTargetPos()-position;
                 if(direction.y==0){
                     if(direction.x>0){
                         
-                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 3));
+                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 3));
                     }
                     else{
                         
-                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 2));
+                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 2));
                     }
                 }
                 else{
                     if(direction.y>0){
                        
-                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 0));
+                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 0));
                     }
                     else{
                         
-                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 1));
+                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 1));
                     }
                 }
                 break;
-            case ShipState.Moving:
-                direction=nextPos[0]-position;
+            case MessageType.movement:
+                direction=move.GetTargetPos()-position;
                 if(direction.y==0){
                     if(direction.x>0){
                         
-                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 3));
+                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 3));
                     }
                     else{
                         
-                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 2));
+                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 2));
                     }
                 }
                 else{
                     if(direction.y>0){
                         
-                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 0));
+                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 0));
                     }
                     else{
                         
-                        messageSentEvent?.Invoke(new MessageStruct(shipName, (int) currentState, faction, 1));
+                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 1));
                     }
                 }
                 break;
@@ -118,7 +120,7 @@ public class Ship : MonoBehaviour
     
     //il metodo viene chiamato quando la nave registra una risposta a lei associata
     
-    public void ExecuteInstructions(AnswerStruct answerStruct)
+    public virtual void ExecuteInstructions(AnswerStruct answerStruct)
     {
         int entity = answerStruct.entity;
         bool answer = answerStruct.result;
@@ -127,9 +129,21 @@ public class Ship : MonoBehaviour
 
         if(this.faction == entity && this.faction==(int)Entity.ally)
         {
-            if(shipName == answerStruct.receiver)
+            if(shipName == answerStruct.receiver && answer)
             {
-                if(currentState==ShipState.Attacking)
+                Move selectedMove;
+                 
+                if(shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).Count() > 0 ){
+                    selectedMove = shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).ToList()[0];
+                    if(selectedMove.GetMessageType() == MessageType.attack){
+                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos()));
+                    }
+                    else{
+                        gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
+                        position=selectedMove.GetTargetPos();
+                    }
+                }
+                /*if(currentState==ShipState.Attacking)
                 {
                     //evento dove si dichiara la posizione 2D della nave avversaria da colpire
                     attackEvent?.Invoke(new ShipAttackStruct(targetPos[0]));
@@ -140,34 +154,41 @@ public class Ship : MonoBehaviour
                     gridManager.MoveShip(position, nextPos[0], entity);
                     position=nextPos[0];
                     //nextPos=Vector2.negativeInfinity;
-                }
+                }*/
             }
             else
             {
-                currentState = ShipState.Waiting;
+                //currentState = ShipState.Waiting;
             }
         }
         else if(this.faction == entity && this.faction==(int)Entity.enemy)
         {
-            if(shipName == answerStruct.receiver)
+            if(shipName == answerStruct.receiver && answer)
             {
                 currentState = ShipState.Waiting;
             }
-            else
+            else if(shipName == answerStruct.receiver && !answer)
             {
-                    if(currentState==ShipState.Attacking)
+                Move selectedMove;
+                if(shipMoves.Where(x=> x.GetIdMove()== answerStruct.idMove).Count()>0){
+                    selectedMove = shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).ToList()[0];
+                    
+                    if(selectedMove.GetMessageType()==MessageType.attack && canAttack)
                     {
+                        canAttack=false;
                         //evento dove si dichiara la posizione 2D della nave avversaria da colpire
-                        attackEvent?.Invoke(new ShipAttackStruct(targetPos[0]));
+                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos()));
 
                     }
-                    else if(currentState==ShipState.Moving)
+                    else if(selectedMove.GetMessageType()==MessageType.movement && canMove)
                     {
                         //qui siamo sicuri di non dover chiamare un metodo?
-                        gridManager.MoveShip(position, nextPos[0], entity);
-                        position=nextPos[0];
+                        gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
+                        position=selectedMove.GetTargetPos();
+                        canMove=false;
                         //nextPos=Vector2.negativeInfinity;
                     }
+                }
             }
         }
         
@@ -251,7 +272,7 @@ public class Ship : MonoBehaviour
 
 
     //possiamo valutare se passare anche il danno nella shipAttackStruct
-    public void OnAttacked(ShipAttackStruct attackPosition)
+    public virtual void OnAttacked(ShipAttackStruct attackPosition)
     {
         if(position.x == attackPosition.gridPosition.x && position.y == attackPosition.gridPosition.y)
         {
@@ -261,7 +282,7 @@ public class Ship : MonoBehaviour
             {
                 shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
             }
-            manager.RemoveShip(this, faction);
+            //manager.RemoveShip(this, faction);
         }
     }
 }

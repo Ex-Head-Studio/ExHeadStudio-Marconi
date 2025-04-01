@@ -12,9 +12,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76197b39508ec9b49b2f36c36decb8fb, type: 3}
   m_Name: Bomber
   m_EditorClassIdentifier: 
-  movementRange: 0
-  attackRange: 0
-  attackPower: 0
-  health: 0
+  movementRange: 2
+  attackRange: 3
+  attackPower: 5
+  health: 2
   shipInfluence: 0
   shipModelPrefab: {fileID: 0}

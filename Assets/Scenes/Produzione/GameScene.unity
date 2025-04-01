@@ -1387,67 +1387,6 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 27d3e13592370d948b1b14fedcfb2b78, type: 3}
---- !u!1 &1226071889 stripped
-GameObject:
-  m_CorrespondingSourceObject: {fileID: 4870401875397307769, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
-  m_PrefabInstance: {fileID: 4890556703305376550}
-  m_PrefabAsset: {fileID: 0}
---- !u!114 &1226071899
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1226071889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d77cd057ffbcee45afab5b3cd69ebcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipSO: {fileID: 0}
-  nearbyShipSearchRadius: 0
-  position: {x: 0, y: 0}
-  shipInfluence: 0
-  messageSentEvent: {fileID: 0}
-  shipDestroyedEvent: {fileID: 0}
-  attackEvent: {fileID: 0}
-  gridManager: {fileID: 0}
-  shipLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  shipName: 
-  manager: {fileID: 0}
-  currentState: 2
-  targetPos: []
-  faction: 0
---- !u!114 &1226071900
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1226071889}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2d77cd057ffbcee45afab5b3cd69ebcf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipSO: {fileID: 0}
-  nearbyShipSearchRadius: 0
-  position: {x: 0, y: 0}
-  shipInfluence: 0
-  messageSentEvent: {fileID: 0}
-  shipDestroyedEvent: {fileID: 0}
-  attackEvent: {fileID: 0}
-  gridManager: {fileID: 0}
-  shipLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  shipName: 
-  manager: {fileID: 0}
-  currentState: 2
-  targetPos: []
-  faction: 0
 --- !u!1001 &1368715141
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -1824,6 +1763,10 @@ PrefabInstance:
     - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
       propertyPath: numberOfEnemies
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      propertyPath: numberOfMessages
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
       propertyPath: shipChoice.Array.size
@@ -2261,6 +2204,10 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4712459035336583460, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      propertyPath: shipManagerSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 03bbd7596a6b932468d25964a02066e3, type: 2}
     - target: {fileID: 4870401875397307769, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: m_Name
       value: GameCanvas
@@ -2268,13 +2215,7 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents:
-    - targetCorrespondingSourceObject: {fileID: 4870401875397307769, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1226071900}
-    - targetCorrespondingSourceObject: {fileID: 4870401875397307769, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: 1226071899}
+    m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
 --- !u!1660057539 &9223372036854775807
 SceneRoots:

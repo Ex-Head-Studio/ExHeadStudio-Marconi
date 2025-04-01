@@ -4,7 +4,7 @@ using UnityEngine.UI;
 public class ToggleInformations : MonoBehaviour
 {
     [SerializeField] private string sender;
-    private int enemy, direction, messageType;
+    private int enemy, direction, messageType, moveId;
 
     private Toggle toggle;
     private ToggleGroup toggleGroup;
@@ -14,9 +14,10 @@ public class ToggleInformations : MonoBehaviour
         toggle = GetComponent<Toggle>();
     }
 
-    public void SetInformations(string sender, int enemy, int direction, int messageType)
+    public void SetInformations(string sender,int moveId, int enemy, int direction, int messageType)
     {
         this.sender = sender;
+        this.moveId = moveId;
         this.enemy = enemy;
         this.direction = direction;
         this.messageType = messageType;
@@ -36,6 +37,9 @@ public class ToggleInformations : MonoBehaviour
         return toggle;
     }
 
+    public int GetToggleMoveId(){
+        return moveId;
+    }
     public ToggleGroup GetToggleGroup()
     {
         return toggle.group;

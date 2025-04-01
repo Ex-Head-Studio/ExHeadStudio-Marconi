@@ -5,6 +5,7 @@ using UnityEngine;
 using Random= UnityEngine.Random;
 public class NewShip : Ship
 {
+    protected int moveId=0;
     /*
     protected StrategyState strategyState;
     
@@ -44,9 +45,9 @@ public class NewShip : Ship
                 possibleMoves.Add( new Vector2Int(position.x, position.y+j));
             }
         }
-        possibleMoves=possibleMoves.Where(x=> x.x>=0 && x.x<mapWidth && x.y>=0 && x.y<mapHeight).ToList(); 
+        possibleMoves=possibleMoves.Where(x=> x.x>=0 && x.x<mapWidth && x.y>=0 && x.y<mapHeight && x!=position).Distinct().ToList(); 
         foreach(Vector2Int move in possibleMoves){
-            bestMoves.Add(new Move(shipName, move, MessageType.movement, manager.influenceMap.GetValue(move.x, move.y)));
+            bestMoves.Add(new Move(moveId++, shipName, move, MessageType.movement, manager.influenceMap.GetValue(move.x, move.y)));
         }
         List<Vector2Int> occupiedPositions = Physics.OverlapSphere(this.transform.position, shipSO.movementRange, shipLayer ).Select(x=> x.GetComponent<Ship>().position).ToList();
         occupiedPositions=occupiedPositions.Concat(Physics.OverlapSphere(this.transform.position, shipSO.movementRange, gameObject.layer).Select(x=> x.GetComponent<Ship>().position)).ToList();
@@ -56,28 +57,47 @@ public class NewShip : Ship
             bestMoves.Sort((a, b)=> b.value.CompareTo(a.value));
         else bestMoves.Sort((a, b)=> a.value.CompareTo(b.value));
 
-        if(bestMoves.Count()>0){
+        if(bestMoves.Count()>manager.numberOfMessages){
+            bestMoves=bestMoves.Take(2).ToList();
             canMove=true;
-            nextPos=bestMoves.Select(a=>a.GetTargetPos()).ToList();
         }
+        else if(bestMoves.Count()>0){
+            canMove=true;
+        }
+        
+        shipMoves=bestMoves;
         return canMove;
     }
 
-    public bool LookForObjectives()
+    public bool LookForObjectives(List<NewShip> adv)
     {
         canAttack=false;
         //Cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione tra le navi nemiche
         //SIAMO SICURI DELL'ORDINE DEI METODI?
-        List<Vector2Int> targets=Physics.OverlapSphere(transform.position, shipSO.attackRange, shipLayer).ToList().Select(x=> x.GetComponent<NewShip>().position).Where(k => k.x==position.x || k.y==position.y).ToList();        
-        if(targets.Count>=2){
+        List<Vector2Int> targets=adv.Select(x=> x.position).Where(k => (k.x==position.x || k.y==position.y) && (Vector2Int.Distance(k, position)<= shipSO.attackRange)).ToList();        
+        
+        if(targets.Count()>manager.numberOfMessages){
             canAttack=true;
-            targetPos=targets.OrderBy(x=>Random.value).Take(2).ToList();
+            targets=targets.Take(2).ToList();
         }
-        else if(targets.Count>0){
+        else if(targets.Count()>0){
             canAttack=true;
-            targetPos=targets;
         }
-    
+        targets.ForEach(x=> shipMoves.Add(new Move(moveId++, shipName, x, MessageType.attack, 0f)));
+        //shipMoves=shipMoves.Distinct().ToList();
         return canAttack;
+    }
+    public override void OnAttacked(ShipAttackStruct attackPosition)
+    {
+        if(position.x == attackPosition.gridPosition.x && position.y == attackPosition.gridPosition.y)
+        {
+            //per ora decrementiamo di uno la vita
+            health--;
+            if(health<=0)
+            {
+                shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
+            }
+            manager.RemoveShip(this, faction);
+        }
     }
 }

@@ -87,12 +87,12 @@ public class ToggleMessage : MonoBehaviour
             {
                 if(answerStack.CountEntity((int)Entity.ally) == 0)
                 {
-                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
+                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
                 }
                 else if(answerStack.CountEntity((int)Entity.ally) > 0)
                 {
                     answerStack.RemoveAnswerByFaction((int)Entity.ally);
-                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
+                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
                 }
             }
             else
@@ -101,11 +101,11 @@ public class ToggleMessage : MonoBehaviour
                 if(answerStack.CountEntity((int)Entity.enemy) > 0)
                 {
                     answerStack.RemoveAnswerByFaction((int)Entity.enemy);
-                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
+                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
                 }
                 else if(answerStack.CountEntity((int)Entity.enemy) == 0)
                 {
-                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));   
+                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));   
                 }
             }
  

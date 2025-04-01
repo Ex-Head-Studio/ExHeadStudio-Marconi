@@ -9,18 +9,21 @@ public class ShipManager : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] private ShipManagerSO shipManagerSO;
-    List<Ship> ships;
+    Dictionary<string, NewShip> ships;
     public List<ShipSO> shipChoice;
+    [Tooltip("Numero di messaggi massimo per fazione per turno")] public int numberOfMessages;
 
     [Header("Lists for debug, don't touch")]
     //le ho messe tutte pubbliche altimenti non posso fare debug
+    public List<Move> allyMoves;
+    public List<Move> enemyMoves;
     public InfluenceMap influenceMap;
-    public List<Ship>enemies=new List<Ship>();
-    public List<Ship>allies=new List<Ship>();
-    public List<Ship> allyAttackers=new List<Ship>();
-    public List<Ship> activeAllies=new List<Ship>();
-    public List<Ship> enemyAttackers=new List<Ship>();
-    public List<Ship> activeEnemies=new List<Ship>();
+    public List<NewShip>enemies=new List<NewShip>();
+    public List<NewShip>allies=new List<NewShip>();
+    //public List<Ship> allyAttackers=new List<Ship>();
+    //public List<Ship> activeAllies=new List<Ship>();
+    //public List<Ship> enemyAttackers=new List<Ship>();
+    //public List<Ship> activeEnemies=new List<Ship>();
     private static int allyCount = 0;
     private static int enemyCount = 0;
     
@@ -48,7 +51,7 @@ public class ShipManager : MonoBehaviour
     void Awake()
     {
         
-        ships = new List<Ship>();
+        ships = new Dictionary<string, NewShip>();
         shipManagerSO.RandomizeShips();
         //TODO rivedere questa cosa
         gridManager = FindFirstObjectByType<GridManager>();
@@ -79,7 +82,7 @@ public class ShipManager : MonoBehaviour
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
-            ships.Add(newShip);
+            ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(0);
             newShip.shipSO = shipChoice[Random.Range(0,4)];
             newShip.shipLayer=LayerMask.GetMask("Enemy");
@@ -97,7 +100,7 @@ public class ShipManager : MonoBehaviour
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
-            ships.Add(newShip);
+            ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(1);
             newShip.shipSO = shipChoice[Random.Range(0,4)];
             newShip.shipLayer=LayerMask.GetMask("Ally");
@@ -121,17 +124,35 @@ public class ShipManager : MonoBehaviour
     //TODO non compaiono attacchi
     public void ChooseShips()
     {
+        
+        foreach(NewShip ship in allies){
+            ship.LookForMovement();
+            ship.LookForObjectives(enemies);
+        }
+        foreach(NewShip ship in enemies){
+            ship.LookForMovement();
+            ship.LookForObjectives(allies);
+        }
+
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
-        allyAttackers = allies.Where(x => x.LookForObjectives(enemies)).ToList();
-        List<Ship> movableAllies = allies.Where(x => x.LookForMovement()).ToList();
-        /*Debug.Log("Numero: " + allyAttackers.Count());
+        allyMoves = allies.SelectMany(x=> x.shipMoves).OrderBy(x=>Random.value).ToList();
+        enemyMoves = enemies.SelectMany(x => x.shipMoves).OrderBy(x=> Random.value).ToList();
+
+        Debug.Log("Ally moves: " + allyMoves.Count());
+        Debug.Log("Enemy moves: " + enemyMoves.Count());
+        /*
         foreach(Ship ship in allyAttackers)
         {
             Debug.Log("Allyatt: " + ship.shipName);
         }*/
+  
+
+        
+
+        /*
         enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)).ToList();
         List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()).ToList();
-        
+        Debug.Log("Numero nemici: "+ enemyAttackers.Count());
 
         //Una volta che le navi sono state selezionate, si decide cosa far fare a una fazione a seconda di quante navi ha a disposizione
         //per attaccare e per muoversi
@@ -175,16 +196,12 @@ public class ShipManager : MonoBehaviour
 
         switch(allyDecision){
             case 0:
-                if(movableAllies.Count>1){
-                    activeAllies=movableAllies.OrderBy(x=> Random.value).Take(2).ToList();
-                }
-                else
-                {
-                    activeAllies=movableAllies.OrderBy(x=> Random.value).Take(1).ToList();
-                }
-                activeAllies.ForEach(x => x.SetState(Ship.ShipState.Moving));
+                movableAllies=movableAllies.OrderBy(x=> Random.value).ToList();
+                
+                //activeAllies.ForEach(x => x.SetState(Ship.ShipState.Moving));
                 allyAttackers.Clear();
                 break;
+                
             case 1:
                 activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
                 activeAllies[0].SetState(Ship.ShipState.Attacking);
@@ -241,18 +258,42 @@ public class ShipManager : MonoBehaviour
                 break;
             default:
                 break;
-        }
+        }*/
         //le liste moving contengono le navi che proporranno un movimento o un attacco al giocatore
 
-        Debug.Log("Nemici che fanno cose:" + activeEnemies.Count);
-        Debug.Log("Alleati che fanno cose: "+ activeAllies.Count);
+    //        Debug.Log("Nemici che fanno cose:" + activeEnemies.Count);
+    //      Debug.Log("Alleati che fanno cose: "+ activeAllies.Count);
 
         SendMessages();
     }
     void SendMessages()
     {
-        activeAllies.ForEach(x => x.SendMessage());
-        activeEnemies.ForEach(x => x.SendMessage());
+        if(allyMoves.Count()<numberOfMessages){
+            foreach(Move move in allyMoves){
+                ships[move.GetShipName()].SendMessage(move);
+            }
+        }
+        else{
+            allyMoves=allyMoves.OrderBy(x=>Random.value).Take(numberOfMessages).ToList();
+            foreach(Move move in allyMoves){
+                ships[move.GetShipName()].SendMessage(move);
+            }
+        }
+
+        if(enemyMoves.Count() < numberOfMessages){
+            foreach(Move move in enemyMoves){
+            ships[move.GetShipName()].SendMessage(move);
+            }
+        }
+        else{
+            enemyMoves = enemyMoves.OrderBy(x=>Random.value).Take(numberOfMessages).ToList();
+            foreach(Move move in enemyMoves){
+            ships[move.GetShipName()].SendMessage(move);
+            }
+        }
+
+        //activeAllies.ForEach(x => x.SendMessage());
+        //activeEnemies.ForEach(x => x.SendMessage());
     }
 
     public void EndTurn(){
@@ -260,7 +301,7 @@ public class ShipManager : MonoBehaviour
     }
     
     //cosa fa questo metodo? Da chi toglie cosa?
-    public void RemoveShip(Ship ship, int isAlly)
+    public void RemoveShip(NewShip ship, int isAlly)
     {
         if(isAlly==0){
             allies.Remove(ship);
@@ -268,7 +309,7 @@ public class ShipManager : MonoBehaviour
         else{
             enemies.Remove(ship);
         }
-        ships.Remove(ship);
+        ships.Remove(ship.shipName);
         influenceMap.UnregisterPropagator(ship);
         shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(ship.shipName, ship.faction, ship.position));
         Destroy(ship.gameObject);
