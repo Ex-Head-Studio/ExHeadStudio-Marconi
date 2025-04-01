@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HolograficShipVariant#4
+  m_Name: HolograficArrow
   m_Shader: {fileID: -6465566751694194690, guid: 49f7f2001e59ca94da82fad8ee8faa90, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -55,7 +55,7 @@ Material:
     - _CastShadows: 1
     - _Cull: 2
     - _DstBlend: 10
-    - _FresnelPower: 2.38
+    - _FresnelPower: 2.59
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SrcBlend: 5
@@ -65,7 +65,7 @@ Material:
     - _ZWrite: 0
     - _ZWriteControl: 0
     m_Colors:
-    - _FresnelColor: {r: 15.999998, g: 13.236939, b: 2.5968575, a: 1}
+    - _FresnelColor: {r: 15, g: 15, b: 1, a: 1}
     - _ScanlineSpeed: {r: 0, g: 1, b: 0, a: 0}
     - _ScanlineTiling: {r: 1, g: 32, b: 0, a: 0}
   m_BuildTextureStacks: []

@@ -75,7 +75,7 @@ public class ShipManager : MonoBehaviour
         {
             //tipo questa cosa potremmo spostarla in un metodo che istanzia il prefab, all'interno dello script della nave
             //Se facciamo così ogni nave istanzierà il proprio prefab e si posizionerà da sola se gli passiamo le coordinate
-            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(-90,0,0)).GetComponent<Ship>();
+            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,0,0), gridManager.transform).GetComponent<Ship>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
@@ -83,13 +83,14 @@ public class ShipManager : MonoBehaviour
             newShip.SetFaction(0);
             allies.Add(newShip);
             allyCount++;
-            newShip.GetComponent<MeshRenderer>().material=allyMaterial;
+            GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
+            shipMesh.GetComponent<MeshRenderer>().material=allyMaterial;
             gridManager.InsertShips(newShip);
             return;
         }
 
         if(enemyCount<numberOfEnemies){
-            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(-90,0,0)).GetComponent<Ship>();
+            Ship newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,0,0), gridManager.transform).GetComponent<Ship>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
@@ -97,7 +98,8 @@ public class ShipManager : MonoBehaviour
             newShip.SetFaction(1);
             enemies.Add(newShip);
             enemyCount++;
-            newShip.GetComponent<MeshRenderer>().material=enemyMaterial;
+            GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
+            shipMesh.GetComponent<MeshRenderer>().material=enemyMaterial;
             gridManager.InsertShips(newShip);
             return;
         }
@@ -250,6 +252,7 @@ public class ShipManager : MonoBehaviour
     //cosa fa questo metodo? Da chi toglie cosa?
     public void RemoveShip(Ship ship, int isAlly)
     {
+        
         if(isAlly==0){
             allies.Remove(ship);
         }
@@ -260,6 +263,7 @@ public class ShipManager : MonoBehaviour
 
         shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(ship.shipName, ship.faction, ship.position));
         Destroy(ship.gameObject);
+        Debug.Log("ally ship number: " + allies.Count + " enemy ship number: " + enemies.Count);
     }
     private IEnumerator ShipGeneration(){
         yield return new WaitForSeconds(1);

@@ -11,6 +11,12 @@ public class DirectionDisplay : MonoBehaviour
     [SerializeField] private GameObject directionIndicatorImage;
     private RawImage image;
     [SerializeField] private Camera gridCamera;
+    [SerializeField] private GameObject upArrow;
+    [SerializeField] private GameObject downArrow;
+    [SerializeField] private GameObject leftArrow;
+    [SerializeField] private GameObject rightArrow;
+    [SerializeField] private Material arrowMaterial;
+
     private Ship shipScript;
     private void OnEnable()
     {
@@ -38,14 +44,16 @@ public class DirectionDisplay : MonoBehaviour
         {
             if(messageType == (int)MessageType.attack)
             {
-                image.color = Color.red;
+                arrowMaterial.SetColor("_FresnelColor",new Color(15f,1f,1f));
+                //image.color = Color.red;
             }
             else
             {
-                image.color = Color.green;
-            
+                arrowMaterial.SetColor("_FresnelColor",new Color(15f,15f,1f));
+                //arrowMaterial._FresnelColor = Color.yellow;
+                //image.color = Color.green;
             }
-            directionIndicatorImage.SetActive(true);
+            //directionIndicatorImage.SetActive(true);
 
             //ATTENZIONE: la rotazione dell'immagine deve essere fatta attorno all'asse z
             //l'immagine della freccia inizialmente punta verso dx,
@@ -54,26 +62,29 @@ public class DirectionDisplay : MonoBehaviour
             //TODO correggere il modo in cui ruota l'immagine, perchè altrimenti ad ogni invocazione della funzione
             //la freccia ruota di 90 gradi, invece di ruotare solo la prima volta
 
+            
+
             Debug.Log("Direction: " + direction);
             switch (direction)
             {
 
                 case 0://up:
-                    directionIndicatorImage.transform.Rotate(0, 0, 90, Space.World);
-
+                    //directionIndicatorImage.transform.Rotate(0, 0, 90, Space.World);
+                    upArrow.SetActive(true);
                     break;
 
                 case 1://down:
-                    directionIndicatorImage.transform.Rotate(0, 0, -90, Space.World);
+                    downArrow.SetActive(true);
+                    //directionIndicatorImage.transform.Rotate(0, 0, -90, Space.World);
                     break;
 
                 case 2://left
-
-                    directionIndicatorImage.transform.Rotate(0, 0,180,Space.World);
+                    leftArrow.SetActive(true);
+                    //directionIndicatorImage.transform.Rotate(0, 0,180,Space.World);
                     break;
                 case 3://right
-
-                    directionIndicatorImage.transform.Rotate(0, 0, 0, Space.World);
+                    rightArrow.SetActive(true);
+                    //directionIndicatorImage.transform.Rotate(0, 0, 0, Space.World);
 
                     break;
 
@@ -88,7 +99,11 @@ public class DirectionDisplay : MonoBehaviour
     {
         if(shipName == shipScript.shipName)
         {
-            directionIndicatorImage.SetActive(false);
+            upArrow.SetActive(false);
+            downArrow.SetActive(false);
+            leftArrow.SetActive(false);
+            rightArrow.SetActive(false);
+            //directionIndicatorImage.SetActive(false);
             Debug.Log("Pointer Exit");
         }
     }

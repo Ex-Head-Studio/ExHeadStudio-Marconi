@@ -61,6 +61,7 @@ public class GameMenuManager : MonoBehaviour
     {
         enemyShips = shipManagerSo.GetEnemyShips();
         allyShips = shipManagerSo.GetAllyShips();
+        Debug.Log("Start di Game Menù Manager: enemy ships: " + enemyShips + " ally ships: " + allyShips);
     }
 
 
@@ -112,17 +113,22 @@ public class GameMenuManager : MonoBehaviour
 
     public void UpdateShipsCount(ShipDestroyedStruct shipDestroyed)
     {
+        Debug.Log("Ship destroyed: " + shipDestroyed.shipName + " entity: " + shipDestroyed.entity);
+      
+        Debug.Log("Entity Ally: "+(int)Entity.ally); 
         if(shipDestroyed.entity == (int)Entity.ally)
         {
+            //Debug.Log("Ally ship destroyed: " + shipDestroyed.shipName);
             allyShips -= 1;
         }
         else
         {
             enemyShips -= 1;
         }
-
+        Debug.Log("Update di Game Menù Manager: ship ally number: " + allyShips + " ship enemy number: " + enemyShips);
         if(enemyShips == 0 || allyShips == 0)
         {
+            //Debug.Log("enemy ships: " + enemyShips + " ally ships: " + allyShips);
             StartCoroutine(EndGame());
         }
     }
