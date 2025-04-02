@@ -16,4 +16,5 @@ MonoBehaviour:
   attackRange: 1
   attackPower: 1
   health: 1
+  shipInfluence: 0
   shipModelPrefab: {fileID: 6176163466115431475, guid: 1fb0b5eb286bf534391fd387aa510554, type: 3}

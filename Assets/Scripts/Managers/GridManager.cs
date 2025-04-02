@@ -78,7 +78,7 @@ public class GridManager : MonoBehaviour
         //brutto, da rifare appena abbiamo tempo
         while(true)
         {
-            Vector2 position = new Vector2(Random.Range(0, _width), Random.Range(0, _height));
+            Vector2Int position = new Vector2Int(Random.Range(0, _width), Random.Range(0, _height));
             if(IsValidPosition(position) && attempts < (_width * _height))
             {
                 //fare un controllo su questa logica

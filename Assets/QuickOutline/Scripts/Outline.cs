@@ -114,7 +114,7 @@ public class Outline : MonoBehaviour {
   }
 
   void OnValidate() {
-    Debug.Log("OnValidate");
+    //Debug.Log("OnValidate");
     // Update material properties
     needsUpdate = true;
 

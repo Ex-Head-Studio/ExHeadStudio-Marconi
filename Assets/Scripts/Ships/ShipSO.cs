@@ -7,5 +7,7 @@ public class ShipSO : ScriptableObject
     [SerializeField] public int attackRange;
     [SerializeField] public int attackPower;
     [SerializeField] public int health;
+    public float shipInfluence;
     [SerializeField] public GameObject shipModelPrefab;
+    
 }
