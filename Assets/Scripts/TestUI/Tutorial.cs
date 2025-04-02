@@ -21,6 +21,7 @@ public class TutorialManager : MonoBehaviour
 
     void Update()
     {
+        //TODO sistemare input
         if (Input.GetKeyDown(KeyCode.Space))
         {
             NextSentence();
