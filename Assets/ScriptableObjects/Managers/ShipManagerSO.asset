@@ -23,6 +23,7 @@ MonoBehaviour:
   - F
   influenceDecay: 0.5
   decayMomentum: 0.1
-  shipChoice: []
+  shipSOarray: []
   enemyShips: 3
   allyShips: 3
+  numberOfMessages: 2

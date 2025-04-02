@@ -360,6 +360,7 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 1229445335440105657}
+  - component: {fileID: -1945377296878425735}
   - component: {fileID: 2941105610232887662}
   - component: {fileID: 1085708604119113370}
   - component: {fileID: 3556178522352949066}
@@ -396,7 +397,7 @@ Transform:
   - {fileID: 154886899679046851}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &2941105610232887662
+--- !u!114 &-1945377296878425735
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -404,6 +405,35 @@ MonoBehaviour:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7409743080964778017}
   m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d77cd057ffbcee45afab5b3cd69ebcf, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipSO: {fileID: 0}
+  nearbyShipSearchRadius: 0
+  position: {x: 0, y: 0}
+  shipInfluence: 0
+  messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
+  shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
+  attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
+  gridManager: {fileID: 0}
+  shipLayer:
+    serializedVersion: 2
+    m_Bits: 0
+  shipName: 
+  manager: {fileID: 0}
+  currentState: 2
+  targetPos: []
+  shipMoves: []
+  faction: 0
+--- !u!114 &2941105610232887662
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7409743080964778017}
+  m_Enabled: 0
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: 9d2d094c3fc39d84b96d1f251cc20b3a, type: 3}
   m_Name: 
@@ -416,12 +446,16 @@ MonoBehaviour:
   shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
   attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
   gridManager: {fileID: 0}
+  shipLayer:
+    serializedVersion: 2
+    m_Bits: 0
   shipName: 
   manager: {fileID: 0}
   currentState: 2
   targetPos:
   - {x: 877767520, y: 320}
   - {x: 877765120, y: 320}
+  shipMoves: []
   faction: 0
 --- !u!114 &1085708604119113370
 MonoBehaviour:
