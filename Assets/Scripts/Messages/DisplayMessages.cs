@@ -18,8 +18,8 @@ public class DisplayMessages : MonoBehaviour
     [SerializeField] private ToggleGroup allyToggleGroup;
     [SerializeField] private ToggleGroup enemyToggleGroup;
     [Header("Toggle values")]
-    [SerializeField] Color allyColor;
-    [SerializeField] Color enemyColor;
+    [SerializeField] Material allyColor;
+    [SerializeField] Material enemyColor;
     
     [Header("Stack dei messaggi")]
     [SerializeField] private MessagesStack messagesStack; 
@@ -31,7 +31,7 @@ public class DisplayMessages : MonoBehaviour
     //serve per determinare a quale toggle group appartnegono
     private Transform parent;
     private List<Toggle> toggles = new List<Toggle>();
-    private Toggle togglePrefab;
+    [SerializeField] private Toggle togglePrefab;
     private Toggle tmpToggle;
 
     private void Start()
@@ -40,13 +40,27 @@ public class DisplayMessages : MonoBehaviour
         directions = messagesStack.directions;
     }
 
+
+    //qui mi iscrivo agli eventi
+
+    //iscrizione all'evento che, attraverso il consumabile, permette di disabilitare i toggle
+    private void OnEnable()
+    {
+        
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
      public void DisplayMessage(MessageStruct message)
     {
         SetMessageColorAndTransform(message);
         SetMessageText(message);
 
         togglePrefab?.GetComponent<ToggleInformations>().SetInformations(message.sender, message.moveId, message.entity, message.direction, message.messageType);
-        tmpToggle = Instantiate(togglePrefab, parent.position  , Quaternion.identity, parent);
+        tmpToggle = Instantiate(togglePrefab, parent.position, Quaternion.Euler(90,0,0), parent);
 
         //Non modificare l'ordine di queste due righe
         tmpToggle?.GetComponent<ToggleInformations>().SetInformations(message.sender, message.moveId, message.entity, message.direction, message.messageType);
@@ -58,13 +72,13 @@ public class DisplayMessages : MonoBehaviour
     {
         if(message.entity == (int)Entity.ally)
         {
-            togglePrefab.GetComponentInChildren<Image>().color = allyColor;
+            togglePrefab.GetComponentInChildren<Image>().material = allyColor;
             parent = allyStackTransform;
             togglePrefab.group = allyToggleGroup;        
         }
         else
         {
-            togglePrefab.GetComponentInChildren<Image>().color = enemyColor;
+            togglePrefab.GetComponentInChildren<Image>().material = enemyColor;
             parent = enemyStackTransform;
             togglePrefab.group = enemyToggleGroup;
         }
@@ -106,6 +120,14 @@ public class DisplayMessages : MonoBehaviour
     public void SendAnswers()
     {
         answerStack.SendAnswers();
+    }
+
+    private void DisableToggles()
+    {
+        foreach(Toggle t in toggles)
+        {
+            t.GetComponent<ToggleMessage>().OnToggleDisable();
+        }
     }
     
 }

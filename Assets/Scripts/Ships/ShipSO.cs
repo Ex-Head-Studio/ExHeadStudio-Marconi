@@ -10,4 +10,6 @@ public class ShipSO : ScriptableObject
     public float shipInfluence;
     [SerializeField] public GameObject shipModelPrefab;
     
+    [SerializeField] public Mesh shipNameMesh;
+    [SerializeField] public Mesh shipClassMesh;
 }

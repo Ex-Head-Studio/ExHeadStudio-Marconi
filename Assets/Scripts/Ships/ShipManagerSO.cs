@@ -14,6 +14,9 @@ public class ShipManagerSO : ScriptableObject
     [SerializeField] public float influenceDecay;
     [SerializeField] public float decayMomentum;
 
+
+    [SerializeField] private ShipSO[] shipSOarray;
+
     public int enemyShips;
     public int allyShips;
     public int numberOfMessages;

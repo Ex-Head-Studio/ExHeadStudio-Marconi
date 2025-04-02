@@ -89,7 +89,8 @@ public class ShipManager : MonoBehaviour
             newShip.shipInfluence=1;
             allies.Add(newShip);
             allyCount++;
-            newShip.GetComponent<MeshRenderer>().material=allyMaterial;
+            GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
+            shipMesh.GetComponent<MeshRenderer>().material=allyMaterial;
             gridManager.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
 
@@ -107,7 +108,8 @@ public class ShipManager : MonoBehaviour
             newShip.shipInfluence=-1;
             enemies.Add(newShip);
             enemyCount++;
-            newShip.GetComponent<MeshRenderer>().material=enemyMaterial;
+            GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
+            shipMesh.GetComponent<MeshRenderer>().material=enemyMaterial;
             gridManager.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
             return;
@@ -303,6 +305,7 @@ public class ShipManager : MonoBehaviour
     //cosa fa questo metodo? Da chi toglie cosa?
     public void RemoveShip(NewShip ship, int isAlly)
     {
+        
         if(isAlly==0){
             allies.Remove(ship);
         }

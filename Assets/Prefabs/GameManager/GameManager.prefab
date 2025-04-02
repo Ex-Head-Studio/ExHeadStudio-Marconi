@@ -103,11 +103,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f1d9bb66949b3b04880326539e9321ba, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  timeBeforeStart: 5
-  timeBetweenRounds: 3
+  timeBeforeStart: 2
+  timeBetweenRounds: 1.5
   startedTurnEvent: {fileID: 11400000, guid: 3853f00209eb0c642a9389baec0e5283, type: 2}
   clearEvent: {fileID: 11400000, guid: 26523e0c8046a6148b981eb4b90557c5, type: 2}
-  messagesStack: {fileID: 11400000, guid: 74f00b27aae28cf46b0c721ccf170c14, type: 2}
+  messagesStack: {fileID: 11400000, guid: 7cb46817945bbc545a0c7ca530f617fe, type: 2}
   answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
 --- !u!1 &6498117003030704917
 GameObject:

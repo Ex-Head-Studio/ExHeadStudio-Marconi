@@ -1,11 +1,16 @@
 using TMPro;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
-public class ToggleMessage : MonoBehaviour
-{
 
-    [Header("Bisogna sistemare un problema con le sprite")]
+[RequireComponent(typeof(Toggle))]
+[RequireComponent(typeof(ToggleInformations))]
+[RequireComponent(typeof(toggleSounds))]
+
+
+public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
+{
     private Toggle toggle;
     private ToggleInformations toggleInfo;
 
@@ -13,66 +18,21 @@ public class ToggleMessage : MonoBehaviour
     private ToggleGroup currentGroup;
     private ToggleGroup selectedGroup;
 
+    [Header("Answer Stack ScriptableObject")]
     [SerializeField] private AnswerStack answerStack;
     private void Start()
     {
         toggleInfo = GetComponent<ToggleInformations>();
-        if (toggleInfo == null)
-        {
-            Debug.LogError("ToggleInformations non trovato nel GameObject.");
-            return;
-        }
-
         toggle = GetComponent<Toggle>();
 
-        /*toggle = toggleInfo.GetToggle();
-        if (toggle == null)
-        {
-            Debug.LogError("Toggle non trovato.");
-            return;
-        }*/
-
-        //currentGroup = toggleInfo.GetToggleGroup();
         currentGroup = toggle.group;
         previousState = toggle.isOn;
     
     }
-
-    //questa va capita un po' meglio
-    /*private void Update()
-    {
-        if (toggle != null && toggle.image != null)
-        {
-            if (toggle.spriteState.highlightedSprite != null && toggle.spriteState.disabledSprite != null)
-            {
-                toggle.image.sprite = toggle.isOn ? toggle.spriteState.highlightedSprite : toggle.spriteState.disabledSprite;
-            }
-        }
-    }*/
-
-
     public void SetAnswer(bool toggleValue)
     {
-        //selectedGroup = toggle.group;
-        //devo ragionare sulla logica per i controlli, è fatto in fretta, verificare se serve tenere il previous state
-        //se il toggle è attivo aggiungo la risposta alla lista, altrimenti la rimuovo
-        /*if(toggle.isOn && !previousState)
-        {
-            Debug.Log("Toggle changed:\nSender: " + toggleInfo.GetToggleSender() + " Entity: " + toggleInfo.GetToggleEntity());
-            answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
-        }
-        else if(currentGroup == selectedGroup)
-        {
-            answerStack.RemoveAnswer(toggleInfo.GetToggleSender());
-        }
-
-        previousState = toggle.isOn;
-        currentGroup = selectedGroup;*/
-
-
         if (toggle == null || toggleInfo == null) return;
 
-        // Verifica se il gruppo selezionato è valido (se usi selectedGroup, assicurati che sia definito)
         ToggleGroup selectedGroup = toggle.group;
         if (selectedGroup == null)
         {
@@ -80,8 +40,10 @@ public class ToggleMessage : MonoBehaviour
             return;
         }
 
+        toggleInfo.PrintInformations();
+
         // Se il toggle è stato attivato e prima era spento, aggiungo la risposta
-        if (toggle.isOn)// && !previousState)
+        if (toggle.isOn)
         {
             if(toggleInfo.GetToggleEntity() == (int)Entity.ally)
             {
@@ -108,12 +70,49 @@ public class ToggleMessage : MonoBehaviour
                     answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));   
                 }
             }
- 
 
-            //Debug.Log($"Toggle changed:\nSender: {toggleInfo.GetToggleSender()} Entity: {toggleInfo.GetToggleEntity()}");
-            
         }
-        //Aggiorno gli stati
-        //previousState = toggle.isOn;
     }
+
+    
+
+    #region Suoni
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+       Playhover();
+    }
+
+    public void OnSubmit(BaseEventData eventData)
+    {
+        PlaySelect();
+    }
+
+    public void OnToggleDisable()
+    {
+        //da modificare con la grafica
+        toggle.interactable = false;
+        toggle.colors.normalColor.Equals(Color.white);
+    }
+
+
+
+
+    private FMOD.Studio.EventInstance hoverMessage;
+
+    public void Playhover()
+    {
+        hoverMessage = FMODUnity.RuntimeManager.CreateInstance("event:/UI/MessageHover");
+        hoverMessage.start();
+        hoverMessage.release();
+    }
+
+    private FMOD.Studio.EventInstance selectMessage;
+    public void PlaySelect()
+    {
+        selectMessage = FMODUnity.RuntimeManager.CreateInstance("event:/UI/MessageSelection");
+        selectMessage.start();
+        selectMessage.release();
+    }
+
+    #endregion
 }

@@ -24,3 +24,6 @@ MonoBehaviour:
   decayMomentum: 0
   enemyShips: 3
   allyShips: 3
+  shipNames: []
+  shipSOarray:
+  - {fileID: 11400000, guid: a6a74b98722011c488fca974bf86454b, type: 2}

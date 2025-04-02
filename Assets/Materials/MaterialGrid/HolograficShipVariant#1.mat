@@ -17,7 +17,11 @@ Material:
   m_LightmapFlags: 4
   m_EnableInstancingVariants: 0
   m_DoubleSidedGI: 0
+<<<<<<< HEAD
   m_CustomRenderQueue: 3000
+=======
+  m_CustomRenderQueue: -1
+>>>>>>> 2249a242be7368ed1be060947b47c6fd98082e71
   stringTagMap:
     RenderType: Transparent
   disabledShaderPasses:

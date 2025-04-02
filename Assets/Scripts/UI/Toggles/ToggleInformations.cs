@@ -23,11 +23,11 @@ public class ToggleInformations : MonoBehaviour
         this.messageType = messageType;
     }
 
-    public void PrintInformations(bool value)
+    public void PrintInformations()
     {
         if(toggle.isOn)
         {
-             Debug.Log("Sender: " + sender + " Enemy: " + enemy + " Direction: " + direction + " MessageType: " + messageType);
+            //Debug.Log("Sender: " + sender + " Enemy: " + enemy + " Direction: " + direction + " MessageType: " + messageType);
         }
        
     }

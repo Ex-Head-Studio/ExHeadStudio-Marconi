@@ -37,8 +37,6 @@ public class GameManager : MonoBehaviour
 
     public void OnTurnEnded()
     {
-        Debug.Log("Turn Ends, game manager registered");
-
         //qui bisogna passare un evento vuoto "fittizio" (stefano)
         clearEvent?.Invoke(new VoidEvent(0));
 
@@ -49,6 +47,7 @@ public class GameManager : MonoBehaviour
         StartCoroutine(WaitNextRound());
     }
 
+    //TODO controllare se gli animator sono tutti in idle
     public void OnTurnStarted()
     {
         Debug.Log("Turn starts, game manager registered, count: " + numberOfRounds);
