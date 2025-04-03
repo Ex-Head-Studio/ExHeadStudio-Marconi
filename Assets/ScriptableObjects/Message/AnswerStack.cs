@@ -22,6 +22,10 @@ public class AnswerStack : ScriptableObject
         answers.Remove(answers.Find(x => x.receiver == sender));
     }
 
+    public void RemoveEnemyAnswer(AnswerStruct answer)
+    {
+        answers.Remove(answer);
+    }
     public void RemoveAnswerByFaction(int faction)
     {
         answers.RemoveAll(x => x.entity == faction);

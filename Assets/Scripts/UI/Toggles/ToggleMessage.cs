@@ -21,11 +21,14 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
     [Header("Answer Stack ScriptableObject")]
     [SerializeField] private AnswerStack answerStack;
 
+
+    private AnswerStruct tmpRemovedEnemyAnswer;
+
     private bool abilitaToggle = true;
 
     private void OnEnable()
     {
-        UIObjectScript.testActionForConsumable += OnToggleDisable;
+            UIObjectScript.testActionForConsumable += OnToggleDisable;
     }
 
     private void OnDisable()
@@ -47,7 +50,14 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
 
         currentGroup = toggle.group;
         previousState = toggle.isOn;
+
+        //TODO sistemare questa parte
+        if(toggleInfo.GetToggleEntity() == (int)Entity.enemy)
+        {
+            answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
+        }
     
+        tmpRemovedEnemyAnswer.receiver = "";
     }
     public void SetAnswer(bool toggleValue)
     {
@@ -79,8 +89,8 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
             }
             else
             {
-
-                if(answerStack.CountEntity((int)Entity.enemy) > 0)
+                //vecchia logica, da sistemare
+                /*if(answerStack.CountEntity((int)Entity.enemy) > 0)
                 {
                     answerStack.RemoveAnswerByFaction((int)Entity.enemy);
                     answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
@@ -88,10 +98,28 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
                 else if(answerStack.CountEntity((int)Entity.enemy) == 0)
                 {
                     answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));   
-                }
+                }*/
             }
 
         }
+
+        if(toggleInfo.GetToggleEntity() == (int)Entity.enemy)
+        {
+                //nuova logica. Tutte le volte che un toggle nemico viene selezionato viene rimosso dallo stack delle risposte
+                //devo mantenere una reference all'ultima risposta eliminata, per poterle reinserire se elimino un altro messaggio
+
+                if(tmpRemovedEnemyAnswer.receiver != "")
+                {
+                    answerStack.AddAnswer(tmpRemovedEnemyAnswer);
+                }
+
+                tmpRemovedEnemyAnswer = new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()); 
+                answerStack.RemoveEnemyAnswer(tmpRemovedEnemyAnswer);
+        }
+
+
+
+    
     }
 
     //TODO voglio modificare questa cosa, è un pessimo prototipo

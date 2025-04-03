@@ -22,14 +22,9 @@ public class EndTurnButton : MonoBehaviour
 
     public void EndTurn()
     {
-        if(answerStack.answers.Count <2)
+        if(answerStack.CountEntity((int)Entity.enemy) >= 1 && answerStack.CountEntity((int)Entity.ally) >= 1)
         {
-            //TODO Rob modifica il colore
-            button.image.color = Color.red;
-        }
-        else
-        {
-            button.image.color = Color.green;
+                        button.image.color = Color.green;
 
             //chiama l'evento di fine turno
             VoidEvent voidEvent =  new VoidEvent(0);
@@ -37,6 +32,12 @@ public class EndTurnButton : MonoBehaviour
 
             //TODO controllare che sia corretto l'ordine di escuzione
             sendAsnwers();
+
+        }
+        else
+        {
+            //TODO Rob modifica il colore
+            button.image.color = Color.red;
         }
 
     }

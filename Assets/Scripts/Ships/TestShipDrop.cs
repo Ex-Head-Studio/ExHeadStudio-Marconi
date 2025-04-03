@@ -50,6 +50,6 @@ public class TestShipDrop : MonoBehaviour, Idroppable
 
     public void DeathAnimation()
     {
-        Debug.Log("Death animation called");
+        //Debug.Log("Death animation called");
     }
 }

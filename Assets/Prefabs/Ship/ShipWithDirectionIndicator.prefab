@@ -32,7 +32,6 @@ RectTransform:
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 782690722063816795}
-  - {fileID: 1686573565020577727}
   - {fileID: 6265585061610131499}
   - {fileID: 1797447227520672657}
   - {fileID: 4407836678584872244}
@@ -107,78 +106,6 @@ MonoBehaviour:
   m_BlockingMask:
     serializedVersion: 2
     m_Bits: 4294967295
---- !u!1 &2658613635904989003
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1686573565020577727}
-  - component: {fileID: 4048277584363154802}
-  - component: {fileID: 10832284841962555}
-  m_Layer: 6
-  m_Name: rawImageTest
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!224 &1686573565020577727
-RectTransform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2658613635904989003}
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.8, y: 0.8, z: 0.8}
-  m_ConstrainProportionsScale: 1
-  m_Children: []
-  m_Father: {fileID: 3248987217965079318}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 15, y: 15}
-  m_Pivot: {x: 0.5, y: 0.5}
---- !u!222 &4048277584363154802
-CanvasRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2658613635904989003}
-  m_CullTransparentMesh: 1
---- !u!114 &10832284841962555
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2658613635904989003}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 1344c3c82d62a2a41a3576d8abb8e3ea, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  m_Material: {fileID: 0}
-  m_Color: {r: 1, g: 0.92759216, b: 0, a: 1}
-  m_RaycastTarget: 1
-  m_RaycastPadding: {x: 0, y: 0, z: 0, w: 0}
-  m_Maskable: 1
-  m_OnCullStateChanged:
-    m_PersistentCalls:
-      m_Calls: []
-  m_Texture: {fileID: 2800000, guid: 9dc042a5514de7e459815d20d9da870e, type: 3}
-  m_UVRect:
-    serializedVersion: 2
-    x: 0
-    y: 0
-    width: 1
-    height: 1
 --- !u!1 &6149632019693708781
 GameObject:
   m_ObjectHideFlags: 0
@@ -325,7 +252,7 @@ GameObject:
   m_Component:
   - component: {fileID: 4407836678584872244}
   m_Layer: 6
-  m_Name: Destra
+  m_Name: Sinistra
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -417,6 +344,7 @@ MonoBehaviour:
   shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
   attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
   gridManager: {fileID: 0}
+  shipAnimator: {fileID: 3341787590223873863}
   shipLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -446,6 +374,7 @@ MonoBehaviour:
   shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
   attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
   gridManager: {fileID: 0}
+  shipAnimator: {fileID: 0}
   shipLayer:
     serializedVersion: 2
     m_Bits: 0
@@ -505,7 +434,7 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2941105610232887662}
+      - m_Target: {fileID: -1945377296878425735}
         m_TargetAssemblyTypeName: Ship, Assembly-CSharp
         m_MethodName: ExecuteInstructions
         m_Mode: 0
@@ -573,8 +502,8 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 2941105610232887662}
-        m_TargetAssemblyTypeName: Ship, Assembly-CSharp
+      - m_Target: {fileID: -1945377296878425735}
+        m_TargetAssemblyTypeName: NewShip, Assembly-CSharp
         m_MethodName: OnAttacked
         m_Mode: 0
         m_Arguments:
@@ -639,12 +568,11 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 301ca715915bb7c4881ff1219dea3134, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  directionIndicatorImage: {fileID: 2658613635904989003}
   gridCamera: {fileID: 8288683419973744189, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
-  upArrow: {fileID: 7775243268990539684}
-  downArrow: {fileID: 8071121850657665694}
-  leftArrow: {fileID: 8476719052267065047}
-  rightArrow: {fileID: 6174805351743314632}
+  upArrow: {fileID: 8071121850657665694}
+  downArrow: {fileID: 7775243268990539684}
+  leftArrow: {fileID: 6174805351743314632}
+  rightArrow: {fileID: 8476719052267065047}
   arrowMaterial: {fileID: 2100000, guid: 2d20250719f1d2643b758b4b03e845a9, type: 2}
 --- !u!114 &-8728377234537810871
 MonoBehaviour:
@@ -711,6 +639,7 @@ GameObject:
   - component: {fileID: 3641054744646079674}
   - component: {fileID: 3181786393325451725}
   - component: {fileID: 3341787590223873863}
+  - component: {fileID: 1770515408620577077}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -830,6 +759,19 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &1770515408620577077
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8035476762317079230}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b97b21471ae90c42b4f043bf88a647c, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  parentShipScript: {fileID: -1945377296878425735}
 --- !u!1 &8071121850657665694
 GameObject:
   m_ObjectHideFlags: 0
@@ -876,7 +818,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3552810257362153494}
   m_Layer: 6
-  m_Name: Sinistra
+  m_Name: Destra
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0

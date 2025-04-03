@@ -19,6 +19,7 @@ public class Ship : MonoBehaviour
     [SerializeField] protected OnShipDestroyedEvent shipDestroyedEvent;
     [SerializeField] protected OnShipAttackEvent attackEvent;
     [SerializeField] protected GridManager gridManager;
+    [SerializeField] protected Animator shipAnimator;
     protected int mapWidth;
     protected int mapHeight;
     public LayerMask shipLayer;
@@ -280,6 +281,7 @@ public class Ship : MonoBehaviour
             health--;
             if(health<=0)
             {
+                shipAnimator.SetTrigger("Death");
                 shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
             }
             //manager.RemoveShip(this, faction);

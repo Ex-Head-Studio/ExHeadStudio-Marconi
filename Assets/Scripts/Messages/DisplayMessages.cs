@@ -117,10 +117,10 @@ public class DisplayMessages : MonoBehaviour
         toggles.Clear();
     }
 
-    public void SendAnswers()
+    /*public void SendAnswers()
     {
         answerStack.SendAnswers();
-    }
+    }*/
 
     /*private void DisableToggles()
     {

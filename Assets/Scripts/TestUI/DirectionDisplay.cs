@@ -8,7 +8,7 @@ public class DirectionDisplay : MonoBehaviour
     //ATTENZIONE: l'immagine dell'inidicatore deve trovarsi sullo stesso piano, o al massimo alle spalle,
     //della nave a cui si riferisce (altrimenti non si vede nella griglia)
 
-    [SerializeField] private GameObject directionIndicatorImage;
+    //[SerializeField] private GameObject directionIndicatorImage;
     private RawImage image;
     [SerializeField] private Camera gridCamera;
     [SerializeField] private GameObject upArrow;
@@ -38,9 +38,9 @@ public class DirectionDisplay : MonoBehaviour
 
     private void Start()
     {
-        directionIndicatorImage.SetActive(false);
+       // directionIndicatorImage.SetActive(false);
         shipScript = GetComponent<Ship>();
-        image = directionIndicatorImage.GetComponent<RawImage>();
+        //image = directionIndicatorImage.GetComponent<RawImage>();
     }
 
     private void DisplayDirection(string shipName, int direction, int messageType)
@@ -94,7 +94,7 @@ public class DirectionDisplay : MonoBehaviour
                     break;
 
                 default:
-                    directionIndicatorImage.transform.Rotate(0, 0, 0, Space.World);
+                    //directionIndicatorImage.transform.Rotate(0, 0, 0, Space.World);
                     break;
             }
         }

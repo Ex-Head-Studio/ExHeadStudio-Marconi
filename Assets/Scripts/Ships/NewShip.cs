@@ -87,6 +87,7 @@ public class NewShip : Ship
         //shipMoves=shipMoves.Distinct().ToList();
         return canAttack;
     }
+    
     public override void OnAttacked(ShipAttackStruct attackPosition)
     {
         if(position.x == attackPosition.gridPosition.x && position.y == attackPosition.gridPosition.y)
@@ -95,9 +96,16 @@ public class NewShip : Ship
             health--;
             if(health<=0)
             {
+                shipAnimator.SetTrigger("Death");
                 shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
+
             }
-            manager.RemoveShip(this, faction);
+
         }
+    }
+
+    public void ParentRemoveShip()
+    {
+        manager.RemoveShip(this, faction);
     }
 }
