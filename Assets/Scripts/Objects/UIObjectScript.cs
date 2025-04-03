@@ -4,7 +4,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
 using System;
-public class UIObjectScript : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
+public class UIObjectScript : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler, IConsumableObjectTest
 {
     [SerializeField] private GameObject nameChildren;
     [SerializeField] private GameObject descriptionChildren;
@@ -17,9 +17,6 @@ public class UIObjectScript : MonoBehaviour, IPointerExitHandler, IPointerEnterH
 
     //inserire reference al pannello di conferma
     //inserire i bottoni e gli eventi legati per chiamare la funzione del consumabile
-
-    public static event Action<string> testActionForConsumable;
-
 
     private TMP_Text objectNameText;
     private TMP_Text objectDescriptionText;
@@ -112,10 +109,16 @@ public class UIObjectScript : MonoBehaviour, IPointerExitHandler, IPointerEnterH
     //?
     public void UseObject()
     {
-        Debug.Log("Ho attivato l'oggetto");        //uso dell'oggetto
-        testActionForConsumable?.Invoke(objName);
+        IConsumableObjectTest.InvokeConsumableObjectEvent(objName);
+
         abstractObject.ObjectAction();
+        
         RemoveObject();
+    }
+
+    public void OnConsumableObjectAction(string testString)
+    {
+
     }
     
     public void RemoveObject()

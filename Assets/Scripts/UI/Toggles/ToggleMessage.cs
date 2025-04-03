@@ -3,77 +3,83 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 
+/// <summary>
+/// Lo script deve essere associato al toggle dei messaggii
+/// </summary>
 
 [RequireComponent(typeof(Toggle))]
 [RequireComponent(typeof(ToggleInformations))]
 [RequireComponent(typeof(toggleSounds))]
+[RequireComponent(typeof(DirectionIndicator))]
 
 
-public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
+public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler, IConsumableObjectTest
 {
     private Toggle toggle;
     private ToggleInformations toggleInfo;
 
-    private bool previousState;
-    private ToggleGroup currentGroup;
-    private ToggleGroup selectedGroup;
+    private int toggleEntity, toggleMoveId;
+    private string toggleSender;
+
 
     [Header("Answer Stack ScriptableObject")]
     [SerializeField] private AnswerStack answerStack;
 
 
+    //struct necessaria per mantenere un clone di ogni risposta nemica eliminata
     private AnswerStruct tmpRemovedEnemyAnswer;
-
-    private bool abilitaToggle = true;
-
-    private void OnEnable()
-    {
-            UIObjectScript.testActionForConsumable += OnToggleDisable;
-    }
-
-    private void OnDisable()
-    {
-        //UIObjectScript.testActionForConsumable -= OnToggleDisable;
-    }
-
-    private void OnDestroy()
-    {
-        
-        UIObjectScript.testActionForConsumable -= OnToggleDisable;
-    }
-
 
     private void Start()
     {
         toggleInfo = GetComponent<ToggleInformations>();
         toggle = GetComponent<Toggle>();
 
-        currentGroup = toggle.group;
-        previousState = toggle.isOn;
+        toggleEntity = toggleInfo.GetToggleEntity();
+        toggleMoveId = toggleInfo.GetToggleMoveId();
+        toggleSender = toggleInfo.GetToggleSender();
 
-        //TODO sistemare questa parte
-        if(toggleInfo.GetToggleEntity() == (int)Entity.enemy)
-        {
-            answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
-        }
-    
         tmpRemovedEnemyAnswer.receiver = "";
+
+        //se il messaggio è nemico viene automaticamente aggiunto allo stack
+        if(toggleEntity  == (int)Entity.enemy)
+        {
+            answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleMoveId, toggleSender, toggleEntity));
+        }
+
     }
+
+    #region Iscrivione agli eventi
+
+    private void OnEnable()
+    {
+        IConsumableObjectTest.testActionForConsumable += OnConsumableObjectAction;
+
+    }
+
+    private void OnDestroy()
+    {
+        IConsumableObjectTest.testActionForConsumable -= OnConsumableObjectAction;
+    }
+
+    #endregion
+
+    #region Creazione delle risposte (Set Answer)
     public void SetAnswer(bool toggleValue)
     {
-        if (toggle == null || toggleInfo == null) return;
-
-        ToggleGroup selectedGroup = toggle.group;
-        if (selectedGroup == null)
+        if(toggleEntity == (int)Entity.ally)
         {
-            Debug.LogWarning("SelectedGroup non definito.");
-            return;
+            SetAllyAnswer();
         }
+        else
+        {
+            SetEnemyAnswer();
+        }
+    }
 
-        toggleInfo.PrintInformations();
-
+    private void SetAllyAnswer()
+    {
         // Se il toggle è stato attivato e prima era spento, aggiungo la risposta
-        if (toggle.isOn)
+        if (toggle != null && toggle.isOn)
         {
             if(toggleInfo.GetToggleEntity() == (int)Entity.ally)
             {
@@ -87,52 +93,40 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
                     answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
                 }
             }
-            else
-            {
-                //vecchia logica, da sistemare
-                /*if(answerStack.CountEntity((int)Entity.enemy) > 0)
-                {
-                    answerStack.RemoveAnswerByFaction((int)Entity.enemy);
-                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));
-                }
-                else if(answerStack.CountEntity((int)Entity.enemy) == 0)
-                {
-                    answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()));   
-                }*/
-            }
-
+        
         }
-
-        if(toggleInfo.GetToggleEntity() == (int)Entity.enemy)
-        {
-                //nuova logica. Tutte le volte che un toggle nemico viene selezionato viene rimosso dallo stack delle risposte
-                //devo mantenere una reference all'ultima risposta eliminata, per poterle reinserire se elimino un altro messaggio
-
-                if(tmpRemovedEnemyAnswer.receiver != "")
-                {
-                    answerStack.AddAnswer(tmpRemovedEnemyAnswer);
-                }
-
-                tmpRemovedEnemyAnswer = new AnswerStruct(toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()); 
-                answerStack.RemoveEnemyAnswer(tmpRemovedEnemyAnswer);
-        }
-
-
-
-    
     }
 
-    //TODO voglio modificare questa cosa, è un pessimo prototipo
-    public void OnToggleDisable(string consumableName)
+    //TODO verificare se questa logica funziona correttamente e se nel caso può essere estesa alle altre navi
+    private void SetEnemyAnswer()
+    {
+        //Tutte le volte che un toggle nemico viene selezionato viene rimosso dallo stack delle risposte.
+        //Devo mantenere una copia all'ultima risposta eliminata, per poterle reinserire se elimino un altro messaggio
+
+        if(tmpRemovedEnemyAnswer.receiver != "")
+        {
+            answerStack.AddAnswer(tmpRemovedEnemyAnswer);
+        }
+
+        //l'azione selezionata deve passare la risposta negata
+        tmpRemovedEnemyAnswer = new AnswerStruct(!toggle.isOn, toggleInfo.GetToggleMoveId(), toggleInfo.GetToggleSender(), toggleInfo.GetToggleEntity()); 
+        answerStack.RemoveEnemyAnswer(tmpRemovedEnemyAnswer);
+    }
+    #endregion
+
+    #region  Consumabili
+    public void OnConsumableObjectAction(string testString)
     {
         if(toggleInfo.GetToggleMessageType() == (int)MessageType.attack)
         {
             toggle.interactable = false;
-            toggle.colors.normalColor.Equals(Color.white);
+            //TODO sistemare questa cosa del colore
+            toggle.GetComponent<Image>().material.SetFloat("_EMISSION", 0.5f);
         }
-
     }
+    #endregion
 
+    //TODO capire perchè queste funzioni non possono essere invocate da toggleSounds
     #region Suoni
     public void OnPointerEnter(PointerEventData eventData)
     {

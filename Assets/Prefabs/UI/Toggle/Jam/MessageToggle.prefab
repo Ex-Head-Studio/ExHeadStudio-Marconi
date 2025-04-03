@@ -159,12 +159,12 @@ GameObject:
   - component: {fileID: 268791329789273259}
   - component: {fileID: 7117328383197805555}
   - component: {fileID: 6531330861181446931}
+  - component: {fileID: 8462897535949951048}
   - component: {fileID: 2264804269914538886}
   - component: {fileID: 3421356267209597738}
   - component: {fileID: 3715089364689736860}
-  - component: {fileID: -6783789590949299099}
-  - component: {fileID: 8462897535949951048}
-  - component: {fileID: 5780744829649019077}
+  - component: {fileID: 10780496403012008}
+  - component: {fileID: 5929397418675621025}
   m_Layer: 5
   m_Name: MessageToggle
   m_TagString: Untagged
@@ -291,7 +291,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
-      - m_Target: {fileID: -6783789590949299099}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: DirectionIndicatorTest, Assembly-CSharp
         m_MethodName: ShowArrowIndicator
         m_Mode: 0
@@ -304,6 +304,28 @@ MonoBehaviour:
           m_BoolArgument: 0
         m_CallState: 2
   m_IsOn: 1
+--- !u!95 &8462897535949951048
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3604495796554277922}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 4462fca439ec1e341b65a5501b41df47, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0
 --- !u!114 &2264804269914538886
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -341,7 +363,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 08e5438d95dac6641b5b7ee95e17f0f0, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!114 &-6783789590949299099
+--- !u!114 &10780496403012008
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -350,32 +372,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3604495796554277922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e2fb84c23256101489fb8d636459c2a9, type: 3}
+  m_Script: {fileID: 11500000, guid: 53f441e4351a11740a98c6432e4b8379, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!95 &8462897535949951048
-Animator:
-  serializedVersion: 7
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3604495796554277922}
-  m_Enabled: 1
-  m_Avatar: {fileID: 0}
-  m_Controller: {fileID: 9100000, guid: 4462fca439ec1e341b65a5501b41df47, type: 2}
-  m_CullingMode: 0
-  m_UpdateMode: 0
-  m_ApplyRootMotion: 0
-  m_LinearVelocityBlending: 0
-  m_StabilizeFeet: 0
-  m_AnimatePhysics: 0
-  m_WarningMessage: 
-  m_HasTransformHierarchy: 1
-  m_AllowConstantClipSamplingOptimization: 1
-  m_KeepAnimatorStateOnDisable: 0
-  m_WriteDefaultValuesOnDisable: 0
---- !u!114 &5780744829649019077
+--- !u!114 &5929397418675621025
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -384,15 +384,15 @@ MonoBehaviour:
   m_GameObject: {fileID: 3604495796554277922}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: b3bbc22f5ff449d45ba4696e10a83f61, type: 3}
+  m_Script: {fileID: 11500000, guid: 915cb9b51fdf28447b109893119c064d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  eventToListen: {fileID: 11400000, guid: 3853f00209eb0c642a9389baec0e5283, type: 2}
+  eventToListen: {fileID: 11400000, guid: bbc7cca08e679134487cfec6f8259024, type: 2}
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: -6783789590949299099}
-        m_TargetAssemblyTypeName: DirectionIndicatorTest, Assembly-CSharp
+      - m_Target: {fileID: 10780496403012008}
+        m_TargetAssemblyTypeName: DirectionIndicator, Assembly-CSharp
         m_MethodName: HideArrowIndicator
         m_Mode: 1
         m_Arguments:
@@ -468,7 +468,7 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: Roma moves right
+  m_text: Defaut text
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2100000, guid: 79459efec17a4d00a321bdcc27bbc385, type: 2}

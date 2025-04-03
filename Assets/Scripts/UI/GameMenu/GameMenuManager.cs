@@ -127,7 +127,7 @@ public class GameMenuManager : MonoBehaviour
         {
             allyShips -= 1;
         }
-        else
+        else if(shipDestroyed.entity == (int)Entity.enemy)
         {
             enemyShips -= 1;
         }
@@ -152,7 +152,6 @@ public class GameMenuManager : MonoBehaviour
     {
         yield return new WaitForSeconds(2);
         OnEndGame(enemyShips == 0 ? (int)Entity.enemy : (int)Entity.ally);
-        //SceneManager.LoadScene(0);
     }
 
 

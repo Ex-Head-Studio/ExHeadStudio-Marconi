@@ -7,7 +7,7 @@ public class ConsumableObject : AbstractObject
 
    public override void ObjectAction()
    {
-      Debug.LogWarning("Consumable object used, non so neache io come");
+      
    }
    public int GetEntityDrop()
    {

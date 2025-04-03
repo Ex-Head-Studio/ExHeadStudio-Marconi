@@ -3,7 +3,7 @@ using UnityEngine.UI;
 
 public class ToggleInformations : MonoBehaviour
 {
-    [SerializeField] private string sender;
+    private string sender;
     private int enemy, direction, messageType, moveId;
 
     private Toggle toggle;
@@ -23,14 +23,6 @@ public class ToggleInformations : MonoBehaviour
         this.messageType = messageType;
     }
 
-    public void PrintInformations()
-    {
-        if(toggle.isOn)
-        {
-            //Debug.Log("Sender: " + sender + " Enemy: " + enemy + " Direction: " + direction + " MessageType: " + messageType);
-        }
-       
-    }
 
     public Toggle GetToggle()
     {

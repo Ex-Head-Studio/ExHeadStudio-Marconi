@@ -45,11 +45,5 @@ public class TestShipDrop : MonoBehaviour, Idroppable
         //TODO qui ci va la logica del drop, ora lo faccio solo per testare
         //l'evento deve essere ricevuto dalla UI, che lo visualizza sui pannelli necessari
         dropEvent.Invoke(consObj);
-        Debug.Log("Dropped by the test ship");
-    }
-
-    public void DeathAnimation()
-    {
-        //Debug.Log("Death animation called");
     }
 }

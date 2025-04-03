@@ -4,7 +4,7 @@ using UnityEngine.UI;
 using UnityEngine.EventSystems;
 using System;
 
-public class DirectionIndicatorTest : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
+public class DirectionIndicator : MonoBehaviour, IPointerEnterHandler, IPointerExitHandler
 {
     // Lo script viene associato ad un toggle, permette di vedere la direzione di movimento o attacco
     //della nave selezionata
@@ -45,7 +45,6 @@ public class DirectionIndicatorTest : MonoBehaviour, IPointerEnterHandler, IPoin
 
     public void ShowArrowIndicator(bool toggleValue)
     {
-
         if(toggleValue)
         {
             OnToggleSelectedEvent?.Invoke(shipName, directionIndicator, messageType);
@@ -61,8 +60,4 @@ public class DirectionIndicatorTest : MonoBehaviour, IPointerEnterHandler, IPoin
     {
         OnToggleDeselectedEvent?.Invoke(shipName);
     }
-
-
-
-
 }
