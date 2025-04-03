@@ -14,6 +14,8 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private GameObject classSelectionPanel;
+    [SerializeField] private GameObject title;
 
     [field: Header("FMOD Events")]
     [field: SerializeField] public EventReference startButtonSound { get; private set; }
@@ -42,6 +44,7 @@ public class MainMenuButtons : MonoBehaviour
         creditsPanel.SetActive(true);
         mainMenuPanel.SetActive(false);
         optionsPanel.SetActive(false);
+        title.SetActive(false);
         AudioManager.PlayOneShot(menuButtonSound, this.transform.position);
     }
 
@@ -50,6 +53,7 @@ public class MainMenuButtons : MonoBehaviour
         optionsPanel.SetActive(true);
         mainMenuPanel.SetActive(false);
         creditsPanel.SetActive(false);
+        title.SetActive(false);
         AudioManager.PlayOneShot(menuButtonSound, this.transform.position);
 
     }
@@ -59,6 +63,16 @@ public class MainMenuButtons : MonoBehaviour
         optionsPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
         creditsPanel.SetActive(false);
+        classSelectionPanel.SetActive(false);
+        title.SetActive(true);
+        AudioManager.PlayOneShot(menuButtonSound, this.transform.position);
+    }
+
+    public void OpenClassSelection()
+    {
+        mainMenuPanel.SetActive(false);
+        title.SetActive(false);
+        classSelectionPanel.SetActive(true);
         AudioManager.PlayOneShot(menuButtonSound, this.transform.position);
     }
 }
