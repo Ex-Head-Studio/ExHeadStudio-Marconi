@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections;
+using System;
 public class UIObjectScript : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
 {
     [SerializeField] private GameObject nameChildren;
@@ -17,12 +18,17 @@ public class UIObjectScript : MonoBehaviour, IPointerExitHandler, IPointerEnterH
     //inserire reference al pannello di conferma
     //inserire i bottoni e gli eventi legati per chiamare la funzione del consumabile
 
+    public static event Action<string> testActionForConsumable;
+
 
     private TMP_Text objectNameText;
     private TMP_Text objectDescriptionText;
     private Image objectIllustrationImage;
 
     private Image objectImage;
+
+    //serve solo per fare un test sull'azione che spegne i toggles
+    private string objName;
 
     private void Start()
     {
@@ -40,6 +46,8 @@ public class UIObjectScript : MonoBehaviour, IPointerExitHandler, IPointerEnterH
         objectNameText.text = objectName;
         objectDescriptionText.text = objectDescription;
         objectIllustrationImage.sprite = objectIllustration.sprite;
+
+        objName = objectName;
     }
 
     public void SetDescriptionParent(Transform parent)
@@ -104,13 +112,15 @@ public class UIObjectScript : MonoBehaviour, IPointerExitHandler, IPointerEnterH
     //?
     public void UseObject()
     {
-        //uso dell'oggetto
+        Debug.Log("Ho attivato l'oggetto");        //uso dell'oggetto
+        testActionForConsumable?.Invoke(objName);
         abstractObject.ObjectAction();
         RemoveObject();
     }
     
     public void RemoveObject()
     {
+        objectsStack.RemoveObject(this.GetComponent<AbstractObject>());
         //TODO eliminazione dalla UI
         StartCoroutine(WaitBeforeDestroy(this.GetComponent<AbstractObject>()));
 

@@ -16,6 +16,7 @@ public class GameMenuManager : MonoBehaviour
     [SerializeField] private GameObject pausePanel;
     [Tooltip("Panello delle opzioni, mostra le opzioni di gioco")]
     [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private GameObject notificationPanel;
 #endregion
 #region Messages panels
     [Header("Messages panels")]
@@ -36,6 +37,9 @@ public class GameMenuManager : MonoBehaviour
     [Header("Ship number SO")]
     [SerializeField] private ShipManagerSO shipManagerSo;
 
+    [Header("Objects stack")]
+    [SerializeField] private ObjectsStack objectsStackSO;
+
     private int enemyShips;
     private int allyShips;
 
@@ -48,6 +52,9 @@ public class GameMenuManager : MonoBehaviour
         inputs.FindActionMap("UI").FindAction("PauseGame").performed += ctx => OnPause();
         inputs.FindActionMap("UI").FindAction("ShowObjectsMenu").performed += ctx => OnObjectDisplay();
         inputs.FindActionMap("UI").FindAction("ExitMenu").performed += ctx => OnObjectHide();
+
+        ObjectsStack.addedFirstObjEvent += ShowNotificationPanel;
+        ObjectsStack.removedLastObjEvent += HideNotificationPanel;
     }
 
     private void OnDisable()
@@ -55,6 +62,9 @@ public class GameMenuManager : MonoBehaviour
         inputs.FindActionMap("UI").FindAction("PauseGame").performed -= ctx => OnPause();
         inputs.FindActionMap("UI").FindAction("ShowObjectsMenu").performed -= ctx => OnObjectDisplay();  
         inputs.FindActionMap("UI").FindAction("ExitMenu").performed -= ctx => OnObjectHide();
+
+        ObjectsStack.addedFirstObjEvent -= ShowNotificationPanel;
+        ObjectsStack.removedLastObjEvent -= HideNotificationPanel;
     }
 
     private void Start()
@@ -73,6 +83,7 @@ public class GameMenuManager : MonoBehaviour
         confirmPanel.SetActive(true);
         objectPanel.SetActive(false);
         objectDescriptionPanel.SetActive(false);   
+        notificationPanel.SetActive(false);
     }
 
 
@@ -145,6 +156,16 @@ public class GameMenuManager : MonoBehaviour
     }
 
 
+
+    private void ShowNotificationPanel()
+    {
+        notificationPanel.SetActive(true);
+    }
+
+    private void HideNotificationPanel()
+    {
+        notificationPanel.SetActive(false);
+    }
 
 #region Bottoni
 

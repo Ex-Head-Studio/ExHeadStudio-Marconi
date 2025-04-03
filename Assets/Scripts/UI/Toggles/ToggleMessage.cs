@@ -20,6 +20,26 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
 
     [Header("Answer Stack ScriptableObject")]
     [SerializeField] private AnswerStack answerStack;
+
+    private bool abilitaToggle = true;
+
+    private void OnEnable()
+    {
+        UIObjectScript.testActionForConsumable += OnToggleDisable;
+    }
+
+    private void OnDisable()
+    {
+        //UIObjectScript.testActionForConsumable -= OnToggleDisable;
+    }
+
+    private void OnDestroy()
+    {
+        
+        UIObjectScript.testActionForConsumable -= OnToggleDisable;
+    }
+
+
     private void Start()
     {
         toggleInfo = GetComponent<ToggleInformations>();
@@ -74,7 +94,16 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
         }
     }
 
-    
+    //TODO voglio modificare questa cosa, è un pessimo prototipo
+    public void OnToggleDisable(string consumableName)
+    {
+        if(toggleInfo.GetToggleMessageType() == (int)MessageType.attack)
+        {
+            toggle.interactable = false;
+            toggle.colors.normalColor.Equals(Color.white);
+        }
+
+    }
 
     #region Suoni
     public void OnPointerEnter(PointerEventData eventData)
@@ -86,16 +115,6 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
     {
         PlaySelect();
     }
-
-    public void OnToggleDisable()
-    {
-        //da modificare con la grafica
-        toggle.interactable = false;
-        toggle.colors.normalColor.Equals(Color.white);
-    }
-
-
-
 
     private FMOD.Studio.EventInstance hoverMessage;
 

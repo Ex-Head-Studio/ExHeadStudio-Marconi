@@ -122,12 +122,12 @@ public class DisplayMessages : MonoBehaviour
         answerStack.SendAnswers();
     }
 
-    private void DisableToggles()
+    /*private void DisableToggles()
     {
         foreach(Toggle t in toggles)
         {
             t.GetComponent<ToggleMessage>().OnToggleDisable();
         }
-    }
+    }*/
     
 }
