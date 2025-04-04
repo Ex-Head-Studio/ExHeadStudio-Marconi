@@ -12,6 +12,7 @@ public class EndTurnButton : MonoBehaviour
     [Tooltip("L'evento viene chiamato alla fine di ogni turno, con la conferma del giocatore")] 
     [SerializeField] private EndedTurnEvent endedTurnEvent;
     [SerializeField] private AnswerStack answerStack;
+    [SerializeField] private Animator executeAnimator;
 
     private Button  button;
 
@@ -24,8 +25,9 @@ public class EndTurnButton : MonoBehaviour
     {
         if(answerStack.CountEntity((int)Entity.enemy) >= 1 && answerStack.CountEntity((int)Entity.ally) >= 1)
         {
-                        button.image.color = Color.green;
-
+            button.image.color = Color.green;
+            
+            Debug.Log("Eseguiamo l'animazione di fine turno");
             //chiama l'evento di fine turno
             VoidEvent voidEvent =  new VoidEvent(0);
             endedTurnEvent?.Invoke(voidEvent);
@@ -36,10 +38,24 @@ public class EndTurnButton : MonoBehaviour
         }
         else
         {
+            executeAnimator.SetBool("CanExecute", false);
             //TODO Rob modifica il colore
             button.image.color = Color.red;
         }
 
+    }
+
+    void Update(){
+         if(answerStack.CountEntity((int)Entity.enemy) >= 1 && answerStack.CountEntity((int)Entity.ally) >= 1)
+        {
+            button.interactable = true;
+            executeAnimator.SetBool("CanExecute", true);
+        }
+        else
+        {
+            button.interactable = false;
+            executeAnimator.SetBool("CanExecute", false);
+        }
     }
 
     public void sendAsnwers()

@@ -45,7 +45,11 @@ public class ShipManager : MonoBehaviour
 
     //TODO trovare il modo di referenziare correttamente il grid manager, qui è fatto veloce
     private GridManager gridManager;
+
+    private int modelIndex;
     
+    private ShipModelMaterialAssignement shipModelMaterialAssignement;
+
     
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
@@ -78,38 +82,42 @@ public class ShipManager : MonoBehaviour
         {
             //tipo questa cosa potremmo spostarla in un metodo che istanzia il prefab, all'interno dello script della nave
             //Se facciamo così ogni nave istanzierà il proprio prefab e si posizionerà da sola se gli passiamo le coordinate
-            NewShip newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<NewShip>();
+            modelIndex = Random.Range(0, shipChoice.Count);
+            NewShip newShip=Instantiate(shipChoice[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<NewShip>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
             ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(0);
-            newShip.shipSO = shipChoice[Random.Range(0,4)];
+            newShip.shipSO = shipChoice[modelIndex];
             newShip.shipLayer=LayerMask.GetMask("Enemy");
             newShip.shipInfluence=1;
             allies.Add(newShip);
             allyCount++;
-            GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
-            shipMesh.GetComponent<MeshRenderer>().material=allyMaterial;
+            newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(allyMaterial);
+            /*GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
+            shipMesh.GetComponent<MeshRenderer>().material=allyMaterial;*/
             gridManager.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
 
             return;
         }
         if(enemyCount<shipManagerSO.enemyShips){
-            NewShip newShip=Instantiate(shipPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<NewShip>();
+            modelIndex = Random.Range(0, shipChoice.Count);
+            NewShip newShip=Instantiate(shipChoice[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<NewShip>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
             ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(1);
-            newShip.shipSO = shipChoice[Random.Range(0,4)];
+            newShip.shipSO = shipChoice[modelIndex];
             newShip.shipLayer=LayerMask.GetMask("Ally");
             newShip.shipInfluence=-1;
             enemies.Add(newShip);
             enemyCount++;
-            GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
-            shipMesh.GetComponent<MeshRenderer>().material=enemyMaterial;
+            newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(enemyMaterial);
+            /*GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
+            shipMesh.GetComponent<MeshRenderer>().material=enemyMaterial;*/
             gridManager.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
             return;
