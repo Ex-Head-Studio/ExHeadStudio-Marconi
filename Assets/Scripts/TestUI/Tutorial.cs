@@ -6,18 +6,19 @@ using TMPro;
 public class TutorialManager : MonoBehaviour
 {
 
-    public TextMeshProUGUI tutorialText;
+    [Header("UI Elements")]
+    [Tooltip("TextMeshProUGUI component to display the tutorial text.")]
+    [SerializeField] private TextMeshProUGUI tutorialText;
+    [SerializeField] private GameObject backgroundPanel;
+
+    [Header("Tutorial Messages")]
     public string[] tutorialMessages;
-    private int currentMessageIndex = 0;
-    public float Speed;
+    [Header("Typing Values")]
+    [SerializeField] private float Speed;
+
     private Coroutine typingCoroutine; 
     private bool isTyping = false; 
-    public GameObject backgroundPanel;
-    
-    void Start()
-    {
-        
-    }
+    private int currentMessageIndex = 0;
 
     void Update()
     {

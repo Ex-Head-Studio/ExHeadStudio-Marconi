@@ -8,6 +8,12 @@ public class GameMenuManager : MonoBehaviour
 
     //TODO provare ad inserire un contextmenu per le funzioni dei bottoni
 
+    #region Tutorial canvas
+    [Header("Tutorial canvas")]
+    [SerializeField] private GameObject tutorialCanvas;
+
+    #endregion
+
 #region Game Menu Panels
     [Header("Game Menu Panels")]
     [Tooltip("Panello di fine partita, mostra il vincitore")]
