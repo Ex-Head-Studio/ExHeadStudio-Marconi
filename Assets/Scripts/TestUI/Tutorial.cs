@@ -16,9 +16,16 @@ public class TutorialManager : MonoBehaviour
     [Header("Typing Values")]
     [SerializeField] private float Speed;
 
+    [SerializeField] private GameObject tutorialCanvas;
+
     private Coroutine typingCoroutine; 
     private bool isTyping = false; 
     private int currentMessageIndex = 0;
+
+    private void Start()
+    {
+        tutorialCanvas.SetActive(true);
+    }
 
     void Update()
     {
@@ -73,7 +80,11 @@ public class TutorialManager : MonoBehaviour
             case 7:
                 rectTransform.offsetMin = Vector2.zero; 
                 rectTransform.offsetMax = Vector2.zero; 
-                rectTransform.offsetMax = new Vector2(-215, rectTransform.offsetMax.y); // Set right to 215
+                rectTransform.offsetMax = new Vector2(400, rectTransform.offsetMax.y); // Set left to 400
+                break;
+
+            case 8:
+                tutorialCanvas.SetActive(false); // Disattiva il canvas del tutorial
                 break;
             default:
                 rectTransform.offsetMin = Vector2.zero; 
