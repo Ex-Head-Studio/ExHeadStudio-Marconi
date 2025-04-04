@@ -176,7 +176,7 @@ public class Tile : MonoBehaviour
     {
         if(tileShip==null)
         {
-            Debug.Log("La nave non è presente");
+            //Debug.Log("La nave non è presente");
             return null;
         }
         else

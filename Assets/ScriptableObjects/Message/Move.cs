@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class Move : ScriptableObject
+public class Move 
 {
    int idMove;
    string shipName;

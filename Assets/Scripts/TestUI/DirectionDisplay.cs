@@ -35,7 +35,7 @@ public class DirectionDisplay : MonoBehaviour
 
     private void DisplayDirection(string shipName, int direction, int messageType)
     {
-        Debug.Log("bho");
+        //Debug.Log("bho");
         if(shipName == shipScript.shipName)
         {
             if(messageType == (int)MessageType.attack)

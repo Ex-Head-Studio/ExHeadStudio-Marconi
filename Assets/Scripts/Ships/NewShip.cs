@@ -47,10 +47,15 @@ public class NewShip : Ship
         }
         possibleMoves=possibleMoves.Where(x=> x.x>=0 && x.x<mapWidth && x.y>=0 && x.y<mapHeight && x!=position).Distinct().ToList(); 
         foreach(Vector2Int move in possibleMoves){
-            bestMoves.Add(new Move(moveId++, shipName, move, MessageType.movement, manager.influenceMap.GetValue(move.x, move.y)));
+            Move newMove=new Move(moveId++, shipName, move, MessageType.movement, manager.influenceMap.CalculateMoveValue(move.x, move.y, shipSO.movementRange, shipSO.attackRange));
+            bestMoves.Add(newMove);
+            Debug.Log("Nave "+shipName+" muove in "+newMove.GetTargetPos()+" con value: "+newMove.value);
         }
-        List<Vector2Int> occupiedPositions = Physics.OverlapSphere(this.transform.position, shipSO.movementRange, shipLayer ).Select(x=> x.GetComponent<Ship>().position).ToList();
-        occupiedPositions=occupiedPositions.Concat(Physics.OverlapSphere(this.transform.position, shipSO.movementRange, gameObject.layer).Select(x=> x.GetComponent<Ship>().position)).ToList();
+        //Recupera tutte le posizioni occupate da navi, tra quelle che può fare la nave corrente
+        List<Vector2Int> occupiedPositions = possibleMoves.Where(x=>gridManager._tiles[x].GetShip()!=null).ToList();
+
+        Debug.Log("Navi affianco: "+ occupiedPositions.Count());
+        //Toglie tutti i movimenti che porterebbero a caselle già occupate
         bestMoves=bestMoves.Where(x=>!occupiedPositions.Contains(x.GetTargetPos())).ToList();
 
         if(faction==0)
@@ -83,7 +88,7 @@ public class NewShip : Ship
         else if(targets.Count()>0){
             canAttack=true;
         }
-        targets.ForEach(x=> shipMoves.Add(new Move(moveId++, shipName, x, MessageType.attack, 0f)));
+        targets.ForEach(x=> shipMoves.Add(new Move(moveId++, shipName, x, MessageType.attack, faction==0 ? -1f:1f)));
         //shipMoves=shipMoves.Distinct().ToList();
         return canAttack;
     }
