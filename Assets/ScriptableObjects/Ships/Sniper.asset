@@ -12,10 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76197b39508ec9b49b2f36c36decb8fb, type: 3}
   m_Name: Sniper
   m_EditorClassIdentifier: 
-  movementRange: 2
+  movementRange: 1
   attackRange: 10
   attackPower: 3
-  health: 3
+  health: 1
   shipInfluence: 0
   shipModelPrefab: {fileID: 6150688784509194374, guid: b8ab934cec80f6b438d0f2c58531e99f, type: 3}
   shipNameMesh: {fileID: 0}

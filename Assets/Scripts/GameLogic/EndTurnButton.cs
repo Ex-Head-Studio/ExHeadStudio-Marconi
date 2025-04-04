@@ -13,6 +13,7 @@ public class EndTurnButton : MonoBehaviour
     [SerializeField] private EndedTurnEvent endedTurnEvent;
     [SerializeField] private AnswerStack answerStack;
     [SerializeField] private Animator executeAnimator;
+    [SerializeField] private Material materialButton;
 
     private Button  button;
 
@@ -25,7 +26,7 @@ public class EndTurnButton : MonoBehaviour
     {
         if(answerStack.CountEntity((int)Entity.enemy) >= 1 && answerStack.CountEntity((int)Entity.ally) >= 1)
         {
-            button.image.color = Color.green;
+            //button.image.color = Color.green;
             
             Debug.Log("Eseguiamo l'animazione di fine turno");
             //chiama l'evento di fine turno
@@ -40,7 +41,7 @@ public class EndTurnButton : MonoBehaviour
         {
             executeAnimator.SetBool("CanExecute", false);
             //TODO Rob modifica il colore
-            button.image.color = Color.red;
+            //button.image.color = Color.red;
         }
 
     }
@@ -49,11 +50,15 @@ public class EndTurnButton : MonoBehaviour
          if(answerStack.CountEntity((int)Entity.enemy) >= 1 && answerStack.CountEntity((int)Entity.ally) >= 1)
         {
             button.interactable = true;
+            //materialButton.SetColor("_EmissionColor", Color.green);
+            button.image.color = Color.green;
             executeAnimator.SetBool("CanExecute", true);
         }
         else
         {
             button.interactable = false;
+            //materialButton.SetColor("_EmissionColor", Color.red);
+            button.image.color = Color.red;
             executeAnimator.SetBool("CanExecute", false);
         }
     }
