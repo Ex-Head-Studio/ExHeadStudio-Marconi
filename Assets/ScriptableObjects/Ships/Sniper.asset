@@ -17,4 +17,6 @@ MonoBehaviour:
   attackPower: 3
   health: 3
   shipInfluence: 0
-  shipModelPrefab: {fileID: 0}
+  shipModelPrefab: {fileID: 6150688784509194374, guid: b8ab934cec80f6b438d0f2c58531e99f, type: 3}
+  shipNameMesh: {fileID: 0}
+  shipClassMesh: {fileID: 0}

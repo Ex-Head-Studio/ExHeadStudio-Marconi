@@ -7,7 +7,7 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: HolograficShipVariant#1
+  m_Name: HolograficShipAllyVariant#1
   m_Shader: {fileID: -6465566751694194690, guid: 49f7f2001e59ca94da82fad8ee8faa90, type: 3}
   m_Parent: {fileID: 0}
   m_ModifiedSerializedProperties: 0
@@ -51,11 +51,11 @@ Material:
     m_Floats:
     - _AlphaClip: 0
     - _AlphaToMask: 0
-    - _Blend: 0
+    - _Blend: 2
     - _CastShadows: 1
     - _Cull: 2
-    - _DstBlend: 10
-    - _FresnelPower: 2.59
+    - _DstBlend: 1
+    - _FresnelPower: 3
     - _QueueControl: 0
     - _QueueOffset: 0
     - _SrcBlend: 5
@@ -67,7 +67,7 @@ Material:
     m_Colors:
     - _FresnelColor: {r: 0.9369777, g: 6.7280087, b: 13.766361, a: 1}
     - _ScanlineSpeed: {r: 0, g: 1, b: 0, a: 0}
-    - _ScanlineTiling: {r: 1, g: 657, b: 0, a: 0}
+    - _ScanlineTiling: {r: 1, g: 20, b: 0, a: 0}
   m_BuildTextureStacks: []
   m_AllowLocking: 1
 --- !u!114 &9044965991703320034
