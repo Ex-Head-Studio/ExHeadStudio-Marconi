@@ -105,4 +105,11 @@ public class TutorialManager : MonoBehaviour
         isTyping = false;
         currentMessageIndex++;
     }
+
+
+    public void SkipTutorialButon()
+    {
+        tutorialCanvas.SetActive(false); // Disattiva il canvas del tutorial
+    }
+
 }
