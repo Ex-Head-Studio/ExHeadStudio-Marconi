@@ -534,72 +534,6 @@ RectTransform:
   m_CorrespondingSourceObject: {fileID: 3954213152114757376, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
   m_PrefabInstance: {fileID: 1268484650}
   m_PrefabAsset: {fileID: 0}
---- !u!1 &429603280
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 429603282}
-  - component: {fileID: 429603281}
-  m_Layer: 0
-  m_Name: TutorialController
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!114 &429603281
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 429603280}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 9cfe93c224b072e42baad281461136f0, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  tutorialText: {fileID: 1969175352}
-  backgroundPanel: {fileID: 147325355}
-  tutorialMessages:
-  - "Ciao, comandante! Benvenuto su BattleShift: Marconi! Io sono Marconi, e il mio
-    compito \xE8 spiegarti come funziona questo gioco."
-  - "Siamo in guerra, e il destino della tua fazione \xE8 nelle tue mani. Sei pronto
-    a prendere il comando?"
-  - Le navi verdi sono le tue alleate, mentre quelle rosse appartengono al nemico
-  - Il tuo obiettivo? Distruggere tutte le navi nemiche! Facile, no? Beh, lascia
-    che ti spieghi meglio...
-  - "Vedi quei messaggi verdi a sinistra dello schermo? Ogni messaggio rappresenta
-    un'azione che una tua nave pu\xF2 eseguire. "
-  - "Selezionane uno e quell'azione verr\xE0 eseguita, ma attenzione: le altre verranno
-    scartate!"
-  - 'A destra, invece, ci sono i messaggi rossi. Questi indicano le azioni delle
-    navi nemiche. '
-  - Selezionarne uno significa impedirlo, ma occhio! Tutte le altre azioni avversarie
-    andranno comunque a segno.
-  - "Ora che sai le basi, \xE8 il momento di entrare in azione! Scegli con attenzione,
-    adatta la tua strategia e guida la tua flotta alla vittoria."
-  Speed: 0.05
-  tutorialCanvas: {fileID: 502417056}
---- !u!4 &429603282
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 429603280}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 192.30704, y: -51.6037, z: 615.156}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 0}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!1 &472631985
 GameObject:
   m_ObjectHideFlags: 0
@@ -766,22 +700,22 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 502417056}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0, y: 0, z: 0}
-  m_ConstrainProportionsScale: 0
+  m_LocalPosition: {x: 0, y: 0, z: -10.04}
+  m_LocalScale: {x: 4, y: 4, z: 4}
+  m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 147325358}
   - {fileID: 1567076710}
   - {fileID: 1969175350}
   - {fileID: 1189122986}
   - {fileID: 721016343}
-  m_Father: {fileID: 0}
+  m_Father: {fileID: 393936754}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 0}
-  m_Pivot: {x: 0, y: 0}
+  m_AnchoredPosition: {x: 946.875, y: 406.82004}
+  m_SizeDelta: {x: 430.4, y: 244}
+  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!95 &502417058
 Animator:
   serializedVersion: 7
@@ -843,7 +777,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 0
+  m_PresetInfoIsWorld: 1
 --- !u!223 &502417061
 Canvas:
   m_ObjectHideFlags: 0
@@ -951,8 +885,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 24
-  m_fontSizeBase: 24
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1030,7 +964,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 721016342}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.000020265576}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
@@ -1039,8 +973,8 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 328.1, y: -160.5}
-  m_SizeDelta: {x: 77.7, y: 65.82}
+  m_AnchoredPosition: {x: -96.718735, y: -106.704956}
+  m_SizeDelta: {x: 50.3, y: 17.6}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &721016344
 MonoBehaviour:
@@ -1086,7 +1020,7 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 429603281}
+      - m_Target: {fileID: 1268484653}
         m_TargetAssemblyTypeName: TutorialManager, Assembly-CSharp
         m_MethodName: SkipTutorialButon
         m_Mode: 1
@@ -1165,6 +1099,7 @@ Transform:
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children:
+  - {fileID: 1150166864}
   - {fileID: 2026514603}
   - {fileID: 1305205252}
   m_Father: {fileID: 1036401159}
@@ -1207,7 +1142,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 0}
+    m_TransformParent: {fileID: 757071700}
     m_Modifications:
     - target: {fileID: 2338273343161374645, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
       propertyPath: m_LocalPosition.x
@@ -1227,15 +1162,15 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 2338273343161374645, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2338273343161374645, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2338273343161374645, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: -0
       objectReference: {fileID: 0}
     - target: {fileID: 2338273343161374645, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
@@ -1262,6 +1197,11 @@ PrefabInstance:
     m_AddedGameObjects: []
     m_AddedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
+--- !u!4 &1150166864 stripped
+Transform:
+  m_CorrespondingSourceObject: {fileID: 2338273343161374645, guid: f97e32a10c4a79e4895bd1a68db94b95, type: 3}
+  m_PrefabInstance: {fileID: 1150166863}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1189122985
 GameObject:
   m_ObjectHideFlags: 0
@@ -1288,7 +1228,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1189122985}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 17.00003}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -1296,7 +1236,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
-  m_AnchoredPosition: {x: -115.7, y: 0}
+  m_AnchoredPosition: {x: 162.73, y: 6.13}
   m_SizeDelta: {x: 350, y: 48.009995}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &1189122987
@@ -1346,8 +1286,8 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 20
-  m_fontSizeBase: 20
+  m_fontSize: 8
+  m_fontSizeBase: 8
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
@@ -1384,7 +1324,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 0, y: 23.385954, z: 245.19153, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -1455,9 +1395,17 @@ PrefabInstance:
       value: 186.81
       objectReference: {fileID: 0}
     - target: {fileID: 2398932702815304891, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      propertyPath: allyMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: c718bfae42c29634698c49fdbd079f72, type: 2}
+    - target: {fileID: 2398932702815304891, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: togglePrefab
       value: 
       objectReference: {fileID: 6531330861181446931, guid: 71f33633b02148143aa475439da79fdb, type: 3}
+    - target: {fileID: 2398932702815304891, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      propertyPath: enemyMaterial
+      value: 
+      objectReference: {fileID: 2100000, guid: 526fb18e1b10ddd408d6e0a7c560e495, type: 2}
     - target: {fileID: 2536171111192032010, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1671,19 +1619,64 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 3954213152114757376, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1557298785}
+    - targetCorrespondingSourceObject: {fileID: 3954213152114757376, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 502417057}
     - targetCorrespondingSourceObject: {fileID: 2386152993763539538, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1433213048}
     m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 4870401875397307769, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1268484653}
     - targetCorrespondingSourceObject: {fileID: 3117347728498581790, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       insertIndex: -1
       addedObject: {fileID: 1268484660}
   m_SourcePrefab: {fileID: 100100000, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+--- !u!1 &1268484651 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 4870401875397307769, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+  m_PrefabInstance: {fileID: 1268484650}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1268484652 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 3117347728498581790, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
   m_PrefabInstance: {fileID: 1268484650}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1268484653
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1268484651}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9cfe93c224b072e42baad281461136f0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tutorialText: {fileID: 1969175352}
+  backgroundPanel: {fileID: 147325355}
+  tutorialMessages:
+  - "Ciao, comandante! Benvenuto su BattleShift: Marconi! Io sono Marconi, e il mio
+    compito \xE8 spiegarti come funziona questo gioco."
+  - "Siamo in guerra, e il destino della tua fazione \xE8 nelle tue mani. Sei pronto
+    a prendere il comando?"
+  - Le navi verdi sono le tue alleate, mentre quelle rosse appartengono al nemico
+  - Il tuo obiettivo? Distruggere tutte le navi nemiche! Facile, no? Beh, lascia
+    che ti spieghi meglio...
+  - "Vedi quei messaggi verdi a sinistra dello schermo? Ogni messaggio rappresenta
+    un'azione che una tua nave pu\xF2 eseguire. "
+  - "Selezionane uno e quell'azione verr\xE0 eseguita, ma attenzione: le altre verranno
+    scartate!"
+  - 'A destra, invece, ci sono i messaggi rossi. Questi indicano le azioni delle
+    navi nemiche. '
+  - Selezionarne uno significa impedirlo, ma occhio! Tutte le altre azioni avversarie
+    andranno comunque a segno.
+  - "Ora che sai le basi, \xE8 il momento di entrare in azione! Scegli con attenzione,
+    adatta la tua strategia e guida la tua flotta alla vittoria."
+  Speed: 0.05
+  tutorialCanvas: {fileID: 502417056}
 --- !u!95 &1268484660
 Animator:
   serializedVersion: 7
@@ -1909,7 +1902,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1557298782}
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: -85.000015}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -1918,7 +1911,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0.5}
   m_AnchorMax: {x: 0, y: 0.5}
-  m_AnchoredPosition: {x: 397, y: 1.0000036}
+  m_AnchoredPosition: {x: 350, y: 0}
   m_SizeDelta: {x: 450, y: 150}
   m_Pivot: {x: 0, y: 0.5}
 --- !u!1 &1567076709
@@ -2196,7 +2189,7 @@ RectTransform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1969175349}
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: -0.0000047683707}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -2204,7 +2197,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0.5, y: 0.5}
   m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 67, y: -110.7}
+  m_AnchoredPosition: {x: 66.5, y: -70.7}
   m_SizeDelta: {x: 350, y: 48.01}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!222 &1969175351
@@ -2262,14 +2255,14 @@ MonoBehaviour:
   m_faceColor:
     serializedVersion: 2
     rgba: 4294967295
-  m_fontSize: 23
-  m_fontSizeBase: 23
+  m_fontSize: 10
+  m_fontSizeBase: 10
   m_fontWeight: 400
   m_enableAutoSizing: 0
   m_fontSizeMin: 18
   m_fontSizeMax: 72
   m_fontStyle: 0
-  m_HorizontalAlignment: 1
+  m_HorizontalAlignment: 8
   m_VerticalAlignment: 256
   m_textAlignment: 65535
   m_characterSpacing: 0
@@ -2300,7 +2293,7 @@ MonoBehaviour:
   m_VertexBufferAutoSizeReduction: 0
   m_useMaxVisibleDescender: 1
   m_pageToDisplay: 1
-  m_margin: {x: 0, y: 0, z: 0, w: 0}
+  m_margin: {x: 42.545914, y: 0, z: 108.66446, w: 0}
   m_isUsingLegacyAnimationComponent: 0
   m_isVolumetricText: 0
   m_hasFontAssetChanged: 0
@@ -2381,8 +2374,5 @@ SceneRoots:
   - {fileID: 132646502}
   - {fileID: 1036401159}
   - {fileID: 132861256}
-  - {fileID: 1150166863}
   - {fileID: 88808805}
   - {fileID: 1268484650}
-  - {fileID: 502417057}
-  - {fileID: 429603282}

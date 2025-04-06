@@ -17,5 +17,5 @@ MonoBehaviour:
   - down
   - left
   - right
-  togglePrefab: {fileID: 2985266290775673929, guid: 0f60c4eeddf55564fb8cd988b97b41d0, type: 3}
+  togglePrefab: {fileID: 4273822201149596600, guid: 8375982d20890664da9ef0f5298aece6, type: 3}
   messages: []

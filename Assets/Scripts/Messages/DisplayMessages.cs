@@ -17,9 +17,12 @@ public class DisplayMessages : MonoBehaviour
     [Header("Toggle Groups")]
     [SerializeField] private ToggleGroup allyToggleGroup;
     [SerializeField] private ToggleGroup enemyToggleGroup;
-    [Header("Toggle values")]
-    [SerializeField] Material allyColor;
-    [SerializeField] Material enemyColor;
+
+
+
+    [Header("Materials")]
+    [SerializeField] private Material enemyMaterial;
+    [SerializeField] private Material allyMaterial;
     
     [Header("Stack dei messaggi")]
     [SerializeField] private MessagesStack messagesStack; 
@@ -31,8 +34,8 @@ public class DisplayMessages : MonoBehaviour
     //serve per determinare a quale toggle group appartnegono
     private Transform parent;
     private List<Toggle> toggles = new List<Toggle>();
-    [SerializeField] private Toggle togglePrefab;
-    private Toggle tmpToggle;
+    private GameObject togglePrefab;
+    private GameObject tmpToggle;
 
     private void Start()
     {
@@ -64,7 +67,7 @@ public class DisplayMessages : MonoBehaviour
 
         //Non modificare l'ordine di queste due righe
         tmpToggle?.GetComponent<ToggleInformations>().SetInformations(message.sender, message.moveId, message.entity, message.direction, message.messageType);
-        toggles.Add(tmpToggle);
+        toggles.Add(tmpToggle.GetComponent<Toggle>());
         messagesStack.AddMessage(message, parent);
     }
 
@@ -72,15 +75,15 @@ public class DisplayMessages : MonoBehaviour
     {
         if(message.entity == (int)Entity.ally)
         {
-            togglePrefab.GetComponentInChildren<Image>().material = allyColor;
+            togglePrefab.GetComponentInChildren<Image>().material = allyMaterial;
             parent = allyStackTransform;
-            togglePrefab.group = allyToggleGroup;        
+            togglePrefab.GetComponent<Toggle>().group = allyToggleGroup;        
         }
         else
         {
-            togglePrefab.GetComponentInChildren<Image>().material = enemyColor;
+            togglePrefab.GetComponentInChildren<Image>().material = enemyMaterial;
             parent = enemyStackTransform;
-            togglePrefab.group = enemyToggleGroup;
+            togglePrefab.GetComponent<Toggle>().group = enemyToggleGroup;
         }
     }
 

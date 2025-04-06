@@ -26,6 +26,10 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
     [SerializeField] private AnswerStack answerStack;
 
 
+    [Header("Status images")]
+    [SerializeField] private GameObject confirmedImage;
+    [SerializeField] private GameObject deniedImage;
+
     //struct necessaria per mantenere un clone di ogni risposta nemica eliminata
     private AnswerStruct tmpRemovedEnemyAnswer;
 
@@ -40,12 +44,16 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
 
         tmpRemovedEnemyAnswer.receiver = "";
 
-        //se il messaggio è nemico viene automaticamente aggiunto allo stack
+        //se il messaggio è nemico viene automaticamente aggiunto allo stack. Uniformare anche alla logica del toggle alleato
         if(toggleEntity  == (int)Entity.enemy)
         {
             answerStack.AddAnswer(new AnswerStruct(toggle.isOn, toggleMoveId, toggleSender, toggleEntity));
         }
 
+
+        //inizialmente spengo le immagini di statu del toggle
+        confirmedImage.gameObject.SetActive(false);
+        deniedImage.gameObject.SetActive(false);
     }
 
     #region Iscrivione agli eventi
@@ -81,6 +89,11 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
         // Se il toggle è stato attivato e prima era spento, aggiungo la risposta
         if (toggle != null && toggle.isOn)
         {
+            //setto la grafica del toggle a confermato
+            toggle.graphic = confirmedImage.GetComponent<RawImage>();
+
+            confirmedImage.gameObject.SetActive(true);
+
             if(toggleInfo.GetToggleEntity() == (int)Entity.ally)
             {
                 if(answerStack.CountEntity((int)Entity.ally) == 0)
@@ -95,11 +108,27 @@ public class ToggleMessage : MonoBehaviour, IPointerEnterHandler, ISubmitHandler
             }
         
         }
+        else
+        {
+            confirmedImage.gameObject.SetActive(false);
+        }
     }
 
     //TODO verificare se questa logica funziona correttamente e se nel caso può essere estesa alle altre navi
     private void SetEnemyAnswer()
     {
+        if (toggle != null && toggle.isOn)
+        {
+            //setto la grafica del toggle a confermato
+            toggle.graphic = deniedImage.GetComponent<RawImage>();
+            deniedImage.gameObject.SetActive(true);
+        }
+        else
+        {
+            deniedImage.gameObject.SetActive(false);
+        }
+
+
         //Tutte le volte che un toggle nemico viene selezionato viene rimosso dallo stack delle risposte.
         //Devo mantenere una copia all'ultima risposta eliminata, per poterle reinserire se elimino un altro messaggio
 
