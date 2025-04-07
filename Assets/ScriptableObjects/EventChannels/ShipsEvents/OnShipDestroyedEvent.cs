@@ -12,11 +12,13 @@ public struct ShipDestroyedStruct
     public string shipName;
     public int entity;
     public Vector2 gridPosition;
+    public Ship shipScript;
 
-    public ShipDestroyedStruct(string shipName, int entity, Vector2 gridPosition)
+    public ShipDestroyedStruct(string shipName, int entity, Vector2 gridPosition, Ship shipScript)
     {
         this.shipName = shipName;
         this.entity = entity;
         this.gridPosition = gridPosition;
+        this.shipScript = shipScript;
     }
 }

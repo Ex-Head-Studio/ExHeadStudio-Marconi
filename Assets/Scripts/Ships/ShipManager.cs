@@ -9,8 +9,7 @@ public class ShipManager : MonoBehaviour
     
     [Header("Parameters")]
     [SerializeField] private ShipManagerSO shipManagerSO;
-    Dictionary<string, NewShip> ships;
-    public List<ShipSO> shipChoice;
+    Dictionary<string, Ship> ships;
     [Tooltip("Numero di messaggi massimo per fazione per turno")] public int numberOfMessages;
 
     [Header("Lists for debug, don't touch")]
@@ -18,8 +17,15 @@ public class ShipManager : MonoBehaviour
     public List<Move> allyMoves;
     public List<Move> enemyMoves;
     public InfluenceMap influenceMap;
-    public List<NewShip>enemies=new List<NewShip>();
-    public List<NewShip>allies=new List<NewShip>();
+
+    //le ho messe generiche, perchè ereditano da ship
+
+    //
+    /*public List<NewShip>enemies=new List<NewShip>();
+    public List<NewShip>allies=new List<NewShip>();*/
+
+    public List<Ship>enemies=new List<Ship>();
+    public List<Ship>allies=new List<Ship>();
     //public List<Ship> allyAttackers=new List<Ship>();
     //public List<Ship> activeAllies=new List<Ship>();
     //public List<Ship> enemyAttackers=new List<Ship>();
@@ -35,12 +41,10 @@ public class ShipManager : MonoBehaviour
      
 
     [Header("Events")]
-    //[SerializeField] private OnShipAttackEvent attackEvent;
     [SerializeField] private OnShipDestroyedEvent shipDestroyedEvent;
     [SerializeField] private MessageSentEvent messageSentEvent;
     [SerializeField] private MessageReceivedEvent messageReceivedEvent;
 
-    //TODO bisogna linkare il numero di navi con la UI (Stefano), verifica se serve anche in funzione delle luci
 
 
     //TODO trovare il modo di referenziare correttamente il grid manager, qui è fatto veloce
@@ -48,14 +52,10 @@ public class ShipManager : MonoBehaviour
 
     private int modelIndex;
     
-    private ShipModelMaterialAssignement shipModelMaterialAssignement;
-
-    
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Awake()
     {
         
-        ships = new Dictionary<string, NewShip>();
+        ships = new Dictionary<string, Ship>();
         shipManagerSO.RandomizeShips();
         //TODO rivedere questa cosa
         gridManager = FindFirstObjectByType<GridManager>();
@@ -82,42 +82,38 @@ public class ShipManager : MonoBehaviour
         {
             //tipo questa cosa potremmo spostarla in un metodo che istanzia il prefab, all'interno dello script della nave
             //Se facciamo così ogni nave istanzierà il proprio prefab e si posizionerà da sola se gli passiamo le coordinate
-            modelIndex = Random.Range(0, shipChoice.Count);
-            NewShip newShip=Instantiate(shipChoice[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<NewShip>();
+            modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
+            Ship newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
             ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(0);
-            newShip.shipSO = shipChoice[modelIndex];
+            newShip.shipSO = shipManagerSO.shipSOarray[modelIndex];
             newShip.shipLayer=LayerMask.GetMask("Enemy");
             newShip.shipInfluence=1;
             allies.Add(newShip);
             allyCount++;
             newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(allyMaterial);
-            /*GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
-            shipMesh.GetComponent<MeshRenderer>().material=allyMaterial;*/
             gridManager.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
 
             return;
         }
         if(enemyCount<shipManagerSO.enemyShips){
-            modelIndex = Random.Range(0, shipChoice.Count);
-            NewShip newShip=Instantiate(shipChoice[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<NewShip>();
+            modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
+            Ship newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
             ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(1);
-            newShip.shipSO = shipChoice[modelIndex];
+            newShip.shipSO = shipManagerSO.shipSOarray[modelIndex];
             newShip.shipLayer=LayerMask.GetMask("Ally");
             newShip.shipInfluence=-1;
             enemies.Add(newShip);
             enemyCount++;
             newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(enemyMaterial);
-            /*GameObject shipMesh = newShip.transform.Find("Ship")?.gameObject;
-            shipMesh.GetComponent<MeshRenderer>().material=enemyMaterial;*/
             gridManager.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
             return;
@@ -127,19 +123,27 @@ public class ShipManager : MonoBehaviour
         
     }
 
-    //questa funzione va rivista perchè non viene mai chiamata, la collego all'evento di inzio turno
-    //BUG le liste non vengono aggiornate, è il primo problema da risolvere
-
-    //TODO debug passo passo
-    //TODO non compaiono attacchi
     public void ChooseShips()
     {
         
-        foreach(NewShip ship in allies){
-            ship.LookForMovement();
-            ship.LookForObjectives(enemies);
+
+
+        foreach(Ship ship in allies)
+        {
+            if(ship is NewShip)
+            {
+                ship.LookForMovement();
+                ship.LookForObjectives(enemies);
+            }
+
         }
-        foreach(NewShip ship in enemies){
+        foreach(Ship ship in enemies)
+        {
+            if(ship is NewShip)
+            {
+                ship.LookForMovement();
+                ship.LookForObjectives(allies);
+            }
             ship.LookForMovement();
             ship.LookForObjectives(allies);
         }
@@ -278,8 +282,10 @@ public class ShipManager : MonoBehaviour
     }
     void SendMessages()
     {
-        if(allyMoves.Count()<numberOfMessages){
-            foreach(Move move in allyMoves){
+        if(allyMoves.Count()<numberOfMessages)
+        {
+            foreach(Move move in allyMoves)
+            {
                 ships[move.GetShipName()].SendMessage(move);
             }
         }
@@ -311,19 +317,21 @@ public class ShipManager : MonoBehaviour
     }
     
     //cosa fa questo metodo? Da chi toglie cosa?
-    public void RemoveShip(NewShip ship, int isAlly)
+    public void RemoveShip(ShipDestroyedStruct shipDestroyedStruct)
     {
         
-        if(isAlly==0){
-            allies.Remove(ship);
+        if(shipDestroyedStruct.entity == (int)Entity.ally)
+        {
+            allies.Remove(ships[shipDestroyedStruct.shipName]);
         }
         else{
-            enemies.Remove(ship);
+            enemies.Remove(ships[shipDestroyedStruct.shipName]);
         }
-        ships.Remove(ship.shipName);
-        influenceMap.UnregisterPropagator(ship);
-        shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(ship.shipName, ship.faction, ship.position));
-        Destroy(ship.gameObject);
+    
+        ships.Remove(shipDestroyedStruct.shipName);
+        influenceMap.UnregisterPropagator(shipDestroyedStruct.shipScript);
+        //shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(ship.shipName, ship.faction, ship.position));
+        Destroy(shipDestroyedStruct.shipScript.gameObject);
         influenceMap.Propagate();
     }
     private IEnumerator ShipGeneration(){

@@ -13,4 +13,5 @@ MonoBehaviour:
   m_Name: ShipAttackedEventSO
   m_EditorClassIdentifier: 
   testingValue:
-    gridPosition: {x: 3, y: 0}
+    gridPosition: {x: 3, y: 5}
+    damage: 1

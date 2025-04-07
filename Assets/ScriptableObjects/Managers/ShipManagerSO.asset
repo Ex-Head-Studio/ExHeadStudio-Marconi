@@ -14,6 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   initialEnemyShips: 3
   initialAllyShips: 3
+  numberOfMessages: 3
   startingShips:
   - A
   - B
@@ -23,7 +24,8 @@ MonoBehaviour:
   - F
   influenceDecay: 0.5
   decayMomentum: 0.1
-  shipSOarray: []
-  enemyShips: 3
-  allyShips: 3
-  numberOfMessages: 2
+  shipSOarray:
+  - {fileID: 11400000, guid: 5028460dd36551949a087a7dd00fc112, type: 2}
+  - {fileID: 11400000, guid: a6a74b98722011c488fca974bf86454b, type: 2}
+  - {fileID: 11400000, guid: dc867e7cbd11b5245ac60b00014265c6, type: 2}
+  - {fileID: 11400000, guid: 2fbe1eeb15352c841b681056495d7110, type: 2}

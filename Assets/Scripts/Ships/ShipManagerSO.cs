@@ -7,19 +7,22 @@ using Random=UnityEngine.Random;
 [CreateAssetMenu(fileName = "ShipManagerSO", menuName = "Scriptable Objects/ShipManagerSO")]
 public class ShipManagerSO : ScriptableObject
 {
-    [SerializeField] private int initialEnemyShips = 3;
-    [SerializeField] private int initialAllyShips = 3;
-    //vedi tu se usare questi
+    [SerializeField] private int initialEnemyShips;
+    [SerializeField] private int initialAllyShips;
+
+    [SerializeField] public int numberOfMessages;
     public List<string> startingShips;
     [SerializeField] public float influenceDecay;
     [SerializeField] public float decayMomentum;
 
 
-    [SerializeField] private ShipSO[] shipSOarray;
+    [SerializeField] public List<ShipSO> shipSOarray;
 
+    [NonSerialized]
     public int enemyShips;
+     [NonSerialized]
     public int allyShips;
-    public int numberOfMessages;
+
     private void OnEnable()
     {
         enemyShips = initialEnemyShips;

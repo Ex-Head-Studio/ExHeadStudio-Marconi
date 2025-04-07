@@ -210,14 +210,17 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1313830103093164223, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1526058841}
   m_SourcePrefab: {fileID: 100100000, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
 --- !u!114 &88808806 stripped
 MonoBehaviour:
   m_CorrespondingSourceObject: {fileID: 1440934996520483006, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
   m_PrefabInstance: {fileID: 88808805}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 0}
+  m_GameObject: {fileID: 1526058838}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac74ef68c2a3f4f40a53ad9110493e5f, type: 3}
@@ -1406,6 +1409,10 @@ PrefabInstance:
       propertyPath: enemyMaterial
       value: 
       objectReference: {fileID: 2100000, guid: 526fb18e1b10ddd408d6e0a7c560e495, type: 2}
+    - target: {fileID: 2398932702815304891, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      propertyPath: messagesStack
+      value: 
+      objectReference: {fileID: 11400000, guid: 0089ed49510cec842a0fac693ced129a, type: 2}
     - target: {fileID: 2536171111192032010, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: m_Camera
       value: 
@@ -1555,9 +1562,17 @@ PrefabInstance:
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4712459035336583460, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      propertyPath: shipManagerSo
+      value: 
+      objectReference: {fileID: 11400000, guid: 03bbd7596a6b932468d25964a02066e3, type: 2}
+    - target: {fileID: 4712459035336583460, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: objectsStackSO
       value: 
       objectReference: {fileID: 11400000, guid: e75b03c53adb58d4ca5f49a19aaa75ae, type: 2}
+    - target: {fileID: 4712459035336583460, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      propertyPath: tutorialCanvas
+      value: 
+      objectReference: {fileID: 502417056}
     - target: {fileID: 4712459035336583460, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: notificationPanel
       value: 
@@ -1569,6 +1584,10 @@ PrefabInstance:
     - target: {fileID: 4964387778168497451, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: m_Transition
       value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5898486102090136269, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.size
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 6455886373902227247, guid: 258f7962a3c094b4e9159812fd67ef20, type: 3}
       propertyPath: materialButton
@@ -1838,6 +1857,39 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1433213047}
   m_CullTransparentMesh: 1
+--- !u!1 &1526058838 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1313830103093164223, guid: f64cc2c9734aa774dab497aebbeed229, type: 3}
+  m_PrefabInstance: {fileID: 88808805}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1526058841
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1526058838}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e4c1f3156ee248b4ab39fc1bf645501e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 88808806}
+        m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
+        m_MethodName: RemoveShip
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1557298782
 GameObject:
   m_ObjectHideFlags: 0

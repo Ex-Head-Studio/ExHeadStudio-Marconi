@@ -74,11 +74,10 @@ public class NewShip : Ship
         return canMove;
     }
 
-    public bool LookForObjectives(List<NewShip> adv)
+    public override bool LookForObjectives(List<Ship> adv)
     {
         canAttack=false;
         //Cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione tra le navi nemiche
-        //SIAMO SICURI DELL'ORDINE DEI METODI?
         List<Vector2Int> targets=adv.Select(x=> x.position).Where(k => (k.x==position.x || k.y==position.y) && (Vector2Int.Distance(k, position)<= shipSO.attackRange)).ToList();        
         
         if(targets.Count()>manager.numberOfMessages){
@@ -93,24 +92,20 @@ public class NewShip : Ship
         return canAttack;
     }
     
+
+
     public override void OnAttacked(ShipAttackStruct attackPosition)
     {
         if(position.x == attackPosition.gridPosition.x && position.y == attackPosition.gridPosition.y)
         {
-            //per ora decrementiamo di uno la vita
-            health--;
+
+            health-= attackPosition.damage;
             if(health<=0)
             {
                 shipAnimator.SetTrigger("Death");
-                shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
 
             }
 
         }
-    }
-
-    public void ParentRemoveShip()
-    {
-        manager.RemoveShip(this, faction);
     }
 }

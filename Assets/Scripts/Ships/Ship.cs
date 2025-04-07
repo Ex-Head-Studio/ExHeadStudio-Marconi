@@ -55,16 +55,14 @@ public class Ship : MonoBehaviour
 
     void Start()
     {
-        
         health=shipSO.health;
     }
 
-
-    //TODO Gabriele controllare
     public void SendMessage(Move move)
     {
         Vector2Int direction;
-        switch(move.GetMessageType()){
+        switch(move.GetMessageType())
+        {
             case MessageType.attack:
                 direction = move.GetTargetPos()-position;
                 if(direction.y==0){
@@ -119,14 +117,15 @@ public class Ship : MonoBehaviour
 
     }
     
-    //il metodo viene chiamato quando la nave registra una risposta a lei associata
-    
+
+
+    //il metodo viene chiamato quando la nave registra una risposta a lei associata, deve rispondere all'evento
     public virtual void ExecuteInstructions(AnswerStruct answerStruct)
     {
         int entity = answerStruct.entity;
         bool answer = answerStruct.result;
-        //True per gli alleati CONFERMA l'azione
-        //True per i nemici NEGA l'azione
+        //True per gli alleati CONFERMA l'azione, le altre navi non devono fare nulla
+        //True per i nemici NEGA l'azione, le altre navi devono eseguire le loro azioni nulla
 
         if(this.faction == entity && this.faction==(int)Entity.ally)
         {
@@ -134,16 +133,19 @@ public class Ship : MonoBehaviour
             {
                 Move selectedMove;
                  
-                if(shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).Count() > 0 ){
+                if(shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).Count() > 0 )
+                {
                     selectedMove = shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).ToList()[0];
                     if(selectedMove.GetMessageType() == MessageType.attack){
-                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos()));
+                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
                     }
                     else{
                         gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
                         position=selectedMove.GetTargetPos();
                     }
                 }
+
+                //TODO, si puo eliminare?
                 /*if(currentState==ShipState.Attacking)
                 {
                     //evento dove si dichiara la posizione 2D della nave avversaria da colpire
@@ -178,7 +180,7 @@ public class Ship : MonoBehaviour
                     {
                         canAttack=false;
                         //evento dove si dichiara la posizione 2D della nave avversaria da colpire
-                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos()));
+                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
 
                     }
                     else if(selectedMove.GetMessageType()==MessageType.movement && canMove)
@@ -212,7 +214,6 @@ public class Ship : MonoBehaviour
     {
         canAttack=false;
         //Cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione tra le navi nemiche
-        //SIAMO SICURI DELL'ORDINE DEI METODI?
         List<Ship> targets=possibleTargets.Where(k => k.position.x==position.x || k.position.y==position.y).OrderBy(x => Random.value).Take(1).ToList();        
         if(targets.Count>0){
             canAttack=true;
@@ -282,9 +283,24 @@ public class Ship : MonoBehaviour
             if(health<=0)
             {
                 shipAnimator.SetTrigger("Death");
-                shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
+                //shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
             }
-            //manager.RemoveShip(this, faction);
         }
+    }
+
+    public void ParentRemoveShip()
+    {
+        shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position, this));
+    }
+
+
+    public int GetHealth()
+    {
+        return health;
+    }
+
+    public Vector2Int GetPosition()
+    {
+        return position;
     }
 }
