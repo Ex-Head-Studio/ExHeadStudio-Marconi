@@ -13,7 +13,7 @@ public class SelectionPanelScript : MonoBehaviour
         {
             GameObject classPanel = Instantiate(classPanelPrefab, classPanelParent);
             ClassStatsScript classStatsScript = classPanel.GetComponent<ClassStatsScript>();
-            classStatsScript.SetShipClass(shipClass);
+            //classStatsScript.SetShipClass(shipClass);
         }
         
     }
