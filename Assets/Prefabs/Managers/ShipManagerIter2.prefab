@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!1 &1313830103093164223
+--- !u!1 &1468267785584294830
 GameObject:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -8,24 +8,24 @@ GameObject:
   m_PrefabAsset: {fileID: 0}
   serializedVersion: 6
   m_Component:
-  - component: {fileID: 5104236288274845499}
-  - component: {fileID: 1440934996520483006}
-  - component: {fileID: 5940471526766903116}
-  - component: {fileID: 5875411479212585575}
+  - component: {fileID: 3060470617468302632}
+  - component: {fileID: 3021723375907349566}
+  - component: {fileID: 7145104563043181894}
+  - component: {fileID: 3459094535404006477}
   m_Layer: 6
-  m_Name: ShipManager
+  m_Name: ShipManagerIter2
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!4 &5104236288274845499
+--- !u!4 &3060470617468302632
 Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313830103093164223}
+  m_GameObject: {fileID: 1468267785584294830}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
@@ -34,13 +34,13 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &1440934996520483006
+--- !u!114 &3021723375907349566
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313830103093164223}
+  m_GameObject: {fileID: 1468267785584294830}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ac74ef68c2a3f4f40a53ad9110493e5f, type: 3}
@@ -56,13 +56,13 @@ MonoBehaviour:
   shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
   messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
   messageReceivedEvent: {fileID: 11400000, guid: 0f63c89a9841f2b4eb35a359bdfcd2af, type: 2}
---- !u!114 &5940471526766903116
+--- !u!114 &7145104563043181894
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313830103093164223}
+  m_GameObject: {fileID: 1468267785584294830}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: b3bbc22f5ff449d45ba4696e10a83f61, type: 3}
@@ -72,7 +72,7 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1440934996520483006}
+      - m_Target: {fileID: 3021723375907349566}
         m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
         m_MethodName: ChooseShips
         m_Mode: 1
@@ -84,13 +84,13 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &5875411479212585575
+--- !u!114 &3459094535404006477
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1313830103093164223}
+  m_GameObject: {fileID: 1468267785584294830}
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: e4c1f3156ee248b4ab39fc1bf645501e, type: 3}
@@ -100,7 +100,7 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 1440934996520483006}
+      - m_Target: {fileID: 3021723375907349566}
         m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
         m_MethodName: RemoveShip
         m_Mode: 0
