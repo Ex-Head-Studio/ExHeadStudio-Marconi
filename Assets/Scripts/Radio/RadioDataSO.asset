@@ -12,4 +12,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 07d748e4c98c3a246859da169e8139b6, type: 3}
   m_Name: RadioDataSO
   m_EditorClassIdentifier: 
-  radioEventReferences: []
+  radioEventReferences:
+  - Guid:
+      Data1: 0
+      Data2: 0
+      Data3: 0
+      Data4: 0
+    Path: 
