@@ -14,8 +14,20 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   radioEventReferences:
   - Guid:
-      Data1: 0
-      Data2: 0
-      Data3: 0
-      Data4: 0
-    Path: 
+      Data1: 31503239
+      Data2: 1211520247
+      Data3: 1095488157
+      Data4: -1296638779
+    Path: event:/Musica/Radio 1
+  - Guid:
+      Data1: 1357166681
+      Data2: 1126754336
+      Data3: 1321375638
+      Data4: -2046367950
+    Path: event:/Musica/Radio 2
+  - Guid:
+      Data1: 30412086
+      Data2: 1272650486
+      Data3: -221659469
+      Data4: -564733668
+    Path: event:/Musica/Radio 3

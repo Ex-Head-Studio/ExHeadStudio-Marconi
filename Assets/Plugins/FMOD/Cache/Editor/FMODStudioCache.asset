@@ -42,10 +42,10 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.strings.bank
   Name: Desktop/Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638792290380031172
+  lastModified: 638798257372641541
   FileSizes:
   - Name: 
-    Value: 1132
+    Value: 1408
   Exists: 1
 --- !u!114 &-7545578330973327430
 MonoBehaviour:
@@ -62,7 +62,7 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.bank
   Name: Desktop/Master
   StudioPath: bank:/Master
-  lastModified: 638792290379928359
+  lastModified: 638798257372621529
   FileSizes: []
   Exists: 1
 --- !u!114 &-6303109462738554844
@@ -110,6 +110,85 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1000
+--- !u!114 &-3747487682738298099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/RadioConKnob/RadioKnob
+  m_EditorClassIdentifier: 
+  Name: RadioKnob
+  StudioPath: 
+  Min: 0
+  Max: 3
+  Default: 0
+  ID:
+    data1: 3308103427
+    data2: 2884866218
+  Type: 0
+  IsGlobal: 1
+  Labels: []
+  Exists: 1
+--- !u!114 &-2890190086125575684
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ShipExploding
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/ShipExploding
+  Guid:
+    Data1: 672104014
+    Data2: 1153534388
+    Data3: 1386098846
+    Data4: 517204010
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
+--- !u!114 &-2545915401735414116
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Musica/RadioConKnob
+  m_EditorClassIdentifier: 
+  Path: event:/Musica/RadioConKnob
+  Guid:
+    Data1: 1524174995
+    Data2: 1201391888
+    Data3: 283215034
+    Data4: 1153491578
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 1
+  Parameters:
+  - {fileID: -3747487682738298099}
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 280364
 --- !u!114 &-2412686949106737192
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -137,6 +216,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 13833
+--- !u!114 &-1030356980705620758
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/ShipMoving
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/ShipMoving
+  Guid:
+    Data1: -285975817
+    Data2: 1282554931
+    Data3: 1527579804
+    Data4: -1243085278
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-965599790059647802
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -236,20 +342,26 @@ MonoBehaviour:
   EditorEvents:
   - {fileID: -8925270832445231983}
   - {fileID: 7889754349852523742}
-  - {fileID: 246142633262423928}
   - {fileID: -883375222632384933}
   - {fileID: -134278303666386650}
   - {fileID: 7728109848283919040}
   - {fileID: -5048089156616822725}
   - {fileID: 2474632994682864173}
-  EditorParameters: []
+  - {fileID: 6189344596430177506}
+  - {fileID: -2890190086125575684}
+  - {fileID: 2193205338161841116}
+  - {fileID: 6452919384654398112}
+  - {fileID: -1030356980705620758}
+  - {fileID: -2545915401735414116}
+  EditorParameters:
+  - {fileID: 6883603748077967008}
   MasterBanks:
   - {fileID: -7545578330973327430}
   StringsBanks:
   - {fileID: -8517476599244968727}
-  cacheTime: 638792290380031172
+  cacheTime: 638798257372641541
   cacheVersion: 131846
---- !u!114 &246142633262423928
+--- !u!114 &2193205338161841116
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -259,14 +371,14 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
-  m_Name: event:/Musica/Radio
+  m_Name: event:/Musica/Radio 2
   m_EditorClassIdentifier: 
-  Path: event:/Musica/Radio
+  Path: event:/Musica/Radio 2
   Guid:
-    Data1: 31503239
-    Data2: 1211520247
-    Data3: 1095488157
-    Data4: -1296638779
+    Data1: 1357166681
+    Data2: 1126754336
+    Data3: 1321375638
+    Data4: -2046367950
   Banks:
   - {fileID: -7545578330973327430}
   IsStream: 1
@@ -357,6 +469,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1166
+--- !u!114 &6189344596430177506
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Musica/Radio 3
+  m_EditorClassIdentifier: 
+  Path: event:/Musica/Radio 3
+  Guid:
+    Data1: 30412086
+    Data2: 1272650486
+    Data3: -221659469
+    Data4: -564733668
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 280364
 --- !u!114 &6191886234431923298
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -376,6 +515,57 @@ MonoBehaviour:
   FileSizes:
   - Name: 
     Value: 932
+  Exists: 1
+--- !u!114 &6452919384654398112
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/Musica/Radio 1
+  m_EditorClassIdentifier: 
+  Path: event:/Musica/Radio 1
+  Guid:
+    Data1: 31503239
+    Data2: 1211520247
+    Data3: 1095488157
+    Data4: -1296638779
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 1
+  Is3D: 1
+  IsOneShot: 0
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 280364
+--- !u!114 &6883603748077967008
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: fecb8ef7f94ca804a8ab72049b86782e, type: 3}
+  m_Name: parameter:/RadioKnob
+  m_EditorClassIdentifier: 
+  Name: RadioKnob
+  StudioPath: parameter:/RadioKnob
+  Min: 0
+  Max: 3
+  Default: 0
+  ID:
+    data1: 3308103427
+    data2: 2884866218
+  Type: 0
+  IsGlobal: 1
+  Labels: []
   Exists: 1
 --- !u!114 &7728109848283919040
 MonoBehaviour:
