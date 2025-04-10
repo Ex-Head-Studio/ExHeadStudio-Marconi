@@ -69,7 +69,8 @@ public class ShipManager : MonoBehaviour
     }
     protected void InstantiateInMap(string shipName)
     {
-        if(shipManagerSO.allyShips+shipManagerSO.enemyShips>shipManagerSO.startingShips.Count){
+        if(shipManagerSO.allyShips+shipManagerSO.enemyShips>shipManagerSO.startingShips.Count)
+        {
             Debug.LogError("Not enough ships for the number of allies and enemies");
             return;
         }
@@ -83,7 +84,7 @@ public class ShipManager : MonoBehaviour
             //tipo questa cosa potremmo spostarla in un metodo che istanzia il prefab, all'interno dello script della nave
             //Se facciamo così ogni nave istanzierà il proprio prefab e si posizionerà da sola se gli passiamo le coordinate
             modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
-            Ship newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
+            Ship newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<Ship>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
@@ -102,7 +103,7 @@ public class ShipManager : MonoBehaviour
         }
         if(enemyCount<shipManagerSO.enemyShips){
             modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
-            Ship newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,180,0)).GetComponent<Ship>();
+            Ship newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<Ship>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;

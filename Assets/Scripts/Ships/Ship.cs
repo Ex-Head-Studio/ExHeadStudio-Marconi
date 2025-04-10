@@ -35,6 +35,11 @@ public class Ship : MonoBehaviour
 
     // questa va inserita nella logica delle navi
     protected int health;
+
+
+    //Servono per alterare il testo nel display dei comandi, vedi commento in start
+    public int attackRange;
+    public int movementRange;
     
 
     protected List<Vector2Int> nextPos;
@@ -55,7 +60,12 @@ public class Ship : MonoBehaviour
 
     void Start()
     {
+
+        //TODO l'assegnazione dei parametri deve essere discussa, se li modifichiamo ogni istanza dinave deve avere le proprie varabili
         health=shipSO.health;
+
+        attackRange=shipSO.attackRange;
+        movementRange=shipSO.movementRange;
     }
 
     public void SendMessage(Move move)
@@ -290,7 +300,7 @@ public class Ship : MonoBehaviour
 
     public void ParentRemoveShip()
     {
-        shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position, this));
+        //shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position, this));
     }
 
 
