@@ -14,7 +14,14 @@ public class ShipSO : ScriptableObject
     public Dictionary<string, int> statsDictionary =
     new Dictionary<string, int>();
 
-    private void OnEnable()
+    public float shipInfluence;
+    [SerializeField] public GameObject shipModelPrefab;
+    [SerializeField] public GameObject shipModelMesh;
+    
+    [SerializeField] public Mesh shipNameMesh;
+    [SerializeField] public Mesh shipClassMesh;
+
+     private void OnEnable()
     {
         statsDictionary["Movement Range"] = movementRange;
         statsDictionary["Attack Range"] = attackRange;
@@ -25,9 +32,4 @@ public class ShipSO : ScriptableObject
     {
         statsDictionary.Clear();
     }
-    public float shipInfluence;
-    [SerializeField] public GameObject shipModelPrefab;
-    
-    [SerializeField] public Mesh shipNameMesh;
-    [SerializeField] public Mesh shipClassMesh;
 }

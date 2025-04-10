@@ -16,7 +16,13 @@ MonoBehaviour:
   attackRange: 10
   attackPower: 3
   health: 1
+  statNames:
+  - Movement Range
+  - Attack Range
+  - Attack Power
+  - Health
   shipInfluence: 1
   shipModelPrefab: {fileID: 6150688784509194374, guid: b8ab934cec80f6b438d0f2c58531e99f, type: 3}
+  shipModelMesh: {fileID: 919132149155446097, guid: c0041bb6f9d1b914f9c35372085fdb21, type: 3}
   shipNameMesh: {fileID: 369689273696691656, guid: 0a75c8adecaebb04e9710d74c8b75b46, type: 3}
   shipClassMesh: {fileID: 1618706811238412172, guid: cc67895d14e669044b0e8543c0ef2ad7, type: 3}
