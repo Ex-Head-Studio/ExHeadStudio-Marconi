@@ -10,7 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3853038568644754533}
   - component: {fileID: 5171808529926884888}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CardObject
   m_TagString: Untagged
   m_Icon: {fileID: 0}
@@ -100,20 +100,21 @@ GameObject:
   - component: {fileID: 8754718157053078467}
   - component: {fileID: 1050077458094917681}
   - component: {fileID: 6584091556790815289}
-  m_Layer: 0
+  m_Layer: 5
   m_Name: CardPrefabEmpty
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
   m_IsActive: 1
---- !u!224 &3869546842370260924
-RectTransform:
+--- !u!4 &3869546842370260924
+Transform:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 2196661931175602968}
+  serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 1, y: 1, z: 1}
@@ -122,11 +123,6 @@ RectTransform:
   - {fileID: 3853038568644754533}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
-  m_AnchorMin: {x: 0.5, y: 0.5}
-  m_AnchorMax: {x: 0.5, y: 0.5}
-  m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 100, y: 100}
-  m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &-1781785881602627916
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -139,6 +135,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703eeb93f0402114684df93b4dc5cb47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+  cardDistanceFromCameraMultiplayer: 2
   cardCollider: {fileID: 8754718157053078467}
 --- !u!61 &8754718157053078467
 BoxCollider2D:
@@ -184,7 +181,7 @@ BoxCollider2D:
     drawMode: 0
     adaptiveTiling: 0
   m_AutoTiling: 0
-  m_Size: {x: 1, y: 1}
+  m_Size: {x: 7, y: 11}
   m_EdgeRadius: 0
 --- !u!222 &1050077458094917681
 CanvasRenderer:

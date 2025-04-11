@@ -1,10 +1,14 @@
 using UnityEngine;
 using UnityEngine.EventSystems;
 using UnityEngine.UI;
+using System.Collections.Generic;
 
-public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler
+public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
 
+
+    //IMPORTANTE!! Per far funzionare lo script la camera deve avere un Raycaster2D!!!
+    //Ho anche associato un layer alle carte, UI
     //tenere a mente che nel tutorial usa delle sprite per le carte in UI
     
     private Image cardImage;
@@ -14,10 +18,17 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
 
     private AbstractCard cardScript;
 
+    [Range(0, 10)]
+    [SerializeField] private float cardDistanceFromCameraMultiplayer = 2f;
+    [Range(10, 20)]
+    [SerializeField] private float minCardOffesetFromCamera = 10f;
+
 
     
     [SerializeField] private Collider2D cardCollider;
     private Vector3 startCardDragPosition;
+
+    private Vector3 mousePos;
 
     public void SetupUICard(AbstractCard card)
     {
@@ -68,18 +79,29 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
         }
     }
 
-    private void OnPointerDrag()
+    public void OnDrag(PointerEventData eventData)
     {
+        // Call the method to handle dragging the card
         transform.position = GetPointerPositionInWorldSpace();
+        Debug.Log("Mouse position: " + Input.mousePosition);
     }
-
 
     //TODO voglio estenderlo al controller
 
     private Vector3 GetPointerPositionInWorldSpace()
     {
-        Vector3 mousePos = Camera.main.ScreenToWorldPoint(Input.mousePosition);
-        mousePos.z = 0f; // Set the distance from the camera
-        return mousePos;
+        //bisogna tenere a mente le dimensioni della finestra. Gli assi dello schermo hanno origine in basso a sx
+
+        if(Input.mousePosition.y >= Screen.height/2)
+        {
+            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.y*(cardDistanceFromCameraMultiplayer * cardDistanceFromCameraMultiplayer));
+        }
+        else
+        {
+            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, minCardOffesetFromCamera);
+        }
+      
+      Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePos);
+      return objPos;
     }
 }
