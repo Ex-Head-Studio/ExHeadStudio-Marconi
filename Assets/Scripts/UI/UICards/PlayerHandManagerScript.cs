@@ -13,8 +13,20 @@ public class PlayerHandManagerScript : MonoBehaviour
 
     private List<GameObject> cardsInHand = new List<GameObject>();
 
+
+    //Iscrizione agli eventi dichiarati nel deck manager
+    private void OnEnable()
+    {
+        DeckDraw.cardDrawed += DrawCard;
+    }
+
+    private void OnDisable()
+    {
+        
+    }
+
     [ContextMenu("Draw Card")]
-    private void DrawCard()
+    private void DrawCard(DeckType deckType, bool hasDrawingCost)
     {
         if (cardsInHand.Count >= maxCardsInHand) return;
         GameObject newCard = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);

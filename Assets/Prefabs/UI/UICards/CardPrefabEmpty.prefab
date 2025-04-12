@@ -135,7 +135,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 703eeb93f0402114684df93b4dc5cb47, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  cardDistanceFromCameraMultiplayer: 2
+  cardDistanceFromCameraMultiplayer: 0.14
+  minCardOffesetFromCamera: 10
   cardCollider: {fileID: 8754718157053078467}
 --- !u!61 &8754718157053078467
 BoxCollider2D:

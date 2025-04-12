@@ -3,7 +3,7 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;
 
-public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler
+public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler,IPointerEnterHandler, IPointerExitHandler
 {
 
 
@@ -18,17 +18,28 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
 
     private AbstractCard cardScript;
 
+    private Transform cardTransform;
+
     [Range(0, 10)]
     [SerializeField] private float cardDistanceFromCameraMultiplayer = 2f;
     [Range(10, 20)]
     [SerializeField] private float minCardOffesetFromCamera = 10f;
 
+    [Range(1,2)]
+    [Tooltip("Fattore che aumenta la scale dell'oggetto quando si va in hover")]
+    [SerializeField] private float hoverScaleFactor = 1.1f;
 
     
     [SerializeField] private Collider2D cardCollider;
     private Vector3 startCardDragPosition;
 
     private Vector3 mousePos;
+
+
+    private void Start()
+    {
+        cardTransform = GetComponent<Transform>();
+    }
 
     public void SetupUICard(AbstractCard card)
     {
@@ -52,6 +63,17 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
         // Handle the click event on the card
         // You can implement your logic here, such as showing card details or playing a sound
         Debug.Log($"Card clicked: {cardName}");
+
+        transform.localScale = cardTransform.localScale * hoverScaleFactor;
+    }
+    public void OnPointerEnter(PointerEventData eventData)
+    {
+        transform.localScale = cardTransform.localScale * hoverScaleFactor;
+    }
+
+    public void OnPointerExit(PointerEventData eventData)
+    {
+        transform.localScale = cardTransform.localScale / hoverScaleFactor;
     }
 
     public void OnPointerDown(PointerEventData eventData)
