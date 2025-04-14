@@ -22,7 +22,7 @@ public class PlayerHandManagerScript : MonoBehaviour
 
     private void OnDisable()
     {
-        
+        DeckDraw.cardDrawed -= DrawCard;
     }
 
     [ContextMenu("Draw Card")]

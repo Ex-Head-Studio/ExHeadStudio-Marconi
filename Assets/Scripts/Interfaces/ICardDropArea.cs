@@ -2,5 +2,5 @@ using UnityEngine;
 
 public interface ICardDropArea 
 {
-       void OnCardDropped(AbstractCard card);
+       void CardDrop(AbstractCard card);
 }

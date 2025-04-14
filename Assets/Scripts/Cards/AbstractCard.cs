@@ -2,7 +2,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
 
-[RequireComponent(typeof(Collider2D))]
+[RequireComponent(typeof(Collider))]
 
 public abstract class AbstractCard : MonoBehaviour
 {
@@ -52,5 +52,10 @@ public abstract class AbstractCard : MonoBehaviour
     public int GetCardCost()
     {
         return cardCost;
+    }
+
+    public List<AbstractEffectSO> GetCardEffects()
+    {
+        return cardEffects;
     }
 }

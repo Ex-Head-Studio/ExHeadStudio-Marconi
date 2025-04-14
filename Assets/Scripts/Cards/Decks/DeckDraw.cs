@@ -40,14 +40,14 @@ public class DeckDraw : MonoBehaviour, IPointerClickHandler, IPointerEnterHandle
     {
         Debug.Log("Hovering on deck: " + gameObject.name);
         deckOvering?.Invoke(deckTypeEnum, hasDrawingCost);
-        deckObject.GetComponent<Material>().color = Color.blue;
+        //deckObject.GetComponent<Material>().color = Color.blue;
     }
 
     
     public void OnPointerExit(PointerEventData pointerEventData)
     {
         deckOvered?.Invoke(deckTypeEnum, hasDrawingCost);
-        deckObject.GetComponent<Material>().color = Color.green;
+        //deckObject.GetComponent<Material>().color = Color.green;
     }
 
     
