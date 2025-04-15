@@ -13,14 +13,18 @@ MonoBehaviour:
   m_Name: Tank
   m_EditorClassIdentifier: 
   movementRange: 1
-  attackRange: 5
+  attackRange: 4
   attackPower: 4
-  health: 3
+  health: 5
   statNames:
   - Movement Range
   - Attack Range
   - Attack Power
   - Health
+  messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
+  shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
+  attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
+  shipAnimator: {fileID: 0}
   shipInfluence: 2
   shipModelPrefab: {fileID: 1084087441375081691, guid: be406d0bad852e54b83eaf91cf48fa57, type: 3}
   shipModelMesh: {fileID: 919132149155446097, guid: cc67895d14e669044b0e8543c0ef2ad7, type: 3}

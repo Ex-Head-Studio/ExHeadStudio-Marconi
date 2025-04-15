@@ -83,7 +83,7 @@ public class NewShip : AShip
                 {
                     selectedMove = shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).ToList()[0];
                     if(selectedMove.GetMessageType() == MessageType.attack){
-                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
+                        shipSO.attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
                     }
                     else{
                         gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
@@ -110,7 +110,7 @@ public class NewShip : AShip
                     {
                         canAttack=false;
                         //evento dove si dichiara la posizione 2D della nave avversaria da colpire
-                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
+                        shipSO.attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
 
                     }
                     else if(selectedMove.GetMessageType()==MessageType.movement && canMove)

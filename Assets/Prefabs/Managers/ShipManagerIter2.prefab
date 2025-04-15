@@ -9,7 +9,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3060470617468302632}
-  - component: {fileID: 3021723375907349566}
   - component: {fileID: 7145104563043181894}
   - component: {fileID: 3459094535404006477}
   m_Layer: 6
@@ -34,28 +33,6 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &3021723375907349566
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1468267785584294830}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: ac74ef68c2a3f4f40a53ad9110493e5f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipManagerSO: {fileID: 11400000, guid: 03bbd7596a6b932468d25964a02066e3, type: 2}
-  numberOfMessages: 3
-  enemies: []
-  allies: []
-  shipPrefab: {fileID: 7409743080964778017, guid: aebd5cb8756e42641926e1082d5ef9b0, type: 3}
-  allyMaterial: {fileID: 2100000, guid: ab72e475ba578fe42b9c370aed952e25, type: 2}
-  enemyMaterial: {fileID: 2100000, guid: 81ac4eee0b8342142b967ef9048566ed, type: 2}
-  shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
-  messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
-  messageReceivedEvent: {fileID: 11400000, guid: 0f63c89a9841f2b4eb35a359bdfcd2af, type: 2}
 --- !u!114 &7145104563043181894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -72,7 +49,7 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3021723375907349566}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
         m_MethodName: ChooseShips
         m_Mode: 1
@@ -100,7 +77,7 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 3021723375907349566}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
         m_MethodName: RemoveShip
         m_Mode: 0

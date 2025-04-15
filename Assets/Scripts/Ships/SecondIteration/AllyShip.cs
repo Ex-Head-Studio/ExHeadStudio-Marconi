@@ -5,9 +5,10 @@ public class AllyShip : AShip
     
     public override void ExecuteInstructions(AnswerStruct directives)
     {
-        // TODO: implementare la logica per eseguire le istruzioni ricevute tramite carta
+        
     }
 
+    //Le funzioni che seguono non servono, direi che possono essere virtual e non abstract
     public override bool LookForMovement()
     {
         throw new System.NotImplementedException();
@@ -23,5 +24,15 @@ public class AllyShip : AShip
     public override void SendMessage(Move move)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void PerformAttack()
+    {
+
+    }
+
+    public void PerformMovement()
+    {
+
     }
 }

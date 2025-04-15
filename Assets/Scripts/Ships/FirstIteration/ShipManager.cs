@@ -75,7 +75,7 @@ public class ShipManager : MonoBehaviour, IShipManager
     {
         get { return influenceMap; }
     }
-    public void InstantiateAllyShip(string shipName){
+    public void InstantiateAllyShip(string shipName, int faction){
             modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
             AShip newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<AShip>();
             newShip.shipName=shipName;
@@ -92,7 +92,7 @@ public class ShipManager : MonoBehaviour, IShipManager
             gridManager.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
     }
-    public void InstantiateEnemyShip(string shipName){
+    public void InstantiateEnemyShip(string shipName, int faction){
             modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
             AShip newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<AShip>();
             newShip.shipName=shipName;
@@ -118,11 +118,12 @@ public class ShipManager : MonoBehaviour, IShipManager
         }
         if(allyCount<shipManagerSO.allyShips)
         {
-            InstantiateAllyShip(shipName);
+            InstantiateAllyShip(shipName, (int)Entity.ally);
             return;
         }
-        if(enemyCount<shipManagerSO.enemyShips){
-            InstantiateEnemyShip(shipName);
+        if(enemyCount<shipManagerSO.enemyShips)
+        {
+            InstantiateEnemyShip(shipName, (int)Entity.enemy);
             return;
         }
     }

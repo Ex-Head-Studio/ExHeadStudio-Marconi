@@ -6,7 +6,7 @@ public class DisplayHealth : MonoBehaviour
     [SerializeField] private GameObject healthBarPrefab;
     [SerializeField] private GameObject healthBarCanvasPrefab;
 
-    private Ship shipScript;
+    private AShip shipScript;
     private Vector2Int position;
 
     private int healthBarCount = 0;
@@ -16,7 +16,7 @@ public class DisplayHealth : MonoBehaviour
     private void Start()
     {
 
-        shipScript = GetComponent<Ship>();
+        shipScript = GetComponent<AShip>();
         if (shipScript != null && healthBarPrefab != null)
         {
             healthBarCount = shipScript.GetHealth();

@@ -29,9 +29,6 @@ public class TestShipDrop : MonoBehaviour, Idroppable
             tmpConsumableObjectDataSO = tmpObjectDataSO as ConsumableObjectData;
             if(tmpConsumableObjectDataSO.GetEntityDrop() == ship.faction)
             {
-                //fino a qui voglio lavorare con i dati
-                //qui devo inviare una classe?
-                Debug.Log("Ho dropato un oggetto consumabile");
                 ConsumableObject consumable =  new ConsumableObject(tmpConsumableObjectDataSO);
                 DropConsumable(consumable);
                 return;

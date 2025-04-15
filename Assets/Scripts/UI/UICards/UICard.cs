@@ -22,6 +22,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
     //TODO valutare se conviene scrivere un event channel
     public static event Action<AbstractCard> cardDroppedEvent;
     public static event Action<AbstractCard> cardSelectedEvent;
+    public static event Action<AbstractCard> cardDeselectedEvent;
 
     private AbstractCard cardScript;
 
@@ -105,6 +106,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
     public void OnPointerUp(PointerEventData eventData)
     {
         cardDroppedEvent?.Invoke(cardScript);
+        cardDeselectedEvent?.Invoke(cardScript);
 
         int i = 0;
 

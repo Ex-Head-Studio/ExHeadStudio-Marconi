@@ -8,7 +8,6 @@ public enum DeckType
 {
     CommandDeck,
     SupportDeck,
-
     SpyDeck,
 }
 

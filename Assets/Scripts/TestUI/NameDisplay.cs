@@ -32,7 +32,7 @@ public class NameDisplay : MonoBehaviour
     }
     void Start() {
         mainCamera = Camera.main;
-        Ship ship = gameObject.GetComponent<Ship>();
+        AShip ship = gameObject.GetComponent<AShip>();
         if (shipNameText != null) 
         {
             TMP_Text nameText = shipNameText.GetComponentInChildren<TMP_Text>();
@@ -53,21 +53,4 @@ public class NameDisplay : MonoBehaviour
 
          
     }
-
-    //gestione della billboard
-    void Update() 
-    {
-        /*if (mainCamera != null && shipNameText != null) 
-        {
-            shipNameText.transform.LookAt(mainCamera.transform);
-            shipNameText.transform.Rotate(0, 0, 180); 
-        }*/
-    }
-
-
-
-    //aggiunta sezione per il display della direzione
-
-
-
 }

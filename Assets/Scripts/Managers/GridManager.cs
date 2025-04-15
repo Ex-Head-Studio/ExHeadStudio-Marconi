@@ -16,8 +16,6 @@ public class GridManager : MonoBehaviour
     public int _height;
     [SerializeField] private GameObject _tilePrefab;
 
-    [SerializeField] private ShipManager _shipManager;
-
     public Dictionary<Vector2, Tile> _tiles;
     private Dictionary<int, Ship> _ships;
 

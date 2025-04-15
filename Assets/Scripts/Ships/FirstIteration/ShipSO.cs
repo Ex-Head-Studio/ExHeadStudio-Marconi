@@ -1,15 +1,25 @@
 using UnityEngine;
 using System.Collections.Generic;
+using UnityEditor.Animations;
 
 [CreateAssetMenu(fileName = "ShipSO", menuName = "Scriptable Objects/ShipSO")]
 public class ShipSO : ScriptableObject
 {
+
     [SerializeField] public int movementRange;
     [SerializeField] public int attackRange;
     [SerializeField] public int attackPower;
     [SerializeField] public int health;
     public string[] statNames = { "Movement Range", "Attack Range", "Attack Power", "Health" };
     // per ogni variabile aggiunta allo scriptable object, aggiungere un nome alla lista statNames
+
+    [Header("Events")]
+    [SerializeField] public MessageSentEvent messageSentEvent;
+    [SerializeField] public OnShipDestroyedEvent shipDestroyedEvent;
+    [SerializeField] public OnShipAttackEvent attackEvent;
+
+    [Header("Animator")]
+    [SerializeField] public Animator shipAnimator;
 
     public Dictionary<string, int> statsDictionary =
     new Dictionary<string, int>();
@@ -31,5 +41,10 @@ public class ShipSO : ScriptableObject
     private void OnDisable()
     {
         statsDictionary.Clear();
+    }
+
+    private void Start()
+    {
+        shipAnimator = shipModelPrefab.GetComponentInChildren<Animator>();
     }
 }

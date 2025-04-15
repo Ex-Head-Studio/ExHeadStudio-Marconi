@@ -13,7 +13,13 @@ public struct ShipDestroyedStruct
     public int entity;
     public Vector2 gridPosition;
     public AShip shipScript;
-
+    
+    /// <summary>
+    /// Class which encapsulates all the data of destroyed ship
+    /// <param name="shipName"></param>
+    /// <param name="entity"></param>
+    /// <param name="gridPosition"></param>
+    /// <param name="shipScript"></param> <summary>
     public ShipDestroyedStruct(string shipName, int entity, Vector2 gridPosition, AShip shipScript)
     {
         this.shipName = shipName;

@@ -16,6 +16,10 @@ public class ShipManagerSO : ScriptableObject
     [SerializeField] public float decayMomentum;
 
 
+    [Header("Materials")]
+    [SerializeField] public Material allyMaterial;
+    [SerializeField] public Material enemyMaterial;
+
     [SerializeField] public List<ShipSO> shipSOarray;
 
     [NonSerialized]

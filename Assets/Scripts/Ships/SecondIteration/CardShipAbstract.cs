@@ -12,17 +12,15 @@ public abstract class CardShipAbstract : MonoBehaviour
     {
         UICard.cardDroppedEvent += OnCardDropped;
         UICard.cardSelectedEvent += OnCardSelected;
+        UICard.cardDeselectedEvent += OnCardDeselected;
     }
 
     private void OnDisable()
     {
         UICard.cardDroppedEvent -= OnCardDropped;
         UICard.cardSelectedEvent -= OnCardSelected;
+        UICard.cardDeselectedEvent -= OnCardDeselected;
     }
-
-
-
-
 
     protected virtual void OnCardDropped(AbstractCard card)
     {
@@ -30,6 +28,11 @@ public abstract class CardShipAbstract : MonoBehaviour
         // Implementazione di default vuota, può essere sovrascritta dalle classi derivate
     }
     protected virtual void OnCardSelected(AbstractCard card)
+    {
+        // Implementazione di default vuota, può essere sovrascritta dalle classi derivate
+    }
+
+    protected virtual void OnCardDeselected(AbstractCard card)
     {
         // Implementazione di default vuota, può essere sovrascritta dalle classi derivate
     }

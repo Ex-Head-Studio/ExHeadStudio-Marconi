@@ -34,21 +34,21 @@ public class Ship : AShip
                 if(direction.y==0){
                     if(direction.x>0){
                         
-                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 3));
+                        shipSO.messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 3));
                     }
                     else{
                         
-                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 2));
+                        shipSO.messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 2));
                     }
                 }
                 else{
                     if(direction.y>0){
                        
-                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 0));
+                        shipSO.messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 0));
                     }
                     else{
                         
-                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 1));
+                        shipSO.messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 1));
                     }
                 }
                 break;
@@ -57,21 +57,21 @@ public class Ship : AShip
                 if(direction.y==0){
                     if(direction.x>0){
                         
-                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 3));
+                        shipSO.messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 3));
                     }
                     else{
                         
-                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 2));
+                        shipSO.messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 2));
                     }
                 }
                 else{
                     if(direction.y>0){
                         
-                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 0));
+                        shipSO.messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 0));
                     }
                     else{
                         
-                        messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 1));
+                        shipSO.messageSentEvent?.Invoke(new MessageStruct(move.GetShipName(), move.GetIdMove(), (int) move.GetMessageType(), faction, 1));
                     }
                 }
                 break;
@@ -103,7 +103,7 @@ public class Ship : AShip
                 {
                     selectedMove = shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).ToList()[0];
                     if(selectedMove.GetMessageType() == MessageType.attack){
-                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
+                        shipSO.attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
                     }
                     else{
                         gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
@@ -130,7 +130,7 @@ public class Ship : AShip
                     {
                         canAttack=false;
                         //evento dove si dichiara la posizione 2D della nave avversaria da colpire
-                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
+                        shipSO.attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
 
                     }
                     else if(selectedMove.GetMessageType()==MessageType.movement && canMove)
@@ -221,25 +221,5 @@ public class Ship : AShip
        // Debug.Log("Nave: " + shipName + " non trova posizioni valide");
         currentState=ShipState.Waiting;
         return false; 
-    }
-    
-
-
-    //possiamo valutare se passare anche il danno nella shipAttackStruct
-
-    public void ParentRemoveShip()
-    {
-        //shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position, this));
-    }
-
-
-    public int GetHealth()
-    {
-        return health;
-    }
-
-    public Vector2Int GetPosition()
-    {
-        return position;
     }
 }

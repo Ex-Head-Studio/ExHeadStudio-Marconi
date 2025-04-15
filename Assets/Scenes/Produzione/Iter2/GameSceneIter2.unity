@@ -233,16 +233,55 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3459094535404006477, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 209171222}
+    - target: {fileID: 3459094535404006477, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShipManager2, Assembly-CSharp
+      objectReference: {fileID: 0}
+    - target: {fileID: 7145104563043181894, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[0].m_Target
+      value: 
+      objectReference: {fileID: 209171222}
+    - target: {fileID: 7145104563043181894, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+      propertyPath: onEvent.m_PersistentCalls.m_Calls.Array.data[0].m_TargetAssemblyTypeName
+      value: ShipManager2, Assembly-CSharp
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1468267785584294830, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 209171222}
   m_SourcePrefab: {fileID: 100100000, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
 --- !u!4 &209171220 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3060470617468302632, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
   m_PrefabInstance: {fileID: 209171219}
   m_PrefabAsset: {fileID: 0}
+--- !u!1 &209171221 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1468267785584294830, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+  m_PrefabInstance: {fileID: 209171219}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &209171222
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 209171221}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921917491df30ff46a97d3dd719cf083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipManagerSO: {fileID: 11400000, guid: 0eb036cc5636c474fb97ed35452283f2, type: 2}
+  timeBeforeGeneration: 1
+  shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
 --- !u!1001 &321610095
 PrefabInstance:
   m_ObjectHideFlags: 0

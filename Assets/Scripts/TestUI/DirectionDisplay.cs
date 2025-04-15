@@ -14,7 +14,7 @@ public class DirectionDisplay : MonoBehaviour
     [SerializeField] private GameObject upAttack, downAttack, leftAttack, rightAttack;
     [SerializeField] private TMP_Text shipRangeText;
 
-    private Ship shipScript;
+    private AShip shipScript;
     private void OnEnable()
     {
         //tutti gli eventi sotto vengono dichiarati in Directionindicator
@@ -34,7 +34,7 @@ public class DirectionDisplay : MonoBehaviour
 
     private void Start()
     {
-        shipScript = GetComponent<Ship>();
+        shipScript = GetComponent<AShip>();
             upArrow.SetActive(false);
             downArrow.SetActive(false);
             leftArrow.SetActive(false);
