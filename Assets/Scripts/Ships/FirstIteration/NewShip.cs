@@ -3,36 +3,10 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random= UnityEngine.Random;
-public class NewShip : Ship
+public class NewShip : AShip
 {
     protected int moveId=0;
-    /*
-    protected StrategyState strategyState;
-    
-    public void UpdateState(){
-        //da provare quando c'è tempo (gabriele)
-
-        int enemies = Physics.OverlapSphereNonAlloc(transform.position, shipSO.movementRange, null, shipLayer);
-        if(enemies>0){
-            currentState=StrategyState.InRange;
-        }
-        else currentState=StrategyState.Patrolling;
-
-        switch(currentState){
-            case StrategyState.InRange:
-                FindBestPositioning();
-            break;
-            case StrategyState.Patrolling:
-                LookForMovement();
-            break;
-            default:
-
-            break;
-        }
-    }
-    public void FindBestPositioning(){
-
-    }*/
+   
     public override bool LookForMovement()
     {
         canMove=false;
@@ -47,7 +21,7 @@ public class NewShip : Ship
         }
         possibleMoves=possibleMoves.Where(x=> x.x>=0 && x.x<mapWidth && x.y>=0 && x.y<mapHeight && x!=position).Distinct().ToList(); 
         foreach(Vector2Int move in possibleMoves){
-            Move newMove=new Move(moveId++, shipName, move, MessageType.movement, manager.influenceMap.CalculateMoveValue(move.x, move.y, shipSO.movementRange, shipSO.attackRange));
+            Move newMove=new Move(moveId++, shipName, move, MessageType.movement, manager.InfluenceMap.CalculateMoveValue(move.x, move.y, shipSO.movementRange, shipSO.attackRange));
             bestMoves.Add(newMove);
             Debug.Log("Nave "+shipName+" muove in "+newMove.GetTargetPos()+" con value: "+newMove.value);
         }
@@ -62,7 +36,7 @@ public class NewShip : Ship
             bestMoves.Sort((a, b)=> b.value.CompareTo(a.value));
         else bestMoves.Sort((a, b)=> a.value.CompareTo(b.value));
 
-        if(bestMoves.Count()>manager.numberOfMessages){
+        if(bestMoves.Count()>manager.NumberOfMessages){
             bestMoves=bestMoves.Take(2).ToList();
             canMove=true;
         }
@@ -74,13 +48,13 @@ public class NewShip : Ship
         return canMove;
     }
 
-    public override bool LookForObjectives(List<Ship> adv)
+    public override bool LookForAttacks(List<AShip> adv)
     {
         canAttack=false;
         //Cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione tra le navi nemiche
         List<Vector2Int> targets=adv.Select(x=> x.position).Where(k => (k.x==position.x || k.y==position.y) && (Vector2Int.Distance(k, position)<= shipSO.attackRange)).ToList();        
         
-        if(targets.Count()>manager.numberOfMessages){
+        if(targets.Count()>manager.NumberOfMessages){
             canAttack=true;
             targets=targets.Take(2).ToList();
         }
@@ -91,21 +65,74 @@ public class NewShip : Ship
         //shipMoves=shipMoves.Distinct().ToList();
         return canAttack;
     }
-    
 
-
-    public override void OnAttacked(ShipAttackStruct attackPosition)
+    public override void ExecuteInstructions(AnswerStruct answerStruct)
     {
-        if(position.x == attackPosition.gridPosition.x && position.y == attackPosition.gridPosition.y)
+        int entity = answerStruct.entity;
+        bool answer = answerStruct.result;
+        //True per gli alleati CONFERMA l'azione, le altre navi non devono fare nulla
+        //True per i nemici NEGA l'azione, le altre navi devono eseguire le loro azioni nulla
+
+        if(this.faction == entity && this.faction==(int)Entity.ally)
         {
-
-            health-= attackPosition.damage;
-            if(health<=0)
+            if(shipName == answerStruct.receiver && answer)
             {
-                shipAnimator.SetTrigger("Death");
-
+                Move selectedMove;
+                 
+                if(shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).Count() > 0 )
+                {
+                    selectedMove = shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).ToList()[0];
+                    if(selectedMove.GetMessageType() == MessageType.attack){
+                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
+                    }
+                    else{
+                        gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
+                        position=selectedMove.GetTargetPos();
+                    }
+                }
             }
-
+        
+          
         }
+        else if(this.faction == entity && this.faction==(int)Entity.enemy)
+        {
+            if(shipName == answerStruct.receiver && answer)
+            {
+                currentState = ShipState.Waiting;
+            }
+            else if(shipName == answerStruct.receiver && !answer)
+            {
+                Move selectedMove;
+                if(shipMoves.Where(x=> x.GetIdMove()== answerStruct.idMove).Count()>0){
+                    selectedMove = shipMoves.Where(x=>x.GetIdMove()==answerStruct.idMove).ToList()[0];
+                    
+                    if(selectedMove.GetMessageType()==MessageType.attack && canAttack)
+                    {
+                        canAttack=false;
+                        //evento dove si dichiara la posizione 2D della nave avversaria da colpire
+                        attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
+
+                    }
+                    else if(selectedMove.GetMessageType()==MessageType.movement && canMove)
+                    {
+                        //qui siamo sicuri di non dover chiamare un metodo?
+                        gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
+                        position=selectedMove.GetTargetPos();
+                        canMove=false;
+                        //nextPos=Vector2.negativeInfinity;
+                    }
+                }
+            }
+        }
+    }
+
+    public override bool LookForAttacks()
+    {
+        throw new NotImplementedException();
+    }
+
+    public override void SendMessage(Move move)
+    {
+        throw new NotImplementedException();
     }
 }

@@ -168,7 +168,7 @@ public class Tile : MonoBehaviour
         {
             tileShip = ship;
             tileShip.transform.position = gameObject.transform.position;
-            SetType(this._type, ship.GetComponent<Ship>().faction);
+            SetType(this._type, ship.GetComponent<AShip>().faction);
         }
        
     }

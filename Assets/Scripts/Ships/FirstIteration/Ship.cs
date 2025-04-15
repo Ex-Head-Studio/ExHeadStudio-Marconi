@@ -3,52 +3,8 @@ using System.Collections.Generic;
 using System.Linq;
 using Random=UnityEngine.Random;
 using System;
-public class Ship : MonoBehaviour
+public class Ship : AShip
 {
-    protected enum StrategyState{
-        InRange,
-        Patrolling
-    }
-    [Header("Scriptable Objects")]
-    [SerializeField] public ShipSO shipSO;
-    [Header("Ship Parameters")]
-    [SerializeField] float nearbyShipSearchRadius;
-    [SerializeField] public Vector2Int position;
-    public float shipInfluence;
-    [SerializeField] protected MessageSentEvent messageSentEvent;
-    [SerializeField] protected OnShipDestroyedEvent shipDestroyedEvent;
-    [SerializeField] protected OnShipAttackEvent attackEvent;
-    [SerializeField] protected GridManager gridManager;
-    [SerializeField] protected Animator shipAnimator;
-    protected int mapWidth;
-    protected int mapHeight;
-    public LayerMask shipLayer;
-    public enum ShipState{
-        Attacking,
-        Moving,
-        Waiting
-    }
-    
-    public string shipName;
-    public ShipManager manager;
-    
-
-    // questa va inserita nella logica delle navi
-    protected int health;
-
-
-    //Servono per alterare il testo nel display dei comandi, vedi commento in start
-    public int attackRange;
-    public int movementRange;
-    
-
-    protected List<Vector2Int> nextPos;
-    public ShipState currentState=ShipState.Waiting;
-    public List<Vector2Int> targetPos;
-    public List<Move> shipMoves;
-    protected bool canMove;
-    protected bool canAttack;
-    public int faction;
     
     void Awake()
     {
@@ -68,7 +24,7 @@ public class Ship : MonoBehaviour
         movementRange=shipSO.movementRange;
     }
 
-    public void SendMessage(Move move)
+    public override void SendMessage(Move move)
     {
         Vector2Int direction;
         switch(move.GetMessageType())
@@ -130,7 +86,7 @@ public class Ship : MonoBehaviour
 
 
     //il metodo viene chiamato quando la nave registra una risposta a lei associata, deve rispondere all'evento
-    public virtual void ExecuteInstructions(AnswerStruct answerStruct)
+    public override void ExecuteInstructions(AnswerStruct answerStruct)
     {
         int entity = answerStruct.entity;
         bool answer = answerStruct.result;
@@ -154,25 +110,9 @@ public class Ship : MonoBehaviour
                         position=selectedMove.GetTargetPos();
                     }
                 }
-
-                //TODO, si puo eliminare?
-                /*if(currentState==ShipState.Attacking)
-                {
-                    //evento dove si dichiara la posizione 2D della nave avversaria da colpire
-                    attackEvent?.Invoke(new ShipAttackStruct(targetPos[0]));
-
-                }
-                else if(currentState==ShipState.Moving)
-                {
-                    gridManager.MoveShip(position, nextPos[0], entity);
-                    position=nextPos[0];
-                    //nextPos=Vector2.negativeInfinity;
-                }*/
             }
-            else
-            {
-                //currentState = ShipState.Waiting;
-            }
+        
+          
         }
         else if(this.faction == entity && this.faction==(int)Entity.enemy)
         {
@@ -204,7 +144,6 @@ public class Ship : MonoBehaviour
                 }
             }
         }
-        
     }
     
     /*void SetNextPosition(Vector2 newPos)
@@ -220,11 +159,11 @@ public class Ship : MonoBehaviour
 
 
     //La nave cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione
-    virtual public bool LookForObjectives(List<Ship> possibleTargets)
+    override public bool LookForAttacks(List<AShip> possibleTargets)
     {
         canAttack=false;
         //Cerca se ci sono navi nemiche in linea retta rispetto alla sua posizione tra le navi nemiche
-        List<Ship> targets=possibleTargets.Where(k => k.position.x==position.x || k.position.y==position.y).OrderBy(x => Random.value).Take(1).ToList();        
+        List<AShip> targets=possibleTargets.Where(k => k.position.x==position.x || k.position.y==position.y).OrderBy(x => Random.value).Take(1).ToList();        
         if(targets.Count>0){
             canAttack=true;
             targetPos=targets.OrderBy(x=>Random.value).Select(a=>a.position).Take(2).ToList();
@@ -232,17 +171,22 @@ public class Ship : MonoBehaviour
         return canAttack;
     }   
 
+    override public bool LookForAttacks()
+    {
+       throw new System.NotImplementedException();
+    }
+
     //TODO Gabriele controllare che inserisca giusto e non cancelli cosa serve
     //Allo stesso tempo, la nave controlla anche se ha spazio per muoversi, così da essere pronta a muoversi se non trova navi nemiche
-    virtual public bool LookForMovement(){
+    public override bool LookForMovement(){
         canMove=false;
 
         //canMove=false;
         List<int> xOffsets=new List<int>(){-1, 1};
         List<int> yOffsets=new List<int>(){-1, 1};
         //Seleziona le navi vicine a quella attuale e prendi tutte le posizioni attuali e future di ciascuna nave trovata
-        List<Vector2Int> nearbyShips = Physics.OverlapSphere(transform.position, nearbyShipSearchRadius, shipLayer).Select(x => x.GetComponent<Ship>().position).ToList();
-        nearbyShips = nearbyShips.Concat(Physics.OverlapSphere(transform.position, nearbyShipSearchRadius, shipLayer).SelectMany(x => x.GetComponent<Ship>().nextPos)
+        List<Vector2Int> nearbyShips = Physics.OverlapSphere(transform.position, nearbyShipSearchRadius, adversaryShipLayer).Select(x => x.GetComponent<Ship>().position).ToList();
+        nearbyShips = nearbyShips.Concat(Physics.OverlapSphere(transform.position, nearbyShipSearchRadius, adversaryShipLayer).SelectMany(x => x.GetComponent<Ship>().nextPos)
                     .Where(x => x!=Vector2.negativeInfinity).ToList()).ToList();
         //La nave mantiene solo gli offset che non la farebbero uscire dalla mappa e che non la farebbero andare su una casella già occupata
 
@@ -278,25 +222,10 @@ public class Ship : MonoBehaviour
         currentState=ShipState.Waiting;
         return false; 
     }
-    public void SetFaction(int faction){
-        this.faction=faction;
-    }
+    
 
 
     //possiamo valutare se passare anche il danno nella shipAttackStruct
-    public virtual void OnAttacked(ShipAttackStruct attackPosition)
-    {
-        if(position.x == attackPosition.gridPosition.x && position.y == attackPosition.gridPosition.y)
-        {
-            //per ora decrementiamo di uno la vita
-            health--;
-            if(health<=0)
-            {
-                shipAnimator.SetTrigger("Death");
-                //shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position));
-            }
-        }
-    }
 
     public void ParentRemoveShip()
     {

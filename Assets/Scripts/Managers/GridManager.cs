@@ -75,7 +75,7 @@ public class GridManager : MonoBehaviour
         }
         return false;
     }
-    public void InsertShips(Ship ship)
+    public void InsertShips(AShip ship)
     {
         //brutto, da rifare appena abbiamo tempo
         while(true)

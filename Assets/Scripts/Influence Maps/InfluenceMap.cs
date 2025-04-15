@@ -34,7 +34,7 @@ public struct Vector2I
 
 public class InfluenceMap
 {
-	List<Ship> _propagators = new List<Ship>();
+	List<AShip> _propagators = new List<AShip>();
 
 	float[,] _influences;
 	float[,] _influencesBuffer;
@@ -103,11 +103,11 @@ public class InfluenceMap
 		}
 	}
 
-	public void RegisterPropagator(Ship p)
+	public void RegisterPropagator(AShip p)
 	{
 		_propagators.Add(p);
 	}
-	public void UnregisterPropagator(Ship p){
+	public void UnregisterPropagator(AShip p){
 		_propagators.Remove(p);
 	}
 	public void Propagate()
@@ -120,7 +120,7 @@ public class InfluenceMap
 
 	void UpdatePropagators()
 	{
-		foreach (Ship p in _propagators)
+		foreach (AShip p in _propagators)
 		{
 			SetInfluence(new Vector2I(p.position.x, p.position.y), p.shipInfluence);
 		}

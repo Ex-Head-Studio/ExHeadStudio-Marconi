@@ -24,7 +24,7 @@ public class ShipModelMaterialAssignement : MonoBehaviour
     {
         foreach (var meshRenderer in shipMeshRenderers)
         {
-            Debug.Log(meshRenderer.material.name);
+//            Debug.Log(meshRenderer.material.name);
             if(meshRenderer.material.name != "HolograficShipWeapon")
                 meshRenderer.material = material;
         }

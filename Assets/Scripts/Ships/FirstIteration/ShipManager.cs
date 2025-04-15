@@ -4,12 +4,12 @@ using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
 using Random=UnityEngine.Random;
-public class ShipManager : MonoBehaviour
+public class ShipManager : MonoBehaviour, IShipManager
 {
     
     [Header("Parameters")]
     [SerializeField] private ShipManagerSO shipManagerSO;
-    Dictionary<string, Ship> ships;
+    Dictionary<string, AShip> ships;
     [Tooltip("Numero di messaggi massimo per fazione per turno")] public int numberOfMessages;
 
     [Header("Lists for debug, don't touch")]
@@ -18,18 +18,18 @@ public class ShipManager : MonoBehaviour
     public List<Move> enemyMoves;
     public InfluenceMap influenceMap;
 
-    //le ho messe generiche, perchè ereditano da ship
+    //le ho messe generiche, perchè ereditano da AShip
 
     //
     /*public List<NewShip>enemies=new List<NewShip>();
     public List<NewShip>allies=new List<NewShip>();*/
 
-    public List<Ship>enemies=new List<Ship>();
-    public List<Ship>allies=new List<Ship>();
-    //public List<Ship> allyAttackers=new List<Ship>();
-    //public List<Ship> activeAllies=new List<Ship>();
-    //public List<Ship> enemyAttackers=new List<Ship>();
-    //public List<Ship> activeEnemies=new List<Ship>();
+    public List<AShip>enemies=new List<AShip>();
+    public List<AShip>allies=new List<AShip>();
+    //public List<AShip> allyAttackers=new List<AShip>();
+    //public List<AShip> activeAllies=new List<AShip>();
+    //public List<AShip> enemyAttackers=new List<AShip>();
+    //public List<AShip> activeEnemies=new List<AShip>();
     private static int allyCount = 0;
     private static int enemyCount = 0;
     
@@ -55,7 +55,7 @@ public class ShipManager : MonoBehaviour
     void Awake()
     {
         
-        ships = new Dictionary<string, Ship>();
+        ships = new Dictionary<string, AShip>();
         shipManagerSO.RandomizeShips();
         //TODO rivedere questa cosa
         gridManager = FindFirstObjectByType<GridManager>();
@@ -67,61 +67,64 @@ public class ShipManager : MonoBehaviour
     {
         StartCoroutine(ShipGeneration());
     }
-    protected void InstantiateInMap(string shipName)
+    public int NumberOfMessages
     {
-        if(shipManagerSO.allyShips+shipManagerSO.enemyShips>shipManagerSO.startingShips.Count)
-        {
-            Debug.LogError("Not enough ships for the number of allies and enemies");
-            return;
-        }
-
-        //Adesso si possono scegliere quante navi alleate o nemiche far spawnare
-        //Sono sicuro si possa mostrare in inspector un errore se la somma di navi eccede i limiti (stefano)
-           
-        //Decide se la nave è alleata o nemica
-        if(allyCount<shipManagerSO.allyShips)
-        {
-            //tipo questa cosa potremmo spostarla in un metodo che istanzia il prefab, all'interno dello script della nave
-            //Se facciamo così ogni nave istanzierà il proprio prefab e si posizionerà da sola se gli passiamo le coordinate
+        get { return numberOfMessages; }
+    }
+    public InfluenceMap InfluenceMap
+    {
+        get { return influenceMap; }
+    }
+    public void InstantiateAllyShip(string shipName){
             modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
-            Ship newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<Ship>();
+            AShip newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<AShip>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
             ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(0);
             newShip.shipSO = shipManagerSO.shipSOarray[modelIndex];
-            newShip.shipLayer=LayerMask.GetMask("Enemy");
+            newShip.adversaryShipLayer=LayerMask.GetMask("Enemy");
             newShip.shipInfluence=1;
             allies.Add(newShip);
             allyCount++;
             newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(allyMaterial);
             gridManager.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
-
-            return;
-        }
-        if(enemyCount<shipManagerSO.enemyShips){
+    }
+    public void InstantiateEnemyShip(string shipName){
             modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
-            Ship newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<Ship>();
+            AShip newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<AShip>();
             newShip.shipName=shipName;
             newShip.name=shipName;
             newShip.manager=this;
             ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(1);
             newShip.shipSO = shipManagerSO.shipSOarray[modelIndex];
-            newShip.shipLayer=LayerMask.GetMask("Ally");
+            newShip.adversaryShipLayer=LayerMask.GetMask("Ally");
             newShip.shipInfluence=-1;
             enemies.Add(newShip);
             enemyCount++;
             newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(enemyMaterial);
             gridManager.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
+    }
+    public void InstantiateInMap(string shipName)
+    {
+        if(shipManagerSO.allyShips+shipManagerSO.enemyShips>shipManagerSO.startingShips.Count)
+        {
+            Debug.LogError("Not enough ships for the number of allies and enemies");
             return;
         }
-        
-       
-        
+        if(allyCount<shipManagerSO.allyShips)
+        {
+            InstantiateAllyShip(shipName);
+            return;
+        }
+        if(enemyCount<shipManagerSO.enemyShips){
+            InstantiateEnemyShip(shipName);
+            return;
+        }
     }
 
     public void ChooseShips()
@@ -129,24 +132,24 @@ public class ShipManager : MonoBehaviour
         
 
 
-        foreach(Ship ship in allies)
+        foreach(AShip AShip in allies)
         {
-            if(ship is NewShip)
+            if(AShip is NewShip)
             {
-                ship.LookForMovement();
-                ship.LookForObjectives(enemies);
+                AShip.LookForMovement();
+                AShip.LookForAttacks(enemies);
             }
 
         }
-        foreach(Ship ship in enemies)
+        foreach(AShip ship in enemies)
         {
             if(ship is NewShip)
             {
                 ship.LookForMovement();
-                ship.LookForObjectives(allies);
+                ship.LookForAttacks(allies);
             }
             ship.LookForMovement();
-            ship.LookForObjectives(allies);
+            ship.LookForAttacks(allies);
         }
 
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà
@@ -156,9 +159,9 @@ public class ShipManager : MonoBehaviour
         Debug.Log("Ally moves: " + allyMoves.Count());
         Debug.Log("Enemy moves: " + enemyMoves.Count());
         /*
-        foreach(Ship ship in allyAttackers)
+        foreach(AShip AShip in allyAttackers)
         {
-            Debug.Log("Allyatt: " + ship.shipName);
+            Debug.Log("Allyatt: " + AShip.shipName);
         }*/
   
 
@@ -166,7 +169,7 @@ public class ShipManager : MonoBehaviour
 
         /*
         enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)).ToList();
-        List<Ship> movableEnemies = enemies.Where(x => x.LookForMovement()).ToList();
+        List<AShip> movableEnemies = enemies.Where(x => x.LookForMovement()).ToList();
         Debug.Log("Numero nemici: "+ enemyAttackers.Count());
 
         //Una volta che le navi sono state selezionate, si decide cosa far fare a una fazione a seconda di quante navi ha a disposizione
@@ -213,16 +216,16 @@ public class ShipManager : MonoBehaviour
             case 0:
                 movableAllies=movableAllies.OrderBy(x=> Random.value).ToList();
                 
-                //activeAllies.ForEach(x => x.SetState(Ship.ShipState.Moving));
+                //activeAllies.ForEach(x => x.SetState(AShip.ShipState.Moving));
                 allyAttackers.Clear();
                 break;
                 
             case 1:
                 activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
-                activeAllies[0].SetState(Ship.ShipState.Attacking);
+                activeAllies[0].SetState(AShip.ShipState.Attacking);
                 movableAllies.Remove(activeAllies[0]);
                 activeAllies.Add(movableAllies.OrderBy(x=> Random.value).Take(1).ToList()[0]);
-                activeAllies[1].SetState(Ship.ShipState.Moving);
+                activeAllies[1].SetState(AShip.ShipState.Moving);
                 break;
             case 2:
                 if(allyAttackers.Count>1){
@@ -231,7 +234,7 @@ public class ShipManager : MonoBehaviour
                 else{
                     activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
                 }
-                activeAllies.ForEach(x => x.SetState(Ship.ShipState.Attacking));
+                activeAllies.ForEach(x => x.SetState(AShip.ShipState.Attacking));
                 movableAllies.Clear();
                 
                 break;
@@ -248,16 +251,16 @@ public class ShipManager : MonoBehaviour
                 else{
                     activeEnemies=movableEnemies.OrderBy(x=> Random.value).Take(1).ToList();
                 }
-                activeEnemies.ForEach(x => x.SetState(Ship.ShipState.Moving));
+                activeEnemies.ForEach(x => x.SetState(AShip.ShipState.Moving));
                 enemyAttackers.Clear();
                 break;
             case 1:
                 //Ci sono abbastanza nemici per scegliere un attacco e un movimento
                 activeEnemies = enemyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
-                activeEnemies[0].SetState(Ship.ShipState.Attacking);
+                activeEnemies[0].SetState(AShip.ShipState.Attacking);
                 movableEnemies.Remove(activeEnemies[0]);
                 activeEnemies.Add(movableEnemies.OrderBy(x=> Random.value).Take(1).ToList()[0]);
-                activeEnemies[1].SetState(Ship.ShipState.Moving);
+                activeEnemies[1].SetState(AShip.ShipState.Moving);
                 break;
             case 2:
                 //Non ci sono nemici che possono muoversi, scelgo solo attacchi
@@ -267,7 +270,7 @@ public class ShipManager : MonoBehaviour
                 else{
                     activeEnemies=enemyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
                 }
-                activeEnemies.ForEach(x => x.SetState(Ship.ShipState.Attacking));
+                activeEnemies.ForEach(x => x.SetState(AShip.ShipState.Attacking));
                 //movableEnemies.Clear();
                 movableEnemies.Clear();
                 break;
@@ -331,15 +334,15 @@ public class ShipManager : MonoBehaviour
     
         ships.Remove(shipDestroyedStruct.shipName);
         influenceMap.UnregisterPropagator(shipDestroyedStruct.shipScript);
-        //shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(ship.shipName, ship.faction, ship.position));
+        //shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(AShip.shipName, AShip.faction, AShip.position));
         Destroy(shipDestroyedStruct.shipScript.gameObject);
         influenceMap.Propagate();
     }
     private IEnumerator ShipGeneration(){
         yield return new WaitForSeconds(1);
-        foreach (string ship in shipManagerSO.startingShips)
+        foreach (string AShip in shipManagerSO.startingShips)
         {
-            InstantiateInMap(ship);
+            InstantiateInMap(AShip);
         }
         influenceMap.Propagate();
     }
