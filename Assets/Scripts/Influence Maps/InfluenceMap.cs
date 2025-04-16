@@ -48,23 +48,10 @@ public class InfluenceMap
 		return _influences[x, y];
 	}
 
-	public float CalculateMoveValue(int x, int y, int moveRange, int atkRange){
-		int count=0;
-		float value=0f;
-		for(int i=x-moveRange; i<=x+moveRange; i++){
-			for(int j=y-moveRange; j<=y+moveRange;j++){
-				if(i>=0 && i<Height && j>=0 && j<Width){
-					//Verifica se intorno alla posizione sono presenti più nemici che alleati
-					value+=GetValue(i, j);
-					count++;
-				}
-			}
-		}
-		if(value!=0f)
-			value=value/count;
-		else value=0f;
+	public float CalculateMoveValue(int x, int y){
 		
-		return value;
+		//metodo che si può ampliare successivamente, per ora è vuoto ma miservirà
+		return GetValue(x, y);
 
 
 	}

@@ -62,7 +62,6 @@ public abstract class AShip : MonoBehaviour
     public abstract void ExecuteInstructions(AnswerStruct directives);
 
     public abstract bool LookForMovement();
-    
     public abstract bool LookForAttacks();
     public abstract bool LookForAttacks(List<AShip> nearbyShips);
 
