@@ -1,5 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
+using Unity.VisualScripting;
 
 public abstract class AShip : MonoBehaviour
 {
@@ -72,7 +73,7 @@ public abstract class AShip : MonoBehaviour
             health-=attackStruct.damage;
             if(health<=0)
             {
-                shipSO.shipAnimator.SetTrigger("Death");
+                GetComponentInChildren<Animator>().SetTrigger("Death");
             }
         }
     }
@@ -105,6 +106,7 @@ public abstract class AShip : MonoBehaviour
     //da controllare
     public void SetupShip(ShipSO shipData, string name, int faction, ShipManager2 shipManager2)
     {
+
             this.shipSO = shipData;
             this.shipName = name;
             this.gameObject.name = this.shipName;

@@ -14,7 +14,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     private Dictionary<string, AShip> shipsD;
 
     //per vedere le liste in inspector, usare la modalità di debug
-    //TODO Servono ancora queste due liste
+
     private List<Move> allyMoves;
     private List<Move> enemyMoves;
     public InfluenceMap influenceMap;
@@ -153,6 +153,10 @@ public class ShipManager2 : MonoBehaviour, IShipManager
         modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
         GameObject newShip = Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90, 0, 0));
 
+        Animator childAnim = newShip.gameObject.GetComponentInChildren<Animator>();
+        childAnim.runtimeAnimatorController = shipManagerSO.shipSOarray[modelIndex].shipAnimatorController;
+
+        Instantiate(shipManagerSO.shipSOarray[modelIndex].shipClassModel, childAnim.gameObject.transform, false);
 
         //tolgo il component NewShip
         if(newShip.TryGetComponent<NewShip>(out NewShip oldScript))
@@ -166,11 +170,11 @@ public class ShipManager2 : MonoBehaviour, IShipManager
             newShip.AddComponent<AllyShip>();
 
             //assegno ad ogni nuova nave i component per reagire alle carte
-            newShip.AddComponent<CardAllyShip>();
+            //newShip.AddComponent<CardAllyShip>();
             
             AllyShip shipScript = newShip.GetComponent<AllyShip>();
             shipScript.SetupShip(shipManagerSO.shipSOarray[modelIndex], shipName, faction, this);
-            shipScript.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.allyMaterial);
+            //shipScript.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.allyMaterial);
 
 
             return shipScript;
@@ -181,7 +185,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
             newShip.AddComponent<EnemyShip>();
             EnemyShip shipScript = newShip.GetComponent<EnemyShip>();
             shipScript.SetupShip(shipManagerSO.shipSOarray[modelIndex], shipName, faction, this);
-            shipScript.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.enemyMaterial);
+            //shipScript.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.enemyMaterial);
             return shipScript;
         }
     }

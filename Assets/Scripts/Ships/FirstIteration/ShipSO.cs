@@ -19,17 +19,17 @@ public class ShipSO : ScriptableObject
     [SerializeField] public OnShipAttackEvent attackEvent;
 
     [Header("Animator")]
-    [SerializeField] public Animator shipAnimator;
+    [SerializeField] public AnimatorController shipAnimatorController;
 
     public Dictionary<string, int> statsDictionary =
     new Dictionary<string, int>();
 
     public float shipInfluence;
+
     [SerializeField] public GameObject shipModelPrefab;
+    [SerializeField] public GameObject shipClassModel;
     [SerializeField] public GameObject shipModelMesh;
     
-    [SerializeField] public Mesh shipNameMesh;
-    [SerializeField] public Mesh shipClassMesh;
 
      private void OnEnable()
     {
@@ -41,10 +41,5 @@ public class ShipSO : ScriptableObject
     private void OnDisable()
     {
         statsDictionary.Clear();
-    }
-
-    private void Start()
-    {
-        shipAnimator = shipModelPrefab.GetComponentInChildren<Animator>();
     }
 }

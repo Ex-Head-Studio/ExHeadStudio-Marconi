@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 7093567064606927732}
   - component: {fileID: 3753439735822878364}
   - component: {fileID: 8275936499255003265}
-  - component: {fileID: 8570738459372233372}
+  - component: {fileID: 3895692876995684044}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -597,7 +597,7 @@ Transform:
   m_GameObject: {fileID: 3762632695331897579}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0, z: 0.5662048}
   m_LocalScale: {x: 1.2, y: 1.2, z: 1.2}
   m_ConstrainProportionsScale: 1
   m_Children: []
@@ -610,7 +610,7 @@ MeshRenderer:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 3762632695331897579}
-  m_Enabled: 1
+  m_Enabled: 0
   m_CastShadows: 1
   m_ReceiveShadows: 1
   m_DynamicOccludee: 1
@@ -700,7 +700,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &8570738459372233372
+--- !u!114 &3895692876995684044
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -709,10 +709,10 @@ MonoBehaviour:
   m_GameObject: {fileID: 3762632695331897579}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2b97b21471ae90c42b4f043bf88a647c, type: 3}
+  m_Script: {fileID: 11500000, guid: 62e0d5b3e3d56fc4b85f986f7092e5d9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  parentShipScript: {fileID: 0}
+  shipMeshRenderers: []
 --- !u!1 &3968402913019941839
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,7 +942,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2543398849260712460}
-  - component: {fileID: 295043476961954573}
   - component: {fileID: 6418796834375986826}
   - component: {fileID: 3107409907676549077}
   - component: {fileID: 2222173631782455242}
@@ -954,6 +953,7 @@ GameObject:
   - component: {fileID: 1897717715020496788}
   - component: {fileID: 1705176554862433656}
   - component: {fileID: 7348712502363055009}
+  - component: {fileID: -2885583865651547858}
   m_Layer: 6
   m_Name: AllyShip
   m_TagString: Untagged
@@ -979,36 +979,6 @@ Transform:
   - {fileID: 1597837523001409255}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &295043476961954573
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4912451739719525359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: fb30f4f24e61c14458048cc3f295981e, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipSO: {fileID: 0}
-  nearbyShipSearchRadius: 0
-  position: {x: 0, y: 0}
-  shipInfluence: 1
-  messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
-  shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
-  attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
-  gridManager: {fileID: 0}
-  shipAnimator: {fileID: 8275936499255003265}
-  adversaryShipLayer:
-    serializedVersion: 2
-    m_Bits: 0
-  shipName: 
-  attackRange: 0
-  movementRange: 0
-  currentState: 2
-  targetPos: []
-  faction: 0
 --- !u!114 &6418796834375986826
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1057,7 +1027,7 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 295043476961954573}
+      - m_Target: {fileID: 0}
         m_TargetAssemblyTypeName: AllyShip, Assembly-CSharp
         m_MethodName: ExecuteInstructions
         m_Mode: 0
@@ -1125,10 +1095,10 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 295043476961954573}
-        m_TargetAssemblyTypeName: AShip, Assembly-CSharp
-        m_MethodName: OnAttacked
-        m_Mode: 0
+      - m_Target: {fileID: 0}
+        m_TargetAssemblyTypeName: ShipChildRemover, Assembly-CSharp
+        m_MethodName: RemoveShip
+        m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
@@ -1167,11 +1137,11 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 1705176554862433656}
         m_TargetAssemblyTypeName: TestShipDrop, Assembly-CSharp
-        m_MethodName: DeathAnimation
-        m_Mode: 1
+        m_MethodName: DropConsumable
+        m_Mode: 2
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_ObjectArgumentAssemblyTypeName: ConsumableObject, Assembly-CSharp
           m_IntArgument: 0
           m_FloatArgument: 0
           m_StringArgument: 
@@ -1244,6 +1214,19 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 5625949989435475814, guid: b55440878e3e5d6458df9eb2294425b5, type: 3}
   healthBarCanvasPrefab: {fileID: 3089387875595966818}
+--- !u!114 &-2885583865651547858
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4912451739719525359}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 62e0d5b3e3d56fc4b85f986f7092e5d9, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipMeshRenderers: []
 --- !u!1 &6906936414736378593
 GameObject:
   m_ObjectHideFlags: 0
