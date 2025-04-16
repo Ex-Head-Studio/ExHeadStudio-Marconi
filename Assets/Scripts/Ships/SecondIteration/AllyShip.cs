@@ -6,11 +6,6 @@ using Unity.VisualScripting;
 
 public class AllyShip : AShip
 {
-    
-    private void Start()
-    {
-        this.gameObject.AddComponent<CardAllyShip>();
-    }
     public override void ExecuteInstructions(AnswerStruct directives)
     {
         

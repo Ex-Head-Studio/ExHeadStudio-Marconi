@@ -20,4 +20,17 @@ public abstract class AbstractEventListenerSO<T>: MonoBehaviour
     {
         onEvent?.Invoke(value);
     }
+
+    /// <summary>
+    /// This method adds methods to call via code
+    /// </summary>
+    /// <summary>
+    /// <param name="action"> 
+    /// The method you want to add and be called (don't use parenthese)
+    /// </param>
+    /// </summary>
+    public virtual void AddMethodToExecute(UnityAction<T> action)
+    {
+        onEvent.AddListener(action);
+    }
 }

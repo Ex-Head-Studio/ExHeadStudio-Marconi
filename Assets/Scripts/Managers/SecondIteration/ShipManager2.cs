@@ -166,17 +166,13 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
         if(faction == (int)Entity.ally)
         {
-
-            newShip.AddComponent<AllyShip>();
-
             //assegno ad ogni nuova nave i component per reagire alle carte
-            //newShip.AddComponent<CardAllyShip>();
+            newShip.AddComponent<CardAllyShip>();
+            newShip.AddComponent<AllyShip>();
             
             AllyShip shipScript = newShip.GetComponent<AllyShip>();
             shipScript.SetupShip(shipManagerSO.shipSOarray[modelIndex], shipName, faction, this);
-            //shipScript.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.allyMaterial);
-
-
+            newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.allyMaterial);
             return shipScript;
         }
         else
@@ -185,7 +181,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
             newShip.AddComponent<EnemyShip>();
             EnemyShip shipScript = newShip.GetComponent<EnemyShip>();
             shipScript.SetupShip(shipManagerSO.shipSOarray[modelIndex], shipName, faction, this);
-            //shipScript.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.enemyMaterial);
+            newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.enemyMaterial);
             return shipScript;
         }
     }

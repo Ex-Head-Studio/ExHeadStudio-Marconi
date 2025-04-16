@@ -11,6 +11,7 @@ GameObject:
   - component: {fileID: 3060470617468302632}
   - component: {fileID: 7145104563043181894}
   - component: {fileID: 3459094535404006477}
+  - component: {fileID: 8185301139086698051}
   m_Layer: 6
   m_Name: ShipManagerIter2
   m_TagString: Untagged
@@ -49,8 +50,8 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
+      - m_Target: {fileID: 8185301139086698051}
+        m_TargetAssemblyTypeName: ShipManager2, Assembly-CSharp
         m_MethodName: ChooseShips
         m_Mode: 1
         m_Arguments:
@@ -77,8 +78,8 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ShipManager, Assembly-CSharp
+      - m_Target: {fileID: 8185301139086698051}
+        m_TargetAssemblyTypeName: ShipManager2, Assembly-CSharp
         m_MethodName: RemoveShip
         m_Mode: 0
         m_Arguments:
@@ -89,3 +90,17 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &8185301139086698051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468267785584294830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921917491df30ff46a97d3dd719cf083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipManagerSO: {fileID: 11400000, guid: 0eb036cc5636c474fb97ed35452283f2, type: 2}
+  timeBeforeGeneration: 1

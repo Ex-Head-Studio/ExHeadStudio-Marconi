@@ -580,7 +580,7 @@ GameObject:
   - component: {fileID: 7093567064606927732}
   - component: {fileID: 3753439735822878364}
   - component: {fileID: 8275936499255003265}
-  - component: {fileID: 3895692876995684044}
+  - component: {fileID: 8145367800630121858}
   m_Layer: 0
   m_Name: Ship
   m_TagString: Untagged
@@ -700,7 +700,7 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!114 &3895692876995684044
+--- !u!114 &8145367800630121858
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -709,10 +709,9 @@ MonoBehaviour:
   m_GameObject: {fileID: 3762632695331897579}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e0d5b3e3d56fc4b85f986f7092e5d9, type: 3}
+  m_Script: {fileID: 11500000, guid: 2b97b21471ae90c42b4f043bf88a647c, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipMeshRenderers: []
 --- !u!1 &3968402913019941839
 GameObject:
   m_ObjectHideFlags: 0
@@ -942,9 +941,6 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2543398849260712460}
-  - component: {fileID: 6418796834375986826}
-  - component: {fileID: 3107409907676549077}
-  - component: {fileID: 2222173631782455242}
   - component: {fileID: 2958193819159021257}
   - component: {fileID: 6682893818373453967}
   - component: {fileID: 8568399702603861691}
@@ -953,7 +949,7 @@ GameObject:
   - component: {fileID: 1897717715020496788}
   - component: {fileID: 1705176554862433656}
   - component: {fileID: 7348712502363055009}
-  - component: {fileID: -2885583865651547858}
+  - component: {fileID: 420125419027255399}
   m_Layer: 6
   m_Name: AllyShip
   m_TagString: Untagged
@@ -976,69 +972,8 @@ Transform:
   m_Children:
   - {fileID: 8268395305956841252}
   - {fileID: 8766426908478536376}
-  - {fileID: 1597837523001409255}
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!114 &6418796834375986826
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4912451739719525359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 915cb9b51fdf28447b109893119c064d, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventToListen: {fileID: 11400000, guid: bbc7cca08e679134487cfec6f8259024, type: 2}
-  onEvent:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &3107409907676549077
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4912451739719525359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 47c25a1ccac73274184c28c66c4a916c, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventToListen: {fileID: 11400000, guid: 26523e0c8046a6148b981eb4b90557c5, type: 2}
-  onEvent:
-    m_PersistentCalls:
-      m_Calls: []
---- !u!114 &2222173631782455242
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4912451739719525359}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0d7ae00f6d766924c81bcce19459695f, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventToListen: {fileID: 11400000, guid: 0f63c89a9841f2b4eb35a359bdfcd2af, type: 2}
-  onEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: AllyShip, Assembly-CSharp
-        m_MethodName: ExecuteInstructions
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
 --- !u!114 &2958193819159021257
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -1095,18 +1030,6 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: ShipChildRemover, Assembly-CSharp
-        m_MethodName: RemoveShip
-        m_Mode: 1
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
       - m_Target: {fileID: 7348712502363055009}
         m_TargetAssemblyTypeName: DisplayHealth, Assembly-CSharp
         m_MethodName: UpdateHealthBar
@@ -1214,19 +1137,27 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   healthBarPrefab: {fileID: 5625949989435475814, guid: b55440878e3e5d6458df9eb2294425b5, type: 3}
   healthBarCanvasPrefab: {fileID: 3089387875595966818}
---- !u!114 &-2885583865651547858
-MonoBehaviour:
+--- !u!65 &420125419027255399
+BoxCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4912451739719525359}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
   m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 62e0d5b3e3d56fc4b85f986f7092e5d9, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  shipMeshRenderers: []
+  serializedVersion: 3
+  m_Size: {x: 8, y: 8, z: 4}
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &6906936414736378593
 GameObject:
   m_ObjectHideFlags: 0
@@ -1264,92 +1195,6 @@ RectTransform:
   m_AnchoredPosition: {x: 5.9200087, y: -0.0000019073486}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
---- !u!1 &7915292737477293526
-GameObject:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  serializedVersion: 6
-  m_Component:
-  - component: {fileID: 1597837523001409255}
-  - component: {fileID: 4944012808840088244}
-  - component: {fileID: 8105574099685916316}
-  m_Layer: 6
-  m_Name: TestObjForRoberto
-  m_TagString: Untagged
-  m_Icon: {fileID: 0}
-  m_NavMeshLayer: 0
-  m_StaticEditorFlags: 0
-  m_IsActive: 1
---- !u!4 &1597837523001409255
-Transform:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7915292737477293526}
-  serializedVersion: 2
-  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 1, y: 1, z: 1}
-  m_ConstrainProportionsScale: 0
-  m_Children: []
-  m_Father: {fileID: 2543398849260712460}
-  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
---- !u!23 &4944012808840088244
-MeshRenderer:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7915292737477293526}
-  m_Enabled: 1
-  m_CastShadows: 1
-  m_ReceiveShadows: 1
-  m_DynamicOccludee: 1
-  m_StaticShadowCaster: 0
-  m_MotionVectors: 1
-  m_LightProbeUsage: 1
-  m_ReflectionProbeUsage: 1
-  m_RayTracingMode: 2
-  m_RayTraceProcedural: 0
-  m_RayTracingAccelStructBuildFlagsOverride: 0
-  m_RayTracingAccelStructBuildFlags: 1
-  m_SmallMeshCulling: 1
-  m_RenderingLayerMask: 1
-  m_RendererPriority: 0
-  m_Materials:
-  - {fileID: 0}
-  m_StaticBatchInfo:
-    firstSubMesh: 0
-    subMeshCount: 0
-  m_StaticBatchRoot: {fileID: 0}
-  m_ProbeAnchor: {fileID: 0}
-  m_LightProbeVolumeOverride: {fileID: 0}
-  m_ScaleInLightmap: 1
-  m_ReceiveGI: 1
-  m_PreserveUVs: 0
-  m_IgnoreNormalsForChartDetection: 0
-  m_ImportantGI: 0
-  m_StitchLightmapSeams: 1
-  m_SelectedEditorRenderState: 3
-  m_MinimumChartSize: 4
-  m_AutoUVMaxDistance: 0.5
-  m_AutoUVMaxAngle: 89
-  m_LightmapParameters: {fileID: 0}
-  m_SortingLayerID: 0
-  m_SortingLayer: 0
-  m_SortingOrder: 0
-  m_AdditionalVertexStreams: {fileID: 0}
---- !u!33 &8105574099685916316
-MeshFilter:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 7915292737477293526}
-  m_Mesh: {fileID: 0}
 --- !u!1 &8895447020869910021
 GameObject:
   m_ObjectHideFlags: 0

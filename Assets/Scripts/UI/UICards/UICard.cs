@@ -3,8 +3,9 @@ using UnityEngine.EventSystems;
 using UnityEngine.UI;
 using System.Collections.Generic;   
 using System;
+using Unity.VisualScripting;
 
-public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, IPointerUpHandler, IDragHandler,IPointerEnterHandler, IPointerExitHandler
+public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, IPointerExitHandler//, IPointerDownHandler, IPointerUpHandler, IDragHandler,
 {
     //IMPORTANTE!! Per far funzionare lo script la camera deve avere un Raycaster3D!!!
     //Il prefab della carta è racchiuso in un wrapper, una empty a cui è associato il box collider
@@ -51,6 +52,8 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
 
     private bool drawGizmos;
 
+    private bool isCardSelected = false;
+
 
     private void Start()
     {
@@ -85,25 +88,43 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        cardSelectedEvent?.Invoke(cardScript);
+        if(eventData.pointerClick == this.gameObject)
+        {
+            cardSelectedEvent?.Invoke(cardScript);
+            isCardSelected = true;
+            transform.localScale = cardTransform.localScale * hoverScaleFactor;
+        }
+        else if(eventData.pointerClick != this.gameObject)
+        {   
+            Debug.Log("Carta deselezionata");
+            cardDeselectedEvent?.Invoke(cardScript);
+            isCardSelected = false;
+            transform.localScale = cardTransform.localScale / hoverScaleFactor;
+        }
     }
     public void OnPointerEnter(PointerEventData eventData)
     {
-        transform.localScale = cardTransform.localScale * hoverScaleFactor;
+        if(!isCardSelected)
+        {
+            transform.localScale = cardTransform.localScale * hoverScaleFactor;
+        }
     }
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        transform.localScale = cardTransform.localScale / hoverScaleFactor;
+        if(!isCardSelected)
+        {
+            transform.localScale = cardTransform.localScale / hoverScaleFactor;
+        }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
+    /*public void OnPointerDown(PointerEventData eventData)
     {
         startCardDragPosition = transform.position;
         transform.position = GetPointerPositionInWorldSpace();
-    }
+    }*/
 
-    public void OnPointerUp(PointerEventData eventData)
+    /*public void OnPointerUp(PointerEventData eventData)
     {
         cardDroppedEvent?.Invoke(cardScript);
         cardDeselectedEvent?.Invoke(cardScript);
@@ -130,9 +151,9 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
         cardCollider.enabled = true;
 
         transform.position = startCardDragPosition;
-    }
+    }*/
 
-    public void OnDrag(PointerEventData eventData)
+    /*public void OnDrag(PointerEventData eventData)
     {
         transform.position = GetPointerPositionInWorldSpace();
     }
@@ -154,7 +175,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerDownHandler, 
       
       Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePos);
       return objPos;
-    }
+    }*/
 
     #endregion
 

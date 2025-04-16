@@ -4,7 +4,8 @@ using UnityEngine;
 /// <summary>
 ///Classe astratta da cui derivano tutte le navi che possono interagire con le carte
 /// </summary>
-[RequireComponent(typeof(Collider))]
+//[RequireComponent(typeof(Collider))]
+
 
 public abstract class CardShipAbstract : MonoBehaviour
 {

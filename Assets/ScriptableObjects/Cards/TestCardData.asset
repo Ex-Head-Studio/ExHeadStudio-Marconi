@@ -12,8 +12,13 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: cfc6d05c17513294494b444943d35d9b, type: 3}
   m_Name: TestCardData
   m_EditorClassIdentifier: 
+  cardEntityType: 0
   cardImage: {fileID: 0}
   cardName: Drago Oscuro occhi rossi
   cardDescription: 
   cardCost: 0
+  lastingTurns: 1
   cardPrefab: {fileID: 2196661931175602968, guid: af2e3b03567b674428bd079487933a8a, type: 3}
+  cardEffects:
+  - {fileID: 11400000, guid: 6def7fb2e62af3447b8fb9010a15cee4, type: 2}
+  - {fileID: 11400000, guid: 3ef313e096f4846499937cdd6556dd57, type: 2}

@@ -57,6 +57,8 @@ public abstract class AShip : MonoBehaviour
         mapHeight=FindAnyObjectByType<GridManager>()._height;
         mapWidth=FindFirstObjectByType<GridManager>()._width;
 
+        GetComponent<OnShipAttackEventListener>().AddMethodToExecute(OnAttacked);
+
     }
 
     public abstract void ExecuteInstructions(AnswerStruct directives);

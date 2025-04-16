@@ -2,7 +2,12 @@ using UnityEngine;
 
 public class ShipChildRemover : MonoBehaviour
 {
-    [SerializeField] private AShip parentShipScript;
+    private AShip parentShipScript;
+
+    private void Start()
+    {
+        parentShipScript = GetComponentInParent<AShip>();
+    }
 
     public void RemoveShip()
     {

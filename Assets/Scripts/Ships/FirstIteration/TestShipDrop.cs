@@ -6,7 +6,7 @@ public class TestShipDrop : MonoBehaviour, Idroppable
     [SerializeField] private ObjectDropEvent dropEvent;
     [SerializeField] private AbstractObjectDataSO[] consumableObject;
 
-    private Ship ship;
+    private AShip ship;
     private int index = 0;
     private AbstractObjectDataSO tmpObjectDataSO;
     private ConsumableObjectData tmpConsumableObjectDataSO;
@@ -14,7 +14,7 @@ public class TestShipDrop : MonoBehaviour, Idroppable
 
     private void Start()
     {
-        ship = GetComponent<Ship>();
+        ship = GetComponent<AShip>();
     }
 
     //questo metodo preferisco lasciarlo separato dalla logica della nave
