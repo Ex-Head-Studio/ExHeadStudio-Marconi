@@ -15,8 +15,6 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
     //per vedere le liste in inspector, usare la modalità di debug
 
-    private List<Move> allyMoves;
-    private List<Move> enemyMoves;
     public InfluenceMap influenceMap;
 
 
@@ -112,12 +110,15 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
 
     //TODO commentare questa funzione, non è chiaro il suo scopo; Viene chiamata in risposta all'evento di inizio turno
+    //La funzione viene chiamata per dire alle navi di calcolare le loro azioni, fatto questo, le navi poi potranno eseguire la loro azione migliore
+    //una volta che il turno verrà effettuato.
     public void ChooseShips()
     {
         enemies.ForEach(e => {e.LookForAttacks(); e.LookForMovement(); });   
     }
 
     //TODO commentare questa funzione, non è chiaro il suo scopo
+    //Finito il turno, aggiorna la influence map con le nuove posizioni delle navi, così i calcoli nei turni successivi sono corretti
     public void EndTurn()
     {
         influenceMap.Propagate();
@@ -131,20 +132,25 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     /// </summary>
     public void RemoveShip(ShipDestroyedStruct shipDestroyedStruct)
     {
-        if(shipDestroyedStruct.entity == (int)Entity.ally)
-        {
-            allies.Remove(shipsD[shipDestroyedStruct.shipName]);
+        if(shipsD.ContainsKey(shipDestroyedStruct.shipName)){
+            if(shipDestroyedStruct.entity == (int)Entity.ally )
+            {
+                allies.Remove(shipsD[shipDestroyedStruct.shipName]);
+                allyCount--;
+            }
+            else if(shipDestroyedStruct.entity == (int)Entity.enemy && shipsD.ContainsKey(shipDestroyedStruct.shipName))
+            {
+                enemies.Remove(shipsD[shipDestroyedStruct.shipName]);
+                enemyCount--; 
+            }
+        
+            
+            influenceMap.UnregisterPropagator(shipDestroyedStruct.shipScript);
+            influenceMap.Propagate();
+        
+            shipsD.Remove(shipDestroyedStruct.shipName);
+            Destroy(shipDestroyedStruct.shipScript.gameObject);
         }
-        else
-        {
-            enemies.Remove(shipsD[shipDestroyedStruct.shipName]);
-        }
-
-        influenceMap.UnregisterPropagator(shipDestroyedStruct.shipScript);
-        influenceMap.Propagate();
-    
-        shipsD.Remove(shipDestroyedStruct.shipName);
-        Destroy(shipDestroyedStruct.shipScript.gameObject);
     }
 
 

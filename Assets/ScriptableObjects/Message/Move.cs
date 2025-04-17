@@ -2,21 +2,25 @@ using UnityEngine;
 
 public class Move 
 {
-   
+   int idMove;
    string shipName;
    Vector2Int targetPos;
    public float value;
    MessageType messageType;
 
-   public Move( string shipName, Vector2Int targetPos, MessageType messageType, float value)
+   public Move(int idMove, string shipName, Vector2Int targetPos, MessageType messageType, float value)
    {
-     
+        this.idMove = idMove;
         this.shipName = shipName;
         this.targetPos = targetPos;
         this.messageType = messageType;
         this.value=value;
    }
    
+   public int GetIdMove()
+   {
+       return idMove;
+   }
    public string GetShipName(){
      return shipName;
    }

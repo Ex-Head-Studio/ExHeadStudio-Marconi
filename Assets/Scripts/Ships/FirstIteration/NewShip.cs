@@ -21,7 +21,7 @@ public class NewShip : AShip
         }
         possibleMoves=possibleMoves.Where(x=> x.x>=0 && x.x<mapWidth && x.y>=0 && x.y<mapHeight && x!=position).Distinct().ToList(); 
         foreach(Vector2Int move in possibleMoves){
-            Move newMove=new Move(moveId++, shipName, move, MessageType.movement, manager.InfluenceMap.CalculateMoveValue(move.x, move.y, shipSO.movementRange, shipSO.attackRange));
+            Move newMove=new Move(moveId++, shipName, move, MessageType.movement, manager.InfluenceMap.CalculateMoveValue(move.x, move.y));
             bestMoves.Add(newMove);
             Debug.Log("Nave "+shipName+" muove in "+newMove.GetTargetPos()+" con value: "+newMove.value);
         }
