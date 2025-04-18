@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
 public enum TileType 
 {
@@ -11,8 +12,15 @@ public enum TileType
     Enemy
 }
 
-public class Tile : MonoBehaviour 
+public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
 {
+    public enum Entity 
+    {
+        ally = 0,
+        enemy = 1,
+        empty = 2
+    } 
+
     [SerializeField] private Color _baseColor, _offsetColor, _allyColor, _enemyColor, _emptyColor;
     [SerializeField] private Material _allyMaterial, _enemyMaterial;
     [SerializeField] private MeshRenderer _mesh;
@@ -36,6 +44,10 @@ public class Tile : MonoBehaviour
     public GameObject tileShip;
    
 
+    [Header("Interaction")]
+    [SerializeField] private GameObject interactionSignal;
+    [SerializeField] bool isInteractable = false;
+
     // [SerializeField] private bool _isPlaceable;
 
     // public BaseShip OccupiedShip;
@@ -43,6 +55,7 @@ public class Tile : MonoBehaviour
 
     void Awake() 
     {
+        interactionSignal.SetActive(false);
         /* 
         int gridWidth = _gridManager._width;
         int gridHeight = _gridManager._height;
@@ -78,31 +91,68 @@ public class Tile : MonoBehaviour
     //     if (Input.GetMouseButtonUpAsButton(0)) if (_type != TileType.Empty) GridManager.Instance.SwapTileTypes(this);
     // }
 
+    #region Gestione della selezione della tile
 
-    //di tutta questa parte dobbiamo capire cosa serve e cosa no (stefano)
-    //Edit: commento le funzioni di hover sulle tiles per non far capire che sono interagibili (stefano)
-    /*void OnMouseEnter() 
+    [ContextMenu("Set Tyle Interactable" )]
+    //Questa funzione è per il debug, per vedere se la tile è interagibile o meno
+    private void SetTileInteractableEditor() 
     {
-        _highlight.SetActive(true);
+        SetTileInteractable(true);
+    }
 
-        if (_isRightClicking) {
-            SelectTile();
+
+    public void SetTileInteractable(bool interactable = true) 
+    {
+        isInteractable = interactable;
+        if(interactable) 
+        {
+            interactionSignal.SetActive(interactable);
+        } 
+        else 
+        {
+            interactionSignal.SetActive(interactable);
+        }
+
+    }
+
+
+    void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData) 
+    {
+        if(isInteractable)
+        {
+            //Debug.Log("Mouse entered tile: " + gameObject.name);
+            _highlight.SetActive(true);
+        }
+
+    }
+
+    void IPointerExitHandler.OnPointerExit(PointerEventData eventData) 
+    {
+        if(isInteractable)
+        {
+            //Debug.Log("Mouse exited tile: " + gameObject.name);
+            _highlight.SetActive(false);
         }
     }
 
-    void OnMouseExit() {
-        _highlight.SetActive(false);
+    void IPointerClickHandler.OnPointerClick(PointerEventData eventData) 
+    {
+        Debug.Log("Mouse clicked tile: " + gameObject.name);
+        //La tile comunica con un evento che è stata selezionata, lo riceverà una nave
     }
+    
 
-    void OnMouseUpAsButton() {
+    #endregion
+
+    /*void OnMouseUpAsButton() {
 		if (Input.GetMouseButtonUp(0))
 		{
 			if (_type != TileType.Empty) _gridManager.SwapTileTypes(this);
 			return;
 		}
-    }
+    }*/
 
-    void OnMouseOver() {
+    /*void OnMouseOver() {
         
         if (Input.GetMouseButtonDown(1)) {
             Debug.Log("cazzi");

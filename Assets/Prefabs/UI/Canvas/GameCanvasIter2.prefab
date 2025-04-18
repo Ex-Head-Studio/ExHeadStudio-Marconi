@@ -2203,10 +2203,10 @@ GameObject:
   - component: {fileID: 8300354228616240268}
   - component: {fileID: 5874645157704977028}
   - component: {fileID: 4286708013915338917}
-  - component: {fileID: 8046609692421654266}
   - component: {fileID: 4268942967114299792}
   - component: {fileID: 8414528480070898854}
   - component: {fileID: 5068596875613623331}
+  - component: {fileID: 5366286873133151610}
   m_Layer: 5
   m_Name: EndTurnButton
   m_TagString: Untagged
@@ -2317,8 +2317,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8046609692421654266}
-        m_TargetAssemblyTypeName: EndTurnButton, Assembly-CSharp
+      - m_Target: {fileID: 5366286873133151610}
+        m_TargetAssemblyTypeName: EndTurnButton2, Assembly-CSharp
         m_MethodName: EndTurn
         m_Mode: 1
         m_Arguments:
@@ -2329,22 +2329,6 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8046609692421654266
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 3943451576374062813}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 2fa985c55d5aeef45a01dd269dd65abf, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  endedTurnEvent: {fileID: 11400000, guid: bbc7cca08e679134487cfec6f8259024, type: 2}
-  answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}
-  executeAnimator: {fileID: 5068596875613623331}
-  materialButton: {fileID: 2100000, guid: 9bbe4dc80ed783342afc4cde15ea3f3f, type: 2}
 --- !u!114 &4268942967114299792
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2400,6 +2384,21 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
+--- !u!114 &5366286873133151610
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3943451576374062813}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 916b717d6fa705f4ba1cf1669f40ee80, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  endedTurnEvent: {fileID: 11400000, guid: bbc7cca08e679134487cfec6f8259024, type: 2}
+  executeAnimator: {fileID: 5068596875613623331}
+  materialButton: {fileID: 2100000, guid: 9bbe4dc80ed783342afc4cde15ea3f3f, type: 2}
 --- !u!1 &4127788682986800355
 GameObject:
   m_ObjectHideFlags: 0

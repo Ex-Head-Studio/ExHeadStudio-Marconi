@@ -6,13 +6,12 @@ using UnityEngine.UI;
 
 public abstract class AbstractCard : MonoBehaviour
 {
-    [SerializeField] private BaseCardData cardData;
+    
+    [Header("Card Data SO")]
+    private BaseCardData cardData;
 
-    private void Start()
-    {
-        gameObject.name = cardData.cardName;
-    }   
-
+    [Multiline(2)]
+    private string cardDataName = "";
 
     //Getters
 
@@ -40,5 +39,16 @@ public abstract class AbstractCard : MonoBehaviour
     public int GetCardEntity()
     {
         return (int)cardData.cardEntityType;
+    }
+
+    public void SetCardData(BaseCardData cardDataSO)
+    {
+        cardData = cardDataSO;
+        cardDataName = cardDataSO.cardName;
+    }
+
+    public bool isWolrdInteractive()
+    {
+        return cardData.isWorldInteractive;
     }
 }

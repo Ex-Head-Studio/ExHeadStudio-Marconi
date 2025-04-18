@@ -1,15 +1,29 @@
 using UnityEngine;
 
+    public struct EffectStruct
+    {
+        public AbstractCard card;
+        public GameObject obj;
+        
+
+        public EffectStruct(AbstractCard card = null, GameObject obj = null)
+        {
+            this.card = card;
+            this.obj = obj;
+        }
+    }
+
 
 public abstract class AbstractEffectSO : ScriptableObject
 {
+
+
     /// <summary>
     /// La funzione definisce l'effetto della carta.
     /// @note: Questa funzione deve essere implementata nelle classi derivate.
-    /// @param name="card">La carta a cui è associato l'effetto.</param>
-    /// @param name="obj">L'oggetto a cui si applica l'effetto.</param>
+    /// @param name="effectStruct"> La classe wrapper che contiene i parametri necessari all'effetto.</param>
     /// </summary>
-    public virtual void PerformEffect(AbstractCard card, GameObject obj)
+    public virtual void PerformEffect(EffectStruct effectStruct)
     {
         // Implementazione di default vuota, può essere sovrascritta dalle classi derivate
     }

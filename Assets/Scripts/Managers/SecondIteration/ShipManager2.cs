@@ -82,6 +82,10 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     ///  Instantiates an ally ship and adds it to the dictionary of shipsD.
     /// </summary>
     /// <param name="shipName"></param>
+    /// 
+    
+
+    //Possiamo invocare questo metodo da parte di una carta supporto
     public void InstantiateAllyShip(string shipName, int faction)
     {
         AShip newShip = SetupShip(shipName, faction);

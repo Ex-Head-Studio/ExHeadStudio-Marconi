@@ -24,6 +24,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     public static event Action<AbstractCard> cardDroppedEvent;
     public static event Action<AbstractCard> cardSelectedEvent;
     public static event Action<AbstractCard> cardDeselectedEvent;
+    public static event Action<GameObject> cardUsedEvent;
 
     private AbstractCard cardScript;
 
@@ -59,8 +60,6 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     {
         cardTransform = GetComponent<Transform>();
         drawGizmos = true;
-        cardScript = GetComponent<AbstractCard>();
-        SetupUICard(cardScript);
 
         //molto importante, non modificare, evita che le navi debbano avere un rigidbody
         cardCollider.providesContacts = true;
@@ -84,7 +83,9 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     }
 
 
-    #region Gestione del Drang&Drop
+    #region Gestione del Drang&Drop e della selezione
+
+    //Qui c'è un bug, non riesce a deselezionare correttamente
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
@@ -118,42 +119,52 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
         }
     }
 
-    /*public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
-        startCardDragPosition = transform.position;
-        transform.position = GetPointerPositionInWorldSpace();
-    }*/
-
-    /*public void OnPointerUp(PointerEventData eventData)
-    {
-        cardDroppedEvent?.Invoke(cardScript);
-        cardDeselectedEvent?.Invoke(cardScript);
-
-        int i = 0;
-
-        //Verificare la riga successiva -> è corretta, non serve modifcarla
-        cardCollider.enabled = false;
-        Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, collisionMask);
-        while (i < hitColliders.Length)
+        if(cardScript.isWolrdInteractive())
         {
-            if (hitColliders[i] != null && hitColliders[i].TryGetComponent<ICardDropArea>(out ICardDropArea dropArea))
-            {
-                dropArea.CardDrop(cardScript);
-                //prima di distruggere la carta, bisogna anche eliminarla dalla lista delle carte in mano al giocatore
-                Destroy(gameObject);
-            }
-            else
-            {
-                transform.position = startCardDragPosition;
-            }
-            i++;
+            startCardDragPosition = transform.position;
+            transform.position = GetPointerPositionInWorldSpace();
         }
-        cardCollider.enabled = true;
+        else
+        {
+            return;
+        }
 
-        transform.position = startCardDragPosition;
-    }*/
+    }
 
-    /*public void OnDrag(PointerEventData eventData)
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if(cardScript.isWolrdInteractive())
+        {
+            int i = 0;
+
+            cardCollider.enabled = false;
+            Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, collisionMask);
+            while (i < hitColliders.Length)
+            {
+                if (hitColliders[i] != null && hitColliders[i].TryGetComponent<ICardDropArea>(out ICardDropArea dropArea))
+                {
+                    dropArea.CardDrop(cardScript);
+
+                    cardDroppedEvent?.Invoke(cardScript);
+                    
+                    cardUsedEvent?.Invoke(gameObject);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    transform.position = startCardDragPosition;
+                }
+                i++;
+            }
+            cardCollider.enabled = true;
+
+            transform.position = startCardDragPosition;
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
     {
         transform.position = GetPointerPositionInWorldSpace();
     }
@@ -175,7 +186,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
       
       Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePos);
       return objPos;
-    }*/
+    }
 
     #endregion
 

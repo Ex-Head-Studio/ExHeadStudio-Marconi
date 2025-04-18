@@ -4,9 +4,8 @@ using DG.Tweening;
 using UnityEngine.EventSystems;
 
 //[RequireComponent(typeof(AllyShip))]
-public class CardAllyShip : CardShipAbstract, ICardDropArea, IShipSelectable, IPointerClickHandler
+public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandler
 {
-
     private AllyShip allyShip;
     private AbstractCard cardToUse;
 
@@ -30,7 +29,7 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IShipSelectable, IP
             foreach (AbstractEffectSO effect in card.GetCardEffects())
             {
                 Debug.Log("L'effetto" + effect.name + "è stato applicato correttamente.");
-                effect.PerformEffect(card, this.gameObject);
+                effect.PerformEffect(new EffectStruct(card, this.gameObject));
             }
         }
 
@@ -52,12 +51,12 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IShipSelectable, IP
                 foreach (AbstractEffectSO effect in cardToUse.GetCardEffects())
                 {
                     Debug.Log("L'effetto" + effect.name + "è stato applicato correttamente.");
-                    effect.PerformEffect(cardToUse, this.gameObject);
+                    effect.PerformEffect(new EffectStruct(cardToUse, this.gameObject));
                 }
         }
     }
 
-    public void OnShipSelected(PointerEventData pointerEventData)
+    /*public void OnShipSelected(PointerEventData pointerEventData)
     {
 
         if(isShipSelectable)
@@ -75,7 +74,7 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IShipSelectable, IP
                     effect.PerformEffect(cardToUse, this.gameObject);
                 }
         }
-    }
+    }*/
 
     protected override void OnCardDropped(AbstractCard card)
     {
@@ -89,10 +88,9 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IShipSelectable, IP
         {
             //animazione che risponde se la carta è selezionata funziona sugli alleati
             transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+            cardToUse = card;
+            isShipSelectable = true;
         }
-
-        cardToUse = card;
-        isShipSelectable = true;
     }
 
     protected override void OnCardDeselected(AbstractCard card)
@@ -102,4 +100,6 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IShipSelectable, IP
 
         isShipSelectable = false;
     }
+
+     //qui inserisco i metodi di riposta agli effetti, con le differenze dovute
 }

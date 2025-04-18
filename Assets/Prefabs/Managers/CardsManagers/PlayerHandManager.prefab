@@ -10,6 +10,7 @@ GameObject:
   m_Component:
   - component: {fileID: 3456255958661744799}
   - component: {fileID: 3931047326382954386}
+  - component: {fileID: 1905047583949069041}
   m_Layer: 0
   m_Name: PlayerHandManager
   m_TagString: Untagged
@@ -47,9 +48,37 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   cardPrefab: {fileID: 2196661931175602968, guid: af2e3b03567b674428bd079487933a8a, type: 3}
-  maxCardsInHand: 5
   splineContainer: {fileID: 1034751151907221147}
   spawnPoint: {fileID: 7843691294095575842}
+  maxCardsInHand: 7
+--- !u!114 &1905047583949069041
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489519457135971022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 915cb9b51fdf28447b109893119c064d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: bbc7cca08e679134487cfec6f8259024, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3931047326382954386}
+        m_TargetAssemblyTypeName: PlayerHandManagerScript, Assembly-CSharp
+        m_MethodName: DestroyPlayerHand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &3106809393108989922
 GameObject:
   m_ObjectHideFlags: 0
@@ -75,7 +104,7 @@ Transform:
   m_GameObject: {fileID: 3106809393108989922}
   serializedVersion: 2
   m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 8, z: 9}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -107,7 +136,7 @@ Transform:
   m_GameObject: {fileID: 7452117534153061058}
   serializedVersion: 2
   m_LocalRotation: {x: -0, y: -0, z: -0, w: 1}
-  m_LocalPosition: {x: 0, y: 0, z: 0}
+  m_LocalPosition: {x: 0, y: 0.00000047683716, z: 3.0000005}
   m_LocalScale: {x: 1, y: 1, z: 1}
   m_ConstrainProportionsScale: 0
   m_Children: []
@@ -148,21 +177,21 @@ MonoBehaviour:
       TangentIn:
         x: -0
         y: -0
-        z: -0.9486833
+        z: -0.6480741
       TangentOut:
         x: 0
         y: 0
-        z: 0.9486833
+        z: 0.6480741
       Rotation:
         value:
-          x: 0.15879163
-          y: 0.2305389
-          z: 0.6890465
-          w: 0.6684698
+          x: 0.24750765
+          y: 0.3607399
+          z: 0.64427453
+          w: 0.6273093
     - Position:
         x: 0
         y: -4
-        z: 8
+        z: 4
       TangentIn:
         x: 0
         y: 0
@@ -173,10 +202,10 @@ MonoBehaviour:
         z: 1.6312671
       Rotation:
         value:
-          x: 0.49432802
-          y: 0.48970404
-          z: 0.50560844
-          w: 0.5100881
+          x: 0.494328
+          y: 0.48970413
+          z: 0.5056085
+          w: 0.510088
     - Position:
         x: 5
         y: -5
@@ -184,21 +213,41 @@ MonoBehaviour:
       TangentIn:
         x: -0
         y: -0
-        z: -0.8660254
+        z: -0.0014439056
       TangentOut:
         x: 0
         y: 0
-        z: 0.8660254
+        z: 0.00000061298425
       Rotation:
         value:
-          x: 0.68472725
-          y: 0.659768
-          z: 0.1764894
-          w: 0.25437438
+          x: 0.84789497
+          y: 0.4441583
+          z: 0.28574422
+          w: 0.046343107
+    - Position:
+        x: 5
+        y: -4.9999995
+        z: 0.99999905
+      TangentIn:
+        x: -0
+        y: -0
+        z: -0.00000010662403
+      TangentOut:
+        x: 0
+        y: 0
+        z: 0.00000010662403
+      Rotation:
+        value:
+          x: 0.8535737
+          y: 0.4675741
+          z: 0.110379264
+          w: -0.20150141
     m_MetaData:
     - Mode: 0
       Tension: 0.5
     - Mode: 2
+      Tension: 0.5
+    - Mode: 0
       Tension: 0.5
     - Mode: 0
       Tension: 0.5
@@ -212,4 +261,9 @@ MonoBehaviour:
     m_ObjectData:
       m_Data: []
   m_Knots:
-    m_KnotsLink: []
+    m_KnotsLink:
+    - Knots:
+      - Spline: 0
+        Knot: 2
+      - Spline: 0
+        Knot: 3

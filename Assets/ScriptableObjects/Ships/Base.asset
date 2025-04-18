@@ -1,0 +1,31 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 76197b39508ec9b49b2f36c36decb8fb, type: 3}
+  m_Name: Base
+  m_EditorClassIdentifier: 
+  movementRange: 1
+  attackRange: 1
+  attackPower: 1
+  health: 2
+  statNames:
+  - Movement Range
+  - Attack Range
+  - Attack Power
+  - Health
+  messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
+  shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
+  attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
+  shipAnimatorController: {fileID: 9100000, guid: aeb74e1e009911544a03f9cef7127a99, type: 2}
+  shipInfluence: 0
+  shipModelPrefab: {fileID: 4912451739719525359, guid: a4722112e218a7a45934fb6510052f6e, type: 3}
+  shipClassModel: {fileID: 8019734259390328717, guid: a2e216409814ffb45867202eca54abbb, type: 3}
+  shipModelMesh: {fileID: 8019734259390328717, guid: a2e216409814ffb45867202eca54abbb, type: 3}

@@ -38,6 +38,8 @@ public abstract class CardShipAbstract : MonoBehaviour
         // Implementazione di default vuota, può essere sovrascritta dalle classi derivate
     }
 
+
+    //qui inserisco i metodi di riposta agli effetti, con le differenze dovute
 }
 
 
