@@ -35,6 +35,7 @@ public class AllyShip : AShip
                 {
                     Vector2Int pos = new Vector2Int(x, position.y);
                     Move move = new Move(moveId++, shipName, pos, MessageType.movement, 0);
+                    if(move != null)
                     shipMoves.Add(move);
                 }
             }
