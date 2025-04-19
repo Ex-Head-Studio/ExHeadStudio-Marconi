@@ -52,6 +52,8 @@ public abstract class AShip : MonoBehaviour
 
     void Awake()
     {
+
+        shipMoves = new List<Move>();
         //TODO come detto in altri script, questa cosa va sistemata facendo un singleton corretto
         gridManager= FindFirstObjectByType<GridManager>();
         mapHeight=FindAnyObjectByType<GridManager>()._height;

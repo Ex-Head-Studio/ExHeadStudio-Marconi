@@ -460,8 +460,12 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: hasDrawingCost
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
       propertyPath: cardsInDeck.Array.size
-      value: 3
+      value: 4
       objectReference: {fileID: 0}
     - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
       propertyPath: cardsInDeck.Array.data[1].cardData
@@ -478,6 +482,14 @@ PrefabInstance:
     - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
       propertyPath: cardsInDeck.Array.data[2].quantity
       value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[3].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: a559adef3444b4846a1b03f349cbf10e, type: 2}
+    - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[3].quantity
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 5694385318561605748, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
       propertyPath: m_text
@@ -1372,6 +1384,14 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4014272842064681068, guid: 0732f07ab07589548bb7e2f204a871a0, type: 3}
+      propertyPath: cardsInDeck.Array.size
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4014272842064681068, guid: 0732f07ab07589548bb7e2f204a871a0, type: 3}
+      propertyPath: cardsInDeck.Array.data[0].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: a559adef3444b4846a1b03f349cbf10e, type: 2}
     - target: {fileID: 4143346970671668842, guid: 0732f07ab07589548bb7e2f204a871a0, type: 3}
       propertyPath: m_text
       value: Spy Deck

@@ -48,6 +48,9 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     [SerializeField] private GameObject interactionSignal;
     [SerializeField] bool isInteractable = false;
 
+    public static event Action<Tile> tileSelected;
+
+
     // [SerializeField] private bool _isPlaceable;
 
     // public BaseShip OccupiedShip;
@@ -138,6 +141,10 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) 
     {
         Debug.Log("Mouse clicked tile: " + gameObject.name);
+        if(isInteractable)
+        {
+            tileSelected?.Invoke(this);
+        }
         //La tile comunica con un evento che è stata selezionata, lo riceverà una nave
     }
     

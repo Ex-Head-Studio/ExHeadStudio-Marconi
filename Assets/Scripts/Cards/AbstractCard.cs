@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
@@ -6,12 +7,18 @@ using UnityEngine.UI;
 
 public abstract class AbstractCard : MonoBehaviour
 {
-    
+    public static event Action<AbstractCard> abstractCardUsed;
+
     [Header("Card Data SO")]
     private BaseCardData cardData;
 
     [Multiline(2)]
     private string cardDataName = "";
+
+    public void InvokeCardUsed(AbstractCard cardUsed)
+    {
+        abstractCardUsed?.Invoke(cardUsed);
+    }
 
     //Getters
 

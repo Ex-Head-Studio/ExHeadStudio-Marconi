@@ -6,6 +6,7 @@ using UnityEngine;
 using UnityEngine.Splines;
 using UnityEngine.UI;
 using System.Collections;
+using Unity.VisualScripting;
 
 [RequireComponent(typeof(EndedTurnEventListener))]
 public class PlayerHandManagerScript : MonoBehaviour
@@ -25,15 +26,15 @@ public class PlayerHandManagerScript : MonoBehaviour
     private void OnEnable()
     {
         DeckManager.cardDrawed += DrawCard;
-
+        AbstractCard.abstractCardUsed += OnCardUsed;
         UICard.cardUsedEvent += OnCardUsed;
 
-        //cardUsed
     }
 
     private void OnDisable()
     {
         DeckManager.cardDrawed -= DrawCard;
+        AbstractCard.abstractCardUsed -= OnCardUsed;
         UICard.cardUsedEvent -= OnCardUsed;
 
         //cardUsed
@@ -70,6 +71,13 @@ public class PlayerHandManagerScript : MonoBehaviour
     {
         Destroy(cardUsed);
         cardsInHand.Remove(cardUsed);
+        UpdateCardPosition();
+    }
+
+    private void OnCardUsed(AbstractCard cardUsed)
+    {
+        Destroy(cardUsed.gameObject);
+        cardsInHand.Remove(cardUsed.gameObject);
         UpdateCardPosition();
     }
 

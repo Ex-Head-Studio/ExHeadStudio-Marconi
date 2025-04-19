@@ -56,6 +56,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     private bool isCardSelected = false;
 
 
+
     private void Start()
     {
         cardTransform = GetComponent<Transform>();

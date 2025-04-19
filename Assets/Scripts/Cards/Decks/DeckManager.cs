@@ -46,7 +46,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     [SerializeField] private List<CardForDeck> cardsInDeck;
 
     [Header("Deck Parameters")]
-    [SerializeField] private float drawTime = 0.5f;
+    [SerializeField] private float drawTime = 0.1f;
     //[Header("DeckDraw Object")]
     //[SerializeField] private TMP_Text deckCostIcon;
 

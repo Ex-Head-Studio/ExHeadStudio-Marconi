@@ -6,6 +6,16 @@ using System.Linq;
 public class AllyShip : AShip
 {
     int moveId = 0;
+
+    private void OnEnable()
+    {
+        Tile.tileSelected += ReceiveTile;
+    }
+
+    private void OnDisable()
+    {
+        Tile.tileSelected -= ReceiveTile;
+    }
     public override void ExecuteInstructions(AnswerStruct directives)
     {
         
@@ -13,6 +23,7 @@ public class AllyShip : AShip
 
     //Le funzioni che seguono servono per dare al giocatore la possibilità di scegliere solo azioni consentite
     //e non tutte le azioni possibili, come nel caso delle navi nemiche
+    [ContextMenu("LookForMovement")]
     public override bool LookForMovement()
     {
         canMove=false;
@@ -40,10 +51,15 @@ public class AllyShip : AShip
                 }
             }
         }
+
         //Se le carte permettono giusto di muoversi e poi il player decide dove, questa lista gli farà vedere solo dove potrà spostarsi.
         shipMoves = shipMoves.Where(x => gridManager.GetTileAtPosition(x.GetTargetPos())._type == TileType.Empty).ToList();
         if(shipMoves.Count > 0)
         {
+            foreach(Move move in shipMoves)
+            {
+                gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileInteractable(true);
+            }
             canMove = true;
         }
         return canMove;
@@ -95,6 +111,11 @@ public class AllyShip : AShip
     public override void SendMessage(Move move)
     {
         throw new System.NotImplementedException();
+    }
+
+    public void ReceiveTile(Tile tile)
+    {
+       
     }
 
     public void PerformAttack()
