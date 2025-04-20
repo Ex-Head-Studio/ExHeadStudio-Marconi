@@ -12,6 +12,9 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
     private AbstractCard cardToUse;
 
     private bool isShipSelectable = false;
+
+    //questo bool permette alla nave di riconoscere se è selezionata o meno, per evitare di selezionarla più volte
+    //e serve anche a riconoscere l'ascoltatore degli eventi
     private bool isShipSelected = false;
 
     private void Start()

@@ -10,7 +10,7 @@ PrefabInstance:
     m_Modifications:
     - target: {fileID: 547740546878312068, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: m_Name
-      value: SingleDeckManager Variant
+      value: CommandDeck Variant
       objectReference: {fileID: 0}
     - target: {fileID: 6044673805502603212, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: m_LocalPosition.x
@@ -50,6 +50,14 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 6044673805502603212, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8511230033672173309, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: deckTypeEnum
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 8511230033672173309, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: hasDrawingCost
       value: 0
       objectReference: {fileID: 0}
     m_RemovedComponents: []

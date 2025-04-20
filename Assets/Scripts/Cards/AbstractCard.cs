@@ -12,12 +12,29 @@ public abstract class AbstractCard : MonoBehaviour
     [Header("Card Data SO")]
     private BaseCardData cardData;
 
+    [Header("Energy Event")]
+    private EnergyUsedEvent energyUsedEvent;
+    private EnergySystem energySystem;
+
+
     [Multiline(2)]
     private string cardDataName = "";
+
+
+    private void Start()
+    {
+        if(cardData.isWorldInteractive)
+        {
+            gameObject.AddComponent<UICardDragNDropHandler>();
+            UICardDragNDropHandler cardDragNDropHandler = GetComponent<UICardDragNDropHandler>();
+            cardDragNDropHandler.SetEnergySystem(energySystem);
+        }
+    }
 
     public void InvokeCardUsed(AbstractCard cardUsed)
     {
         abstractCardUsed?.Invoke(cardUsed);
+        energyUsedEvent?.Invoke(cardData.cardCost);
     }
 
     //Getters
@@ -57,5 +74,15 @@ public abstract class AbstractCard : MonoBehaviour
     public bool isWolrdInteractive()
     {
         return cardData.isWorldInteractive;
+    }
+
+    public EnergySystem GetEnergySystem()
+    {
+        return energySystem;
+    }
+
+    public EnergyUsedEvent GetEnergyEvent()
+    {
+        return energyUsedEvent;
     }
 }

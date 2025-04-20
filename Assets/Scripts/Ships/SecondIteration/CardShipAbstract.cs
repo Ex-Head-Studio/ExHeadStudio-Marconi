@@ -11,14 +11,14 @@ public abstract class CardShipAbstract : MonoBehaviour
 {
     private void OnEnable()
     {
-        UICard.cardDroppedEvent += OnCardDropped;
+        UICardDragNDropHandler.cardDroppedEvent += OnCardDropped;
         UICard.cardSelectedEvent += OnCardSelected;
         UICard.cardDeselectedEvent += OnCardDeselected;
     }
 
     private void OnDisable()
     {
-        UICard.cardDroppedEvent -= OnCardDropped;
+        UICardDragNDropHandler.cardDroppedEvent -= OnCardDropped;
         UICard.cardSelectedEvent -= OnCardSelected;
         UICard.cardDeselectedEvent -= OnCardDeselected;
     }

@@ -19,6 +19,9 @@ MonoBehaviour:
   cardDescription: One of your ships can move
   cardCost: 0
   isWorldInteractive: 0
+  dragLayerMask:
+    serializedVersion: 2
+    m_Bits: 4294967295
   lastingTurns: 1
   cardEffects:
   - {fileID: 11400000, guid: 28b8616b3abb1764ca631b441e19f5ae, type: 2}

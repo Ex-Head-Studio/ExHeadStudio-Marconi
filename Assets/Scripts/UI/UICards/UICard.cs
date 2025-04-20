@@ -4,6 +4,8 @@ using UnityEngine.UI;
 using System.Collections.Generic;   
 using System;
 using Unity.VisualScripting;
+using DG.Tweening;
+using TMPro;
 
 public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, IPointerExitHandler//, IPointerDownHandler, IPointerUpHandler, IDragHandler,
 {
@@ -21,10 +23,9 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
 
     //TODO valutare se conviene scrivere un event channel
-    public static event Action<AbstractCard> cardDroppedEvent;
+
     public static event Action<AbstractCard> cardSelectedEvent;
     public static event Action<AbstractCard> cardDeselectedEvent;
-    public static event Action<GameObject> cardUsedEvent;
 
     private AbstractCard cardScript;
 
@@ -41,15 +42,15 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     [Tooltip("Fattore che aumenta la scale dell'oggetto quando si va in hover")]
     [SerializeField] private float hoverScaleFactor = 1.1f;
 
-    [Tooltip("Associare il collider che possiede la empty-parent")]
-    [SerializeField] private Collider cardCollider;
+    [Header("Visual References")]
+    [SerializeField] private TMP_Text nameText;
+    [SerializeField] private TMP_Text costText;
 
-    [Header("Parametri di Drag&Drop")]
-    [SerializeField] private LayerMask collisionMask;
 
-    private Vector3 startCardDragPosition;
 
-    private Vector3 mousePos;
+    [Header("Events")]
+    [SerializeField] private EnergyUsedEvent energyUsedEvent;
+    [SerializeField] private EnergySystem energySystem;
 
     private bool drawGizmos;
 
@@ -61,9 +62,6 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     {
         cardTransform = GetComponent<Transform>();
         drawGizmos = true;
-
-        //molto importante, non modificare, evita che le navi debbano avere un rigidbody
-        cardCollider.providesContacts = true;
     }
 
     public void SetupUICard(AbstractCard card)
@@ -72,6 +70,9 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
         cardImage = GetComponent<Image>();
         cardName = cardScript.GetCardName();
         gameObject.name = cardName;
+
+        nameText.text = cardName;
+        costText.text = "Cost:" + cardScript.GetCardCost().ToString();
         
         cardDescription = cardScript.GetCardDescription();
         cardCost = cardScript.GetCardCost();
@@ -84,24 +85,34 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     }
 
 
-    #region Gestione del Drang&Drop e della selezione
+    #region Gestione della selezione
 
     //Qui c'è un bug, non riesce a deselezionare correttamente
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        if(eventData.pointerClick == this.gameObject)
+
+        if(energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
         {
-            cardSelectedEvent?.Invoke(cardScript);
-            isCardSelected = true;
-            transform.localScale = cardTransform.localScale * hoverScaleFactor;
+            transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true);
+            //cambiare il colore per un attimo
+
         }
-        else if(eventData.pointerClick != this.gameObject)
-        {   
-            Debug.Log("Carta deselezionata");
-            cardDeselectedEvent?.Invoke(cardScript);
-            isCardSelected = false;
-            transform.localScale = cardTransform.localScale / hoverScaleFactor;
+        else
+        {
+            if(eventData.pointerClick == this.gameObject)
+            {
+                cardSelectedEvent?.Invoke(cardScript);
+                isCardSelected = true;
+                transform.localScale = cardTransform.localScale * hoverScaleFactor;
+            }
+            else if(eventData.pointerClick != this.gameObject)
+            {   
+                Debug.Log("Carta deselezionata");
+                cardDeselectedEvent?.Invoke(cardScript);
+                isCardSelected = false;
+                transform.localScale = cardTransform.localScale / hoverScaleFactor;
+            }
         }
     }
     public void OnPointerEnter(PointerEventData eventData)
@@ -120,77 +131,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
         }
     }
 
-    public void OnPointerDown(PointerEventData eventData)
-    {
-        if(cardScript.isWolrdInteractive())
-        {
-            startCardDragPosition = transform.position;
-            transform.position = GetPointerPositionInWorldSpace();
-        }
-        else
-        {
-            return;
-        }
-
-    }
-
-    public void OnPointerUp(PointerEventData eventData)
-    {
-        if(cardScript.isWolrdInteractive())
-        {
-            int i = 0;
-
-            cardCollider.enabled = false;
-            Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity, collisionMask);
-            while (i < hitColliders.Length)
-            {
-                if (hitColliders[i] != null && hitColliders[i].TryGetComponent<ICardDropArea>(out ICardDropArea dropArea))
-                {
-                    dropArea.CardDrop(cardScript);
-
-                    cardDroppedEvent?.Invoke(cardScript);
-                    
-                    cardUsedEvent?.Invoke(gameObject);
-                    Destroy(gameObject);
-                }
-                else
-                {
-                    transform.position = startCardDragPosition;
-                }
-                i++;
-            }
-            cardCollider.enabled = true;
-
-            transform.position = startCardDragPosition;
-        }
-    }
-
-    public void OnDrag(PointerEventData eventData)
-    {
-        transform.position = GetPointerPositionInWorldSpace();
-    }
-
-    //TODO voglio estenderlo al controller
-
-    private Vector3 GetPointerPositionInWorldSpace()
-    {
-        //bisogna tenere a mente le dimensioni della finestra. Gli assi dello schermo hanno origine in basso a sx
-
-        if(Input.mousePosition.y >= Screen.height/4)
-        {
-            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.y*(cardDistanceFromCameraMultiplayer * cardDistanceFromCameraMultiplayer));
-        }
-        else
-        {
-            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, minCardOffesetFromCamera);
-        }
-      
-      Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePos);
-      return objPos;
-    }
-
     #endregion
-
     //Draw the Box Overlap as a gizmo to show where it currently is testing. Click the Gizmos button to see this
     void OnDrawGizmos()
     {

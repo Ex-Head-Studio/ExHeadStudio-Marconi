@@ -47,8 +47,12 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     [Header("Deck Parameters")]
     [SerializeField] private float drawTime = 0.1f;
-    //[Header("DeckDraw Object")]
-    //[SerializeField] private TMP_Text deckCostIcon;
+
+    [Header("Energy System")]
+    [SerializeField] private EnergySystem energySystem;
+    [SerializeField] private EnergyUsedEvent energyUsedEvent;
+    [Header("DeckDraw Object")]
+    [SerializeField] private TMP_Text deckCostIcon;
 
     public static event Action<BaseCardData> cardDrawed;
     public static event Action<DeckType> deckOvering;
@@ -78,13 +82,32 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     #region Gestione del puntatore
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        if((int)deckTypeEnum == (int)DeckType.SupportDeck || (int)deckTypeEnum == (int)DeckType.SpyDeck)
+        if(hasDrawingCost && energySystem.currentEnergy >= drawingCost)
         {
-            //if ho abbstanza mana
+            //se ho energia sufficiente per pescare, rimuovo l'energia utilizzata
+            energyUsedEvent?.Invoke(drawingCost);
+
+
+            //controllo che restino abbastanza carte nel mazzo
+            if(cardsInDeck.Count > 0)
+            {
+                cardDrawed?.Invoke(cardsInDeck.ElementAt(UnityEngine.Random.Range(0, cardsInDeck.Count)).cardData);
+                drawingCost++;
+            }
+        }
+        //se non ho costo di pesca e mazzo non vuoto
+        else if(!hasDrawingCost && cardsInDeck.Count > 0) 
+        {
             cardDrawed?.Invoke(cardsInDeck.ElementAt(UnityEngine.Random.Range(0, cardsInDeck.Count)).cardData);
             drawingCost++;
-            //aggiornamento UI per il costo della -> deckCostIcon++
         }
+
+
+        if(drawingCost >= energySystem.defaultEnergy)
+        {
+            drawingCost = energySystem.defaultEnergy;
+        }
+        deckCostIcon.text = drawingCost.ToString();
     }
     public void OnPointerEnter(PointerEventData pointerEventData)
     {

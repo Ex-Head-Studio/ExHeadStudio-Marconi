@@ -23,6 +23,7 @@ public class BaseCardData : ScriptableObject
 
     [Tooltip("Whether the card can be dragged in the world or not")]
     [SerializeField] public bool isWorldInteractive = false;
+    [SerializeField] public LayerMask dragLayerMask;
 
     
     [SerializeField] public int lastingTurns = 1;

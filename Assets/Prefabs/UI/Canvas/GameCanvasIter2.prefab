@@ -1705,6 +1705,7 @@ GameObject:
   - component: {fileID: 443341872713556297}
   - component: {fileID: 203516456109069266}
   - component: {fileID: 5062831532777362524}
+  - component: {fileID: 1673848740331857524}
   m_Layer: 5
   m_Name: EnergyPanel
   m_TagString: Untagged
@@ -1806,6 +1807,34 @@ MonoBehaviour:
         m_TargetAssemblyTypeName: EnergyDisplay, Assembly-CSharp
         m_MethodName: AddTurnEnergy
         m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &1673848740331857524
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 3924847341525289025}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ca73cdb9911eca64bb155c57c26e31c0, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: 3a986c728b37b99438be18298d645fb4, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 203516456109069266}
+        m_TargetAssemblyTypeName: EnergyDisplay, Assembly-CSharp
+        m_MethodName: RemoveEnergy
+        m_Mode: 0
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
           m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine

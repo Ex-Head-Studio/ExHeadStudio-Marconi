@@ -62,8 +62,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 8511230033672173309, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: cardsInDeck.Array.size
-      value: 2
+      value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8511230033672173309, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: cardsInDeck.Array.data[0].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: a559adef3444b4846a1b03f349cbf10e, type: 2}
     - target: {fileID: 8511230033672173309, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: cardsInDeck.Array.data[1].cardData
       value: 
@@ -72,8 +76,13 @@ PrefabInstance:
       propertyPath: cardsInDeck.Array.data[1].quantity
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 8658268554761236731, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_text
+      value: Spy Deck
+      objectReference: {fileID: 0}
     m_RemovedComponents:
     - {fileID: 7528077715044678580, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+    - {fileID: 3548507416420786218, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
     m_AddedComponents:

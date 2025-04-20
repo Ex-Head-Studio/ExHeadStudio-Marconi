@@ -1,0 +1,116 @@
+using UnityEngine;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using System.Collections.Generic;   
+using System;
+using Unity.VisualScripting;
+using DG.Tweening;
+public class UICardDragNDropHandler : MonoBehaviour
+{
+        public static event Action<AbstractCard> cardDroppedEvent;
+        public static event Action<GameObject> cardUsedEvent;
+        private Vector3 startCardDragPosition;
+        private Vector3 mousePos;
+
+        private AbstractCard cardScript;
+        private EnergySystem energySystem;
+        private EnergyUsedEvent energyUsedEvent;
+        private Collider cardCollider;
+
+
+        private float cardDistanceFromCameraMultiplayer;
+        private float minCardOffesetFromCamera;
+
+
+        private void Start()
+        {
+            cardScript = GetComponent<AbstractCard>();
+            energySystem = cardScript.GetEnergySystem();
+            energyUsedEvent = cardScript.GetEnergyEvent();
+            cardCollider = GetComponent<Collider>();
+            //molto importante, non modificare, evita che le navi debbano avere un rigidbody
+            cardCollider.providesContacts = true;
+
+
+
+        }
+
+        public void OnPointerDown(PointerEventData eventData)
+    {
+        if(energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
+        {
+            transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true);
+            //cambiare il colore per un attimo
+            return;
+        }
+        if(cardScript.isWolrdInteractive())
+        {
+            startCardDragPosition = transform.position;
+            transform.position = GetPointerPositionInWorldSpace();
+        }
+    }
+
+    public void OnPointerUp(PointerEventData eventData)
+    {
+        if(cardScript.isWolrdInteractive())
+        {
+            int i = 0;
+
+            cardCollider.enabled = false;
+            Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity);
+            while (i < hitColliders.Length)
+            {
+                if (hitColliders[i] != null && hitColliders[i].TryGetComponent<ICardDropArea>(out ICardDropArea dropArea))
+                {
+                    dropArea.CardDrop(cardScript);
+
+                    cardDroppedEvent?.Invoke(cardScript);
+                    
+                    cardUsedEvent?.Invoke(gameObject);
+                    Destroy(gameObject);
+                }
+                else
+                {
+                    transform.position = startCardDragPosition;
+                }
+                i++;
+            }
+            cardCollider.enabled = true;
+
+            transform.position = startCardDragPosition;
+
+            //consumo l'energia
+            energyUsedEvent?.Invoke(cardScript.GetCardCost());
+        }
+    }
+
+    public void OnDrag(PointerEventData eventData)
+    {
+        transform.position = GetPointerPositionInWorldSpace();
+    }
+
+    private Vector3 GetPointerPositionInWorldSpace()
+    {
+        //bisogna tenere a mente le dimensioni della finestra. Gli assi dello schermo hanno origine in basso a sx
+
+        if(Input.mousePosition.y >= Screen.height/4)
+        {
+            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.y*(cardDistanceFromCameraMultiplayer * cardDistanceFromCameraMultiplayer));
+        }
+        else
+        {
+            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, minCardOffesetFromCamera);
+        }
+      
+      Vector3 objPos = Camera.main.ScreenToWorldPoint(mousePos);
+      return objPos;
+    }
+
+
+
+    public void SetEnergySystem(EnergySystem energySystem)
+    {
+        this.energySystem = energySystem;
+    }
+
+}

@@ -89,6 +89,7 @@ GameObject:
   m_Component:
   - component: {fileID: 7953835214553350401}
   - component: {fileID: 5036577896884688752}
+  - component: {fileID: 2817787789133043111}
   - component: {fileID: 7561793032742210724}
   - component: {fileID: 5758680995345812927}
   m_Layer: 0
@@ -142,6 +143,34 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2817787789133043111
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6864579317211534768}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f25382c277880459846ca8a94980bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: b61a9d001a410e64da4d44cc7a5ee84d, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 5758680995345812927}
+        m_TargetAssemblyTypeName: GameManager2, Assembly-CSharp
+        m_MethodName: OnEnemyTurnEnded
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!114 &7561793032742210724
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -183,7 +212,5 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   timeBeforeStart: 1
-  timeBetweenRounds: 1
+  timeBetweenRounds: 0.5
   startedTurnEvent: {fileID: 11400000, guid: 3853f00209eb0c642a9389baec0e5283, type: 2}
-  messagesStack: {fileID: 11400000, guid: 0089ed49510cec842a0fac693ced129a, type: 2}
-  answerStack: {fileID: 11400000, guid: 07e45ce76bfd89547be0255c2131d908, type: 2}

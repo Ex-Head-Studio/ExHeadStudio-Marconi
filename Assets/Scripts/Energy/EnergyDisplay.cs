@@ -1,3 +1,4 @@
+using System.Collections.Generic;
 using UnityEngine;
 
 public class EnergyDisplay : MonoBehaviour
@@ -5,6 +6,8 @@ public class EnergyDisplay : MonoBehaviour
     [SerializeField] private EnergySystem energySystem;
     [SerializeField] private GameObject energyBarPrefab;
     [SerializeField] private Transform energyBarContainer; // Parent object for energy bars
+
+    private List<GameObject> energyBars = new List<GameObject>();
 
     private void Start()
     {
@@ -16,6 +19,7 @@ public class EnergyDisplay : MonoBehaviour
         for(int i = 0; i < energySystem.defaultEnergy; i++)
         {
             GameObject energyBar = Instantiate(energyBarPrefab, energyBarContainer);
+            energyBars.Add(energyBar);
         }
     }
 
@@ -30,6 +34,33 @@ public class EnergyDisplay : MonoBehaviour
         for(int i = 0; i < amount; i++)
         {
             Instantiate(energyBarPrefab, energyBarContainer);
+            energyBars.Add(energyBarPrefab);
         }
+    }
+
+    public void RemoveEnergy(int amount)
+    {
+        //questa funzione deve restare fuori dal ciclo
+        energySystem.RemoveEnergy(amount);
+
+            //implementare un controllo più corretto e rifattorizzare se serve
+            if(energyBarContainer.childCount > 0 && amount < energyBarContainer.childCount)
+            {
+                for(int i = amount-1; i >= 0; i--)
+                {
+                    energyBars.RemoveAt(i);
+                    //mi piacerebbe fare una piccola animazione di distruzione
+                    Destroy(energyBarContainer.GetChild(i).gameObject, 0.5f);
+                }
+            }
+            else if(amount > energyBarContainer.childCount)
+            {
+                for(int i = energyBarContainer.childCount-1; i >= 0; i--)
+                {
+                    energyBars.RemoveAt(i);
+                    Destroy(energyBarContainer.GetChild(i).gameObject);
+                }
+             }
+        
     }
 }
