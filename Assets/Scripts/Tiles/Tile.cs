@@ -5,6 +5,7 @@ using System.Linq;
 using UnityEngine;
 using UnityEngine.EventSystems;
 using Random = UnityEngine.Random;
+using DG.Tweening;
 public enum TileType 
 {
     Empty,
@@ -47,6 +48,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     [Header("Interaction")]
     [SerializeField] private GameObject interactionSignal;
     [SerializeField] bool isInteractable = false;
+    [SerializeField] private Collider tileCollider;
 
     public static event Action<Tile> tileSelected;
 
@@ -59,6 +61,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     void Awake() 
     {
         interactionSignal.SetActive(false);
+        tileCollider.enabled = false;
         /* 
         int gridWidth = _gridManager._width;
         int gridHeight = _gridManager._height;
@@ -103,19 +106,28 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         SetTileInteractable(true);
     }
 
-
     public void SetTileInteractable(bool interactable = true) 
     {
         isInteractable = interactable;
         if(interactable) 
         {
             interactionSignal.SetActive(interactable);
+            tileCollider.enabled = true;
         } 
         else 
         {
             interactionSignal.SetActive(interactable);
+            tileCollider.enabled = false;
         }
 
+    }
+
+    public void SetTileNotInteractable() 
+    {
+        isInteractable = false;
+        interactionSignal.SetActive(false);
+        tileCollider.enabled = false;
+        _highlight.SetActive(false);
     }
 
 
@@ -125,6 +137,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         {
             //Debug.Log("Mouse entered tile: " + gameObject.name);
             _highlight.SetActive(true);
+            transform.DOPunchRotation(Vector3.forward, 0.5f, 1, 0.5f).SetEase(Ease.OutBack);
         }
 
     }
@@ -135,6 +148,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         {
             //Debug.Log("Mouse exited tile: " + gameObject.name);
             _highlight.SetActive(false);
+            transform.DOKill();
         }
     }
 
@@ -144,6 +158,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         if(isInteractable)
         {
             tileSelected?.Invoke(this);
+            SetTileNotInteractable();
         }
         //La tile comunica con un evento che è stata selezionata, lo riceverà una nave
     }

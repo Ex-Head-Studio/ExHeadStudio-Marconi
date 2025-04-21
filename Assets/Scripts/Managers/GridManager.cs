@@ -103,6 +103,20 @@ public class GridManager : MonoBehaviour
     {
         return _tiles.ContainsKey(position) ? _tiles[position] : null;
     }
+
+
+    //scritto da Copilots
+    public Vector2 GetPositionFromTile(Tile tile) 
+    {
+        foreach (var kvp in _tiles) 
+        {
+            if (kvp.Value == tile) 
+            {
+                return kvp.Key;
+            }
+        }
+        return Vector2.negativeInfinity;
+    }
     public void MoveShip(Vector2 currentPosition, Vector2 newPosition, int entity)
     {
         if(currentPosition == Vector2.negativeInfinity || newPosition == Vector2.negativeInfinity)
@@ -134,7 +148,7 @@ public class GridManager : MonoBehaviour
         }
 
         tmpShip = currentTile.GetShip();
-        Debug.Log("GridManager, moveship, tmpShip: " + tmpShip.GetComponent<Ship>().shipName);
+        Debug.Log("GridManager, moveship, tmpShip: " + tmpShip.GetComponent<AShip>().shipName);
 
         Debug.Log("Tipo casella vecchia, tipo nuova: " + currentTile.GetType() + newTile.GetType());
         newTile.SetType(currentTile.GetType(), entity);

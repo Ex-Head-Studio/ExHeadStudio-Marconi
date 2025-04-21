@@ -58,6 +58,17 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     public static event Action<DeckType> deckOvering;
     public static event Action<DeckType> deckOvered;
 
+
+    private void Start()
+    {
+        //se non ho costo di pesca, lo imposto a 0
+        if(!hasDrawingCost)
+        {
+            drawingCost = 0;
+        }
+        deckCostIcon.text = "Cost: " + drawingCost.ToString();
+    }
+
     #region Gestione eventi
 
     //da associare all'event channel di inzio turno
@@ -82,6 +93,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     #region Gestione del puntatore
     public void OnPointerClick(PointerEventData pointerEventData)
     {
+        
         if(hasDrawingCost && energySystem.currentEnergy >= drawingCost)
         {
             //se ho energia sufficiente per pescare, rimuovo l'energia utilizzata
@@ -99,7 +111,6 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         else if(!hasDrawingCost && cardsInDeck.Count > 0) 
         {
             cardDrawed?.Invoke(cardsInDeck.ElementAt(UnityEngine.Random.Range(0, cardsInDeck.Count)).cardData);
-            drawingCost++;
         }
 
 
@@ -107,7 +118,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         {
             drawingCost = energySystem.defaultEnergy;
         }
-        deckCostIcon.text = drawingCost.ToString();
+        deckCostIcon.text = "Cost: " + drawingCost.ToString();
     }
     public void OnPointerEnter(PointerEventData pointerEventData)
     {

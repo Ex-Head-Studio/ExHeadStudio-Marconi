@@ -124,6 +124,14 @@ public abstract class AShip : MonoBehaviour
             health = shipData.health;
     }
 
+    public void ChangeClass(ShipSO newClass)
+    {
+        shipSO = newClass;
+        attackRange = shipSO.attackRange;
+        movementRange = shipSO.movementRange;
+        health = shipSO.health;
+    }
+
     public int GetHealth()
     {
         return health;

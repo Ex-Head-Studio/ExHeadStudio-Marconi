@@ -357,6 +357,42 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[0].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: a559adef3444b4846a1b03f349cbf10e, type: 2}
+    - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[0].quantity
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[1].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 879953964d691104ab1474c03f4ae8fe, type: 2}
+    - target: {fileID: 6582169735493814925, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.size
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 6582169735493814925, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[0].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 99a220e39a2b74b4685955dded273a5f, type: 2}
+    - target: {fileID: 6582169735493814925, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[0].quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6582169735493814925, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[1].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 3d08a1d8e76fa054ab43294233ad9273, type: 2}
+    - target: {fileID: 6582169735493814925, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[1].quantity
+      value: 1
+      objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []

@@ -16,10 +16,13 @@ public class AllyShip : AShip
     {
         Tile.tileSelected -= ReceiveTile;
     }
+
+
     public override void ExecuteInstructions(AnswerStruct directives)
     {
         
     }
+
 
     //Le funzioni che seguono servono per dare al giocatore la possibilità di scegliere solo azioni consentite
     //e non tutte le azioni possibili, come nel caso delle navi nemiche
@@ -102,6 +105,16 @@ public class AllyShip : AShip
                 }
             }
         }
+
+        shipMoves = shipMoves.Where(x => gridManager.GetTileAtPosition(x.GetTargetPos())._type == TileType.Enemy).ToList();
+        if(shipMoves.Count > 0)
+        {
+            foreach(Move move in shipMoves)
+            {
+                gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileInteractable(true);
+            }
+            canAttack = true;
+        }
         return canAttack;
         
     }
@@ -114,18 +127,31 @@ public class AllyShip : AShip
         throw new System.NotImplementedException();
     }
 
-    public void ReceiveTile(Tile tile)
+    public void PerformAttack(Vector2 targetPos)
     {
-       
+        shipSO.attackEvent.Invoke(new ShipAttackStruct(targetPos, shipSO.attackPower));
     }
 
-    public void PerformAttack()
+    public void ReceiveTile(Tile tile)
     {
-
+        if(tile._type == TileType.Empty)
+        {
+            gridManager.MoveShip(this.position, gridManager.GetPositionFromTile(tile), this.faction);
+        }
+        else if (tile._type == TileType.Enemy)
+        {
+            PerformAttack(gridManager.GetPositionFromTile(tile));
+        }  
     }
 
     public void PerformMovement()
     {
 
+    }
+
+    public void AddHealth(int healthToAdd)
+    {
+        health += healthToAdd;
+        //update UI
     }
 }

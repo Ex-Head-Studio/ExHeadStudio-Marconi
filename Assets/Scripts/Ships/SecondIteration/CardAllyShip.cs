@@ -60,12 +60,15 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
                 {
                     foreach (AbstractEffectSO effect in cardToUse.GetCardEffects())
                     {
-                        Debug.Log("L'effetto" + effect.name + "è stato applicato correttamente.");
                         effect.PerformEffect(new EffectStruct(cardToUse, this.gameObject));
                     }
                 }
 
+                isShipSelectable = false;
+
+
                 cardToUse.InvokeCardUsed(cardToUse);
+                cardToUse.GetEnergyEvent().Invoke(cardToUse.GetCardCost());
         }
     }
 
@@ -120,4 +123,5 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
     }
 
      //qui inserisco i metodi di riposta agli effetti, con le differenze dovute
+
 }

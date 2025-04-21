@@ -354,6 +354,8 @@ MonoBehaviour:
   _type: 0
   tileShip: {fileID: 0}
   interactionSignal: {fileID: 1003079049219748415}
+  isInteractable: 0
+  tileCollider: {fileID: -1841351686871509975}
 --- !u!65 &-1841351686871509975
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -373,5 +375,5 @@ BoxCollider:
   m_ProvidesContacts: 0
   m_Enabled: 1
   serializedVersion: 3
-  m_Size: {x: 1, y: 1, z: 6.1232336e-17}
+  m_Size: {x: 1, y: 1, z: 0.5}
   m_Center: {x: 0, y: 0, z: 0}

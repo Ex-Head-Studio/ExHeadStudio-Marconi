@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfc6d05c17513294494b444943d35d9b, type: 3}
-  m_Name: MovementCard
+  m_Name: AttackCard
   m_EditorClassIdentifier: 
   cardEntityType: 0
   cardType: 0
   cardImage: {fileID: 0}
-  cardName: Movement Card
-  cardDescription: One of your ships can move
+  cardName: Attack Card
+  cardDescription: You can attack one enemy ship
   cardCost: 1
   isWorldInteractive: 0
   dragLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   lastingTurns: 1
   cardEffects:
-  - {fileID: 11400000, guid: 28b8616b3abb1764ca631b441e19f5ae, type: 2}
+  - {fileID: 11400000, guid: 5067f883c29afc44b8ad0562ec1729ac, type: 2}

@@ -6,7 +6,7 @@ public class EnergySystem : ScriptableObject
 {
     [SerializeField] public int defaultEnergy;
     [SerializeField] public int maxEnergy;
-    [SerializeField] public int energyPerTurn;
+    [SerializeField] public int energyPerTurn = 2;
 
     [NonSerialized] public int currentEnergy;
 

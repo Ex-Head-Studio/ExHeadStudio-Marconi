@@ -10,18 +10,18 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfc6d05c17513294494b444943d35d9b, type: 3}
-  m_Name: MovementCard
+  m_Name: AddHealthCard
   m_EditorClassIdentifier: 
   cardEntityType: 0
-  cardType: 0
+  cardType: 1
   cardImage: {fileID: 0}
-  cardName: Movement Card
-  cardDescription: One of your ships can move
-  cardCost: 1
+  cardName: Add Health
+  cardDescription: Add 1 health to your unit
+  cardCost: 2
   isWorldInteractive: 0
   dragLayerMask:
     serializedVersion: 2
-    m_Bits: 4294967295
+    m_Bits: 0
   lastingTurns: 1
   cardEffects:
-  - {fileID: 11400000, guid: 28b8616b3abb1764ca631b441e19f5ae, type: 2}
+  - {fileID: 11400000, guid: 716e2ae1314cd3d48bc8504da36015d3, type: 2}

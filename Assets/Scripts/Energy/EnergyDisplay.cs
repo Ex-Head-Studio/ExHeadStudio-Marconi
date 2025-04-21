@@ -9,6 +9,8 @@ public class EnergyDisplay : MonoBehaviour
 
     private List<GameObject> energyBars = new List<GameObject>();
 
+
+
     private void Start()
     {
         if(energySystem == null)
@@ -16,23 +18,22 @@ public class EnergyDisplay : MonoBehaviour
             Debug.LogError("EnergySystem is not assigned in the inspector.");
             return;
         }
-        for(int i = 0; i < energySystem.defaultEnergy; i++)
-        {
-            GameObject energyBar = Instantiate(energyBarPrefab, energyBarContainer);
-            energyBars.Add(energyBar);
-        }
+
+        //l'offset serve perchè a inizio gioco conto anche il primo turno
+        UpdateEnergyDisplay(energySystem.defaultEnergy-1);
     }
 
     public void AddTurnEnergy()
     {
-        energySystem.AddEnergy(energySystem.energyPerTurn);
         UpdateEnergyDisplay(energySystem.energyPerTurn);
     }
 
     private void UpdateEnergyDisplay(int amount)
     {
+
         for(int i = 0; i < amount; i++)
         {
+            energySystem.AddEnergy(1);
             Instantiate(energyBarPrefab, energyBarContainer);
             energyBars.Add(energyBarPrefab);
         }
