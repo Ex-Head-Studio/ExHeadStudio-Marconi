@@ -30,10 +30,9 @@ public class EnergyDisplay : MonoBehaviour
 
     private void UpdateEnergyDisplay(int amount)
     {
-
+        energySystem.AddEnergy(amount);
         for(int i = 0; i < amount; i++)
         {
-            energySystem.AddEnergy(1);
             Instantiate(energyBarPrefab, energyBarContainer);
             energyBars.Add(energyBarPrefab);
         }

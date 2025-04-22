@@ -99,12 +99,12 @@ public class GridManager : MonoBehaviour
         }        
     }
 
+
+    #region Ricerca nel dizionario
     public Tile GetTileAtPosition(Vector2 position) 
     {
         return _tiles.ContainsKey(position) ? _tiles[position] : null;
     }
-
-
     //scritto da Copilots
     public Vector2 GetPositionFromTile(Tile tile) 
     {
@@ -117,29 +117,25 @@ public class GridManager : MonoBehaviour
         }
         return Vector2.negativeInfinity;
     }
+
+    #endregion
     public void MoveShip(Vector2 currentPosition, Vector2 newPosition, int entity)
     {
+
+        GameObject tmpShip;
+        Tile currentTile = _tiles[currentPosition];
+        Tile newTile =  _tiles[newPosition];
+
         if(currentPosition == Vector2.negativeInfinity || newPosition == Vector2.negativeInfinity)
         {
             return;
         }
 
-
-        //aggiunto per evitare l'eccezione lanciata alla riga 127
         if(!_tiles.ContainsKey(currentPosition) || !_tiles.ContainsKey(newPosition))
         {
             Debug.Log("La nave non può muoversi in questa posizione");
             return;
         }
-
-        Debug.Log("La nave in posizione: " + currentPosition.x + " " + currentPosition.y +"\n"+
-        "muove in: "+ newPosition.x + " " + newPosition.y);
-
-        GameObject tmpShip;
-        Tile currentTile = _tiles[currentPosition];//  GetTileAtPosition(currentPosition);
-
-        //qui lancia un'eccezione
-        Tile newTile =  _tiles[newPosition];//  GetTileAtPosition(newPosition);
 
         if(currentTile == null || newTile == null) 
         {
@@ -148,11 +144,7 @@ public class GridManager : MonoBehaviour
         }
 
         tmpShip = currentTile.GetShip();
-        Debug.Log("GridManager, moveship, tmpShip: " + tmpShip.GetComponent<AShip>().shipName);
-
-        Debug.Log("Tipo casella vecchia, tipo nuova: " + currentTile.GetType() + newTile.GetType());
         newTile.SetType(currentTile.GetType(), entity);
-        Debug.Log("Tipo casella vecchia, tipo nuova: " + currentTile.GetType() + newTile.GetType());
 
         //qui ho rimosso un GetShip().gameObject (stefano)
         if(tmpShip != null)

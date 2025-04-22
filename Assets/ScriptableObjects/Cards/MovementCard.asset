@@ -25,3 +25,5 @@ MonoBehaviour:
   lastingTurns: 1
   cardEffects:
   - {fileID: 11400000, guid: 28b8616b3abb1764ca631b441e19f5ae, type: 2}
+  energyUsedEvent: {fileID: 11400000, guid: 3a986c728b37b99438be18298d645fb4, type: 2}
+  energySystem: {fileID: 11400000, guid: 136cca535f0baba46ab62bf1a16ce78d, type: 2}

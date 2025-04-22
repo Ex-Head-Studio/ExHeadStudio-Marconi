@@ -62,6 +62,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     {
         interactionSignal.SetActive(false);
         tileCollider.enabled = false;
+
         /* 
         int gridWidth = _gridManager._width;
         int gridHeight = _gridManager._height;
@@ -109,19 +110,11 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     public void SetTileInteractable(bool interactable = true) 
     {
         isInteractable = interactable;
-        if(interactable) 
-        {
-            interactionSignal.SetActive(interactable);
-            tileCollider.enabled = true;
-        } 
-        else 
-        {
-            interactionSignal.SetActive(interactable);
-            tileCollider.enabled = false;
-        }
-
+        interactionSignal.SetActive(interactable);
+        tileCollider.enabled = true;
     }
 
+    [ContextMenu("Set Tyle Not Interactable" )]
     public void SetTileNotInteractable() 
     {
         isInteractable = false;
@@ -137,7 +130,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         {
             //Debug.Log("Mouse entered tile: " + gameObject.name);
             _highlight.SetActive(true);
-            transform.DOPunchRotation(Vector3.forward, 0.5f, 1, 0.5f).SetEase(Ease.OutBack);
+            transform.DOPunchRotation(Vector3.back, 0.5f, 1, 0.5f).SetEase(Ease.OutBack);
         }
 
     }

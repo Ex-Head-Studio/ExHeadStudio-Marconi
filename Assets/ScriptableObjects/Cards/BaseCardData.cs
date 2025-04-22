@@ -33,4 +33,8 @@ public class BaseCardData : ScriptableObject
     [Header("Card Effects")]
     [SerializeField] public List<AbstractEffectSO> cardEffects = new List<AbstractEffectSO>();
 
+    [Header("Energy System")]
+    [SerializeField] public EnergyUsedEvent energyUsedEvent;
+    [SerializeField] public EnergySystem energySystem;
+
 }

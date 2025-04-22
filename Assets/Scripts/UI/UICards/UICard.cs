@@ -6,6 +6,10 @@ using System;
 using Unity.VisualScripting;
 using DG.Tweening;
 using TMPro;
+using UnityEngine.Assertions;
+using UnityEngine.Serialization;
+
+
 
 public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, IPointerExitHandler//, IPointerDownHandler, IPointerUpHandler, IDragHandler,
 {
@@ -16,7 +20,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     
 
     //questi campi sono da associare una volta che si ha i placeholder corretti
-    private Image cardImage;
+    private UnityEngine.UI.Image cardImage;
     private string cardName;
     private string cardDescription;
     private int cardCost;
@@ -48,15 +52,17 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
 
 
-    [Header("Events")]
-    [SerializeField] private EnergyUsedEvent energyUsedEvent;
+    [Header("Energy System")]
     [SerializeField] private EnergySystem energySystem;
 
     private bool drawGizmos;
 
     private bool isCardSelected = false;
 
-
+    private void OnDestroy()
+    {
+        cardDeselectedEvent?.Invoke(cardScript);
+    }
 
     private void Start()
     {
@@ -67,7 +73,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     public void SetupUICard(AbstractCard card)
     {
         cardScript = card;
-        cardImage = GetComponent<Image>();
+        cardImage = GetComponent<UnityEngine.UI.Image>();
         cardName = cardScript.GetCardName();
         gameObject.name = cardName;
 
@@ -87,21 +93,20 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
     #region Gestione della selezione
 
-    //Qui c'è un bug, non riesce a deselezionare correttamente
-
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-
         if(energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
         {
-            transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true);
-            //cambiare il colore per un attimo
+            transform.DOShakePosition(1f, 0.5f, 10, 90, false, true);
+            //cambiare colore
 
         }
         else
         {
+            //Qui c'è un bug, non riesce a deselezionare correttamente
             if(eventData.pointerClick == this.gameObject)
             {
+                UnityEngine.Debug.Log("PointerClick su carta: " + eventData.pointerClick);
                 cardSelectedEvent?.Invoke(cardScript);
                 isCardSelected = true;
                 transform.localScale = cardTransform.localScale * hoverScaleFactor;

@@ -105,6 +105,9 @@ public class EnemyShip : AShip
                 }
             }
         }
+
+        //TODO contrallare se initialMove è corretto!!!
+
         //Aggiungi le mosse di attacco dalla posizioni attuale della nave, non quelle future, aggiungi il valore della mossa
         // più distanza c'è col nemico, più il valore è alto, valori così alti servono perché se la nave può già attaccare,
         // non ha senso muoverla, quindi il valore della mossa di attacco deve essere più alto di quello di movimento
@@ -114,9 +117,21 @@ public class EnemyShip : AShip
                     Vector2Int pos = new Vector2Int(x, position.y);
                     Move newMove= new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     if(Vector2Int.Distance(position, pos)==shipSO.attackRange){
+
+                        if(initialMove==null)
+                        {
+                            initialMove=newMove;
+                        }
+                        
                         initialMove.value+=6;
+                        
                     }
-                    else if(Vector2Int.Distance(position, pos)<shipSO.attackRange && Vector2Int.Distance(position, pos)>0){
+                    else if(Vector2Int.Distance(position, pos)<shipSO.attackRange && Vector2Int.Distance(position, pos)>0)
+                    {
+                        if(initialMove==null)
+                        {
+                            initialMove=newMove;
+                        }
                         initialMove.value+=5;
                     }
                     shipMoves.Add(newMove);
@@ -130,9 +145,21 @@ public class EnemyShip : AShip
                     Vector2Int pos = new Vector2Int(position.x, y);
                     Move newMove= new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     if(Vector2Int.Distance(position, pos)==shipSO.attackRange){
+
+                        
+                        if(initialMove==null)
+                        {
+                            initialMove=newMove;
+                        }
                         initialMove.value+=6;
                     }
                     else if(Vector2Int.Distance(position, pos)<shipSO.attackRange && Vector2Int.Distance(position, pos)>0){
+
+                        
+                        if(initialMove==null)
+                        {
+                            initialMove=newMove;
+                        }
                         initialMove.value+=5;
                     }
                     shipMoves.Add(newMove);

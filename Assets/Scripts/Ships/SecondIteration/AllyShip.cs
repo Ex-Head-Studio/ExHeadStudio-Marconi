@@ -132,6 +132,11 @@ public class AllyShip : AShip
         shipSO.attackEvent.Invoke(new ShipAttackStruct(targetPos, shipSO.attackPower));
     }
 
+    public void PerformMovement()
+    {
+
+    }
+
     public void ReceiveTile(Tile tile)
     {
         if(tile._type == TileType.Empty)
@@ -142,11 +147,12 @@ public class AllyShip : AShip
         {
             PerformAttack(gridManager.GetPositionFromTile(tile));
         }  
-    }
 
-    public void PerformMovement()
-    {
-
+        //disattivo le tile interagibili
+        foreach(Move move in shipMoves)
+        {
+            gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileNotInteractable();
+        }
     }
 
     public void AddHealth(int healthToAdd)

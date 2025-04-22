@@ -13,12 +13,18 @@ MonoBehaviour:
   m_Name: TestCardData
   m_EditorClassIdentifier: 
   cardEntityType: 0
+  cardType: 0
   cardImage: {fileID: 0}
   cardName: Drago Oscuro occhi rossi
   cardDescription: 
   cardCost: 0
+  isWorldInteractive: 0
+  dragLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
   lastingTurns: 1
-  cardPrefab: {fileID: 2196661931175602968, guid: af2e3b03567b674428bd079487933a8a, type: 3}
   cardEffects:
   - {fileID: 11400000, guid: 6def7fb2e62af3447b8fb9010a15cee4, type: 2}
   - {fileID: 11400000, guid: 3ef313e096f4846499937cdd6556dd57, type: 2}
+  energyUsedEvent: {fileID: 11400000, guid: 3a986c728b37b99438be18298d645fb4, type: 2}
+  energySystem: {fileID: 11400000, guid: 136cca535f0baba46ab62bf1a16ce78d, type: 2}

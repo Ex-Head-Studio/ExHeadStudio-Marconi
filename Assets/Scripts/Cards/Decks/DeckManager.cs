@@ -7,6 +7,7 @@ using System.Collections.Generic;
 using TMPro;
 using System.Linq;
 using System.Collections;
+using UnityEngine.Assertions;
 public enum DeckType
 {
     CommandDeck,
@@ -75,7 +76,6 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void InstantiateNewPlayerHand()
     {
-        Debug.Log("Inizio turno, pesco carte");
         //si può migliorare -> shuffle delle carte
         cardsInDeck = cardsInDeck.OrderBy( x => UnityEngine.Random.value ).ToList();
         StartCoroutine(WaitBeforeDraw(drawTime, commandCardAtTurn));

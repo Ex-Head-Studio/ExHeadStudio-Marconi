@@ -11,8 +11,6 @@ public abstract class AbstractCard : MonoBehaviour
 
     [Header("Card Data SO")]
     private BaseCardData cardData;
-
-    [Header("Energy Event")]
     private EnergyUsedEvent energyUsedEvent;
     private EnergySystem energySystem;
 
@@ -29,6 +27,9 @@ public abstract class AbstractCard : MonoBehaviour
             UICardDragNDropHandler cardDragNDropHandler = GetComponent<UICardDragNDropHandler>();
             cardDragNDropHandler.SetEnergySystem(energySystem);
         }
+
+        energyUsedEvent = cardData.energyUsedEvent;
+        energySystem = cardData.energySystem;
     }
 
     public void InvokeCardUsed(AbstractCard cardUsed)
@@ -83,6 +84,7 @@ public abstract class AbstractCard : MonoBehaviour
 
     public EnergyUsedEvent GetEnergyEvent()
     {
+
         return energyUsedEvent;
     }
 }

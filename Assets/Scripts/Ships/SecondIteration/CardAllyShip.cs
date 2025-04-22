@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using DG.Tweening;
 using UnityEngine.EventSystems;
+using UnityEngine.Assertions;
 
 ///<summary>
 /// The script manages all the interaction of a ship with a card, driving the responses from the ship script
@@ -22,8 +23,6 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
         allyShip = GetComponent<AllyShip>();
     }
 
-
-    //forse si può rimuovere
     void ICardDropArea.CardDrop(AbstractCard card)
     {
         if(card.GetCardEntity() == (int)CardEntityType.AllyShip)
@@ -66,7 +65,6 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
 
                 isShipSelectable = false;
 
-
                 cardToUse.InvokeCardUsed(cardToUse);
                 cardToUse.GetEnergyEvent().Invoke(cardToUse.GetCardCost());
         }
@@ -104,13 +102,11 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
         base.OnCardSelected(card);
         if(card.GetCardEntity() == (int)CardEntityType.AllyShip)
         {
-            //animazione che risponde se la carta è selezionata funziona sugli alleati
+            //animazione che risponde se la carta selezionata funziona sugli alleati
             transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+
             cardToUse = card;
             isShipSelectable = true;
-
-            //if(movimento) -> segnala movimenti possibili
-            //if(attacco) -> segnala attacchi disponibili
         }
     }
 
