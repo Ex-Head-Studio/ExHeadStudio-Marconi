@@ -15,4 +15,5 @@ MonoBehaviour:
   testingValue:
     shipName: Ardito
     entity: 1
-    gridPosition: {x: 4, y: 6}
+    gridPosition: {x: 6, y: 6}
+    shipScript: {fileID: 0}

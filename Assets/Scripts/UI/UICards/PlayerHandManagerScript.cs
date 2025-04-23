@@ -47,7 +47,7 @@ public class PlayerHandManagerScript : MonoBehaviour
     {
         if (cardsInHand.Count >= maxCardsInHand) return;
         GameObject newCard = Instantiate(cardPrefab, spawnPoint.position, spawnPoint.rotation);
-
+        PlayCartDraw();
         //voglio settare questo oggetto come parent
         //newCard.transform.SetParent(gameObject.transform, true);
         SetUpCard(cardData, newCard);
@@ -124,4 +124,15 @@ public class PlayerHandManagerScript : MonoBehaviour
             UpdateCardPosition();
     }
 
+    // <summary>
+    // Play the card draw sound
+    // </summary>
+    private FMOD.Studio.EventInstance cartDraw;
+
+    public void PlayCartDraw()
+    {
+        cartDraw = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/CardDraw");
+        cartDraw.start();
+        cartDraw.release();
+    }
 }

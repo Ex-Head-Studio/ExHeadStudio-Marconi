@@ -26,7 +26,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 40783
+  Length: 41477
 --- !u!114 &-8517476599244968727
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -42,10 +42,10 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.strings.bank
   Name: Desktop/Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638799195902920596
+  lastModified: 638810240402778003
   FileSizes:
   - Name: 
-    Value: 1408
+    Value: 1464
   Exists: 1
 --- !u!114 &-7545578330973327430
 MonoBehaviour:
@@ -62,7 +62,7 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.bank
   Name: Desktop/Master
   StudioPath: bank:/Master
-  lastModified: 638799195902910623
+  lastModified: 638810240402757985
   FileSizes: []
   Exists: 1
 --- !u!114 &-6303109462738554844
@@ -160,7 +160,7 @@ MonoBehaviour:
   Parameters: []
   MinDistance: 1
   MaxDistance: 20
-  Length: 0
+  Length: 2000
 --- !u!114 &-2545915401735414116
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -353,14 +353,42 @@ MonoBehaviour:
   - {fileID: 6452919384654398112}
   - {fileID: -1030356980705620758}
   - {fileID: -2545915401735414116}
+  - {fileID: 1500750082751055525}
   EditorParameters:
   - {fileID: 6883603748077967008}
   MasterBanks:
   - {fileID: -7545578330973327430}
   StringsBanks:
   - {fileID: -8517476599244968727}
-  cacheTime: 638799195902920596
+  cacheTime: 638810240402778003
   cacheVersion: 131846
+--- !u!114 &1500750082751055525
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cards/CardDraw
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cards/CardDraw
+  Guid:
+    Data1: 1736270385
+    Data2: 1161269234
+    Data3: -1305508974
+    Data4: 792399712
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1000
 --- !u!114 &2193205338161841116
 MonoBehaviour:
   m_ObjectHideFlags: 0

@@ -6,7 +6,7 @@ public class ShipSounds: MonoBehaviour
 
     public void PlayShipDestroy()
     {
-        shipDestroy = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipDestroy");
+        shipDestroy = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipExploding");
         shipDestroy.start();
         shipDestroy.release();
     }
