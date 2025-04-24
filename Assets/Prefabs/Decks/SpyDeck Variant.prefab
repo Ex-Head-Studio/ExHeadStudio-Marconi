@@ -8,6 +8,18 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 291194850491860506, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 291194850491860506, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 291194850491860506, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 547740546878312068, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: m_Name
       value: SpyDeck Variant

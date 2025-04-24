@@ -8,9 +8,53 @@ PrefabInstance:
     serializedVersion: 3
     m_TransformParent: {fileID: 0}
     m_Modifications:
+    - target: {fileID: 291194850491860506, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 291194850491860506, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 291194850491860506, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 547740546878312068, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: m_Name
       value: SupportDeck Variant
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242127744564876314, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: -0.011
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242127744564876314, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242127744564876314, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242127744564876314, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242127744564876314, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: -0.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242127744564876314, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_AnchoredPosition.x
+      value: 0.082
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242127744564876314, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_AnchoredPosition.y
+      value: 0.59
+      objectReference: {fileID: 0}
+    - target: {fileID: 5242127744564876314, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: 6044673805502603212, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: m_LocalPosition.x
@@ -52,13 +96,39 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 7315834519130486656, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_IsActive
+      value: 0
+      objectReference: {fileID: 0}
     - target: {fileID: 8511230033672173309, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: deckTypeEnum
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 8658268554761236731, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
       propertyPath: m_text
-      value: Support Deck
+      value: 'Support
+
+'
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658268554761236731, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_fontSize
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658268554761236731, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_margin.w
+      value: 0.56282955
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658268554761236731, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_margin.y
+      value: 0.30956984
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658268554761236731, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_fontSizeBase
+      value: 1.9
+      objectReference: {fileID: 0}
+    - target: {fileID: 8658268554761236731, guid: e0f166c6bee59714bae2e3c14bb8f808, type: 3}
+      propertyPath: m_HorizontalAlignment
+      value: 2
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []

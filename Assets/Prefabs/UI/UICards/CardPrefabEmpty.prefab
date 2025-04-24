@@ -76,7 +76,7 @@ SpriteRenderer:
   m_SortingLayerID: 0
   m_SortingLayer: 0
   m_SortingOrder: 0
-  m_Sprite: {fileID: 21300000, guid: 396591aaa3ee3c246aaf695f3688ba13, type: 3}
+  m_Sprite: {fileID: 21300000, guid: 80b5a71a0cfaac241a51bee790cb2300, type: 3}
   m_Color: {r: 1, g: 1, b: 1, a: 1}
   m_FlipX: 0
   m_FlipY: 0
@@ -141,7 +141,6 @@ MonoBehaviour:
   hoverScaleFactor: 1.1
   nameText: {fileID: 481095048434097478}
   costText: {fileID: 861822500176709552}
-  energyUsedEvent: {fileID: 11400000, guid: 3a986c728b37b99438be18298d645fb4, type: 2}
   energySystem: {fileID: 11400000, guid: 136cca535f0baba46ab62bf1a16ce78d, type: 2}
 --- !u!222 &1050077458094917681
 CanvasRenderer:
@@ -189,7 +188,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &48802788736137281
 RectTransform:
   m_ObjectHideFlags: 0
@@ -365,7 +364,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 1
+  m_IsActive: 0
 --- !u!224 &9021130034796456757
 RectTransform:
   m_ObjectHideFlags: 0
