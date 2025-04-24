@@ -63,7 +63,10 @@ public abstract class AShip : MonoBehaviour
 
     }
 
-    public abstract void ExecuteInstructions(AnswerStruct directives);
+    public virtual void ExecuteMove(){}
+    public virtual void ExecuteInstructions(AnswerStruct answer){
+        
+    }
 
     public abstract bool LookForMovement();
     public abstract bool LookForAttacks();

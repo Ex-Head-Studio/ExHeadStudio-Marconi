@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 
 public interface IShipManager
@@ -7,5 +8,10 @@ public interface IShipManager
     void InstantiateAllyShip(string shipName, int faction);
     void InstantiateEnemyShip(string shipName, int faction);
     void InstantiateInMap(string shipName);
-    void ChooseShips();
+    void EnemyMovesExecution();
+
+    void EnemyMovesSelection();
+
+    IEnumerator EndEnemyTurn();
+
 }

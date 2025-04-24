@@ -130,9 +130,6 @@ public class ShipManager : MonoBehaviour, IShipManager
 
     public void ChooseShips()
     {
-        
-
-
         foreach(AShip AShip in allies)
         {
             if(AShip is NewShip)
@@ -159,131 +156,18 @@ public class ShipManager : MonoBehaviour, IShipManager
 
         Debug.Log("Ally moves: " + allyMoves.Count());
         Debug.Log("Enemy moves: " + enemyMoves.Count());
-        /*
-        foreach(AShip AShip in allyAttackers)
-        {
-            Debug.Log("Allyatt: " + AShip.shipName);
-        }*/
-  
-
         
-
-        /*
-        enemyAttackers = enemies.Where(x => x.LookForObjectives(allies)).ToList();
-        List<AShip> movableEnemies = enemies.Where(x => x.LookForMovement()).ToList();
-        Debug.Log("Numero nemici: "+ enemyAttackers.Count());
-
-        //Una volta che le navi sono state selezionate, si decide cosa far fare a una fazione a seconda di quante navi ha a disposizione
-        //per attaccare e per muoversi
-        // 0 = solo movimento, 1 = movimento e attacco, 2 = solo attacco
-
-        // Verificare che poi nella lista delle navi che eseguiranno qualcosa ci sia il numero giusto di navi
-        
-        int allyDecision, enemyDecision;
-        Debug.Log(allyAttackers.Count);
-        Debug.Log(movableAllies.Count);
-        if(allyAttackers.Count>1 && movableAllies.Count>1){
-            
-            allyDecision=Random.Range(0, 3);
-
-        }
-        else if(allyAttackers.Count>1 && movableAllies.Count==1){
-            allyDecision=Random.Range(1, 3);
-        }
-        else if(allyAttackers.Count==1 && movableAllies.Count>1){
-            allyDecision=Random.Range(0, 2);
-        }
-        else
-        {
-            allyDecision=0;
-        }
-        
-        if(enemyAttackers.Count>1 && movableEnemies.Count>1){
-            
-            enemyDecision=Random.Range(0, 3);
-        }
-        else if(enemyAttackers.Count>1 && movableEnemies.Count==1){
-            enemyDecision=Random.Range(1, 3);
-        }
-        else if(enemyAttackers.Count==1 && movableEnemies.Count>1){
-            enemyDecision=Random.Range(0, 2);
-        }
-        else{
-            enemyDecision=0;
-        }
- 
-
-        switch(allyDecision){
-            case 0:
-                movableAllies=movableAllies.OrderBy(x=> Random.value).ToList();
-                
-                //activeAllies.ForEach(x => x.SetState(AShip.ShipState.Moving));
-                allyAttackers.Clear();
-                break;
-                
-            case 1:
-                activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
-                activeAllies[0].SetState(AShip.ShipState.Attacking);
-                movableAllies.Remove(activeAllies[0]);
-                activeAllies.Add(movableAllies.OrderBy(x=> Random.value).Take(1).ToList()[0]);
-                activeAllies[1].SetState(AShip.ShipState.Moving);
-                break;
-            case 2:
-                if(allyAttackers.Count>1){
-                    activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
-                }
-                else{
-                    activeAllies=allyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
-                }
-                activeAllies.ForEach(x => x.SetState(AShip.ShipState.Attacking));
-                movableAllies.Clear();
-                
-                break;
-            default:
-                break;
-        }
-
-        switch(enemyDecision){
-            case 0:
-                //Non ci sono nemici che possono attaccare, scelgo solo mosse di movimento 
-                if(movableEnemies.Count>1){
-                    activeEnemies=movableEnemies.OrderBy(x=> Random.value).Take(2).ToList();
-                }
-                else{
-                    activeEnemies=movableEnemies.OrderBy(x=> Random.value).Take(1).ToList();
-                }
-                activeEnemies.ForEach(x => x.SetState(AShip.ShipState.Moving));
-                enemyAttackers.Clear();
-                break;
-            case 1:
-                //Ci sono abbastanza nemici per scegliere un attacco e un movimento
-                activeEnemies = enemyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
-                activeEnemies[0].SetState(AShip.ShipState.Attacking);
-                movableEnemies.Remove(activeEnemies[0]);
-                activeEnemies.Add(movableEnemies.OrderBy(x=> Random.value).Take(1).ToList()[0]);
-                activeEnemies[1].SetState(AShip.ShipState.Moving);
-                break;
-            case 2:
-                //Non ci sono nemici che possono muoversi, scelgo solo attacchi
-                if(enemyAttackers.Count>1){
-                    activeEnemies=enemyAttackers.OrderBy(x=> Random.value).Take(2).ToList();
-                }
-                else{
-                    activeEnemies=enemyAttackers.OrderBy(x=> Random.value).Take(1).ToList();
-                }
-                activeEnemies.ForEach(x => x.SetState(AShip.ShipState.Attacking));
-                //movableEnemies.Clear();
-                movableEnemies.Clear();
-                break;
-            default:
-                break;
-        }*/
-        //le liste moving contengono le navi che proporranno un movimento o un attacco al giocatore
-
-    //        Debug.Log("Nemici che fanno cose:" + activeEnemies.Count);
-    //      Debug.Log("Alleati che fanno cose: "+ activeAllies.Count);
 
         SendMessages();
+    }
+    public IEnumerator EndEnemyTurn(){
+        yield return 1;
+    }
+    public void EnemyMovesSelection(){
+
+    }
+    public void EnemyMovesExecution(){
+
     }
     void SendMessages()
     {

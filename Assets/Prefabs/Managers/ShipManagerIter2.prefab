@@ -9,9 +9,10 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 3060470617468302632}
+  - component: {fileID: 2505504855065462051}
   - component: {fileID: 7145104563043181894}
   - component: {fileID: 3459094535404006477}
-  - component: {fileID: 8185301139086698051}
+  - component: {fileID: -1322292175861332768}
   m_Layer: 6
   m_Name: ShipManagerIter2
   m_TagString: Untagged
@@ -34,6 +35,21 @@ Transform:
   m_Children: []
   m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &2505504855065462051
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1468267785584294830}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921917491df30ff46a97d3dd719cf083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  shipManagerSO: {fileID: 0}
+  timeBeforeGeneration: 1
+  timeBeforeEndEnemyTurn: 0.5
 --- !u!114 &7145104563043181894
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -50,9 +66,9 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8185301139086698051}
+      - m_Target: {fileID: 2505504855065462051}
         m_TargetAssemblyTypeName: ShipManager2, Assembly-CSharp
-        m_MethodName: ChooseShips
+        m_MethodName: EnemyMovesSelection
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -78,7 +94,7 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 8185301139086698051}
+      - m_Target: {fileID: 2505504855065462051}
         m_TargetAssemblyTypeName: ShipManager2, Assembly-CSharp
         m_MethodName: RemoveShip
         m_Mode: 0
@@ -90,7 +106,7 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
---- !u!114 &8185301139086698051
+--- !u!114 &-1322292175861332768
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
@@ -99,8 +115,22 @@ MonoBehaviour:
   m_GameObject: {fileID: 1468267785584294830}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 921917491df30ff46a97d3dd719cf083, type: 3}
+  m_Script: {fileID: 11500000, guid: 915cb9b51fdf28447b109893119c064d, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  shipManagerSO: {fileID: 11400000, guid: 0eb036cc5636c474fb97ed35452283f2, type: 2}
-  timeBeforeGeneration: 1
+  eventToListen: {fileID: 11400000, guid: bbc7cca08e679134487cfec6f8259024, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 2505504855065462051}
+        m_TargetAssemblyTypeName: ShipManager2, Assembly-CSharp
+        m_MethodName: EnemyMovesExecution
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

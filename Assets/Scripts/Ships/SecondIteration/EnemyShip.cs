@@ -8,27 +8,19 @@ public class EnemyShip : AShip
     int idMove=0;
     //Quando viene chiamata la fine del turno, Execute Instructions fa fare l'azione migliore alla nave, a meno che non sia stata bloccata
     //dal giocatore, in quel caso non fa nulla
-    public override void ExecuteInstructions(AnswerStruct directives){
+    public override void ExecuteMove(){
         if(!canMove && !canAttack){
             shipMoves.Clear();
             return;
         }
-        if(canMove && !canAttack){
-            shipMoves=shipMoves.Where(x=>x.GetMessageType()==MessageType.movement).ToList();
-        }
-        else if(canAttack && !canMove){
-            shipMoves=shipMoves.Where(x=>x.GetMessageType()==MessageType.attack).ToList();
-        }
-        shipMoves=shipMoves.OrderByDescending(x=>x.value).ToList();
-
-        Move selectedMove=shipMoves[0];
-        switch(selectedMove.GetMessageType()){
+        
+        switch(initialMove.GetMessageType()){
             case MessageType.attack:
-                shipSO.attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
+                shipSO.attackEvent?.Invoke(new ShipAttackStruct(initialMove.GetTargetPos(), shipSO.attackPower));
                 break;
             case MessageType.movement:
-                gridManager.MoveShip(position, selectedMove.GetTargetPos(), faction);
-                position=selectedMove.GetTargetPos();
+                gridManager.MoveShip(position, initialMove.GetTargetPos(), faction);
+                position=initialMove.GetTargetPos();
                 break;
         }
     }
@@ -40,7 +32,7 @@ public class EnemyShip : AShip
         List<Move> possibleMoves= new List<Move>();
         //Crea una lista di possibili mosse e aggiungi tutte le mosse in tutte le posizioni che rimangono all'interno della mappa, 
         // in verticale e orizzontale
-        for(int x=position.x-shipSO.movementRange; x<position.x+shipSO.movementRange; x++){
+        for(int x=position.x-shipSO.movementRange; x<=position.x+shipSO.movementRange; x++){
             if(x>=0 && x<gridManager._width){
                 if(x!=position.x){
                 Vector2Int pos = new Vector2Int(x, position.y);
@@ -49,7 +41,7 @@ public class EnemyShip : AShip
                 }
             }
         }
-        for(int y=position.y-shipSO.movementRange; y<position.y+shipSO.movementRange;y++){
+        for(int y=position.y-shipSO.movementRange; y<=position.y+shipSO.movementRange;y++){
             if(y>=0 && y<gridManager._height){
                 if(y!=position.y){
                 Vector2Int pos = new Vector2Int(position.x, y);
@@ -117,22 +109,14 @@ public class EnemyShip : AShip
                     Vector2Int pos = new Vector2Int(x, position.y);
                     Move newMove= new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     if(Vector2Int.Distance(position, pos)==shipSO.attackRange){
-
-                        if(initialMove==null)
-                        {
-                            initialMove=newMove;
-                        }
                         
-                        initialMove.value+=6;
+                        newMove.value+=6;
+                        
                         
                     }
                     else if(Vector2Int.Distance(position, pos)<shipSO.attackRange && Vector2Int.Distance(position, pos)>0)
                     {
-                        if(initialMove==null)
-                        {
-                            initialMove=newMove;
-                        }
-                        initialMove.value+=5;
+                        newMove.value += 5;
                     }
                     shipMoves.Add(newMove);
                 }
@@ -146,21 +130,11 @@ public class EnemyShip : AShip
                     Move newMove= new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     if(Vector2Int.Distance(position, pos)==shipSO.attackRange){
 
-                        
-                        if(initialMove==null)
-                        {
-                            initialMove=newMove;
-                        }
-                        initialMove.value+=6;
+                        newMove.value+=6;
                     }
                     else if(Vector2Int.Distance(position, pos)<shipSO.attackRange && Vector2Int.Distance(position, pos)>0){
 
-                        
-                        if(initialMove==null)
-                        {
-                            initialMove=newMove;
-                        }
-                        initialMove.value+=5;
+                        newMove.value+=5;
                     }
                     shipMoves.Add(newMove);
                 }
@@ -168,6 +142,7 @@ public class EnemyShip : AShip
         }
         //Ordina le mosse per valore decrescente, in modo da avere prima le mosse più vantaggiose.
         shipMoves=shipMoves.OrderByDescending(x=>x.value).ToList();
+        initialMove=shipMoves[0];
         if(shipMoves.Count>0 && shipMoves.Where(x => x.GetMessageType()==MessageType.attack).ToList().Count>0){
             canAttack=true;
         }
@@ -187,4 +162,8 @@ public class EnemyShip : AShip
         canMove=false;
     }
     
+
+    void ShowMove(){
+
+    }
 }

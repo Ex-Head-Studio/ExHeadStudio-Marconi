@@ -38,7 +38,7 @@ public class DisplayHealth : MonoBehaviour
         {
             healthBarCount--;
             //distruggo l'health bar
-            Destroy(healthObjectsList[healthBarCount]);
+            Destroy(healthObjectsList[healthBarCount-1]);
             healthObjectsList.RemoveAt(healthBarCount);
         }
     }

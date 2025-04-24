@@ -18,10 +18,7 @@ public class AllyShip : AShip
     }
 
 
-    public override void ExecuteInstructions(AnswerStruct directives)
-    {
-        
-    }
+    
 
 
     //Le funzioni che seguono servono per dare al giocatore la possibilità di scegliere solo azioni consentite

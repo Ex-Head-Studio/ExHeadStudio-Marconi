@@ -14,7 +14,7 @@ public class ShipManagerSO : ScriptableObject
     public List<string> startingShips;
     [SerializeField] public float influenceDecay;
     [SerializeField] public float decayMomentum;
-
+    [SerializeField] public EndedEnemyTurnEvent onEndEnemyTurn;
 
     [Header("Materials")]
     [SerializeField] public Material allyMaterial;

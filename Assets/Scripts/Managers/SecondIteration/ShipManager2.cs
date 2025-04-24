@@ -10,7 +10,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     [Header("Parameters")]
     [SerializeField] private ShipManagerSO shipManagerSO;
     [SerializeField] private float timeBeforeGeneration = 1f;
-    
+    [SerializeField] private float timeBeforeEndEnemyTurn;
     private Dictionary<string, AShip> shipsD;
 
     //per vedere le liste in inspector, usare la modalità di debug
@@ -36,6 +36,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
         //TODO rivedere questa cosa, la reference al singleton va fatta in modo diverso
         gridManager = FindFirstObjectByType<GridManager>();
+        
 
         shipManagerSO.RandomizeShips();
 
@@ -113,15 +114,28 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
 
 
-    //TODO commentare questa funzione, non è chiaro il suo scopo; Viene chiamata in risposta all'evento di inizio turno
     //La funzione viene chiamata per dire alle navi di calcolare le loro azioni, fatto questo, le navi poi potranno eseguire la loro azione migliore
     //una volta che il turno verrà effettuato.
-    public void ChooseShips()
+    public void EnemyMovesSelection()
     {
-        enemies.ForEach(e => {e.LookForAttacks(); e.LookForMovement(); });   
+        Debug.Log("Ricerca mosse del nemico");
+        enemies.ForEach(e => {e.LookForMovement(); e.LookForAttacks();});
+        
+    }
+    //Il metodo viene chiamato dall'evento di fine turno giocatore e fa eseguire alle navi la loro mossa preferita
+    public void EnemyMovesExecution(){
+        Debug.Log("Esecuzione turno nemico");
+        enemies.ForEach(e=>e.ExecuteMove());
+        StartCoroutine(EndEnemyTurn());
     }
 
-    //TODO commentare questa funzione, non è chiaro il suo scopo
+    public IEnumerator EndEnemyTurn(){
+        yield return new WaitForSeconds(timeBeforeEndEnemyTurn);
+        shipManagerSO.onEndEnemyTurn.Invoke(new VoidEvent(0));
+        Debug.Log("Fine turno nemico");
+    }
+
+
     //Finito il turno, aggiorna la influence map con le nuove posizioni delle navi, così i calcoli nei turni successivi sono corretti
     public void EndTurn()
     {
