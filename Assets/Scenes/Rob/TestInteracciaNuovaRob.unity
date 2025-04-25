@@ -197,6 +197,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: ShipManagerIter2
       objectReference: {fileID: 0}
+    - target: {fileID: 2505504855065462051, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+      propertyPath: shipManagerSO
+      value: 
+      objectReference: {fileID: 11400000, guid: 0eb036cc5636c474fb97ed35452283f2, type: 2}
     - target: {fileID: 3060470617468302632, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
       propertyPath: m_LocalPosition.x
       value: 0
@@ -440,7 +444,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -4.5
+      value: 22.7
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_LocalPosition.y
@@ -448,11 +452,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 17.9
+      value: -7.4
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_LocalRotation.x
@@ -460,7 +464,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 1
+      value: -0.7071068
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_LocalRotation.z
@@ -472,7 +476,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 180
+      value: -90
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
@@ -488,7 +492,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
       propertyPath: m_IsActive
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -915,7 +919,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.20152941, g: 0.27985555, b: 0.3529412, a: 0}
+  m_BackGroundColor: {r: 0.13725491, g: 0.14117648, b: 0.28235295, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -2008,7 +2012,6 @@ RectTransform:
   m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
-  - {fileID: 7847917408450756308}
   - {fileID: 693790565760304123}
   - {fileID: 7304384419151994741}
   - {fileID: 596362533}
@@ -3127,9 +3130,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
-        m_MethodName: BackToMainMenu
+      - m_Target: {fileID: 898479758837082563}
+        m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
+        m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -3456,9 +3459,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 8056096205945356722}
-  m_LocalRotation: {x: 0.7071068, y: -0, z: -0, w: 0.7071068}
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
   m_LocalPosition: {x: 0, y: 0, z: 0}
-  m_LocalScale: {x: 0.025000004, y: 0.025000006, z: 0.025000006}
+  m_LocalScale: {x: 0, y: 0, z: 0}
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1357095562894040674}
@@ -3469,9 +3472,9 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 90, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 0, y: 4.7}
-  m_SizeDelta: {x: 1920, y: 1080}
-  m_Pivot: {x: 0.5, y: 0.5}
+  m_AnchoredPosition: {x: 0, y: 0}
+  m_SizeDelta: {x: 0, y: 0}
+  m_Pivot: {x: 0, y: 0}
 --- !u!114 &1962046941555981136
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3942,8 +3945,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 898479758837082563}
+        m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
         m_MethodName: OpenOptions
         m_Mode: 1
         m_Arguments:
@@ -4075,7 +4078,7 @@ MonoBehaviour:
   m_FallbackScreenDPI: 96
   m_DefaultSpriteDPI: 96
   m_DynamicPixelsPerUnit: 1
-  m_PresetInfoIsWorld: 1
+  m_PresetInfoIsWorld: 0
 --- !u!222 &3385844155402582830
 CanvasRenderer:
   m_ObjectHideFlags: 0
@@ -5305,8 +5308,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 898479758837082563}
+        m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
@@ -5664,7 +5667,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 119.999954, y: -40.00004}
+  m_AnchoredPosition: {x: 119.99994, y: -40.00003}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &5874645158335279126
@@ -6015,8 +6018,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 898479758837082563}
+        m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
         m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
@@ -6554,7 +6557,7 @@ Canvas:
   m_GameObject: {fileID: 8056096205945356722}
   m_Enabled: 1
   serializedVersion: 3
-  m_RenderMode: 2
+  m_RenderMode: 0
   m_Camera: {fileID: 1306454073}
   m_PlaneDistance: 2
   m_PixelPerfect: 0
@@ -6660,9 +6663,9 @@ RectTransform:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7228213433559479951}
-  m_LocalRotation: {x: 0.35355344, y: -0.1464466, z: 0.35355335, w: 0.85355335}
-  m_LocalPosition: {x: 0, y: 0, z: -1811.1034}
-  m_LocalScale: {x: 4.060151, y: 4.060152, z: 4.0601516}
+  m_LocalRotation: {x: 0.7071068, y: -0, z: 0.000000014901161, w: 0.7071068}
+  m_LocalPosition: {x: 0, y: 0, z: -3.329504}
+  m_LocalScale: {x: 0.100000024, y: 0.10000007, z: 0.10000006}
   m_ConstrainProportionsScale: 1
   m_Children:
   - {fileID: 8379793210354945403}
@@ -6670,11 +6673,11 @@ RectTransform:
   - {fileID: 1222470743402408322}
   - {fileID: 2160481189255459861}
   - {fileID: 3448490830800823019}
-  m_Father: {fileID: 1724466004}
+  m_Father: {fileID: 0}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
-  m_AnchoredPosition: {x: 925.0137, y: 537.12445}
+  m_AnchoredPosition: {x: -8328.401, y: 537.1253}
   m_SizeDelta: {x: 430.4, y: 244}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!1 &7902387911969885869
@@ -7371,9 +7374,9 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
-        m_MethodName: RestartGame
+      - m_Target: {fileID: 898479758837082563}
+        m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
+        m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -7523,6 +7526,7 @@ SceneRoots:
   m_Roots:
   - {fileID: 1445187769}
   - {fileID: 1458507606}
+  - {fileID: 7847917408450756308}
   - {fileID: 1724466004}
   - {fileID: 443487956}
   - {fileID: 385189859}

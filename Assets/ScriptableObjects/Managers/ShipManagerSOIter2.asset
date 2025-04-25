@@ -25,8 +25,8 @@ MonoBehaviour:
   influenceDecay: 0.5
   decayMomentum: 0.1
   onEndEnemyTurn: {fileID: 11400000, guid: b61a9d001a410e64da4d44cc7a5ee84d, type: 2}
-  allyMaterial: {fileID: 2100000, guid: 793fce91adcbead4692c9a1c9f1edc53, type: 2}
-  enemyMaterial: {fileID: 2100000, guid: 81ac4eee0b8342142b967ef9048566ed, type: 2}
+  allyMaterial: {fileID: 2100000, guid: c1129473d5858344796abb4d75f5f1d3, type: 2}
+  enemyMaterial: {fileID: 2100000, guid: b511e479b90146d43b2c8b4664317367, type: 2}
   shipSOarray:
   - {fileID: 11400000, guid: 5028460dd36551949a087a7dd00fc112, type: 2}
   - {fileID: 11400000, guid: dc867e7cbd11b5245ac60b00014265c6, type: 2}
