@@ -165,6 +165,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
             
             influenceMap.UnregisterPropagator(shipDestroyedStruct.shipScript);
             influenceMap.Propagate();
+            gridManager.RemoveShip(shipDestroyedStruct.shipScript);
         
             shipsD.Remove(shipDestroyedStruct.shipName);
             Destroy(shipDestroyedStruct.shipScript.gameObject);

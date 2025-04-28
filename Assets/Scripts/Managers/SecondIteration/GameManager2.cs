@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections;
 using FMODUnity;
 using System.Collections.Generic;
+using Mono.Cecil;
 
 /// <summary>
 /// Il game manager si occupa della gestione dei tempi e dei turni di gioco
@@ -21,6 +22,7 @@ public class GameManager2 : MonoBehaviour
     
     [Header("Game Events to call")]
     [Tooltip("Evento di inzio turno")]
+    //alla struct passo il numero di round
     [SerializeField] private StartedTurnEvent startedTurnEvent;
     private void Start()
     {
@@ -48,17 +50,17 @@ public class GameManager2 : MonoBehaviour
 
     private IEnumerator StartGame()
     {
-        //devo passare una struct vuota perchè il metodo invocato è void (Stefano)
         yield return new WaitForSeconds(timeBeforeStart);
-        Debug.Log("Inizio partita");
-        startedTurnEvent?.Invoke(new VoidEvent(0));
+        startedTurnEvent?.Invoke(new VoidEvent(numberOfRounds));
+        Debug.Log("Inizio partita, turno " + numberOfRounds);
     }
 
     private IEnumerator WaitNextRound()
     {
         yield return new WaitForSeconds(timeBetweenRounds);
-        Debug.Log("Inizio turno " + numberOfRounds);
-        startedTurnEvent?.Invoke(new VoidEvent(0));
+        startedTurnEvent?.Invoke(new VoidEvent(numberOfRounds));
+        Debug.Log("Turno del giocatore numero " + numberOfRounds);
+
     }
 
     //TODO: implementare la logica di energia delle carte

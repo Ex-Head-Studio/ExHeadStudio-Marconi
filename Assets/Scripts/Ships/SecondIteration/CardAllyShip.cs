@@ -11,6 +11,7 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
 {
     private AllyShip allyShip;
     private AbstractCard cardToUse;
+    private Collider shipCollider;
 
     private bool isShipSelectable = false;
 
@@ -21,6 +22,8 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
     private void Start()
     {
         allyShip = GetComponent<AllyShip>();
+        shipCollider = GetComponent<Collider>();
+        Assert.IsNotNull(shipCollider, "Ship collider is not assigned in the inspector.");
     }
 
     void ICardDropArea.CardDrop(AbstractCard card)
@@ -49,8 +52,11 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
     {
         if(isShipSelectable)
         {
+                //animazione per la selezione della nave
+                transform.DOPunchScale(new Vector3(1.1f, 1.1f, 1.1f), 0.2f).SetLoops(-1, LoopType.Yoyo);
+
+
                 isShipSelected = true;
-                
                 if (cardToUse.GetCardEffects() == null)
                 {
                     Debug.Log("La carta non ha effetti da applicare.");
@@ -63,11 +69,20 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
                     }
                 }
 
-                isShipSelectable = false;
-
                 cardToUse.InvokeCardUsed(cardToUse);
-                cardToUse.GetEnergyEvent().Invoke(cardToUse.GetCardCost());
+                isShipSelectable = false;
+                shipCollider.enabled = false;
         }
+    }
+
+    public bool IsSelected()
+    {
+        return isShipSelected;
+    }
+
+    public void DeselectShip()
+    {
+        isShipSelected = false;
     }
 
     #endregion
@@ -107,6 +122,7 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
 
             cardToUse = card;
             isShipSelectable = true;
+            shipCollider.enabled = true;
         }
     }
 
@@ -116,8 +132,19 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
         transform.DOKill(true);
 
         isShipSelectable = false;
+        shipCollider.enabled = false;
     }
 
-     //qui inserisco i metodi di riposta agli effetti, con le differenze dovute
+
+
+    private void OnDrawGizmos()
+    {
+        if(isShipSelectable)
+        {
+            Gizmos.color = Color.red;
+            Gizmos.DrawCube(transform.position, new Vector3(shipCollider.bounds.size.x, shipCollider.bounds.size.y, shipCollider.bounds.size.z));
+        }
+
+    }
 
 }

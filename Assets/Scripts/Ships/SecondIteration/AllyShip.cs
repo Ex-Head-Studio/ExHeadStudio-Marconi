@@ -7,6 +7,9 @@ public class AllyShip : AShip
 {
     int moveId = 0;
 
+    private CardAllyShip cardAllyScript;
+
+
     private void OnEnable()
     {
         Tile.tileSelected += ReceiveTile;
@@ -16,9 +19,6 @@ public class AllyShip : AShip
     {
         Tile.tileSelected -= ReceiveTile;
     }
-
-
-    
 
 
     //Le funzioni che seguono servono per dare al giocatore la possibilità di scegliere solo azioni consentite
@@ -136,9 +136,14 @@ public class AllyShip : AShip
 
     public void ReceiveTile(Tile tile)
     {
+        if(gameObject.TryGetComponent<CardAllyShip>( out cardAllyScript))
+        {
+            if(!cardAllyScript.IsSelected()) return;
+        }
         if(tile._type == TileType.Empty)
         {
             gridManager.MoveShip(this.position, gridManager.GetPositionFromTile(tile), this.faction);
+            this.position = Vector2Int.RoundToInt(gridManager.GetPositionFromTile(tile));
         }
         else if (tile._type == TileType.Enemy)
         {
@@ -150,6 +155,8 @@ public class AllyShip : AShip
         {
             gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileNotInteractable();
         }
+
+        cardAllyScript.DeselectShip();
     }
 
     public void AddHealth(int healthToAdd)
@@ -157,4 +164,5 @@ public class AllyShip : AShip
         health += healthToAdd;
         //update UI
     }
+
 }

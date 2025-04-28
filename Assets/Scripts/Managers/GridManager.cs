@@ -154,7 +154,14 @@ public class GridManager : MonoBehaviour
             currentTile.SetShip(null);
         }
     }
-
+    
+    public void RemoveShip(AShip ship)
+    {
+        Vector2 position = ship.position;
+        Tile tile = GetTileAtPosition(position);
+        tile.SetTypeEmpty();
+        tile.SetShip(null);
+    }
     
 
     //serve ancora questo metodo? (Stefano)

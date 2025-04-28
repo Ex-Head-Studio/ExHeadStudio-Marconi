@@ -43,7 +43,8 @@ public class ShipManagerSO : ScriptableObject
         return allyShips;
     }
 
-    public void RandomizeShips(){
+    public void RandomizeShips()
+    {
         startingShips.OrderBy(x=>Random.value);
     }
 }

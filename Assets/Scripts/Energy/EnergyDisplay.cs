@@ -1,8 +1,18 @@
+using System;
 using System.Collections.Generic;
+using DG.Tweening;
 using UnityEngine;
 
 public class EnergyDisplay : MonoBehaviour
 {
+
+    private enum EnergyRechargeType
+    {
+        FullIncrement,
+        PartialIncrement
+    }
+
+    [SerializeField] EnergyRechargeType energyRechargeType = EnergyRechargeType.PartialIncrement;
     [SerializeField] private EnergySystem energySystem;
     [SerializeField] private GameObject energyBarPrefab;
     [SerializeField] private Transform energyBarContainer; // Parent object for energy bars
@@ -19,25 +29,44 @@ public class EnergyDisplay : MonoBehaviour
             return;
         }
 
-        //l'offset serve perchè a inizio gioco conto anche il primo turno
-        UpdateEnergyDisplay(energySystem.defaultEnergy-1);
+        energySystem.InizializeValues();
     }
 
-    public void AddTurnEnergy()
+    public void AddTurnEnergy(VoidEvent numberOfRound)
     {
-        UpdateEnergyDisplay(energySystem.energyPerTurn);
-    }
 
-    private void UpdateEnergyDisplay(int amount)
-    {
-        energySystem.AddEnergy(amount);
-        for(int i = 0; i < amount; i++)
+
+        switch (energyRechargeType)
         {
-            Instantiate(energyBarPrefab, energyBarContainer);
-            energyBars.Add(energyBarPrefab);
-        }
-    }
+            case EnergyRechargeType.FullIncrement:
 
+                if (numberOfRound.value == 0)
+                {
+                    UpdateEnergyDisplay();
+                    energySystem.ResetEnergy();
+                    break;
+                }
+
+                //l'ordine di chiamata è importante, prima si aggiorna la UI e poi si resetta l'energia
+                UpdateEnergyDisplay();
+                energySystem.ResetEnergy();
+                break;
+                
+            case EnergyRechargeType.PartialIncrement:
+                if (numberOfRound.value == 0)
+                {
+                    UpdateEnergyDisplay();
+                    energySystem.SetDefaultEnergy();
+                    break;
+                }
+                UpdateEnergyDisplay(energySystem.energyPerTurn);
+                energySystem.AddEnergy(energySystem.energyPerTurn);
+
+                break;
+        }
+
+    }
+    
     public void RemoveEnergy(int amount)
     {
         //questa funzione deve restare fuori dal ciclo
@@ -49,7 +78,9 @@ public class EnergyDisplay : MonoBehaviour
                 for(int i = amount-1; i >= 0; i--)
                 {
                     energyBars.RemoveAt(i);
-                    //mi piacerebbe fare una piccola animazione di distruzione
+                    //mi piacerebbe fare una piccola animazione di distruzione o un particellare
+                    energyBars[i].transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f).SetEase(Ease.OutBack);
+
                     Destroy(energyBarContainer.GetChild(i).gameObject, 0.5f);
                 }
             }
@@ -63,4 +94,31 @@ public class EnergyDisplay : MonoBehaviour
              }
         
     }
+
+
+    //metodo che istanzia la massima energia possibile
+    //la prima differenza che viene eseguita impone che prima si aggiorni la UI e poi si resetti l'energia
+    private void UpdateEnergyDisplay()
+    {
+        int energyDiff = energySystem.maxEnergy - energySystem.currentEnergy;
+        for(int i = 0; i < energyDiff && energyBars.Count < energySystem.maxEnergy; i++)
+        {
+            Instantiate(energyBarPrefab, energyBarContainer);
+            energyBars.Add(energyBarPrefab);
+        }
+    }
+
+    //metodo che istanzia un certo numero di barre di energia
+    private void UpdateEnergyDisplay(int amount)
+    {
+        for(int i = 0; i < amount && energyBars.Count <= energySystem.maxEnergy; i++)
+        {
+            Instantiate(energyBarPrefab, energyBarContainer);
+            energyBars.Add(energyBarPrefab);
+        }
+    }
+
+
+
+
 }

@@ -10,6 +10,11 @@ public class EnergySystem : ScriptableObject
 
     public int currentEnergy;
 
+    public void InizializeValues()
+    {
+        currentEnergy = 0;
+    } 
+
     private void Start()
     {
         currentEnergy = defaultEnergy;
@@ -20,9 +25,16 @@ public class EnergySystem : ScriptableObject
         currentEnergy = defaultEnergy;
     }
 
+    public void SetDefaultEnergy()
+    {
+        currentEnergy = defaultEnergy;
+    }
+
     public void AddEnergy(int amount)
     {
+        
         currentEnergy += amount;
+
         if (currentEnergy > maxEnergy)
         {
             currentEnergy = maxEnergy;
@@ -31,18 +43,10 @@ public class EnergySystem : ScriptableObject
     public void RemoveEnergy(int amount)
     {
         currentEnergy -= amount;
+        
         if (currentEnergy < 0)
         {
             currentEnergy = 0;
-        }
-    }
-
-    public void RegenerateEnergy()
-    {
-        currentEnergy += energyPerTurn;
-        if (currentEnergy > maxEnergy)
-        {
-            currentEnergy = maxEnergy;
         }
     }
 }

@@ -98,7 +98,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     //     if (Input.GetMouseButtonUpAsButton(0)) if (_type != TileType.Empty) GridManager.Instance.SwapTileTypes(this);
     // }
 
-    #region Gestione della selezione della tile
+    #region Selezione della tile
 
     [ContextMenu("Set Tyle Interactable" )]
     //Questa funzione è per il debug, per vedere se la tile è interagibile o meno
@@ -130,7 +130,9 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         {
             //Debug.Log("Mouse entered tile: " + gameObject.name);
             _highlight.SetActive(true);
-            transform.DOPunchRotation(Vector3.back, 0.5f, 1, 0.5f).SetEase(Ease.OutBack);
+
+            //animazione per l'entrata del puntatore
+            transform.DOPunchScale(new Vector3(0.9f, 0.9f, 0.9f), 0.2f).SetLoops(-1, LoopType.Restart);
         }
 
     }
@@ -141,7 +143,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         {
             //Debug.Log("Mouse exited tile: " + gameObject.name);
             _highlight.SetActive(false);
-            transform.DOKill();
+            transform.DOKill(true);
         }
     }
 
@@ -225,8 +227,6 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
             //_mesh.material = _emptyMaterial;
         }
     }
-
-    //TODO capire come legge il transform e se capita qualcosa
     public void SetShip(GameObject ship) 
     {
         if(ship != null)
@@ -253,5 +253,11 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     public void SetTypeEmpty() {
         _type = TileType.Empty;
         _mesh.material.color = _emptyColor;
+    }
+
+    private void OnDrawGizmos()
+    {
+        Gizmos.color = Color.red;
+        Gizmos.DrawWireCube(transform.position, new Vector3(tileCollider.bounds.size.x, tileCollider.bounds.size.y, tileCollider.bounds.size.z));   
     }
 }
