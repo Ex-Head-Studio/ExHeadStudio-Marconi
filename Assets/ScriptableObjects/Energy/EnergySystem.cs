@@ -14,12 +14,7 @@ public class EnergySystem : ScriptableObject
     {
         currentEnergy = 0;
     } 
-
-    private void Start()
-    {
-        currentEnergy = defaultEnergy;
-    }
-
+    
     public void ResetEnergy()
     {
         currentEnergy = defaultEnergy;

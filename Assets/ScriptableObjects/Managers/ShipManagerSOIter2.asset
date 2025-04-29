@@ -13,15 +13,13 @@ MonoBehaviour:
   m_Name: ShipManagerSOIter2
   m_EditorClassIdentifier: 
   initialEnemyShips: 3
-  initialAllyShips: 3
+  initialAllyShips: 1
   numberOfMessages: 3
   startingShips:
   - A
   - B
   - C
   - D
-  - E
-  - F
   influenceDecay: 0.5
   decayMomentum: 0.1
   onEndEnemyTurn: {fileID: 11400000, guid: b61a9d001a410e64da4d44cc7a5ee84d, type: 2}
@@ -32,3 +30,4 @@ MonoBehaviour:
   - {fileID: 11400000, guid: dc867e7cbd11b5245ac60b00014265c6, type: 2}
   - {fileID: 11400000, guid: a6a74b98722011c488fca974bf86454b, type: 2}
   - {fileID: 11400000, guid: 2fbe1eeb15352c841b681056495d7110, type: 2}
+  - {fileID: 11400000, guid: c92e95c62b248b74fac19379a88bab9e, type: 2}

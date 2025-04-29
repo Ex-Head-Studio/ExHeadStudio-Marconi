@@ -27,5 +27,5 @@ MonoBehaviour:
   shipAnimatorController: {fileID: 9100000, guid: aeb74e1e009911544a03f9cef7127a99, type: 2}
   shipInfluence: 0
   shipModelPrefab: {fileID: 4912451739719525359, guid: a4722112e218a7a45934fb6510052f6e, type: 3}
-  shipClassModel: {fileID: 8019734259390328717, guid: a2e216409814ffb45867202eca54abbb, type: 3}
-  shipModelMesh: {fileID: 8019734259390328717, guid: a2e216409814ffb45867202eca54abbb, type: 3}
+  shipClassModel: {fileID: 3882038341808152683, guid: 7d01504a07323d54c8e06be5b2fae0ff, type: 3}
+  shipModelMesh: {fileID: 919132149155446097, guid: 73ff19ecc4f28be4a8ce33ef654bf028, type: 3}

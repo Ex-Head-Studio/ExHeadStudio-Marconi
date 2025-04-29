@@ -175,7 +175,17 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
     private AShip SetupShip(string shipName, int faction)
     {
-        modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
+
+        //Aggiunto per istanziare sempre la classe base se ho solo una nave alleata
+        if(faction == (int)Entity.ally && shipManagerSO.allyShips == 1)
+        {
+            modelIndex = shipManagerSO.shipSOarray.Count - 1;
+        }
+        else
+        {
+            modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
+        }
+
         GameObject newShip = Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90, 0, 0));
 
         Animator childAnim = newShip.gameObject.GetComponentInChildren<Animator>();

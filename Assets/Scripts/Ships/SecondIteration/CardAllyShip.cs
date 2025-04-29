@@ -53,7 +53,8 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
         if(isShipSelectable)
         {
                 //animazione per la selezione della nave
-                transform.DOPunchScale(new Vector3(1.1f, 1.1f, 1.1f), 0.2f).SetLoops(-1, LoopType.Yoyo);
+                transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {transform.DOKill(true);
+                });
 
 
                 isShipSelected = true;

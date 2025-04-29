@@ -132,7 +132,8 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
             _highlight.SetActive(true);
 
             //animazione per l'entrata del puntatore
-            transform.DOPunchScale(new Vector3(0.9f, 0.9f, 0.9f), 0.2f).SetLoops(-1, LoopType.Restart);
+            transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {transform.DOKill(true);
+            });
         }
 
     }

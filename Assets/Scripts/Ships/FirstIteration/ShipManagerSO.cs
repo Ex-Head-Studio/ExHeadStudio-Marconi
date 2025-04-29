@@ -20,11 +20,14 @@ public class ShipManagerSO : ScriptableObject
     [SerializeField] public Material allyMaterial;
     [SerializeField] public Material enemyMaterial;
 
+    [Space]
+    [Header("Ships SO")]
+    [Tooltip("La classe base deve essere in coda all'array")]
     [SerializeField] public List<ShipSO> shipSOarray;
 
     [NonSerialized]
     public int enemyShips;
-     [NonSerialized]
+    [NonSerialized]
     public int allyShips;
 
     private void OnEnable()

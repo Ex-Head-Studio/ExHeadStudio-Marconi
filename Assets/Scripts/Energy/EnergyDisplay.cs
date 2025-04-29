@@ -35,7 +35,6 @@ public class EnergyDisplay : MonoBehaviour
     public void AddTurnEnergy(VoidEvent numberOfRound)
     {
 
-
         switch (energyRechargeType)
         {
             case EnergyRechargeType.FullIncrement:
@@ -79,7 +78,7 @@ public class EnergyDisplay : MonoBehaviour
                 {
                     energyBars.RemoveAt(i);
                     //mi piacerebbe fare una piccola animazione di distruzione o un particellare
-                    energyBars[i].transform.DOPunchScale(new Vector3(0.5f, 0.5f, 0.5f), 0.5f).SetEase(Ease.OutBack);
+                    energyBars[i].transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {energyBars[i].transform.DOKill(true);});
 
                     Destroy(energyBarContainer.GetChild(i).gameObject, 0.5f);
                 }
@@ -89,6 +88,8 @@ public class EnergyDisplay : MonoBehaviour
                 for(int i = energyBarContainer.childCount-1; i >= 0; i--)
                 {
                     energyBars.RemoveAt(i);
+
+                    energyBars[i].transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {energyBars[i].transform.DOKill(true);});
                     Destroy(energyBarContainer.GetChild(i).gameObject);
                 }
              }
