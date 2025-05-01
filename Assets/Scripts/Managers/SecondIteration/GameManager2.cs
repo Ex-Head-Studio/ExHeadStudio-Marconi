@@ -7,6 +7,7 @@ using Mono.Cecil;
 /// <summary>
 /// Il game manager si occupa della gestione dei tempi e dei turni di gioco
 /// </summary>
+
 public class GameManager2 : MonoBehaviour
 {
 
@@ -51,6 +52,10 @@ public class GameManager2 : MonoBehaviour
     private IEnumerator StartGame()
     {
         yield return new WaitForSeconds(timeBeforeStart);
+        /// <summary>
+        //Aggiungere il nuovo event
+        /// </summary>
+        /// <param name="VoidEvent(numberOfRounds)"></param>
         startedTurnEvent?.Invoke(new VoidEvent(numberOfRounds));
         Debug.Log("Inizio partita, turno " + numberOfRounds);
     }

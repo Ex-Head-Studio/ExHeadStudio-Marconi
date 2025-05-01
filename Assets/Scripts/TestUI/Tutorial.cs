@@ -58,6 +58,7 @@ public class TutorialManager : MonoBehaviour
         }
     }
 
+
     void PerformActionBasedOnMessage(int messageIndex)
     {
         RectTransform rectTransform = backgroundPanel.GetComponent<RectTransform>();

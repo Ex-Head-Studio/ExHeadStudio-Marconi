@@ -5,6 +5,8 @@ using UnityEngine;
 using Random=UnityEngine.Random;
 
 [CreateAssetMenu(fileName = "ShipManagerSO", menuName = "Scriptable Objects/ShipManagerSO")]
+
+//Cosa fa la classe?
 public class ShipManagerSO : ScriptableObject
 {
     [SerializeField] private int initialEnemyShips;

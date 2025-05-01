@@ -47,6 +47,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     
     private void Start()
     {
+        //Togliere da start e creare l'evento nuovo di inizio gioco
         StartCoroutine(ShipGeneration());
     }
 
@@ -99,9 +100,9 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
     /// <summary>
     ///  Instantiates an anemy ship and adds it to the dictionary of shipsD.
-    /// </summary>
     /// <param name="shipName"></param>
-    /// 
+    /// </summary>
+
     public void InstantiateEnemyShip(string shipName, int faction)
         {
             AShip newShip= SetupShip(shipName, faction);

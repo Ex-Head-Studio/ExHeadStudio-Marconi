@@ -16,6 +16,11 @@ public class EndTurnButton2 : MonoBehaviour
     private Button  button;
 
 
+    //Gabriele
+    //Non posso cliccare sul bottone se ho selezionato una carta
+    //Non posso cliccare il bottone se è il turno dell'avversario
+
+    
     private void Awake()
     {
         button = GetComponent<Button>();

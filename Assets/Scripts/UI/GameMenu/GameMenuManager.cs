@@ -49,10 +49,10 @@ public class GameMenuManager : MonoBehaviour
     private int enemyShips;
     private int allyShips;
 
-    //TODO verificare se può essere fatto meglio e senza stringhe        
+        
     //TODO verificare se è possibile usare ancora esc per muoversi tra i menu (edit: non tanto)
 
-
+        //TODO verificare se può essere fatto meglio e senza stringhe
     private void OnEnable()
     {
         inputs.FindActionMap("UI").FindAction("PauseGame").performed += ctx => OnPause();
