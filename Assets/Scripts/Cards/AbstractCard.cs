@@ -87,4 +87,8 @@ public abstract class AbstractCard : MonoBehaviour
 
         return energyUsedEvent;
     }
+    private void OnDestroy()
+    {
+
+    }
 }

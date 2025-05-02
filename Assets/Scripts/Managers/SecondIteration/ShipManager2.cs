@@ -120,6 +120,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     public void EnemyMovesSelection()
     {
         Debug.Log("Ricerca mosse del nemico");
+        allies.ForEach(a => {a.LookForMovement(); a.LookForAttacks();});
         enemies.ForEach(e => {e.LookForMovement(); e.LookForAttacks();});
         
     }

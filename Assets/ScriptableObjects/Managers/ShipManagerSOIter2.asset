@@ -20,6 +20,8 @@ MonoBehaviour:
   - B
   - C
   - D
+  - E
+  - F
   influenceDecay: 0.5
   decayMomentum: 0.1
   onEndEnemyTurn: {fileID: 11400000, guid: b61a9d001a410e64da4d44cc7a5ee84d, type: 2}

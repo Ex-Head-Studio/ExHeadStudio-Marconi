@@ -260,6 +260,10 @@ PrefabInstance:
     m_TransformParent: {fileID: 1458507606}
     m_Modifications:
     - target: {fileID: 5758680995345812927, guid: 3fefeba251285714caac5039ec07c6a0, type: 3}
+      propertyPath: timeBeforeStart
+      value: 2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758680995345812927, guid: 3fefeba251285714caac5039ec07c6a0, type: 3}
       propertyPath: timeBetweenRounds
       value: 4
       objectReference: {fileID: 0}

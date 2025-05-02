@@ -8,6 +8,7 @@ using DG.Tweening;
 using TMPro;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
+using System.Runtime.CompilerServices;
 
 
 
@@ -26,10 +27,12 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     private int cardCost;
 
 
+
     //TODO valutare se conviene scrivere un event channel
 
     public static event Action<AbstractCard> cardSelectedEvent;
     public static event Action<AbstractCard> cardDeselectedEvent;
+    public static event Action<AbstractCard> deselectOtherCardsEvent;
 
     private AbstractCard cardScript;
 
@@ -50,7 +53,9 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text costText;
 
-
+    private Vector3 selectionScale;
+    private Vector3 startingScale;
+    private Vector3 hoverScale;
 
     [Header("Energy System")]
     [SerializeField] private EnergySystem energySystem;
@@ -62,8 +67,17 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     private void OnDestroy()
     {
         cardDeselectedEvent?.Invoke(cardScript);
+        isCardSelected = false;
+        deselectOtherCardsEvent -= DeselectCard;
+        
     }
-
+    void Awake()
+    {
+        deselectOtherCardsEvent += DeselectCard;
+        selectionScale = transform.localScale * (hoverScaleFactor+0.1f);
+        hoverScale = transform.localScale * hoverScaleFactor;
+        startingScale = transform.localScale;
+    }
     private void Start()
     {
         cardTransform = GetComponent<Transform>();
@@ -93,6 +107,17 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
     #region Gestione della selezione
 
+    void DeselectCard(AbstractCard cardScript){
+        if(this.cardScript.gameObject != null){
+            if(isCardSelected && cardScript.gameObject != this.cardScript.gameObject)
+            {
+                
+                cardDeselectedEvent?.Invoke(cardScript);
+                isCardSelected = false; 
+                transform.localScale = startingScale;
+            }
+        }
+    }
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
         if(energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
@@ -104,19 +129,22 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
         else
         {
             //Qui c'è un bug, non riesce a deselezionare correttamente
-            if(eventData.pointerClick == this.gameObject)
-            {
-                UnityEngine.Debug.Log("PointerClick su carta: " + eventData.pointerClick);
-                cardSelectedEvent?.Invoke(cardScript);
-                isCardSelected = true;
-                transform.localScale = cardTransform.localScale * hoverScaleFactor;
-            }
-            else if(eventData.pointerClick != this.gameObject)
+            if(!isCardSelected && eventData.pointerClick == this.gameObject)
             {   
+                deselectOtherCardsEvent?.Invoke(cardScript);
+                isCardSelected = true;
+                UnityEngine.Debug.Log("PointerClick su carta: " + eventData.pointerClick);
+                
+                transform.localScale = selectionScale;
+                cardSelectedEvent?.Invoke(cardScript);
+            }
+            else if(isCardSelected && (eventData.pointerClick == this.gameObject || eventData.pointerClick != this.gameObject))
+            {   
+                isCardSelected = false;
                 Debug.Log("Carta deselezionata");
                 cardDeselectedEvent?.Invoke(cardScript);
                 isCardSelected = false;
-                transform.localScale = cardTransform.localScale / hoverScaleFactor;
+                transform.localScale = startingScale;;
             }
         }
     }
@@ -124,7 +152,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     {
         if(!isCardSelected)
         {
-            transform.localScale = cardTransform.localScale * hoverScaleFactor;
+            transform.localScale = hoverScale;
         }
     }
 
@@ -132,7 +160,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     {
         if(!isCardSelected)
         {
-            transform.localScale = cardTransform.localScale / hoverScaleFactor;
+            transform.localScale = startingScale;
         }
     }
 

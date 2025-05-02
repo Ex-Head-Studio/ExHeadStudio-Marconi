@@ -69,7 +69,7 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
                         effect.PerformEffect(new EffectStruct(cardToUse, this.gameObject));
                     }
                 }
-
+                //TODO: aggiungere verifica se la carta può far fare tale mossa alla nave, altrimenti non chiamare l'evento
                 cardToUse.InvokeCardUsed(cardToUse);
                 isShipSelectable = false;
                 shipCollider.enabled = false;

@@ -26,10 +26,28 @@ public class EndTurnButton2 : MonoBehaviour
         button = GetComponent<Button>();
         button.image.color = Color.green;
         executeAnimator.SetBool("CanExecute", true);
+        AbstractCard.abstractCardUsed += DisableButton;
+        
+        Tile.tileSelected += EnableButton;
     }
 
     public void EndTurn()
     {
         endedTurnEvent?.Invoke(new VoidEvent(0));
+    }
+
+    public void DisableButton(AbstractCard cardUsed)
+    {
+        button.interactable = false;
+        executeAnimator.SetBool("CanExecute", false);
+        button.image.color = Color.red;
+        materialButton.SetColor("_Color", Color.red);
+    }
+    public void EnableButton(Tile tileSelected)
+    {
+        button.interactable = true;
+        executeAnimator.SetBool("CanExecute", true);
+        button.image.color = Color.green;
+        materialButton.SetColor("_Color", Color.green);
     }
 }
