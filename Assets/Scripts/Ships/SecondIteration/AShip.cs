@@ -108,8 +108,6 @@ public abstract class AShip : MonoBehaviour
         shipSO.shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position, this));
     }
 
-
-    //da controllare
     public void SetupShip(ShipSO shipData, string name, int faction, ShipManager2 shipManager2)
     {
 

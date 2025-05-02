@@ -649,7 +649,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
       propertyPath: cardsInDeck.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
       propertyPath: cardsInDeck.Array.data[0].cardData
@@ -663,6 +663,14 @@ PrefabInstance:
       propertyPath: cardsInDeck.Array.data[1].cardData
       value: 
       objectReference: {fileID: 11400000, guid: 879953964d691104ab1474c03f4ae8fe, type: 2}
+    - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[2].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 2cc3a6034bfbc474da438831bca6fd4b, type: 2}
+    - target: {fileID: 4698145811974876786, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
+      propertyPath: cardsInDeck.Array.data[2].quantity
+      value: 3
+      objectReference: {fileID: 0}
     - target: {fileID: 5050459710622210457, guid: 06cb72a336173b24aa56f98bfa2093b6, type: 3}
       propertyPath: m_Layer
       value: 5
@@ -5141,8 +5149,8 @@ MonoBehaviour:
   onEvent:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 898479758837082563}
+        m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
         m_MethodName: UpdateShipsCount
         m_Mode: 0
         m_Arguments:

@@ -9,14 +9,14 @@ using UnityEngine;
 
 public abstract class CardShipAbstract : MonoBehaviour
 {
-    private void OnEnable()
+    protected virtual void OnEnable()
     {
         UICardDragNDropHandler.cardDroppedEvent += OnCardDropped;
         UICard.cardSelectedEvent += OnCardSelected;
         UICard.cardDeselectedEvent += OnCardDeselected;
     }
 
-    private void OnDisable()
+    protected virtual void OnDisable()
     {
         UICardDragNDropHandler.cardDroppedEvent -= OnCardDropped;
         UICard.cardSelectedEvent -= OnCardSelected;

@@ -1,0 +1,30 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!114 &11400000
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: cfc6d05c17513294494b444943d35d9b, type: 3}
+  m_Name: MovementAndAttackCard
+  m_EditorClassIdentifier: 
+  cardEntityType: 0
+  cardType: 0
+  cardImage: {fileID: 0}
+  cardName: Move and Attack
+  cardDescription: 
+  cardCost: 3
+  isWorldInteractive: 0
+  dragLayerMask:
+    serializedVersion: 2
+    m_Bits: 0
+  lastingTurns: 1
+  cardEffects:
+  - {fileID: 11400000, guid: 5067f883c29afc44b8ad0562ec1729ac, type: 2}
+  - {fileID: 11400000, guid: 28b8616b3abb1764ca631b441e19f5ae, type: 2}
+  energyUsedEvent: {fileID: 11400000, guid: 3a986c728b37b99438be18298d645fb4, type: 2}
+  energySystem: {fileID: 11400000, guid: 136cca535f0baba46ab62bf1a16ce78d, type: 2}

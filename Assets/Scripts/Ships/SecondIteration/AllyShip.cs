@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using DG.Tweening;
 
 
 public class AllyShip : AShip
@@ -8,6 +9,10 @@ public class AllyShip : AShip
     int moveId = 0;
 
     private CardAllyShip cardAllyScript;
+
+
+    //la nave, per gli eventi di movimento e attacco, ha bisogno di sapere quale effetto sta usando
+    private AbstractEffectSO effectSO;
 
 
     private void OnEnable()
@@ -27,7 +32,7 @@ public class AllyShip : AShip
     public override bool LookForMovement()
     {
         canMove=false;
-        for(int x = position.x - shipSO.movementRange; x < position.x + shipSO.movementRange; x++)
+        for(int x = position.x - shipSO.movementRange; x <= position.x + shipSO.movementRange; x++)
         {
             if(x >= 0 && x < gridManager._width)
             {
@@ -40,7 +45,7 @@ public class AllyShip : AShip
                 }
             }
         }
-        for(int y = position.y - shipSO.movementRange; y < position.y + shipSO.movementRange; y++)
+        for(int y = position.y - shipSO.movementRange; y <= position.y + shipSO.movementRange; y++)
         {
             if(y >= 0 && y < gridManager._height)
             {
@@ -63,6 +68,10 @@ public class AllyShip : AShip
             }
             canMove = true;
         }
+        else
+        {
+            ByPassEffect();
+        }
         return canMove;
     }
     public override bool LookForAttacks()
@@ -72,7 +81,7 @@ public class AllyShip : AShip
         //gli farà vedere solo le posizioni in cui può attaccare.
         
        
-        for(int i = position.x - shipSO.attackRange; i < position.x + shipSO.attackRange; i++)
+        for(int i = position.x - shipSO.attackRange; i <= position.x + shipSO.attackRange; i++)
         {
             if(i >= 0 && i < gridManager._width)
             {
@@ -87,7 +96,7 @@ public class AllyShip : AShip
                 }
             }
         }
-        for(int j = position.y - shipSO.attackRange; j < position.y + shipSO.attackRange; j++)
+        for(int j = position.y - shipSO.attackRange; j <= position.y + shipSO.attackRange; j++)
         {
             if(j >= 0 && j < gridManager._height)
             {
@@ -112,9 +121,21 @@ public class AllyShip : AShip
             }
             canAttack = true;
         }
+        else
+        {
+            ByPassEffect();
+        }
         return canAttack;
         
     }
+
+    
+    public void ReceiveEffect(AbstractEffectSO effectSO)
+    {
+        Debug.Log("Received effect: " + effectSO.name);
+        this.effectSO = effectSO;
+    }
+
     public override bool LookForAttacks(List<AShip> nearbyShips)
     {
         throw new System.NotImplementedException();
@@ -127,11 +148,6 @@ public class AllyShip : AShip
     public void PerformAttack(Vector2 targetPos)
     {
         shipSO.attackEvent.Invoke(new ShipAttackStruct(targetPos, shipSO.attackPower));
-    }
-
-    public void PerformMovement()
-    {
-
     }
 
     public void ReceiveTile(Tile tile)
@@ -157,6 +173,27 @@ public class AllyShip : AShip
         }
 
         cardAllyScript.DeselectShip();
+
+        //comunico che l'evento è terminato
+        if(effectSO != null)
+        {
+            effectSO.EndEffect(0);
+            effectSO = null;
+        }
+    }
+
+    private void ByPassEffect()
+    {
+        transform.DOShakeRotation(0.5f, 10, 10, 90).OnComplete(() =>
+        {
+            transform.DOKill(true);
+        });
+        //comunico che l'evento è terminato
+        if(effectSO != null)
+        {
+            effectSO.EndEffect(0);
+            effectSO = null;
+        }
     }
 
     public void AddHealth(int healthToAdd)

@@ -9,6 +9,7 @@ public class AddHealthEffect : AbstractEffectSO
         if (effectStruct.obj.TryGetComponent<AllyShip>(out AllyShip shipScript))
         {
             shipScript.AddHealth(healthToAdd);
+            EndEffect(0);
         }
     }
 }

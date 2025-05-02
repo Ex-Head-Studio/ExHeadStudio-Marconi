@@ -26,13 +26,8 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     private string cardDescription;
     private int cardCost;
 
-
-
-    //TODO valutare se conviene scrivere un event channel
-
     public static event Action<AbstractCard> cardSelectedEvent;
     public static event Action<AbstractCard> cardDeselectedEvent;
-    public static event Action<AbstractCard> deselectOtherCardsEvent;
 
     private AbstractCard cardScript;
 
@@ -66,14 +61,11 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
     private void OnDestroy()
     {
-        cardDeselectedEvent?.Invoke(cardScript);
-        isCardSelected = false;
-        deselectOtherCardsEvent -= DeselectCard;
-        
+        //cardDeselectedEvent?.Invoke(cardScript);
+        isCardSelected = false;        
     }
     void Awake()
     {
-        deselectOtherCardsEvent += DeselectCard;
         selectionScale = transform.localScale * (hoverScaleFactor+0.1f);
         hoverScale = transform.localScale * hoverScaleFactor;
         startingScale = transform.localScale;
@@ -107,17 +99,6 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
     #region Gestione della selezione
 
-    void DeselectCard(AbstractCard cardScript){
-        if(this.cardScript.gameObject != null){
-            if(isCardSelected && cardScript.gameObject != this.cardScript.gameObject)
-            {
-                
-                cardDeselectedEvent?.Invoke(cardScript);
-                isCardSelected = false; 
-                transform.localScale = startingScale;
-            }
-        }
-    }
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
         if(energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
@@ -128,26 +109,44 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
         }
         else
         {
-            //Qui c'è un bug, non riesce a deselezionare correttamente
-            if(!isCardSelected && eventData.pointerClick == this.gameObject)
+            if(!isCardSelected)
             {   
-                deselectOtherCardsEvent?.Invoke(cardScript);
-                isCardSelected = true;
-                UnityEngine.Debug.Log("PointerClick su carta: " + eventData.pointerClick);
-                
-                transform.localScale = selectionScale;
-                cardSelectedEvent?.Invoke(cardScript);
+                SelectCard();
             }
-            else if(isCardSelected && (eventData.pointerClick == this.gameObject || eventData.pointerClick != this.gameObject))
+            else if(isCardSelected)
             {   
-                isCardSelected = false;
-                Debug.Log("Carta deselezionata");
-                cardDeselectedEvent?.Invoke(cardScript);
-                isCardSelected = false;
-                transform.localScale = startingScale;;
+                DeselectCard(cardScript);
             }
         }
     }
+
+    private void SelectCard()
+    {       
+        transform.DOLocalMoveY(transform.localPosition.y + 0.3f, 0.5f);
+        cardSelectedEvent?.Invoke(cardScript);
+        transform.localScale = selectionScale;
+        isCardSelected = true;
+    }
+    public void DeselectCard(AbstractCard cardScript)
+    {
+        if(this.cardScript.gameObject != null)
+        {
+
+                cardDeselectedEvent?.Invoke(cardScript);
+                transform.localScale = startingScale;
+                isCardSelected = false;
+                transform.DOLocalMoveY(transform.localPosition.y - 0.3f, 0.5f);
+        }
+    }
+
+
+
+    public bool IsCardSelected()
+    {
+        return isCardSelected;
+    }
+
+    //funzioni di hover
     public void OnPointerEnter(PointerEventData eventData)
     {
         if(!isCardSelected)

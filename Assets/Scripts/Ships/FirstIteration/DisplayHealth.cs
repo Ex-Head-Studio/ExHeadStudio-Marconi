@@ -47,16 +47,18 @@ public class DisplayHealth : MonoBehaviour
         if (healthBarPrefab != null && healthBarCanvasPrefab != null 
             && shipAttackStruct.gridPosition == shipScript.GetPosition())
         {
+            int endIndex = healthBarCount - shipAttackStruct.damage - 1;
+            if (endIndex < 0) endIndex = 0;
 
-            for(int i = healthBarCount-1; i >= 0; i--)
+            for(int i = 0; i < shipAttackStruct.damage; i++)
             {
 
-                healthObjectsList[i].transform.DOPunchScale(Vector3.one * 0.5f, 0.5f, 10, 1).OnKill(() => { healthObjectsList[i].transform.DOKill(true); });
-                healthObjectsList.RemoveAt(i);
-                Destroy(healthObjectsList[i]);
+                int index = healthBarCount - i - 1;
+                if(index < 0) index = 0;
+                GameObject healthBar = healthObjectsList[index];
+                healthObjectsList.RemoveAt(index);
+                Destroy(healthBar);
             }
-
-
             healthBarCount -= shipAttackStruct.damage;
         }
     }

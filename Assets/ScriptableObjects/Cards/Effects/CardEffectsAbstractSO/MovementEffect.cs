@@ -9,6 +9,7 @@ public class MovementEffect : AbstractEffectSO
     {
         if(effectStruct.obj.TryGetComponent<AllyShip>(out shipScript))
         {
+            shipScript.ReceiveEffect(this);
             shipScript.LookForMovement();
         }
     }
