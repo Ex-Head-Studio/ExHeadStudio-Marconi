@@ -146,6 +146,7 @@ public class EnemyShip : AShip
         if(shipMoves.Count>0 && shipMoves.Where(x => x.GetMessageType()==MessageType.attack).ToList().Count>0){
             canAttack=true;
         }
+        Debug.Log("Ship: " + shipName + " performs: " + initialMove.GetMessageType() + " on: " + initialMove.GetTargetPos());
         return canAttack;
     }
     public override bool LookForAttacks(List<AShip> nearbyShips)

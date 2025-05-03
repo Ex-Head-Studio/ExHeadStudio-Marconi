@@ -51,7 +51,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     [SerializeField] private Collider tileCollider;
 
     public static event Action<Tile> tileSelected;
-
+    private float InfluenceValue {get; set;}
 
     // [SerializeField] private bool _isPlaceable;
 
