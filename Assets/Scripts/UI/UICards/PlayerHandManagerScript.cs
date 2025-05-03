@@ -19,15 +19,14 @@ public class PlayerHandManagerScript : MonoBehaviour
 
     private List<GameObject> cardsInHand = new List<GameObject>();
 
-    private CardShipAbstract cardScript;
 
-
-    //Iscrizione agli eventi dichiarati nel deck manager
+    //Iscrizione agli eventi
     private void OnEnable()
     {
         DeckManager.cardDrawed += DrawCard;
         AbstractCard.abstractCardUsed += OnCardUsed;
         UICardDragNDropHandler.cardUsedEvent += OnCardUsed;
+        UICard.cardSelectedEvent += OnCardSelected;
 
     }
 
@@ -36,11 +35,8 @@ public class PlayerHandManagerScript : MonoBehaviour
         DeckManager.cardDrawed -= DrawCard;
         AbstractCard.abstractCardUsed -= OnCardUsed;
         UICardDragNDropHandler.cardUsedEvent -= OnCardUsed;
-
-        //cardUsed
+        UICard.cardSelectedEvent -= OnCardSelected;
     }
-
-    //AGGIUNGERE DISTRUZIONE DI UNA CARTA
 
     [ContextMenu("Draw Card")]
     private void DrawCard(BaseCardData cardData)
@@ -122,6 +118,22 @@ public class PlayerHandManagerScript : MonoBehaviour
             Destroy(cardsInHand.ElementAt(cardIndex));
             cardsInHand.RemoveAt(cardIndex);
             UpdateCardPosition();
+    }
+
+
+    /// <summary>
+    /// Function which controls the selection of the cards in hand. Hand manager respond to
+    /// card event and check wich cards to disable.
+    /// </summary>
+    private void OnCardSelected(AbstractCard card)
+    {
+        foreach(GameObject cardInHand in cardsInHand)
+        {
+            if(cardInHand.GetComponent<UICard>().IsCardSelected() && cardInHand != card.gameObject)
+            {
+                cardInHand.GetComponent<UICard>().DeselectCard(cardInHand.GetComponent<AbstractCard>());
+            }
+        }
     }
 
     // <summary>

@@ -16,9 +16,8 @@ public class EndTurnButton2 : MonoBehaviour
     private Button  button;
 
 
-    //Gabriele
-    //Non posso cliccare sul bottone se ho selezionato una carta
-    //Non posso cliccare il bottone se è il turno dell'avversario
+
+    private AbstractCard cardToWait = null;
 
     
     private void Awake()
@@ -26,9 +25,21 @@ public class EndTurnButton2 : MonoBehaviour
         button = GetComponent<Button>();
         button.image.color = Color.green;
         executeAnimator.SetBool("CanExecute", true);
-        AbstractCard.abstractCardUsed += DisableButton;
-        
-        Tile.tileSelected += EnableButton;
+
+    }
+
+    private void OnEnable()
+    {
+        UICard.cardSelectedEvent += DisableButton;
+        UICard.cardDeselectedEvent += EnableButton;
+        AbstractCard.abstractCardUsed += EnableButton;
+    }
+
+    private void OnDisable()
+    {
+        UICard.cardSelectedEvent -= DisableButton;
+        UICard.cardDeselectedEvent -= EnableButton;
+        AbstractCard.abstractCardUsed -= EnableButton;
     }
 
     public void EndTurn()
@@ -38,16 +49,21 @@ public class EndTurnButton2 : MonoBehaviour
 
     public void DisableButton(AbstractCard cardUsed)
     {
-        button.interactable = false;
-        executeAnimator.SetBool("CanExecute", false);
-        button.image.color = Color.red;
-        materialButton.SetColor("_Color", Color.red);
+            cardToWait = cardUsed;
+            button.interactable = false;
+            executeAnimator.SetBool("CanExecute", false);
+            button.image.color = Color.red;
+            materialButton.SetColor("_Color", Color.red);
     }
-    public void EnableButton(Tile tileSelected)
+    public void EnableButton(AbstractCard cardUsed)
     {
-        button.interactable = true;
-        executeAnimator.SetBool("CanExecute", true);
-        button.image.color = Color.green;
-        materialButton.SetColor("_Color", Color.green);
+        if(cardToWait == cardUsed)
+        {
+            button.interactable = true;
+            executeAnimator.SetBool("CanExecute", true);
+            button.image.color = Color.green;
+            materialButton.SetColor("_Color", Color.green);
+        }
+
     }
 }

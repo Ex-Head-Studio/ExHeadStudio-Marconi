@@ -12,6 +12,7 @@ public class AttackEffect : AbstractEffectSO
     {
         if(effectStruct.obj.TryGetComponent<AllyShip>(out shipScript))
         {
+            shipScript.ReceiveEffect(this);
             shipScript.LookForAttacks();
         }
     }

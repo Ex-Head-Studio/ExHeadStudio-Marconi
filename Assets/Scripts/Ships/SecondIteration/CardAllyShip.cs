@@ -19,12 +19,29 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
     //e serve anche a riconoscere l'ascoltatore degli eventi
     private bool isShipSelected = false;
 
+    //Coda per gli effetti da applicare
+    private Queue<AbstractEffectSO> effectQueue = new Queue<AbstractEffectSO>();
+
     private void Start()
     {
         allyShip = GetComponent<AllyShip>();
         shipCollider = GetComponent<Collider>();
         Assert.IsNotNull(shipCollider, "Ship collider is not assigned in the inspector.");
     }
+
+    protected override void OnEnable()
+    {
+        base.OnEnable();
+        AbstractEffectSO.effectEndedEvent += StartNextEffect;
+
+    }
+
+    protected override void OnDisable()
+    {
+        base.OnDisable();
+        AbstractEffectSO.effectEndedEvent -= StartNextEffect;
+    }
+
 
     void ICardDropArea.CardDrop(AbstractCard card)
     {
@@ -38,14 +55,17 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
 
             foreach (AbstractEffectSO effect in card.GetCardEffects())
             {
-                Debug.Log("L'effetto" + effect.name + "è stato applicato correttamente.");
-                effect.PerformEffect(new EffectStruct(card, this.gameObject));
+                //aggiungo gli effetti alla coda
+                effectQueue.Enqueue(effect);
             }
+
+            ResolveEffectQueue();
         }
-
     }
-
-    //implementare funzione di hover
+    protected override void OnCardDropped(AbstractCard card)
+    {
+        base.OnCardDropped(card);
+    }
 
     #region Selezione della nave
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
@@ -53,66 +73,59 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
         if(isShipSelectable)
         {
                 //animazione per la selezione della nave
-                transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {transform.DOKill(true);
-                });
-
+                transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {transform.DOKill(true);});
 
                 isShipSelected = true;
-                if (cardToUse.GetCardEffects() == null)
-                {
-                    Debug.Log("La carta non ha effetti da applicare.");
-                }
-                else
+
+                if (cardToUse.GetCardEffects() != null)
                 {
                     foreach (AbstractEffectSO effect in cardToUse.GetCardEffects())
                     {
-                        effect.PerformEffect(new EffectStruct(cardToUse, this.gameObject));
-                    }
+                        //aggiungo gli effetti alla coda
+                        effectQueue.Enqueue(effect);
+                    }       
+                    
+                    //Eseguo gli effetti della coda
+                    ResolveEffectQueue();                              
                 }
-                //TODO: aggiungere verifica se la carta può far fare tale mossa alla nave, altrimenti non chiamare l'evento
-                cardToUse.InvokeCardUsed(cardToUse);
-                isShipSelectable = false;
-                shipCollider.enabled = false;
         }
     }
 
-    public bool IsSelected()
+    public void ResolveEffectQueue()
     {
-        return isShipSelected;
+        //Dalla coda estraggo il primo effettto e lo eseguo
+        if (effectQueue.Count > 0)
+        {
+            AbstractEffectSO effect = effectQueue.Dequeue();
+            effect.StartEffect(0);
+            effect.PerformEffect(new EffectStruct(cardToUse, gameObject));
+        }
     }
 
-    public void DeselectShip()
+    private void StartNextEffect(int id)
     {
-        isShipSelected = false;
+        //Controllo se ci sono effetti nella coda
+        if (effectQueue.Count > 0)
+        {
+            ResolveEffectQueue();
+        }
+        else
+        {
+            //Se non ci sono più effetti nella coda, invoco l'evento di fine effetto
+            effectQueue.Clear();
+
+            //invoco l'evento di carta usata dopo tutti gli effetti
+            cardToUse.InvokeCardUsed(cardToUse);
+            isShipSelectable = false;
+            shipCollider.enabled = false;
+        }
     }
 
     #endregion
 
-    /*public void OnShipSelected(PointerEventData pointerEventData)
-    {
 
-        if(isShipSelectable)
-        {
 
-                if (cardToUse.GetCardEffects() == null)
-                {
-                    Debug.Log("La carta non ha effetti da applicare.");
-                    return;
-                }
-
-                foreach (AbstractEffectSO effect in cardToUse.GetCardEffects())
-                {
-                    Debug.Log("L'effetto" + effect.name + "è stato applicato correttamente.");
-                    effect.PerformEffect(cardToUse, this.gameObject);
-                }
-        }
-    }*/
-
-    protected override void OnCardDropped(AbstractCard card)
-    {
-        base.OnCardDropped(card);
-    }
-
+    //Funzione che viene chiamata quando la carta viene selezionata
     protected override void OnCardSelected(AbstractCard card)
     {
         base.OnCardSelected(card);
@@ -127,6 +140,7 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
         }
     }
 
+    //Funzione che viene chiamata quando la carta viene deselezionata
     protected override void OnCardDeselected(AbstractCard card)
     {
         base.OnCardDeselected(card);
@@ -134,10 +148,17 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
 
         isShipSelectable = false;
         shipCollider.enabled = false;
+        cardToUse = null;
     }
 
-
-
+    public bool IsSelected()
+    {
+        return isShipSelected;
+    }
+    public void DeselectShip()
+    {
+        isShipSelected = false;
+    }
     private void OnDrawGizmos()
     {
         if(isShipSelectable)
@@ -147,5 +168,4 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
         }
 
     }
-
 }

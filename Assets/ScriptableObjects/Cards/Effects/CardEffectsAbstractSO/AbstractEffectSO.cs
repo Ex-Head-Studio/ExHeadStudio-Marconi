@@ -1,4 +1,5 @@
 using UnityEngine;
+using System;
 
     public struct EffectStruct
     {
@@ -17,6 +18,8 @@ using UnityEngine;
 public abstract class AbstractEffectSO : ScriptableObject
 {
 
+    public static event Action<int> effectStartedEvent;
+    public static event Action<int> effectEndedEvent;
 
     /// <summary>
     /// La funzione definisce l'effetto della carta.
@@ -26,5 +29,14 @@ public abstract class AbstractEffectSO : ScriptableObject
     public virtual void PerformEffect(EffectStruct effectStruct)
     {
         // Implementazione di default vuota, può essere sovrascritta dalle classi derivate
+    }
+
+    public void StartEffect(int id)
+    {
+        effectStartedEvent?.Invoke(id);
+    }
+    public void EndEffect(int id)
+    {
+        effectEndedEvent?.Invoke(id);
     }
 }
