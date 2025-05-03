@@ -8,7 +8,8 @@ using TMPro;
 using System.Linq;
 using System.Collections;
 using UnityEngine.Assertions;
-public enum DeckType
+
+public enum DeckType 
 {
     CommandDeck,
     SupportDeck,
@@ -52,6 +53,10 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     [Header("Energy System")]
     [SerializeField] private EnergySystem energySystem;
     [SerializeField] private EnergyUsedEvent energyUsedEvent;
+
+    [Header("Player Hand Manager")]
+    [SerializeField] private PlayerHandManagerScript playerHandManager;
+
     [Header("DeckDraw Object")]
     [SerializeField] private TMP_Text deckCostIcon;
 
@@ -68,49 +73,88 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
             drawingCost = 0;
         }
         deckCostIcon.text = "Cost: " + drawingCost.ToString();
+        ShuffleDeck();
+
     }
 
     #region Gestione eventi
 
     //da associare all'event channel di inzio turno
 
-    public void InstantiateNewPlayerHand()
+    public void InstantiateNewPlayerHand() 
     {
-        //si può migliorare -> shuffle delle carte
-        cardsInDeck = cardsInDeck.OrderBy( x => UnityEngine.Random.value ).ToList();
         StartCoroutine(WaitBeforeDraw(drawTime, commandCardAtTurn));
     }
+
+    
 
     #endregion
 
 
-    //TODO
     #region Gestione del mazzo
-    //Inserire logica di mischiata
+
+    // Funzione per mescolare il mazzo
+    private void ShuffleDeck() 
+    {
+        for (int i = cardsInDeck.Count - 1; i > 0; i--) 
+        {
+            int randomIndex = UnityEngine.Random.Range(0, i + 1);
+            var temp = cardsInDeck[i];
+            cardsInDeck[i] = cardsInDeck[randomIndex];
+            cardsInDeck[randomIndex] = temp;
+        }
+    }   
+
+    // Funzione per pescare una carta in base alla probabilità
+    private BaseCardData DrawCardWithProbability()
+    {
+        // Calcola il totale delle quantità
+        int totalQuantity = cardsInDeck.Sum(card => card.quantity);
+
+        // Genera un numero casuale tra 0 e il totale
+        int randomValue = UnityEngine.Random.Range(0, totalQuantity);
+
+        // Scorri le carte e seleziona in base alla probabilità
+        int cumulativeQuantity = 0;
+        foreach (var card in cardsInDeck)
+        {
+            cumulativeQuantity += card.quantity;
+            if (randomValue < cumulativeQuantity)
+            {
+                return card.cardData;
+            }
+        }
+
+        // In caso di errore (non dovrebbe mai accadere)
+        Debug.LogError("Errore nella selezione della carta.");
+        return null;
+    }
+
     //Inserire logica per inserire le carte e moltiplicarla
     #endregion
 
     #region Gestione del puntatore
+
+    // Funzione per gestire cosa fare quando il mazzo viene cliccato
     public void OnPointerClick(PointerEventData pointerEventData)
     {
-        
-        if(hasDrawingCost && energySystem.currentEnergy >= drawingCost)
+        Debug.Log(cardsInDeck.Count);
+        Debug.Log(string.Join(", ", cardsInDeck.Select(card => card.cardData.name)));
+
+        if (hasDrawingCost && energySystem.currentEnergy >= drawingCost && playerHandManager != null && playerHandManager.GetHandCardsCount() < playerHandManager.maxCardsInHand)
         {
             //se ho energia sufficiente per pescare, rimuovo l'energia utilizzata
             energyUsedEvent?.Invoke(drawingCost);
-
-
-            //controllo che restino abbastanza carte nel mazzo
-            if(cardsInDeck.Count > 0)
-            {
-                cardDrawed?.Invoke(cardsInDeck.ElementAt(UnityEngine.Random.Range(0, cardsInDeck.Count)).cardData);
-                drawingCost++;
-            }
+            var drawnCard = DrawCardWithProbability();
+            cardDrawed?.Invoke(drawnCard);
+            drawingCost++;
+            
         }
         //se non ho costo di pesca e mazzo non vuoto
-        else if(!hasDrawingCost && cardsInDeck.Count > 0) 
+        else if(!hasDrawingCost && cardsInDeck.Count > 0 && playerHandManager != null && playerHandManager.GetHandCardsCount() < playerHandManager.maxCardsInHand) 
         {
-            cardDrawed?.Invoke(cardsInDeck.ElementAt(UnityEngine.Random.Range(0, cardsInDeck.Count)).cardData);
+            cardDrawed?.Invoke(cardsInDeck[0].cardData);
+            cardsInDeck.RemoveAt(0);
         }
 
 

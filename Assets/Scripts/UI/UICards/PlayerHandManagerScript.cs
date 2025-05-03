@@ -15,7 +15,7 @@ public class PlayerHandManagerScript : MonoBehaviour
     [SerializeField] private SplineContainer splineContainer;
     [SerializeField] private Transform spawnPoint;
 
-    [SerializeField] private int maxCardsInHand;
+    public int maxCardsInHand;
 
     private List<GameObject> cardsInHand = new List<GameObject>();
 
@@ -147,4 +147,10 @@ public class PlayerHandManagerScript : MonoBehaviour
         cartDraw.start();
         cartDraw.release();
     }
+    
+    public int GetHandCardsCount()
+    {
+        return cardsInHand.Count;
+    }
+
 }
