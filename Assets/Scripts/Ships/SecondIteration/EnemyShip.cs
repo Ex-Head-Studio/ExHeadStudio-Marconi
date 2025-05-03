@@ -27,7 +27,7 @@ public class EnemyShip : AShip
 
     public override bool LookForMovement()
     {
-        bool canMove=false;
+        canMove=false;
         shipMoves.Clear();
         List<Move> possibleMoves= new List<Move>();
         //Crea una lista di possibili mosse e aggiungi tutte le mosse in tutte le posizioni che rimangono all'interno della mappa, 
@@ -37,7 +37,7 @@ public class EnemyShip : AShip
                 if(x!=position.x){
                 Vector2Int pos = new Vector2Int(x, position.y);
                 float value = manager.InfluenceMap.CalculateMoveValue(pos.x, pos.y);
-                Move move = new Move(idMove++, shipName, pos, MessageType.movement, value);
+                possibleMoves.Add( new Move(idMove++, shipName, pos, MessageType.movement, value));
                 }
             }
         }
@@ -146,6 +146,7 @@ public class EnemyShip : AShip
         if(shipMoves.Count>0 && shipMoves.Where(x => x.GetMessageType()==MessageType.attack).ToList().Count>0){
             canAttack=true;
         }
+        //Debug.Log("Ship: " + shipName + " performs: " + initialMove.GetMessageType() + " on: " + initialMove.GetTargetPos());
         return canAttack;
     }
     public override bool LookForAttacks(List<AShip> nearbyShips)
