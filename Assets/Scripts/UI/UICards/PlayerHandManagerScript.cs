@@ -8,6 +8,9 @@ using UnityEngine.UI;
 using System.Collections;
 using Unity.VisualScripting;
 
+
+[RequireComponent(typeof(PlanningPhaseEndListener))]
+[RequireComponent(typeof(ActionPhaseEndEvent))]
 [RequireComponent(typeof(EndedTurnEventListener))]
 public class PlayerHandManagerScript : MonoBehaviour
 {

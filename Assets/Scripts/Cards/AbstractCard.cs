@@ -8,11 +8,11 @@ using UnityEngine.UI;
 public abstract class AbstractCard : MonoBehaviour
 {
     public static event Action<AbstractCard> abstractCardUsed;
-
-    [Header("Card Data SO")]
     private BaseCardData cardData;
     private EnergyUsedEvent energyUsedEvent;
     private EnergySystem energySystem;
+
+    private UICard UICardScript;
 
 
     [Multiline(2)]
@@ -27,6 +27,8 @@ public abstract class AbstractCard : MonoBehaviour
             UICardDragNDropHandler cardDragNDropHandler = GetComponent<UICardDragNDropHandler>();
             cardDragNDropHandler.SetEnergySystem(energySystem);
         }
+
+
 
         energyUsedEvent = cardData.energyUsedEvent;
         energySystem = cardData.energySystem;
@@ -86,6 +88,15 @@ public abstract class AbstractCard : MonoBehaviour
     {
 
         return energyUsedEvent;
+    }
+
+    public void SetNotInteractable()
+    {
+        if(TryGetComponent<UICard>(out UICardScript))
+        {
+            UICardScript.SetNotInteractable();
+        }
+        
     }
     private void OnDestroy()
     {

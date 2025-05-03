@@ -310,7 +310,7 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 3a986c728b37b99438be18298d645fb4, type: 2}
     - target: {fileID: 1862652042221100401, guid: 813761b315b41d24daca9bfb340bb1f0, type: 3}
       propertyPath: cardsInDeck.Array.size
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1862652042221100401, guid: 813761b315b41d24daca9bfb340bb1f0, type: 3}
       propertyPath: cardsInDeck.Array.data[0].cardData
@@ -331,10 +331,10 @@ PrefabInstance:
     - target: {fileID: 1862652042221100401, guid: 813761b315b41d24daca9bfb340bb1f0, type: 3}
       propertyPath: cardsInDeck.Array.data[2].cardData
       value: 
-      objectReference: {fileID: 11400000, guid: 1cc6a96f4c737f64baf6a4ded7124853, type: 2}
+      objectReference: {fileID: 11400000, guid: 2cc3a6034bfbc474da438831bca6fd4b, type: 2}
     - target: {fileID: 1862652042221100401, guid: 813761b315b41d24daca9bfb340bb1f0, type: 3}
       propertyPath: cardsInDeck.Array.data[2].quantity
-      value: 2
+      value: 3
       objectReference: {fileID: 0}
     - target: {fileID: 1862652042221100401, guid: 813761b315b41d24daca9bfb340bb1f0, type: 3}
       propertyPath: cardsInDeck.Array.data[3].cardData

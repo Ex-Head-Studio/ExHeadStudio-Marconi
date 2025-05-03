@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 3456255958661744799}
   - component: {fileID: 3931047326382954386}
   - component: {fileID: 1905047583949069041}
+  - component: {fileID: 5083976560543149099}
+  - component: {fileID: 2288600423810563644}
   m_Layer: 5
   m_Name: PlayerHandManager
   m_TagString: Untagged
@@ -64,6 +66,50 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventToListen: {fileID: 11400000, guid: bbc7cca08e679134487cfec6f8259024, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &5083976560543149099
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489519457135971022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dfd541709abaf0341b8f2805d2575a37, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: 89ca1e4e6b4edcb41aa9eb8d8964929d, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 3931047326382954386}
+        m_TargetAssemblyTypeName: PlayerHandManagerScript, Assembly-CSharp
+        m_MethodName: DestroyPlayerHand
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!114 &2288600423810563644
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1489519457135971022}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: def85d1c2e5f62f4aa28ed59596ea557, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: 21530ef59e57daf408acd3655c521106, type: 2}
   onEvent:
     m_PersistentCalls:
       m_Calls:
@@ -121,6 +167,7 @@ GameObject:
   - component: {fileID: 3485776876077766571}
   - component: {fileID: 1034751151907221147}
   - component: {fileID: 4179027993508681578}
+  - component: {fileID: 1684540162569089513}
   m_Layer: 5
   m_Name: HandSpline
   m_TagString: Untagged
@@ -244,6 +291,56 @@ MonoBehaviour:
   m_Knots:
     m_KnotsLink: []
 --- !u!114 &4179027993508681578
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7452117534153061058}
+  m_Enabled: 0
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2b74686beb0670a4ea61325c0acf4411, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  m_Container: {fileID: 1034751151907221147}
+  m_ItemsToInstantiate:
+  - prefab: {fileID: 0}
+    Prefab: {fileID: 2196661931175602968, guid: af2e3b03567b674428bd079487933a8a, type: 3}
+    probability: 0
+    Probability: 0
+  m_Method: 1
+  m_Space: 1
+  m_Spacing: {x: 100, y: 100}
+  m_Up: 1
+  m_Forward: 0
+  m_PositionOffset:
+    setup: 0
+    min: {x: 0, y: 0, z: 0}
+    max: {x: 0, y: 0, z: 0}
+    randomX: 0
+    randomY: 0
+    randomZ: 0
+    space: 0
+  m_RotationOffset:
+    setup: 3
+    min: {x: 0, y: 0, z: 90}
+    max: {x: 180, y: 810, z: 595.2}
+    randomX: 0
+    randomY: 0
+    randomZ: 0
+    space: 0
+  m_ScaleOffset:
+    setup: 1
+    min: {x: 0.1, y: 0.1, z: 0.1}
+    max: {x: 20, y: 20, z: 20}
+    randomX: 0
+    randomY: 0
+    randomZ: 0
+    space: 0
+  m_DeprecatedInstances: []
+  m_AutoRefresh: 1
+  m_Seed: 1
+--- !u!114 &1684540162569089513
 MonoBehaviour:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}

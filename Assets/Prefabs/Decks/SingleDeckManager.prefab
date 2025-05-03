@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6044673805502603212}
   - component: {fileID: 8511230033672173309}
   - component: {fileID: 3548507416420786218}
+  - component: {fileID: 643912414438826772}
+  - component: {fileID: -9190477582331396032}
   m_Layer: 0
   m_Name: SingleDeckManager
   m_TagString: Untagged
@@ -47,13 +49,17 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   deckTypeEnum: 2
-  commandCardAtTurn: 5
+  cardsGivenAtTurn: 0
   hasDrawingCost: 1
   cardsInDeck:
   - cardData: {fileID: 11400000, guid: 9ff476595f3d53a469e186514a16f529, type: 2}
     quantity: 1
   - cardData: {fileID: 11400000, guid: 1cc6a96f4c737f64baf6a4ded7124853, type: 2}
     quantity: 1
+  drawTime: 0.1
+  energySystem: {fileID: 0}
+  energyUsedEvent: {fileID: 0}
+  deckCostIcon: {fileID: 0}
 --- !u!114 &3548507416420786218
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,6 +73,38 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   eventToListen: {fileID: 11400000, guid: 3853f00209eb0c642a9389baec0e5283, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &643912414438826772
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547740546878312068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 537b693f457f4674692007544a7be36b, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 0}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls: []
+--- !u!114 &-9190477582331396032
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 547740546878312068}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84198ae0f80e4824ca07b8f12eef6a72, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 0}
   onEvent:
     m_PersistentCalls:
       m_Calls: []

@@ -13,10 +13,14 @@ public enum DeckType
     CommandDeck,
     SupportDeck,
     SpyDeck,
+
+    SpyAndSupportDeck,
 }
 
 //permette di aggiornare la mano del giocatore ad ogni turno
-[RequireComponent(typeof(StartedTurnEventListener))]
+[RequireComponent(typeof(PlanningPhaseStartListener))]
+[RequireComponent(typeof(ActionPhaseStartEvent))]
+[RequireComponent(typeof(EndedTurnEventListener))]
 public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler
 {
     [Serializable]
@@ -37,7 +41,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     [Header("Type of deck")]
     [SerializeField] private DeckType deckTypeEnum;
-    [SerializeField] private int commandCardAtTurn;
+    [SerializeField] private int cardsGivenAtTurn;
 
     [Tooltip("Bool che seleziona se la pescata dal mazzo ha un costo")]
     [SerializeField] private bool hasDrawingCost;
@@ -74,11 +78,21 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     //da associare all'event channel di inzio turno
 
+    public void OnPlanningPhaseStart()
+    {
+        InstantiateNewPlayerHand();
+    }
+
+    public void OnActionPhaseStart()
+    {
+        InstantiateNewPlayerHand();
+    }
+
     public void InstantiateNewPlayerHand()
     {
         //si può migliorare -> shuffle delle carte
         cardsInDeck = cardsInDeck.OrderBy( x => UnityEngine.Random.value ).ToList();
-        StartCoroutine(WaitBeforeDraw(drawTime, commandCardAtTurn));
+        StartCoroutine(WaitBeforeDraw(drawTime, cardsGivenAtTurn));
     }
 
     #endregion

@@ -138,9 +138,6 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
                 transform.DOLocalMoveY(transform.localPosition.y - 0.3f, 0.5f);
         }
     }
-
-
-
     public bool IsCardSelected()
     {
         return isCardSelected;
@@ -161,6 +158,15 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
         {
             transform.localScale = startingScale;
         }
+    }
+
+    /// <summary>
+    /// <remarks>Set the card to be not interactable, when an effect is being used</remarks>
+    /// </summary>
+    public void SetNotInteractable()
+    {
+        //cardImage.raycastTarget = false;
+        //gameObject.raycastTarget = false;
     }
 
     #endregion

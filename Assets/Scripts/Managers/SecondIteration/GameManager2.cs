@@ -7,66 +7,84 @@ using Mono.Cecil;
 /// <summary>
 /// Il game manager si occupa della gestione dei tempi e dei turni di gioco
 /// </summary>
+/// 
+/// 
+
+
+//Aggiungo gli ascoltatori agli eventi
+[RequireComponent(typeof(StartedGameListener))]
+[RequireComponent(typeof(StartedTurnEventListener))]
+[RequireComponent(typeof(PlanningPhaseEndListener))]
+[RequireComponent(typeof(ActionPhaseEndListener))]
 
 public class GameManager2 : MonoBehaviour
 {
 
-    [SerializeField] private float timeBeforeStart = 1f;
-
-    //questo parametro andrà modificato se introdurremo uno stack delle azioni
+    [Header("Timing")]
+    [SerializeField] private float timeBeforeStartGame = 1f;
     [SerializeField] private float timeBetweenRounds = 1f;
-
-    private int numberOfRounds = 0;
-
-    //NOTA: l'evento di fine turno conicide con quello di inizio turno del nemico
-    //Allo start del gioco, il primo a fare le sue azioni è il giocatore. Il nemico pianifica.
     
     [Header("Game Events to call")]
+
+    [Tooltip("Evento di inzio partita/gioco")]
+    [SerializeField] private StartedGameEvent startedGameEvent;
+
     [Tooltip("Evento di inzio turno")]
-    //alla struct passo il numero di round
     [SerializeField] private StartedTurnEvent startedTurnEvent;
+    [Tooltip("Evento di fine turno")]
+    [SerializeField] private EndedTurnEvent endedTurnEvent;
+
+    [Tooltip("Eventi per le fasi del turno del giocatore")]
+    [SerializeField] private PlanningPhaseStartEvent planningPhaseStartEvent;
+    [SerializeField] private ActionPhaseStartEvent actionPhaseStartEvent;
+
+    private int numberOfRounds = 0;
     private void Start()
     {
         StartCoroutine(StartGame());
     }
 
-
-    public void OnTurnEnded()
-    {   
-        //Al termine del turno del giocatore, il nemico esegue le sue mosse
-        //StartCoroutine(WaitNextRound());
+    #region Funzioni di callback per gli eventi
+    /// <summary>
+    /// La fine delle fasi e del turno del giocatore vengono gestiti dal bottone EndTurnButton2
+    /// </summary>
+    public void OnGameStarted()
+    {
+        startedTurnEvent?.Invoke(new VoidEvent(numberOfRounds));
     }
 
-    //TODO controllare se gli animator sono tutti in idle
     public void OnTurnStarted()
     {
         numberOfRounds++;
+        planningPhaseStartEvent?.Invoke(new VoidEvent(0));
+    }
+
+    public void OnPlanningPhaseEnded()
+    {
+        actionPhaseStartEvent?.Invoke(new VoidEvent(0));
+    }
+
+    public void OnActionPhaseEnded()
+    {
+        endedTurnEvent?.Invoke(new VoidEvent(0));
     }
 
     public void OnEnemyTurnEnded()
     {
-        Debug.Log("Turno nemico finito");
         StartCoroutine(WaitNextRound());
     }
 
+    #endregion
+
     private IEnumerator StartGame()
     {
-        yield return new WaitForSeconds(timeBeforeStart);
-        /// <summary>
-        //Aggiungere il nuovo event
-        /// </summary>
-        /// <param name="VoidEvent(numberOfRounds)"></param>
-        startedTurnEvent?.Invoke(new VoidEvent(numberOfRounds));
-        Debug.Log("Inizio partita, turno " + numberOfRounds);
+        yield return new WaitForSeconds(timeBeforeStartGame);
+        startedGameEvent?.Invoke(new VoidEvent(0));
     }
 
     private IEnumerator WaitNextRound()
     {
         yield return new WaitForSeconds(timeBetweenRounds);
         startedTurnEvent?.Invoke(new VoidEvent(numberOfRounds));
-        Debug.Log("Turno del giocatore numero " + numberOfRounds);
-
     }
-
-    //TODO: implementare la logica di energia delle carte
 }

@@ -31,6 +31,9 @@ public class AllyShip : AShip
     [ContextMenu("LookForMovement")]
     public override bool LookForMovement()
     {
+        //quando la invoco, pulisco la lista delle azioni possibili e la riempio con le nuove
+        shipMoves.Clear();
+
         canMove=false;
         for(int x = position.x - shipSO.movementRange; x <= position.x + shipSO.movementRange; x++)
         {
@@ -76,6 +79,9 @@ public class AllyShip : AShip
     }
     public override bool LookForAttacks()
     {
+        //quando la invoco, pulisco la lista delle azioni possibili e la riempio con le nuove
+        shipMoves.Clear();
+
         canAttack = false;
         //Se il giocatore ha la libertà di scegliere in quale posizione attaccare, allora questo metodo
         //gli farà vedere solo le posizioni in cui può attaccare.

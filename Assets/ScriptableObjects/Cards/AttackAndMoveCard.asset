@@ -10,12 +10,12 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfc6d05c17513294494b444943d35d9b, type: 3}
-  m_Name: MovementAndAttackCard
+  m_Name: AttackAndMoveCard
   m_EditorClassIdentifier: 
   cardEntityType: 0
   cardType: 0
   cardImage: {fileID: 0}
-  cardName: Move and Attack
+  cardName: Attack and move
   cardDescription: 
   cardCost: 3
   isWorldInteractive: 0
@@ -24,7 +24,7 @@ MonoBehaviour:
     m_Bits: 0
   lastingTurns: 1
   cardEffects:
-  - {fileID: 11400000, guid: 28b8616b3abb1764ca631b441e19f5ae, type: 2}
   - {fileID: 11400000, guid: 5067f883c29afc44b8ad0562ec1729ac, type: 2}
+  - {fileID: 11400000, guid: 28b8616b3abb1764ca631b441e19f5ae, type: 2}
   energyUsedEvent: {fileID: 11400000, guid: 3a986c728b37b99438be18298d645fb4, type: 2}
   energySystem: {fileID: 11400000, guid: 136cca535f0baba46ab62bf1a16ce78d, type: 2}
