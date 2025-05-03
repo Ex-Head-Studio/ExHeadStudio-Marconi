@@ -27,7 +27,7 @@ public class AllyShip : AShip
     public override bool LookForMovement()
     {
         canMove=false;
-        for(int x = position.x - shipSO.movementRange; x < position.x + shipSO.movementRange; x++)
+        for(int x = position.x - shipSO.movementRange; x <= position.x + shipSO.movementRange; x++)
         {
             if(x >= 0 && x < gridManager._width)
             {
@@ -40,7 +40,7 @@ public class AllyShip : AShip
                 }
             }
         }
-        for(int y = position.y - shipSO.movementRange; y < position.y + shipSO.movementRange; y++)
+        for(int y = position.y - shipSO.movementRange; y <= position.y + shipSO.movementRange; y++)
         {
             if(y >= 0 && y < gridManager._height)
             {
