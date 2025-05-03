@@ -120,7 +120,11 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     public void EnemyMovesSelection()
     {
         Debug.Log("Ricerca mosse del nemico");
-        enemies.ForEach(e => {e.LookForMovement(); e.LookForAttacks();});
+        foreach(AShip enemy in enemies)
+        {
+            enemy.LookForMovement();
+            enemy.LookForAttacks();
+        }
         
     }
     //Il metodo viene chiamato dall'evento di fine turno giocatore e fa eseguire alle navi la loro mossa preferita
