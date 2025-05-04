@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: Scout
   m_EditorClassIdentifier: 
   movementRange: 3
-  attackRange: 5
+  attackRange: 1
   attackPower: 2
   health: 2
   statNames:

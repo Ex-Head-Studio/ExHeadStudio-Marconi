@@ -140,7 +140,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
         Debug.Log("Fine turno nemico");
     }
 
-
+    //Questa serve ancora?
     //Finito il turno, aggiorna la influence map con le nuove posizioni delle navi, così i calcoli nei turni successivi sono corretti
     public void EndTurn()
     {

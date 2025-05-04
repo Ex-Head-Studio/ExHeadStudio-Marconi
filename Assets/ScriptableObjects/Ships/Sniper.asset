@@ -13,8 +13,8 @@ MonoBehaviour:
   m_Name: Sniper
   m_EditorClassIdentifier: 
   movementRange: 2
-  attackRange: 10
-  attackPower: 3
+  attackRange: 6
+  attackPower: 2
   health: 1
   statNames:
   - Movement Range

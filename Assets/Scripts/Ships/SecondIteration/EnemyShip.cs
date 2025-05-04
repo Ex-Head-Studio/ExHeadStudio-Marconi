@@ -8,21 +8,32 @@ public class EnemyShip : AShip
     int idMove=0;
     //Quando viene chiamata la fine del turno, Execute Instructions fa fare l'azione migliore alla nave, a meno che non sia stata bloccata
     //dal giocatore, in quel caso non fa nulla
-    public override void ExecuteMove(){
-        if(!canMove && !canAttack){
+    public override void ExecuteMove()
+    {
+        if(!canMove && !canAttack)
+        {
+            foreach(Move move in shipMoves)
+            {
+                gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileNotInteractable(faction);
+            }
             shipMoves.Clear();
             return;
         }
         
-        switch(initialMove.GetMessageType()){
+        switch(initialMove.GetMessageType())
+        {
             case MessageType.attack:
                 shipSO.attackEvent?.Invoke(new ShipAttackStruct(initialMove.GetTargetPos(), shipSO.attackPower));
                 break;
             case MessageType.movement:
+
+                //QUI FORSE C'E' UNNBUG!!!! Initial move è sempre quella degli attacchi?
                 gridManager.MoveShip(position, initialMove.GetTargetPos(), faction);
                 position=initialMove.GetTargetPos();
                 break;
         }
+
+        gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileNotInteractable(faction);
     }
 
     public override bool LookForMovement()
@@ -37,8 +48,11 @@ public class EnemyShip : AShip
                 if(x!=position.x){
                 Vector2Int pos = new Vector2Int(x, position.y);
                 float value = manager.InfluenceMap.CalculateMoveValue(pos.x, pos.y);
-                possibleMoves.Add( new Move(idMove++, shipName, pos, MessageType.movement, value));
-                }
+                if(gridManager.GetTileAtPosition(pos)._type == TileType.Empty)
+                {
+                    //Debug.Log("Ship: " + shipName + " moves to: " + pos);
+                    possibleMoves.Add( new Move(idMove++, shipName, pos, MessageType.movement, value));
+                }}
             }
         }
         for(int y=position.y-shipSO.movementRange; y<=position.y+shipSO.movementRange;y++){
@@ -46,7 +60,10 @@ public class EnemyShip : AShip
                 if(y!=position.y){
                 Vector2Int pos = new Vector2Int(position.x, y);
                 float value = manager.InfluenceMap.CalculateMoveValue(pos.x, pos.y);
-                possibleMoves.Add(new Move(idMove++, shipName, pos, MessageType.movement,value));
+                if(gridManager.GetTileAtPosition(pos)._type == TileType.Empty)
+                {
+                    possibleMoves.Add(new Move(idMove++, shipName, pos, MessageType.movement,value));
+                }
                 }
             }
         }
@@ -59,6 +76,13 @@ public class EnemyShip : AShip
             canMove=true;
             
         }
+
+        //Chiamo la funzione per il display delle mosse nemiche
+        //TODO come faccio a sapere dove mi muoverò??
+        /*foreach(Move move in shipMoves)
+        {
+            gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileInteractable(faction, move);
+        }*/
         return canMove;
         
     }
@@ -143,9 +167,14 @@ public class EnemyShip : AShip
         //Ordina le mosse per valore decrescente, in modo da avere prima le mosse più vantaggiose.
         shipMoves=shipMoves.OrderByDescending(x=>x.value).ToList();
         initialMove=shipMoves[0];
-        if(shipMoves.Count>0 && shipMoves.Where(x => x.GetMessageType()==MessageType.attack).ToList().Count>0){
+        if(shipMoves.Count>0 && shipMoves.Where(x => x.GetMessageType()==MessageType.attack).ToList().Count>0)
+        {
             canAttack=true;
+
+            //Chiamo la funzione per il display delle mosse nemiche
+            gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
         }
+        
         //Debug.Log("Ship: " + shipName + " performs: " + initialMove.GetMessageType() + " on: " + initialMove.GetTargetPos());
         return canAttack;
     }
@@ -158,13 +187,10 @@ public class EnemyShip : AShip
         throw new System.NotImplementedException();
     }
     //Metodo da invocare nel caso si volesse bloccare l'azione di una nave nemica
-    public void DisableShip(){
+
+    public void DisableShip()
+    {
         canAttack=false;
         canMove=false;
-    }
-    
-
-    void ShowMove(){
-
     }
 }

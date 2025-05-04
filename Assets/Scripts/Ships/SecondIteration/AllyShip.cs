@@ -71,7 +71,7 @@ public class AllyShip : AShip
         {
             foreach(Move move in shipMoves)
             {
-                gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileInteractable(true);
+                gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileInteractable(faction, move);
             }
             canMove = true;
         }
@@ -127,7 +127,7 @@ public class AllyShip : AShip
         {
             foreach(Move move in shipMoves)
             {
-                gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileInteractable(true);
+                gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileInteractable(faction, move);
             }
             canAttack = true;
         }
@@ -169,27 +169,25 @@ public class AllyShip : AShip
         }
         if(tile._type == TileType.Empty)
         {
-            Debug.Log("Received tile: " + tile.name);
+            Debug.Log("Movement in tile: " + tile.name);
             gridManager.MoveShip(this.position, gridManager.GetPositionFromTile(tile), this.faction);
             this.position = Vector2Int.RoundToInt(gridManager.GetPositionFromTile(tile));
         }
         else if (tile._type == TileType.Enemy)
         {
+            Debug.Log("Attack in tile: " + tile.name);
             PerformAttack(gridManager.GetPositionFromTile(tile));
         }  
 
         //disattivo le tile interagibili
         foreach(Move move in shipMoves)
         {
-            gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileNotInteractable();
+            gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileNotInteractable(faction);
         }
 
         //comunico che l'evento è terminato
-        if(effectSO != null)
-        {
-            effectSO.EndEffect(0);
-            effectSO = null;
-        }
+        Debug.Log("Effect ended: " + effectSO.name);
+        effectSO.EndEffect(0);
     }
 
     private void ByPassEffect()
@@ -198,12 +196,8 @@ public class AllyShip : AShip
         {
             transform.DOKill(true);
         });
-        //comunico che l'evento è terminato
-        if(effectSO != null)
-        {
-            effectSO.EndEffect(0);
-            effectSO = null;
-        }
+
+        effectSO.EndEffect(0);
     }
 
     public void AddHealth(int healthToAdd)

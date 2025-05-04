@@ -109,10 +109,12 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
         //Controllo se ci sono effetti nella coda
         if (effectQueue.Count > 0)
         {
+            Debug.Log("Ci sono ancora effetti nella coda.");
             ResolveEffectQueue();
         }
         else
         {
+            Debug.Log("Non ci sono più effetti nella coda.");
             //Se non ci sono più effetti nella coda, invoco l'evento di fine effetto
             effectQueue.Clear();
 

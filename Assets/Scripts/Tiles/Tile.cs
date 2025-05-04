@@ -46,7 +46,12 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
    
 
     [Header("Interaction")]
-    [SerializeField] private GameObject interactionSignal;
+    [SerializeField] private GameObject allyMovementSignal;
+    [SerializeField] private GameObject enemyMovementSignal;
+    [SerializeField] private GameObject allyAttackSignal;
+    [SerializeField] private GameObject enemyAttackSignal;
+
+    private GameObject activeSignal = null;
     [SerializeField] bool isInteractable = false;
     [SerializeField] private Collider tileCollider;
 
@@ -60,7 +65,12 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     void Awake() 
     {
-        interactionSignal.SetActive(false);
+        //Forse si può migliorare, ma per ora va bene
+        allyMovementSignal.SetActive(false);
+        enemyMovementSignal.SetActive(false);
+        allyAttackSignal.SetActive(false);
+        enemyAttackSignal.SetActive(false);
+
         tileCollider.enabled = false;
 
         /* 
@@ -100,27 +110,72 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     #region Selezione della tile
 
-    [ContextMenu("Set Tyle Interactable" )]
-    //Questa funzione è per il debug, per vedere se la tile è interagibile o meno
-    private void SetTileInteractableEditor() 
+    /// <remarks>
+    /// <summary>
+    /// This faction sets the tile interactable and chooses the tileType based on the entity passed as parameter.
+    /// </summary>
+    /// <param name="shipFaction"></param>
+    /// </remarks>
+    public void SetTileInteractable(int shipFaction, Move move = null) 
     {
-        SetTileInteractable(true);
+        if(shipFaction == (int)Entity.ally)
+        {
+            isInteractable = true;
+            tileCollider.enabled = true;
+            if(move != null)
+            {
+                if(move.GetMessageType() == MessageType.attack)
+                {
+                    allyAttackSignal.SetActive(true);
+                    activeSignal = allyAttackSignal;
+                }
+                else if(move.GetMessageType() == MessageType.movement)
+                {
+                    allyMovementSignal.SetActive(true);
+                    activeSignal = allyMovementSignal;
+                }
+            }
+        }
+        else if(shipFaction == (int)Entity.enemy)
+        {
+
+            if(move != null)
+            {
+                if(move.GetMessageType() == MessageType.attack)
+                {
+                    enemyAttackSignal.SetActive(true);
+                    activeSignal = enemyAttackSignal;
+                }
+                else if(move.GetMessageType() == MessageType.movement)
+                {
+
+                    //attenzione!!
+                    _type = TileType.Enemy;
+                    
+
+                    enemyMovementSignal.SetActive(true);
+                    activeSignal = enemyMovementSignal;
+                }
+            }
+        }
+        else
+        {
+            _type = TileType.Empty;
+        }
     }
 
-    public void SetTileInteractable(bool interactable = true) 
+    public void SetTileNotInteractable(int shipFaction) 
     {
-        isInteractable = interactable;
-        interactionSignal.SetActive(interactable);
-        tileCollider.enabled = true;
-    }
-
-    [ContextMenu("Set Tyle Not Interactable" )]
-    public void SetTileNotInteractable() 
-    {
-        isInteractable = false;
-        interactionSignal.SetActive(false);
-        tileCollider.enabled = false;
+        if(activeSignal != null)
+        {
+            activeSignal.SetActive(false);
+        }
         _highlight.SetActive(false);
+        if(shipFaction == (int)Entity.ally)
+        {   
+            isInteractable = false;
+            tileCollider.enabled = false;
+        }
     }
 
 
@@ -150,11 +205,10 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData) 
     {
-        Debug.Log("Mouse clicked tile: " + gameObject.name);
         if(isInteractable)
         {
             tileSelected?.Invoke(this);
-            SetTileNotInteractable();
+            SetTileNotInteractable((int)Entity.ally);
         }
         //La tile comunica con un evento che è stata selezionata, lo riceverà una nave
     }
