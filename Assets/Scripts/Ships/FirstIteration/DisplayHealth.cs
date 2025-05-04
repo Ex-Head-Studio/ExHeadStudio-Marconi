@@ -54,10 +54,21 @@ public class DisplayHealth : MonoBehaviour
             {
 
                 int index = healthBarCount - i - 1;
-                if(index < 0) index = 0;
-                GameObject healthBar = healthObjectsList[index];
-                healthObjectsList.RemoveAt(index);
-                Destroy(healthBar);
+                if(index < 0)
+                {
+                    index = 0;
+                }
+                if(healthObjectsList.Count>0)
+                {
+                    GameObject healthBar = healthObjectsList[index];
+                    healthObjectsList.RemoveAt(index);
+                    Destroy(healthBar);
+                }
+                else
+                {
+                    break;
+                }
+
             }
             healthBarCount -= shipAttackStruct.damage;
         }

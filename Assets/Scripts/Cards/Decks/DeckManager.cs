@@ -36,12 +36,21 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
             this.quantity = quantity;
         }
     }
+
+    private enum DrawMode
+    {
+        [Tooltip("Pesca una carta a caso dal mazzo")]
+        Random,
+        [Tooltip("Pesca una carta in base alla probabilità")]
+        Probability,
+    }
     
 
     //IMPORTANTE!! Aggiungere un raycaster alla camera perchè funzioni, altrimenti non riceve le interazioni
 
     [Header("Type of deck")]
     [SerializeField] private DeckType deckTypeEnum;
+    [SerializeField] private DrawMode drawModeEnum;
     [SerializeField] private int cardsGivenAtTurn;
 
     [Tooltip("Bool che seleziona se la pescata dal mazzo ha un costo")]
@@ -57,9 +66,6 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     [Header("Energy System")]
     [SerializeField] private EnergySystem energySystem;
     [SerializeField] private EnergyUsedEvent energyUsedEvent;
-
-    [Header("Player Hand Manager")]
-    [SerializeField] private PlayerHandManagerScript playerHandManager;
 
     [Header("DeckDraw Object")]
     [SerializeField] private TMP_Text deckCostIcon;
@@ -78,7 +84,6 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         }
         deckCostIcon.text = "Cost: " + drawingCost.ToString();
         ShuffleDeck();
-
     }
 
     #region Gestione eventi
@@ -96,7 +101,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void InstantiateNewPlayerHand()
     {
-        StartCoroutine(WaitBeforeDraw(drawTime, cardsGivenAtTurn));
+        StartCoroutine(WaitBeforeDraw(drawTime, cardsGivenAtTurn-1));
     }
     
 
@@ -142,7 +147,19 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         return null;
     }
 
-    //Inserire logica per inserire le carte e moltiplicarla
+    private BaseCardData DrawCardRandom()
+    {
+        if (cardsInDeck.Count == 0)
+        {
+            Debug.LogError("Il mazzo è vuoto.");
+            return null;
+        }
+
+        // Pesca una carta casuale dal mazzo
+        int randomIndex = UnityEngine.Random.Range(0, cardsInDeck.Count);
+        BaseCardData drawnCard = cardsInDeck[randomIndex].cardData;
+        return drawnCard;
+    }
     #endregion
 
     #region Gestione del puntatore
@@ -153,7 +170,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         Debug.Log(cardsInDeck.Count);
         Debug.Log(string.Join(", ", cardsInDeck.Select(card => card.cardData.name)));
 
-        if (hasDrawingCost && energySystem.currentEnergy >= drawingCost && playerHandManager != null && playerHandManager.GetHandCardsCount() < playerHandManager.maxCardsInHand)
+        if (hasDrawingCost && energySystem.currentEnergy >= drawingCost)
         {
             //se ho energia sufficiente per pescare, rimuovo l'energia utilizzata
             energyUsedEvent?.Invoke(drawingCost);
@@ -163,7 +180,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
             
         }
         //se non ho costo di pesca e mazzo non vuoto
-        else if(!hasDrawingCost && cardsInDeck.Count > 0 && playerHandManager != null && playerHandManager.GetHandCardsCount() < playerHandManager.maxCardsInHand) 
+        else if(!hasDrawingCost && cardsInDeck.Count > 0) 
         {
             cardDrawed?.Invoke(cardsInDeck[0].cardData);
             cardsInDeck.RemoveAt(0);
@@ -200,7 +217,17 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         
         yield return WaitBeforeDraw(drawTime, cardIndex-1);
         yield return new WaitForSeconds(drawTime);
-        //prendi le nuove carte
-        cardDrawed?.Invoke(cardsInDeck.ElementAt(UnityEngine.Random.Range(0, cardsInDeck.Count)).cardData);
+
+        switch (drawModeEnum)
+        {
+            case DrawMode.Random:
+                cardDrawed?.Invoke(DrawCardRandom());
+                break;
+            case DrawMode.Probability:
+                //prendi le nuove carte
+                cardDrawed?.Invoke(DrawCardWithProbability());
+                break;
+        }
+
     }
 }

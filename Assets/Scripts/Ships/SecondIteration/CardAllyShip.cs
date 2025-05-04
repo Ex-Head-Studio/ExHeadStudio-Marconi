@@ -78,7 +78,7 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
                 transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {transform.DOKill(true);});
 
                 isShipSelected = true;
-
+                
                 if (cardToUse.GetCardEffects() != null)
                 {
                     foreach (AbstractEffectSO effect in cardToUse.GetCardEffects())
@@ -119,6 +119,7 @@ public class CardAllyShip : CardShipAbstract, ICardDropArea, IPointerClickHandle
             //invoco l'evento di carta usata dopo tutti gli effetti
             cardToUse.InvokeCardUsed(cardToUse);
             isShipSelectable = false;
+            isShipSelected = false;
             shipCollider.enabled = false;
         }
     }

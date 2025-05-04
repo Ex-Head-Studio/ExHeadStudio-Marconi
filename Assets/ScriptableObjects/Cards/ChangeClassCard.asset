@@ -17,7 +17,7 @@ MonoBehaviour:
   cardImage: {fileID: 0}
   cardName: Change Class
   cardDescription: You can change the class of one of your ships
-  cardCost: 0
+  cardCost: 3
   isWorldInteractive: 0
   dragLayerMask:
     serializedVersion: 2

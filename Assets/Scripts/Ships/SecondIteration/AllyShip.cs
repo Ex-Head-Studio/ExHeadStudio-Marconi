@@ -9,6 +9,7 @@ public class AllyShip : AShip
     int moveId = 0;
 
     private CardAllyShip cardAllyScript;
+    private DisplayHealth displayHealthScript;  
 
 
     //la nave, per gli eventi di movimento e attacco, ha bisogno di sapere quale effetto sta usando
@@ -25,7 +26,10 @@ public class AllyShip : AShip
         Tile.tileSelected -= ReceiveTile;
     }
 
-
+    private void  Start()
+    {
+        displayHealthScript = GetComponent<DisplayHealth>();
+    }
     //Le funzioni che seguono servono per dare al giocatore la possibilità di scegliere solo azioni consentite
     //e non tutte le azioni possibili, come nel caso delle navi nemiche
     [ContextMenu("LookForMovement")]
@@ -158,12 +162,14 @@ public class AllyShip : AShip
 
     public void ReceiveTile(Tile tile)
     {
+
         if(gameObject.TryGetComponent<CardAllyShip>( out cardAllyScript))
         {
             if(!cardAllyScript.IsSelected()) return;
         }
         if(tile._type == TileType.Empty)
         {
+            Debug.Log("Received tile: " + tile.name);
             gridManager.MoveShip(this.position, gridManager.GetPositionFromTile(tile), this.faction);
             this.position = Vector2Int.RoundToInt(gridManager.GetPositionFromTile(tile));
         }
@@ -177,8 +183,6 @@ public class AllyShip : AShip
         {
             gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileNotInteractable();
         }
-
-        cardAllyScript.DeselectShip();
 
         //comunico che l'evento è terminato
         if(effectSO != null)
@@ -205,7 +209,7 @@ public class AllyShip : AShip
     public void AddHealth(int healthToAdd)
     {
         health += healthToAdd;
-        //update UI
+        displayHealthScript.AddHealth(healthToAdd);
     }
 
 }
