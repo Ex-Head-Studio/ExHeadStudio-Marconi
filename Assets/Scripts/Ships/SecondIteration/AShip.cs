@@ -131,6 +131,10 @@ public abstract class AShip : MonoBehaviour
         attackRange = shipSO.attackRange;
         movementRange = shipSO.movementRange;
         health = shipSO.health;
+
+        //cambiare il modello della nave
+
+        //aggiungere particellare/suono/animazione di cambio classe
     }
 
     public int GetHealth()
@@ -141,6 +145,11 @@ public abstract class AShip : MonoBehaviour
     public Vector2Int GetPosition()
     {
         return position;
+    }
+
+    public ShipSO GetShipSO()
+    {
+        return shipSO;
     }
 }
 
