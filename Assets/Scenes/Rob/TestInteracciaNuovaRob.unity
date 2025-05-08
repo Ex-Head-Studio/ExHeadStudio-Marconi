@@ -618,8 +618,59 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -2137904381380714959, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 443487958}
+    - targetCorrespondingSourceObject: {fileID: -2137904381380714959, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 443487959}
   m_SourcePrefab: {fileID: 100100000, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
+--- !u!1 &443487957 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2137904381380714959, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
+  m_PrefabInstance: {fileID: 443487956}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &443487958
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443487957}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b7f40d840e867438c8d42489a0e4a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <radioSound>k__BackingField:
+    Guid:
+      Data1: 1524174995
+      Data2: 1201391888
+      Data3: 283215034
+      Data4: 1153491578
+    Path: event:/Musica/RadioConKnob
+--- !u!65 &443487959
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 443487957}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.054251246, y: 0.024118913, z: 0.054251228}
+  m_Center: {x: 0.14178689, y: -0.123598516, z: 0.06254364}
 --- !u!1 &735269269
 GameObject:
   m_ObjectHideFlags: 0
