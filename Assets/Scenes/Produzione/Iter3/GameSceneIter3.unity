@@ -3446,7 +3446,6 @@ GameObject:
   - component: {fileID: 1193141614}
   - component: {fileID: 1193141613}
   - component: {fileID: 1193141612}
-  - component: {fileID: 1193141611}
   - component: {fileID: 1193141610}
   m_Layer: 0
   m_Name: GameCamera
@@ -3486,25 +3485,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
---- !u!114 &1193141611
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 1193141608}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5d30993f99a32641a2bb054d5b9b485, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <controlAmbience>k__BackingField:
-    Guid:
-      Data1: -967482553
-      Data2: 1198801021
-      Data3: -881561694
-      Data4: -1806178501
-    Path: event:/Ambience/Ambientes
 --- !u!114 &1193141612
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -3683,7 +3663,13 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: -2405390008068412544, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1362578697}
+    - targetCorrespondingSourceObject: {fileID: -2405390008068412544, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1362578696}
   m_SourcePrefab: {fileID: 100100000, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
 --- !u!1 &1247867943
 GameObject:
@@ -4229,6 +4215,51 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 1349119160}
   m_CullTransparentMesh: 1
+--- !u!1 &1362578692 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: -2405390008068412544, guid: 968d797c9fefd6442a78f6a96ff7da44, type: 3}
+  m_PrefabInstance: {fileID: 1239613259}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &1362578696
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362578692}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 40b7f40d840e867438c8d42489a0e4a4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  <radioSound>k__BackingField:
+    Guid:
+      Data1: 1524174995
+      Data2: 1201391888
+      Data3: 283215034
+      Data4: 1153491578
+    Path: event:/Musica/RadioConKnob
+--- !u!65 &1362578697
+BoxCollider:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1362578692}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 1
+  serializedVersion: 3
+  m_Size: {x: 0.054251246, y: 0.024118913, z: 0.054251228}
+  m_Center: {x: -0.14178689, y: -0.123598516, z: 0.06254364}
 --- !u!1 &1451272371
 GameObject:
   m_ObjectHideFlags: 0
@@ -7014,7 +7045,6 @@ GameObject:
   - component: {fileID: 2118361316}
   - component: {fileID: 2118361315}
   - component: {fileID: 2118361314}
-  - component: {fileID: 2118361313}
   - component: {fileID: 2118361312}
   m_Layer: 0
   m_Name: UICamera
@@ -7054,25 +7084,6 @@ MonoBehaviour:
     serializedVersion: 2
     m_Bits: 4294967295
   m_MaxRayIntersections: 0
---- !u!114 &2118361313
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 2118361310}
-  m_Enabled: 0
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e5d30993f99a32641a2bb054d5b9b485, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  <controlAmbience>k__BackingField:
-    Guid:
-      Data1: -967482553
-      Data2: 1198801021
-      Data3: -881561694
-      Data4: -1806178501
-    Path: event:/Ambience/Ambientes
 --- !u!114 &2118361314
 MonoBehaviour:
   m_ObjectHideFlags: 0
