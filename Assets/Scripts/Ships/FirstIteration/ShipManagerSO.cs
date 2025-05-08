@@ -9,8 +9,8 @@ using Random=UnityEngine.Random;
 //Cosa fa la classe?
 public class ShipManagerSO : ScriptableObject
 {
-    [SerializeField] private int initialEnemyShips;
-    [SerializeField] private int initialAllyShips;
+    [SerializeField] public int initialEnemyShips;
+    [SerializeField] public int initialAllyShips;
 
     [SerializeField] public int numberOfMessages;
     public List<string> startingShips;
@@ -27,10 +27,11 @@ public class ShipManagerSO : ScriptableObject
     [Tooltip("La classe base deve essere in coda all'array")]
     [SerializeField] public List<ShipSO> shipSOarray;
 
-    [NonSerialized]
+    [HideInInspector]
     public int enemyShips;
-    [NonSerialized]
+    [HideInInspector]
     public int allyShips;
+
 
     private void OnEnable()
     {

@@ -47,8 +47,8 @@ public class AllyShip : AShip
                 {
                     Vector2Int pos = new Vector2Int(x, position.y);
                     Move move = new Move(moveId++, shipName, pos, MessageType.movement, 0);
-                    if(move != null)
-                    shipMoves.Add(move);
+                    if(move != null && gridManager.GetTileAtPosition(pos).GetType()==TileType.Empty)
+                        shipMoves.Add(move);
                 }
             }
         }
@@ -60,7 +60,8 @@ public class AllyShip : AShip
                 {
                     Vector2Int pos = new Vector2Int(position.x, y);
                     Move move = new Move(moveId++, shipName, pos, MessageType.movement, 0);
-                    shipMoves.Add(move);
+                    if(move != null && gridManager.GetTileAtPosition(pos).GetType()==TileType.Empty)
+                        shipMoves.Add(move);
                 }
             }
         }

@@ -38,7 +38,7 @@ public abstract class AShip : MonoBehaviour
     //Servono per alterare il testo nel display dei comandi, vedi commento in start
     public int attackRange;
     public int movementRange;
-    
+    public bool moveDone;
 
     protected List<Vector2Int> nextPos;
     public ShipState currentState=ShipState.Waiting;

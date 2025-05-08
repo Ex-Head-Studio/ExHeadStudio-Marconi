@@ -32,12 +32,13 @@ public class EnemyShip : AShip
                 position=initialMove.GetTargetPos();
                 break;
         }
-
+        moveDone=true;
         gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileNotInteractable(faction);
     }
 
     public override bool LookForMovement()
     {
+        moveDone=false;
         canMove=false;
         shipMoves.Clear();
         List<Move> possibleMoves= new List<Move>();
@@ -74,7 +75,6 @@ public class EnemyShip : AShip
         if(possibleMoves.Count>0){
             shipMoves=possibleMoves;
             canMove=true;
-            
         }
 
         //Chiamo la funzione per il display delle mosse nemiche
