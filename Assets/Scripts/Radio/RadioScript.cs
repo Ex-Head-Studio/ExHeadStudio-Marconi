@@ -1,26 +1,37 @@
+using System.Collections;
+using System.Collections.Generic;
 using UnityEngine;
+using FMODUnity;
+using FMOD.Studio;
+using FMOD;
+using UnityEngine.EventSystems;
+using UnityEngine.UI;
+using DG.Tweening;
 
-public class RadioScript : MonoBehaviour
+public class RadioScript : MonoBehaviour, IPointerClickHandler
 {
-    [SerializeField] private RadioData radioData;
+    [field: Header("Radio Sound")]  
+    [field: SerializeField] public EventReference radioSound { get; private set; }
+    private float radioKnobValue = 0f;
+    private FMOD.Studio.EventInstance radioInstance;
 
-    private int radioIndex = 0;
-    private FMOD.Studio.EventInstance currentRadioInstance;
-
-    public void ChangeClip()
+    private void Start()
     {
-        // Stop the current clip if it is playing
-        if (currentRadioInstance.isValid())
-        {
-            currentRadioInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
-            currentRadioInstance.release();
-        }
+       PlayRadio();
+    }
 
-        // Play the next radio clip
-        radioIndex = radioIndex % radioData.radioEventReferences.Length;
-        currentRadioInstance = FMODUnity.RuntimeManager.CreateInstance(radioData.radioEventReferences[radioIndex]);
-        radioIndex++;
-        currentRadioInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
-        currentRadioInstance.start();
+    public void PlayRadio()
+    {
+        radioInstance = FMODUnity.RuntimeManager.CreateInstance(radioSound);
+        radioInstance.set3DAttributes(FMODUnity.RuntimeUtils.To3DAttributes(gameObject));
+        radioInstance.start();
+        radioInstance.release();
+    }
+
+    void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
+    {
+        radioKnobValue += 0.5f; 
+        FMODUnity.RuntimeManager.StudioSystem.setParameterByName("RadioKnob", radioKnobValue);
+        UnityEngine.Debug.Log("Manopola cazzo" + radioKnobValue);
     }
 }
