@@ -1,43 +1,84 @@
+using System.Collections;
 using TMPro;
 using UnityEngine;
+using UnityEngine.UI;
 
 public class StatsPanelScript : MonoBehaviour
 {
-    [SerializeField] private TMP_Text allyText;
-    [SerializeField] private TMP_Text enemyText;
+    [Header("Stats Panel")]
+    [SerializeField] private GameObject statsPanel;
 
-    [SerializeField] private OnEndGameEvent endGameEvent;
+    [Header("Generic Stat Prefab")]
+    [SerializeField] private Transform statsParent; 
+    [SerializeField] private GameObject genericStatPrefab;
+    [SerializeField] private GameObject taccaPrefab;  
 
-    //queste sono da cambiare, bisogna linkarli allo SO dell navi;
-    //bisogna essere sicuri di ridurre il numero anche nello SO
-    [SerializeField] private int enemyShips = 3;
-    [SerializeField] private int allyShips = 3;
 
-    private void Start()
+    [Header("Display parameters")]
+    [SerializeField] private int fontSize = 3;
+    [SerializeField] private float waitTimeBeforeShow = 0.5f;
+
+    private HorizontalLayoutGroup horizontalLayoutGroup;
+
+    private void OnEnable()
     {
-        allyText.text = "Ally ships: " + allyShips;
-        enemyText.text = "Enemy ships: " + enemyShips;
+        DisplayStats.OnShipOverStarted += ShowStatsPanel;
+        DisplayStats.OnShipOverEnded += HideStatsPanel;
     }
-    public void UpdateStatsPanel(ShipDestroyedStruct shipDestroyed)
+
+    private void OnDisable()
     {
-        if(shipDestroyed.entity == (int)Entity.ally)
-        {
-            allyShips -= 1;
-            allyText.text = "Ally ships: " + allyShips;
+        DisplayStats.OnShipOverStarted -= ShowStatsPanel;
+        DisplayStats.OnShipOverEnded -= HideStatsPanel;
+    }
+    private void ShowStatsPanel(ShipSO shipSO)
+    {
+        statsPanel.SetActive(true);
+        StartCoroutine(WaitBeforeShow(waitTimeBeforeShow, shipSO));
 
-        }
-        else
+    }
+    private void HideStatsPanel(ShipSO shipSO)
+    {
+        foreach (Transform child in statsParent)
         {
-            enemyShips -= 1;
-            enemyText.text = "Enemy ships: " + enemyShips;
-        }
-
-        if(enemyShips == 0 || allyShips == 0)
-        {
-            Debug.Log("EndGame: " + (enemyShips == 0 ? "Ally" : "Enemy") + " wins");
-            //passiamo il perdente
-            endGameEvent?.Invoke(enemyShips == 0 ? (int)Entity.enemy : (int)Entity.ally);
+            Destroy(child.gameObject);
         }
     }
+
+    private void SetShipClass(ShipSO shipClass)
+   {
+        foreach (string statName in shipClass.statNames)
+        {
+            GameObject statObject = Instantiate(genericStatPrefab, statsParent, false);
+            statObject.name = statName;
+            statObject.GetComponentInChildren<TMP_Text>().text = statName;
+            statObject.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+
+            statObject.AddComponent<HorizontalLayoutGroup>();
+
+            horizontalLayoutGroup = statObject.GetComponent<HorizontalLayoutGroup>();
+            horizontalLayoutGroup.childScaleHeight = true;
+            horizontalLayoutGroup.childScaleWidth = true;
+            horizontalLayoutGroup.childForceExpandWidth = false;
+            horizontalLayoutGroup.childForceExpandWidth = false;
+            horizontalLayoutGroup.childAlignment = TextAnchor.MiddleLeft;
+            horizontalLayoutGroup.spacing = 0.5f;
+            horizontalLayoutGroup.padding.left = 10;
+            horizontalLayoutGroup.padding.right = 10;
+
+
+            for(int i = 0; i < shipClass.statsDictionary[statName]-1; i++)
+            {
+                GameObject tacca = Instantiate(taccaPrefab, statObject.transform, false);
+                tacca.name = "Tacca" + i;
+            }
+        }
+   }
+
+   private IEnumerator WaitBeforeShow(float time, ShipSO shipSO)
+   {
+        yield return new WaitForSeconds(time);
+        SetShipClass(shipSO);
+   }
 
 }

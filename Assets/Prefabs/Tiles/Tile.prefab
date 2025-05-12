@@ -566,7 +566,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 7803537846272620116}
   serializedVersion: 2
-  m_LocalRotation: {x: 0.35355338, y: -0.1464466, z: 0.35355338, w: 0.8535535}
+  m_LocalRotation: {x: 0.6532815, y: -0.27059805, z: 0.27059805, w: 0.6532815}
   m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.3, y: 0.3, z: 0.3}
   m_ConstrainProportionsScale: 1
@@ -574,7 +574,7 @@ Transform:
   - {fileID: 5649214831495210847}
   - {fileID: 7976308062670420189}
   m_Father: {fileID: 872386368807779985}
-  m_LocalEulerAnglesHint: {x: 45, y: 0, z: 45}
+  m_LocalEulerAnglesHint: {x: 90, y: 0, z: 45}
 --- !u!65 &9067265766138019178
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -610,6 +610,7 @@ GameObject:
   - component: {fileID: 8909188004089744965}
   - component: {fileID: 8449598450516919117}
   - component: {fileID: -1841351686871509975}
+  - component: {fileID: 2595778905530319872}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -762,6 +763,34 @@ BoxCollider:
   serializedVersion: 3
   m_Size: {x: 1, y: 1, z: 0.2}
   m_Center: {x: 0, y: 0, z: 0}
+--- !u!114 &2595778905530319872
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8046514618781660489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 61f25382c277880459846ca8a94980bc, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: b61a9d001a410e64da4d44cc7a5ee84d, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 8449598450516919117}
+        m_TargetAssemblyTypeName: Tile, Assembly-CSharp
+        m_MethodName: SetTileNotInteractable
+        m_Mode: 3
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &8150155357449518266
 GameObject:
   m_ObjectHideFlags: 0

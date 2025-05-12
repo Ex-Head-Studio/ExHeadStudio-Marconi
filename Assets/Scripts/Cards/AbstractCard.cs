@@ -37,6 +37,7 @@ public abstract class AbstractCard : MonoBehaviour
     public void InvokeCardUsed(AbstractCard cardUsed)
     {
         abstractCardUsed?.Invoke(cardUsed);
+        Debug.Log("Card cost: " + cardData.cardCost);
         energyUsedEvent?.Invoke(cardData.cardCost);
     }
 

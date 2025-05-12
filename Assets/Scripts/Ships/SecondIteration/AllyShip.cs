@@ -99,7 +99,8 @@ public class AllyShip : AShip
                 if(i != position.x)
                 {
                     Vector2Int pos = new Vector2Int(i, position.y);
-                    if(gridManager.GetTileAtPosition(pos)._type == TileType.Enemy){
+                    if(gridManager.GetTileAtPosition(pos)._type == TileType.Enemy
+                     && gridManager.GetTileAtPosition(pos).GetShip() != null){
                     Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
                     shipMoves.Add(move);
                     canAttack = true;
@@ -114,7 +115,8 @@ public class AllyShip : AShip
                 if(j != position.y)
                 {
                     Vector2Int pos = new Vector2Int(position.x, j);
-                    if(gridManager.GetTileAtPosition(pos)._type == TileType.Enemy){
+                    if(gridManager.GetTileAtPosition(pos)._type == TileType.Enemy
+                     && gridManager.GetTileAtPosition(pos).GetShip() != null){
                     Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
                     shipMoves.Add(move);
                     canAttack = true;
