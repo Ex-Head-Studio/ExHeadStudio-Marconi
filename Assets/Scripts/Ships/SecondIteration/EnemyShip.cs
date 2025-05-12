@@ -29,6 +29,7 @@ public class EnemyShip : AShip
 
                 //QUI FORSE C'E' UNNBUG!!!! Initial move è sempre quella degli attacchi?
                 gridManager.MoveShip(position, initialMove.GetTargetPos(), faction);
+                
                 position=initialMove.GetTargetPos();
                 break;
         }
@@ -172,9 +173,9 @@ public class EnemyShip : AShip
             canAttack=true;
 
             //Chiamo la funzione per il display delle mosse nemiche
-            gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
+            
         }
-        
+        gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
         //Debug.Log("Ship: " + shipName + " performs: " + initialMove.GetMessageType() + " on: " + initialMove.GetTargetPos());
         return canAttack;
     }
