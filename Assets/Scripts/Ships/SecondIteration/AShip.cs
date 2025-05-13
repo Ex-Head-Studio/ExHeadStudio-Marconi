@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
+using Unity.Cinemachine;
 
 public abstract class AShip : MonoBehaviour
 {
@@ -48,6 +49,8 @@ public abstract class AShip : MonoBehaviour
     protected bool canAttack;
     public int faction;
 
+    //per il camera shake
+    private CinemachineImpulseSource impulseSource;
 
 
     void Awake()
@@ -61,6 +64,8 @@ public abstract class AShip : MonoBehaviour
 
         GetComponent<OnShipAttackEventListener>().AddMethodToExecute(OnAttacked);
 
+        //camera shake
+        impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
     public virtual void ExecuteMove(){}
@@ -76,6 +81,9 @@ public abstract class AShip : MonoBehaviour
     {
         if(position.x == attackStruct.gridPosition.x && position.y == attackStruct.gridPosition.y)
         {
+            //camera shake
+            CameraShakeManager.instance.CameraShake(impulseSource);
+
             health-=attackStruct.damage;
             if(health<=0)
             {
