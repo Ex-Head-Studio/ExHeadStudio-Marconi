@@ -218,8 +218,9 @@ public class ShipManager2 : MonoBehaviour, IShipManager
         if(faction == (int)Entity.ally)
         {
             //assegno ad ogni nuova nave i component per reagire alle carte
-            newShip.AddComponent<CardAllyShip>();
+
             newShip.AddComponent<AllyShip>();
+            newShip.AddComponent<CardAllyShip>();
             
             AllyShip shipScript = newShip.GetComponent<AllyShip>();
             shipScript.SetupShip(shipManagerSO.shipSOarray[modelIndex], shipName, faction, this);
@@ -230,6 +231,8 @@ public class ShipManager2 : MonoBehaviour, IShipManager
         {
 
             newShip.AddComponent<EnemyShip>();
+            newShip.AddComponent<CardEnemyShip>();
+            
             EnemyShip shipScript = newShip.GetComponent<EnemyShip>();
             shipScript.SetupShip(shipManagerSO.shipSOarray[modelIndex], shipName, faction, this);
             newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.enemyMaterial);

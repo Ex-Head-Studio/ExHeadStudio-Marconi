@@ -5,16 +5,18 @@ using System.Collections.Generic;
 using System;
 using Unity.VisualScripting;
 using DG.Tweening;
-public class UICardDragNDropHandler : MonoBehaviour
+public class UICardDragNDropHandler : MonoBehaviour, IPointerDownHandler, IPointerUpHandler, IDragHandler
 {
         public static event Action<AbstractCard> cardDroppedEvent;
         public static event Action<GameObject> cardUsedEvent;
+
+        public static event Action<AbstractCard> droppableCardSelectedEvent;
+        public static event Action<AbstractCard> droppableCardDeselectedEvent;
         private Vector3 startCardDragPosition;
         private Vector3 mousePos;
 
         private AbstractCard cardScript;
         private EnergySystem energySystem;
-        private EnergyUsedEvent energyUsedEvent;
         private Collider cardCollider;
 
 
@@ -25,17 +27,13 @@ public class UICardDragNDropHandler : MonoBehaviour
         private void Start()
         {
             cardScript = GetComponent<AbstractCard>();
-            energySystem = cardScript.GetEnergySystem();
-            energyUsedEvent = cardScript.GetEnergyEvent();
             cardCollider = GetComponent<Collider>();
             //molto importante, non modificare, evita che le navi debbano avere un rigidbody
             cardCollider.providesContacts = true;
 
-
-
         }
 
-        public void OnPointerDown(PointerEventData eventData)
+    public void OnPointerDown(PointerEventData eventData)
     {
         if(energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
         {
@@ -47,6 +45,7 @@ public class UICardDragNDropHandler : MonoBehaviour
         {
             startCardDragPosition = transform.position;
             transform.position = GetPointerPositionInWorldSpace();
+            droppableCardSelectedEvent?.Invoke(cardScript);
         }
     }
 
@@ -63,11 +62,10 @@ public class UICardDragNDropHandler : MonoBehaviour
                 if (hitColliders[i] != null && hitColliders[i].TryGetComponent<ICardDropArea>(out ICardDropArea dropArea))
                 {
                     dropArea.CardDrop(cardScript);
-
                     cardDroppedEvent?.Invoke(cardScript);
-                    
-                    cardUsedEvent?.Invoke(gameObject);
-                    Destroy(gameObject);
+
+                    //impedisco che la carta venga usata più volte se entra in più aree
+                    break;
                 }
                 else
                 {
@@ -75,12 +73,12 @@ public class UICardDragNDropHandler : MonoBehaviour
                 }
                 i++;
             }
+
             cardCollider.enabled = true;
 
             transform.position = startCardDragPosition;
 
-            //consumo l'energia
-            energyUsedEvent?.Invoke(cardScript.GetCardCost());
+            droppableCardDeselectedEvent?.Invoke(cardScript);
         }
     }
 

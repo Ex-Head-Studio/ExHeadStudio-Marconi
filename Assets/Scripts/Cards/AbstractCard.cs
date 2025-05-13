@@ -28,8 +28,6 @@ public abstract class AbstractCard : MonoBehaviour
             cardDragNDropHandler.SetEnergySystem(energySystem);
         }
 
-
-
         energyUsedEvent = cardData.energyUsedEvent;
         energySystem = cardData.energySystem;
     }

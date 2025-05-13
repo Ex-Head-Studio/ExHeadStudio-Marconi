@@ -12,11 +12,8 @@ public class DisplayStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     void IPointerEnterHandler.OnPointerEnter(PointerEventData eventData)
     {
-        if(shipSO == null)
-        {
-            shipSO = GetComponent<AShip>().GetShipSO();
-        }
-
+        //TODO forse si può rendere più efficiente, ma non basta creare una variabile locale da assegnare
+        shipSO = GetComponent<AShip>().GetShipSO();
         OnShipOverStarted?.Invoke(shipSO);
     }
 

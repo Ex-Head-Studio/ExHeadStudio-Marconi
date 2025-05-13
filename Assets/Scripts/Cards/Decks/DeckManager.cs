@@ -43,6 +43,8 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         Random,
         [Tooltip("Pesca una carta in base alla probabilità")]
         Probability,
+        [Tooltip("Selected list of card to draw")]
+        ScriptedList,
     }
     
 
@@ -59,6 +61,10 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     
     [Header("Cards in the deck")]
     [SerializeField] private List<CardForDeck> cardsInDeck;
+
+    [Tooltip("Lista di carte da pescare in modo scriptato")]
+    [SerializeField] private List<CardForDeck> scriptedCards;
+    private List<BaseCardData> localScriptedCards;
 
     [Header("Deck Parameters")]
     [SerializeField] private float drawTime = 0.1f;
@@ -101,6 +107,11 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
 
     public void InstantiateNewPlayerHand()
     {
+        if(drawModeEnum == DrawMode.ScriptedList)
+        {
+            localScriptedCards = new List<BaseCardData>();
+            localScriptedCards = scriptedCards.Select(card => card.cardData).ToList();
+        }
         StartCoroutine(WaitBeforeDraw(drawTime, cardsGivenAtTurn-1));
     }
     
@@ -158,6 +169,13 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         // Pesca una carta casuale dal mazzo
         int randomIndex = UnityEngine.Random.Range(0, cardsInDeck.Count);
         BaseCardData drawnCard = cardsInDeck[randomIndex].cardData;
+        return drawnCard;
+    }
+
+    private BaseCardData DrawCardByList()
+    {
+        BaseCardData drawnCard = localScriptedCards[localScriptedCards.Count - 1];
+        localScriptedCards.RemoveAt(localScriptedCards.Count - 1);
         return drawnCard;
     }
     #endregion
@@ -224,8 +242,11 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
                 cardDrawed?.Invoke(DrawCardRandom());
                 break;
             case DrawMode.Probability:
-                //prendi le nuove carte
                 cardDrawed?.Invoke(DrawCardWithProbability());
+                break;
+            case DrawMode.ScriptedList:
+            
+                cardDrawed?.Invoke(DrawCardByList());
                 break;
         }
 

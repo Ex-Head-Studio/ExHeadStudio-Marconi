@@ -13,7 +13,7 @@ public enum TileType
     Enemy
 }
 
-public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler
+public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler, ICardDropArea
 {
     public enum Entity 
     {
@@ -62,6 +62,21 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     // public BaseShip OccupiedShip;
     // public bool Placeable => _isPlaceable && OccupiedShip == null;
+
+    #region Iscrizione agli eventi
+
+    private void OnEnable() 
+    {
+        UICardDragNDropHandler.droppableCardSelectedEvent += ActivateTileCollider;
+        UICardDragNDropHandler.droppableCardDeselectedEvent += DeactivateTileCollider;
+    }
+
+    private void OnDisable() 
+    {
+        UICardDragNDropHandler.droppableCardSelectedEvent -= ActivateTileCollider;
+        UICardDragNDropHandler.droppableCardDeselectedEvent -= DeactivateTileCollider;
+    }
+    #endregion
 
     void Awake() 
     {
@@ -309,6 +324,26 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         _type = TileType.Empty;
         _mesh.material.color = _emptyColor;
     }
+
+
+    #region ICardDropArea
+
+    void ICardDropArea.CardDrop(AbstractCard card)
+    {
+        Debug.Log("Card dropped on tile: " + gameObject.name);
+    }
+
+    private void ActivateTileCollider(AbstractCard card)
+    {
+        tileCollider.enabled = true;
+    }
+
+    private void DeactivateTileCollider(AbstractCard card)
+    {
+        tileCollider.enabled = false;
+    }
+
+    #endregion
 
     private void OnDrawGizmos()
     {

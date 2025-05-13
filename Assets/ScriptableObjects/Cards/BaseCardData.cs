@@ -6,6 +6,7 @@ public enum CardEntityType
     AllyShip,
     EnemyShip,
     AllyAndEnemyShip,
+    None,
 }
 
 [CreateAssetMenu(fileName = "BaseCardData", menuName = "Scriptable Objects/BaseCardData")]
@@ -23,8 +24,6 @@ public class BaseCardData : ScriptableObject
 
     [Tooltip("Whether the card can be dragged in the world or not")]
     [SerializeField] public bool isWorldInteractive = false;
-    [SerializeField] public LayerMask dragLayerMask;
-
     
     [SerializeField] public int lastingTurns = 1;
 

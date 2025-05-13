@@ -194,4 +194,16 @@ public class EnemyShip : AShip
         canAttack=false;
         canMove=false;
     }
+
+    //Funzioni da utilizzare per la risoluzione degli effetti delle carte
+    public void NegateAction()
+    {
+        canAttack=false;
+        canMove=false;
+        //invoco ora la funzione per non attendere la fine del turno
+        foreach(Move move in shipMoves)
+        {
+            gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileNotInteractable(faction);
+        }
+    }
 }

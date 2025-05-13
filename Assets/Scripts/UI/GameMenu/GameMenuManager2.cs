@@ -126,7 +126,7 @@ public class GameMenuManager2 : MonoBehaviour
 
     private IEnumerator EndGame()
     {
-        yield return new WaitForSeconds(2);
+        yield return new WaitForSeconds(0.5f);
         OnEndGame(enemyShips == 0 ? (int)Entity.enemy : (int)Entity.ally);
     }
 

@@ -1480,6 +1480,34 @@ PrefabInstance:
       propertyPath: drawModeEnum
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
+      propertyPath: cardsInDeck.Array.size
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
+      propertyPath: cardsInDeck.Array.data[2].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: c1b2c2c0eec7e6e4fbe03841a3f7a7cc, type: 2}
+    - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
+      propertyPath: cardsInDeck.Array.data[2].quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
+      propertyPath: cardsInDeck.Array.data[3].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 4648e0f4907225a428937e58966c6c44, type: 2}
+    - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
+      propertyPath: cardsInDeck.Array.data[3].quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
+      propertyPath: cardsInDeck.Array.data[4].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: a559adef3444b4846a1b03f349cbf10e, type: 2}
+    - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
+      propertyPath: cardsInDeck.Array.data[4].quantity
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 4812574580403006737, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: eventToListen
       value: 
@@ -1649,7 +1677,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: drawModeEnum
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: cardsGivenAtTurn
@@ -1657,12 +1685,24 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: cardsInDeck.Array.size
-      value: 6
+      value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
+      propertyPath: scriptedCards.Array.size
+      value: 3
+      objectReference: {fileID: 0}
+    - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
+      propertyPath: cardsInDeck.Array.data[0].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 879953964d691104ab1474c03f4ae8fe, type: 2}
+    - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
+      propertyPath: cardsInDeck.Array.data[2].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 024281b8b380e9b4cb426776053ca44f, type: 2}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: cardsInDeck.Array.data[3].cardData
       value: 
-      objectReference: {fileID: 11400000, guid: 024281b8b380e9b4cb426776053ca44f, type: 2}
+      objectReference: {fileID: 11400000, guid: 2be39fb241d6cbd44b45b8ddb2245f44, type: 2}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: cardsInDeck.Array.data[3].quantity
       value: 3
@@ -1670,7 +1710,7 @@ PrefabInstance:
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: cardsInDeck.Array.data[4].cardData
       value: 
-      objectReference: {fileID: 11400000, guid: 2be39fb241d6cbd44b45b8ddb2245f44, type: 2}
+      objectReference: {fileID: 11400000, guid: 76764ec37b881dd4f86416dfeb05ca73, type: 2}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: cardsInDeck.Array.data[4].quantity
       value: 3
@@ -1683,6 +1723,18 @@ PrefabInstance:
       propertyPath: cardsInDeck.Array.data[5].quantity
       value: 3
       objectReference: {fileID: 0}
+    - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
+      propertyPath: scriptedCards.Array.data[0].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 879953964d691104ab1474c03f4ae8fe, type: 2}
+    - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
+      propertyPath: scriptedCards.Array.data[1].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: a559adef3444b4846a1b03f349cbf10e, type: 2}
+    - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
+      propertyPath: scriptedCards.Array.data[2].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: a559adef3444b4846a1b03f349cbf10e, type: 2}
     m_RemovedComponents: []
     m_RemovedGameObjects:
     - {fileID: 7410028442336706116, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
@@ -6024,7 +6076,7 @@ MonoBehaviour:
   optionsPanel: {fileID: 1454355585}
   confirmPanel: {fileID: 139996916}
   inputs: {fileID: -944628639613478452, guid: 052faaac586de48259a63d0c4782560b, type: 3}
-  shipManagerSo: {fileID: 11400000, guid: 03bbd7596a6b932468d25964a02066e3, type: 2}
+  shipManagerSo: {fileID: 11400000, guid: 0eb036cc5636c474fb97ed35452283f2, type: 2}
   objectsStackSO: {fileID: 11400000, guid: e75b03c53adb58d4ca5f49a19aaa75ae, type: 2}
 --- !u!114 &2017085532
 MonoBehaviour:

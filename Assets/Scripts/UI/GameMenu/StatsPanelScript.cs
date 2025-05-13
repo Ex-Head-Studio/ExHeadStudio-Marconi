@@ -33,7 +33,6 @@ public class StatsPanelScript : MonoBehaviour
     }
     private void ShowStatsPanel(ShipSO shipSO)
     {
-        statsPanel.SetActive(true);
         StartCoroutine(WaitBeforeShow(waitTimeBeforeShow, shipSO));
 
     }
