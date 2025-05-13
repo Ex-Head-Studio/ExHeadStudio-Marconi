@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Bomber
   m_EditorClassIdentifier: 
   movementRange: 2
-  attackRange: 2
+  attackRange: 1
   attackPower: 3
-  health: 3
+  health: 2
   statNames:
   - Movement Range
   - Attack Range
