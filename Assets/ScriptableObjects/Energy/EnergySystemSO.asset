@@ -12,7 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 20df3d46c44bad640a723c54915ee2e1, type: 3}
   m_Name: EnergySystemSO
   m_EditorClassIdentifier: 
-  defaultEnergy: 5
-  maxEnergy: 5
+  defaultEnergy: 6
+  maxEnergy: 6
   energyPerTurn: 1
-  currentEnergy: 9
+  currentEnergy: 5
