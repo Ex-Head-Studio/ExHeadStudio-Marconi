@@ -13,9 +13,9 @@ MonoBehaviour:
   m_Name: Tank
   m_EditorClassIdentifier: 
   movementRange: 1
-  attackRange: 3
+  attackRange: 2
   attackPower: 1
-  health: 5
+  health: 4
   statNames:
   - Movement Range
   - Attack Range
