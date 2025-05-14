@@ -21,6 +21,9 @@ public class ShipSO : ScriptableObject
     [Header("Animator")]
     [SerializeField] public AnimatorController shipAnimatorController;
 
+    [Header("Effects")]
+    [SerializeField] public ParticleSystem attackReceivedParticle;
+
     public Dictionary<string, int> statsDictionary =
     new Dictionary<string, int>();
 

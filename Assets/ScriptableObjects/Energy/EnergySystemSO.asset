@@ -15,4 +15,4 @@ MonoBehaviour:
   defaultEnergy: 6
   maxEnergy: 6
   energyPerTurn: 1
-  currentEnergy: 5
+  currentEnergy: 6

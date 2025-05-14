@@ -29,7 +29,9 @@ public class PlayerHandManagerScript : MonoBehaviour
         DeckManager.cardDrawed += DrawCard;
         AbstractCard.abstractCardUsed += OnCardUsed;
         UICardDragNDropHandler.cardUsedEvent += OnCardUsed;
+        UICardDragNDropHandler.droppableCardSelectedEvent += OnCardSelected;
         UICard.cardSelectedEvent += OnCardSelected;
+
 
     }
 
@@ -38,6 +40,7 @@ public class PlayerHandManagerScript : MonoBehaviour
         DeckManager.cardDrawed -= DrawCard;
         AbstractCard.abstractCardUsed -= OnCardUsed;
         UICardDragNDropHandler.cardUsedEvent -= OnCardUsed;
+        UICardDragNDropHandler.droppableCardSelectedEvent -= OnCardSelected;
         UICard.cardSelectedEvent -= OnCardSelected;
     }
 

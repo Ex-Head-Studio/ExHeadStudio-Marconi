@@ -347,7 +347,14 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     private void OnDrawGizmos()
     {
-        Gizmos.color = Color.red;
+        if(tileCollider.enabled)
+        {
+            Gizmos.color = Color.green;
+        }
+        else
+        {
+            Gizmos.color = Color.white;
+        }
         Gizmos.DrawWireCube(transform.position, new Vector3(tileCollider.bounds.size.x, tileCollider.bounds.size.y, tileCollider.bounds.size.z));   
     }
 }

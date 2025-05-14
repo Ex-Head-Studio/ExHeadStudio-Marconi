@@ -12,10 +12,6 @@ public class AllyShip : AShip
     private DisplayHealth displayHealthScript;  
 
 
-    //la nave, per gli eventi di movimento e attacco, ha bisogno di sapere quale effetto sta usando
-    private AbstractEffectSO effectSO;
-
-
     private void OnEnable()
     {
         Tile.tileSelected += ReceiveTile;
@@ -140,13 +136,6 @@ public class AllyShip : AShip
         }
         return canAttack;
         
-    }
-
-    
-    public void ReceiveEffect(AbstractEffectSO effectSO)
-    {
-        Debug.Log("Received effect: " + effectSO.name);
-        this.effectSO = effectSO;
     }
 
     public override bool LookForAttacks(List<AShip> nearbyShips)

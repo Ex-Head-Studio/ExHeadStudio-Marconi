@@ -53,13 +53,13 @@ public abstract class CardShipAbstract : MonoBehaviour, IPointerClickHandler
     #region Funzioni di callback per gli eventi
     protected virtual void OnCardDropped(AbstractCard card)
     {
-
+        cardToUse = card;
     }
 
     //Funzione che viene chiamata quando la carta viene selezionata
     protected virtual void OnCardSelected(AbstractCard card)
     {
-        //Implementazione di default vuota, può essere sovrascritta dalle classi derivate
+        cardToUse = card;
     }
 
     //Funzione che viene chiamata quando la carta viene deselezionata
@@ -124,7 +124,9 @@ public abstract class CardShipAbstract : MonoBehaviour, IPointerClickHandler
 
     private void StartNextEffect(int id)
     {
-        //Controllo se ci sono effetti nella coda
+        if(isShipSelected)
+        {
+                    //Controllo se ci sono effetti nella coda
         if (effectQueue.Count > 0)
         {
             Debug.Log("Ci sono ancora effetti nella coda.");
@@ -142,6 +144,8 @@ public abstract class CardShipAbstract : MonoBehaviour, IPointerClickHandler
             isShipSelected = false;
             shipCollider.enabled = false;
         }
+        }
+
     }
     #endregion
 

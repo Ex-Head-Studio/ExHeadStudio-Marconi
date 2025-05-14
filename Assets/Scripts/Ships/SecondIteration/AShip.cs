@@ -52,6 +52,12 @@ public abstract class AShip : MonoBehaviour
     //per il camera shake
     private CinemachineImpulseSource impulseSource;
 
+    private ParticleSystem particleSystemInstance;
+
+    //la nave per gli eventi di movimento e attacco ha bisogno di sapere quale effetto sta usando
+    protected AbstractEffectSO effectSO;
+
+
 
     void Awake()
     {
@@ -79,8 +85,15 @@ public abstract class AShip : MonoBehaviour
 
     public void OnAttacked(ShipAttackStruct attackStruct)
     {
+
         if(position.x == attackStruct.gridPosition.x && position.y == attackStruct.gridPosition.y)
         {
+            //Test per la creazione dei particle
+            //calcolo dell'angolo
+            Quaternion correctAngle = Quaternion.FromToRotation(shipSO.attackReceivedParticle.gameObject.transform.up, gameObject.transform.up);
+            particleSystemInstance = Instantiate(shipSO.attackReceivedParticle, transform.position, correctAngle);
+            particleSystemInstance.Play();
+
             //camera shake
             CameraShakeManager.instance.CameraShake(impulseSource);
 
@@ -133,6 +146,12 @@ public abstract class AShip : MonoBehaviour
             health = shipData.health;
     }
 
+    public virtual void ReceiveEffect(AbstractEffectSO effectSO)
+    {
+        this.effectSO = effectSO;
+    }
+    
+
     public void ChangeClass(ShipSO newClass)
     {
         shipSO = newClass;
@@ -143,6 +162,12 @@ public abstract class AShip : MonoBehaviour
         //cambiare il modello della nave
 
         //aggiungere particellare/suono/animazione di cambio classe
+    }
+
+    public void TakeDamage(int damage)
+    {
+        Debug.Log("Damage received");
+        shipSO.attackEvent?.Invoke(new ShipAttackStruct(this.position, damage));
     }
 
     public int GetHealth()

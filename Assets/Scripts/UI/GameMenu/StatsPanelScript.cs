@@ -20,6 +20,8 @@ public class StatsPanelScript : MonoBehaviour
 
     private HorizontalLayoutGroup horizontalLayoutGroup;
 
+    private bool isDisplaying = false;
+
     private void OnEnable()
     {
         DisplayStats.OnShipOverStarted += ShowStatsPanel;
@@ -33,15 +35,21 @@ public class StatsPanelScript : MonoBehaviour
     }
     private void ShowStatsPanel(ShipSO shipSO)
     {
-        StartCoroutine(WaitBeforeShow(waitTimeBeforeShow, shipSO));
+        if(!isDisplaying)
+        {
+            isDisplaying = true;
+            StartCoroutine(WaitBeforeShow(waitTimeBeforeShow, shipSO));
+        }
 
     }
     private void HideStatsPanel(ShipSO shipSO)
     {
+        StopCoroutine(WaitBeforeShow(waitTimeBeforeShow, shipSO));
         foreach (Transform child in statsParent)
         {
             Destroy(child.gameObject);
         }
+        isDisplaying = false;
     }
 
     private void SetShipClass(ShipSO shipClass)

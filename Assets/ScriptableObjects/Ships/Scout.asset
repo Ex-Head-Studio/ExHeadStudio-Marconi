@@ -25,6 +25,7 @@ MonoBehaviour:
   shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
   attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
   shipAnimatorController: {fileID: 9100000, guid: aeb74e1e009911544a03f9cef7127a99, type: 2}
+  attackReceivedParticle: {fileID: 7679892832704549551, guid: 15bae1f0410a69d4ca8b2a0aa3cf1d68, type: 3}
   shipInfluence: 0.5
   shipModelPrefab: {fileID: 4912451739719525359, guid: a4722112e218a7a45934fb6510052f6e, type: 3}
   shipClassModel: {fileID: 7146724821592669780, guid: d1852134e6b043c4c814ec0058828c32, type: 3}

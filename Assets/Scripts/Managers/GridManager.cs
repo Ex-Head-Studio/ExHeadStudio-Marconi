@@ -6,7 +6,9 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-public class GridManager : MonoBehaviour 
+[RequireComponent(typeof(Collider))]
+
+public class GridManager : MonoBehaviour, ICardDropArea
 {
 
     public static GridManager Instance;
@@ -19,12 +21,18 @@ public class GridManager : MonoBehaviour
     public Dictionary<Vector2, Tile> _tiles;
     private Dictionary<int, Ship> _ships;
 
+    private Collider gridCollider;
 
     //mi serve a tenere traccia del numero di tentativi per il riposizionamento
     int attempts = 0;
     void Start()
     {
         GenerateGrid();
+        gridCollider = GetComponent<Collider>();
+        gridCollider.providesContacts = true;
+        gridCollider.bounds.Equals( new Vector3(_width, _height, 10));
+        gridCollider.bounds.center.Equals( new Vector3(_width/2, 0,_height/2));
+        gridCollider.bounds.size.Equals( new Vector3(_width, 0.5f, _height));
     }
 
 
@@ -162,7 +170,13 @@ public class GridManager : MonoBehaviour
         tile.SetTypeEmpty();
         tile.SetShip(null);
     }
-    
+
+    //Metodo per il drop della carta
+    public void CardDrop(AbstractCard card)
+    {
+        //throw new NotImplementedException();
+    }
+
 
     //serve ancora questo metodo? (Stefano)
     /*public void SwapTileTypes(Tile selectedTile) {
@@ -188,5 +202,5 @@ public class GridManager : MonoBehaviour
         }
         
     }*/
-    
+
 }

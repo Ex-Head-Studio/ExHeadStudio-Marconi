@@ -71,29 +71,15 @@ public class EnergyDisplay : MonoBehaviour
         //questa funzione deve restare fuori dal ciclo
         energySystem.RemoveEnergy(amount);
 
-            //implementare un controllo più corretto e rifattorizzare se serve
-            if(energyBarContainer.childCount > 0 && amount < energyBarContainer.childCount)
+            //distruggo gli elementi nella lista
+            for(int i = 0; i < amount && energyBars.Count> 0; i++)
             {
-                for(int i = amount-1; i >= 0; i--)
-                {
-                    energyBars.RemoveAt(i);
-                    //mi piacerebbe fare una piccola animazione di distruzione o un particellare
-                    energyBars[i].transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {energyBars[i].transform.DOKill(true);});
+                int index = energyBars.Count-1;
 
-                    Destroy(energyBarContainer.GetChild(i).gameObject, 0.5f);
-                }
-            }
-            else if(amount > energyBarContainer.childCount)
-            {
-                for(int i = energyBarContainer.childCount-1; i >= 0; i--)
-                {
-                    energyBars.RemoveAt(i);
-
-                    energyBars[i].transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {energyBars[i].transform.DOKill(true);});
-                    Destroy(energyBarContainer.GetChild(i).gameObject);
-                }
-             }
-        
+                energyBars[index].transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {energyBars[index].transform.DOKill(true);});
+                energyBars.RemoveAt(index);
+                Destroy(energyBarContainer.GetChild(index).gameObject);
+            }     
     }
 
 

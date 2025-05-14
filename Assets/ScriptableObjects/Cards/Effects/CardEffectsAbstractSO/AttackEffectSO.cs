@@ -6,7 +6,6 @@ using UnityEditor.UIElements;
 [CreateAssetMenu(fileName = "Attack Effect", menuName = "Scriptable Objects/Card Effects/Attack Effect")]
 public class AttackEffect : AbstractEffectSO
 {
-
     private AllyShip shipScript;
     public override void PerformEffect(EffectStruct effectStruct)
     {

@@ -12,16 +12,17 @@ public class CardAllyShip : CardShipAbstract
 
     protected override void OnCardSelected(AbstractCard card)
     {
+        base.OnCardSelected(card);
         if(card.GetCardEntity() == (int)CardEntityType.AllyShip)
         {
             //animazione che risponde se la carta selezionata funziona sugli alleati
             transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
 
-            cardToUse = card;
             isShipSelectable = true;
             shipCollider.enabled = true;
         }
     }
+
 
     protected override void OnCardDropped(AbstractCard card)
     {

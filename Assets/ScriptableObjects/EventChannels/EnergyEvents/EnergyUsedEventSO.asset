@@ -12,4 +12,4 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 60c9f8e103a338a43a19c60e826d58a3, type: 3}
   m_Name: EnergyUsedEventSO
   m_EditorClassIdentifier: 
-  testingValue: -5
+  testingValue: 1

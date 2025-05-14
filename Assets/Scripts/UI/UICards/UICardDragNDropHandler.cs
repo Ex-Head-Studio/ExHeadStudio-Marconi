@@ -15,13 +15,12 @@ public class UICardDragNDropHandler : MonoBehaviour, IPointerDownHandler, IPoint
         private Vector3 startCardDragPosition;
         private Vector3 mousePos;
 
+        [SerializeField] private float minCardOffesetFromCamera = 10f;
         private AbstractCard cardScript;
         private EnergySystem energySystem;
         private Collider cardCollider;
 
-
-        private float cardDistanceFromCameraMultiplayer;
-        private float minCardOffesetFromCamera;
+        private GridManager gridManager;
 
 
         private void Start()
@@ -31,11 +30,13 @@ public class UICardDragNDropHandler : MonoBehaviour, IPointerDownHandler, IPoint
             //molto importante, non modificare, evita che le navi debbano avere un rigidbody
             cardCollider.providesContacts = true;
 
+            gridManager = FindFirstObjectByType<GridManager>();
+
         }
 
     public void OnPointerDown(PointerEventData eventData)
     {
-        if(energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
+        if(energySystem != null && energySystem.currentEnergy <cardScript.GetCardCost())
         {
             transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true);
             //cambiare il colore per un attimo
@@ -56,7 +57,7 @@ public class UICardDragNDropHandler : MonoBehaviour, IPointerDownHandler, IPoint
             int i = 0;
 
             cardCollider.enabled = false;
-            Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale / 2, Quaternion.identity);
+            Collider[] hitColliders = Physics.OverlapBox(gameObject.transform.position, transform.localScale * 2, Quaternion.identity);
             while (i < hitColliders.Length)
             {
                 if (hitColliders[i] != null && hitColliders[i].TryGetComponent<ICardDropArea>(out ICardDropArea dropArea))
@@ -93,7 +94,8 @@ public class UICardDragNDropHandler : MonoBehaviour, IPointerDownHandler, IPoint
 
         if(Input.mousePosition.y >= Screen.height/4)
         {
-            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, Input.mousePosition.y*(cardDistanceFromCameraMultiplayer * cardDistanceFromCameraMultiplayer));
+            
+            mousePos = new Vector3(Input.mousePosition.x, Input.mousePosition.y, minCardOffesetFromCamera);
         }
         else
         {
@@ -110,5 +112,6 @@ public class UICardDragNDropHandler : MonoBehaviour, IPointerDownHandler, IPoint
     {
         this.energySystem = energySystem;
     }
+
 
 }
