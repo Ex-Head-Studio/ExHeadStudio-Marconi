@@ -105,6 +105,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
         {
             transform.DOShakePosition(1f, 0.5f, 10, 90, false, true);
             //cambiare colore
+            
 
         }
         else
@@ -112,10 +113,12 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
             if(!isCardSelected)
             {   
                 SelectCard();
+                PlayCardSelection();
             }
             else if(isCardSelected)
             {   
                 DeselectCard(cardScript);
+                PlayCardDrop();
             }
         }
     }
@@ -167,6 +170,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     {
         //cardImage.raycastTarget = false;
         //gameObject.raycastTarget = false;
+        PlayCardError();
     }
 
     #endregion
@@ -177,5 +181,33 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
         if (drawGizmos)
             //Draw a cube where the OverlapBox is (positioned where your GameObject is as well as a size)
             Gizmos.DrawWireCube(transform.position, transform.localScale);
+    }
+
+    // CARD SOUND EFFECTS
+    private FMOD.Studio.EventInstance cardSelection;
+
+    public void PlayCardSelection()
+    {
+        cardSelection = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/CardSelection");
+        cardSelection.start();
+        cardSelection.release();
+    }
+
+    private FMOD.Studio.EventInstance cardDrop;
+
+    public void PlayCardDrop()
+    {
+        cardDrop = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/CardDrop");
+        cardDrop.start();
+        cardDrop.release();
+    }
+
+    private FMOD.Studio.EventInstance cardError;
+
+    public void PlayCardError()
+    {
+        cardError = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/CardError");
+        cardError.start();
+        cardError.release();
     }
 }

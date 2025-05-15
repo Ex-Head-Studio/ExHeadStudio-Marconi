@@ -109,6 +109,7 @@ public abstract class AShip : MonoBehaviour
 
     private FMOD.Studio.EventInstance shipDamage;
 
+    // Play the ship damage sound
     public void PlayShipDamage()
     {
         shipDamage = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipDamage");
