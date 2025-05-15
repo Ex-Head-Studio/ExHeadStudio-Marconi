@@ -11,7 +11,8 @@ public class StatsPanelScript : MonoBehaviour
     [Header("Generic Stat Prefab")]
     [SerializeField] private Transform statsParent; 
     [SerializeField] private GameObject genericStatPrefab;
-    [SerializeField] private GameObject taccaPrefab;  
+    [SerializeField] private GameObject taccaPrefab;
+    [SerializeField] private TMPro.TextMeshProUGUI classText;
 
 
     [Header("Display parameters")]
@@ -47,6 +48,7 @@ public class StatsPanelScript : MonoBehaviour
         StopCoroutine(WaitBeforeShow(waitTimeBeforeShow, shipSO));
         foreach (Transform child in statsParent)
         {
+            
             Destroy(child.gameObject);
         }
         isDisplaying = false;
@@ -54,14 +56,32 @@ public class StatsPanelScript : MonoBehaviour
 
     private void SetShipClass(ShipSO shipClass)
    {
+        GameObject classObject = Instantiate(genericStatPrefab, statsParent, false);
+        classObject.name = "ShipClass";
+        classObject.GetComponentInChildren<TMP_Text>().text = shipClass.name;
+        classObject.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
+        if (classObject.GetComponent<HorizontalLayoutGroup>() == null)
+            classObject.AddComponent<HorizontalLayoutGroup>();
+
+        horizontalLayoutGroup = classObject.GetComponent<HorizontalLayoutGroup>();
+        horizontalLayoutGroup.childScaleHeight = true;
+        horizontalLayoutGroup.childScaleWidth = true;
+        horizontalLayoutGroup.childForceExpandWidth = false;
+        horizontalLayoutGroup.childForceExpandWidth = false;
+        horizontalLayoutGroup.childAlignment = TextAnchor.MiddleCenter;
+        horizontalLayoutGroup.spacing = 0.5f;
+        horizontalLayoutGroup.padding.left = 10;
+        horizontalLayoutGroup.padding.right = 10;
+        
+        
         foreach (string statName in shipClass.statNames)
         {
             GameObject statObject = Instantiate(genericStatPrefab, statsParent, false);
             statObject.name = statName;
             statObject.GetComponentInChildren<TMP_Text>().text = statName;
             statObject.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-
-            statObject.AddComponent<HorizontalLayoutGroup>();
+            if (statObject.GetComponent<HorizontalLayoutGroup>() == null)
+                statObject.AddComponent<HorizontalLayoutGroup>();
 
             horizontalLayoutGroup = statObject.GetComponent<HorizontalLayoutGroup>();
             horizontalLayoutGroup.childScaleHeight = true;
@@ -74,7 +94,8 @@ public class StatsPanelScript : MonoBehaviour
             horizontalLayoutGroup.padding.right = 10;
 
 
-            for(int i = 0; i < shipClass.statsDictionary[statName]-1; i++)
+
+            for (int i = 0; i < shipClass.statsDictionary[statName] - 1; i++)
             {
                 GameObject tacca = Instantiate(taccaPrefab, statObject.transform, false);
                 tacca.name = "Tacca" + i;
