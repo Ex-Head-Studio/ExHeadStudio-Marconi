@@ -56,7 +56,9 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     [SerializeField] private Collider tileCollider;
 
     public static event Action<Tile> tileSelected;
-    private float InfluenceValue {get; set;}
+
+    private bool dragNDropSelected = false;
+    private float InfluenceValue { get; set; }
 
     // [SerializeField] private bool _isPlaceable;
 
@@ -78,7 +80,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     }
     #endregion
 
-    void Awake() 
+    void Awake()
     {
         //Forse si può migliorare, ma per ora va bene
         allyMovementSignal.SetActive(false);
@@ -87,6 +89,8 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         enemyAttackSignal.SetActive(false);
 
         tileCollider.enabled = false;
+        tileCollider.isTrigger = true;
+        tileCollider.providesContacts = true;
 
         /* 
         int gridWidth = _gridManager._width;
@@ -343,11 +347,31 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         tileCollider.enabled = false;
     }
 
+    void OnTriggerEnter(Collider other)
+    {
+        UICard cardScript;
+        if (other.gameObject.TryGetComponent<UICard>(out cardScript) && cardScript.IsCardSelected())
+        {
+            Debug.Log("Entrato nel collider di: " + gameObject.name);
+            _highlight.SetActive(true);
+        }
+
+    }
+
+    void OnTriggerExit(Collider other)
+    {
+        UICard cardScript;
+        if (other.gameObject.TryGetComponent<UICard>(out cardScript) || !cardScript.IsCardSelected())
+        {
+            _highlight.SetActive(false);
+        }
+    }
+
     #endregion
 
     private void OnDrawGizmos()
     {
-        if(tileCollider.enabled)
+        if (tileCollider.enabled)
         {
             Gizmos.color = Color.green;
         }
@@ -355,6 +379,6 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         {
             Gizmos.color = Color.white;
         }
-        Gizmos.DrawWireCube(transform.position, new Vector3(tileCollider.bounds.size.x, tileCollider.bounds.size.y, tileCollider.bounds.size.z));   
+        Gizmos.DrawWireCube(transform.position, new Vector3(tileCollider.bounds.size.x, tileCollider.bounds.size.y, tileCollider.bounds.size.z));
     }
 }
