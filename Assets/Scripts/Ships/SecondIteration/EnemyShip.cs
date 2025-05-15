@@ -34,7 +34,7 @@ public class EnemyShip : AShip
                 break;
         }
         moveDone=true;
-        //gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileNotInteractable(faction);
+        gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileNotInteractable(faction);
     }
 
     public override bool LookForMovement()
@@ -175,7 +175,7 @@ public class EnemyShip : AShip
             //Chiamo la funzione per il display delle mosse nemiche
             
         }
-        //gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
+        gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
         //Debug.Log("Ship: " + shipName + " performs: " + initialMove.GetMessageType() + " on: " + initialMove.GetTargetPos());
         return canAttack;
     }

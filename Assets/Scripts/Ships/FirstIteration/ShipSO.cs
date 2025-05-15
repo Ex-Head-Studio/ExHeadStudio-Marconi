@@ -10,7 +10,7 @@ public class ShipSO : ScriptableObject
     [SerializeField] public int attackRange;
     [SerializeField] public int attackPower;
     [SerializeField] public int health;
-    public string[] statNames = {"Movement Range", "Attack Range", "Attack Power", "Health" };
+    public string[] statNames = { "Movement Range", "Attack Range", "Attack Power", "Health" };
     // per ogni variabile aggiunta allo scriptable object, aggiungere un nome alla lista statNames
 
     [Header("Events")]
@@ -24,7 +24,8 @@ public class ShipSO : ScriptableObject
     [Header("Effects")]
     [SerializeField] public ParticleSystem attackReceivedParticle;
 
-    public Dictionary<string, int> statsDictionary = new Dictionary<string, int>();
+    public Dictionary<string, int> statsDictionary =
+    new Dictionary<string, int>();
 
     public float shipInfluence;
 
@@ -35,7 +36,6 @@ public class ShipSO : ScriptableObject
 
      private void OnEnable()
     {
-
         statsDictionary["Movement Range"] = movementRange;
         statsDictionary["Attack Range"] = attackRange;
         statsDictionary["Attack Power"] = attackPower;

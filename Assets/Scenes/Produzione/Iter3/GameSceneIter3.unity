@@ -1906,7 +1906,6 @@ MonoBehaviour:
   statsParent: {fileID: 0}
   genericStatPrefab: {fileID: 0}
   taccaPrefab: {fileID: 0}
-  classText: {fileID: 0}
   fontSize: 3
   waitTimeBeforeShow: 0.5
 --- !u!114 &470126019
@@ -2068,11 +2067,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-<<<<<<< HEAD
-  m_AnchoredPosition: {x: 52.649902, y: -120.00003}
-=======
-  m_AnchoredPosition: {x: 52.649902, y: -120}
->>>>>>> c728f317849d25a17eb680cc3a188cd94d0e445f
+  m_AnchoredPosition: {x: 52.649933, y: -120.00003}
   m_SizeDelta: {x: 100, y: 100}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &595105988
@@ -4321,7 +4316,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: 664, y: -375.9407}
+  m_AnchoredPosition: {x: 664, y: -375.94067}
   m_SizeDelta: {x: -1458, y: -828.11865}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1435187321
@@ -4378,7 +4373,6 @@ MonoBehaviour:
   statsParent: {fileID: 1435187317}
   genericStatPrefab: {fileID: 4189053802981799410, guid: 3a0d408835579d24aa9a93850f0332b7, type: 3}
   taccaPrefab: {fileID: 7040301176431300408, guid: 65d70dfad85b00844aa6dd5a3f650b46, type: 3}
-  classText: {fileID: 0}
   fontSize: 25
   waitTimeBeforeShow: 0.5
 --- !u!114 &1435187324
@@ -5632,11 +5626,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-<<<<<<< HEAD
-  m_AnchoredPosition: {x: -665.50006, y: 387.5}
-=======
-  m_AnchoredPosition: {x: -665.49994, y: 387.5}
->>>>>>> c728f317849d25a17eb680cc3a188cd94d0e445f
+  m_AnchoredPosition: {x: -665.5, y: 387.5}
   m_SizeDelta: {x: -1449, y: -965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1856432971

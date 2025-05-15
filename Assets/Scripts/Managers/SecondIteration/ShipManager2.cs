@@ -119,32 +119,24 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     //una volta che il turno verrà effettuato.
     public void EnemyMovesSelection()
     {
-       /* Debug.Log("Ricerca mosse del nemico");
-        foreach(AShip enemy in enemies)
-        {
-            enemy.LookForMovement();
-            enemy.LookForAttacks();
-        }*/
-        
-    }
-    //Il metodo viene chiamato dall'evento di fine turno giocatore e fa eseguire alle navi la loro mossa preferita
-    public void EnemyMovesExecution(){
-        Debug.Log("Esecuzione turno nemico");
+        Debug.Log("Ricerca mosse del nemico");
         foreach(AShip enemy in enemies)
         {
             enemy.LookForMovement();
             enemy.LookForAttacks();
         }
-        for (int i = 0, j = 0; j < shipManagerSO.initialEnemyShips; i++, j++)
-        {
-            if (j >= enemies.Count)
-            {
-                i = 0;
+        
+    }
+    //Il metodo viene chiamato dall'evento di fine turno giocatore e fa eseguire alle navi la loro mossa preferita
+    public void EnemyMovesExecution(){
+        Debug.Log("Esecuzione turno nemico");
+        for(int i=0, j=0 ;j<shipManagerSO.initialEnemyShips; i++, j++){
+            if(j>=enemies.Count){
+                i=0;
             }
-            if (!enemies[i].moveDone)
+            if(!enemies[i].moveDone)
                 enemies[i].ExecuteMove();
-            else
-            {
+            else {
                 enemies[i].LookForMovement();
                 enemies[i].LookForAttacks();
                 enemies[i].ExecuteMove();
@@ -190,9 +182,6 @@ public class ShipManager2 : MonoBehaviour, IShipManager
             influenceMap.UnregisterPropagator(shipDestroyedStruct.shipScript);
             influenceMap.Propagate();
             gridManager.RemoveShip(shipDestroyedStruct.shipScript);
-
-            
-            shipsD[shipDestroyedStruct.shipName].shipMoves.Clear();
         
             shipsD.Remove(shipDestroyedStruct.shipName);
             Destroy(shipDestroyedStruct.shipScript.gameObject);
