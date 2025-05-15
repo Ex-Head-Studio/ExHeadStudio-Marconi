@@ -94,6 +94,8 @@ public abstract class AShip : MonoBehaviour
             particleSystemInstance = Instantiate(shipSO.attackReceivedParticle, transform.position, correctAngle);
             particleSystemInstance.Play();
 
+            PlayShipDamage();
+
             //camera shake
             CameraShakeManager.instance.CameraShake(impulseSource);
 
@@ -103,6 +105,15 @@ public abstract class AShip : MonoBehaviour
                 GetComponentInChildren<Animator>().SetTrigger("Death");
             }
         }
+    }
+
+    private FMOD.Studio.EventInstance shipDamage;
+
+    public void PlayShipDamage()
+    {
+        shipDamage = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipDamage");
+        shipDamage.start();
+        shipDamage.release();
     }
 
     public void SetFaction(int faction)

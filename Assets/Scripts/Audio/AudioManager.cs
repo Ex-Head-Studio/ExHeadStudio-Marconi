@@ -35,6 +35,7 @@ public class AudioManager : MonoBehaviour
     private void InitializeAmbience(EventReference ambienceEventReference)
     {
         ambianceEventInstance = RuntimeManager.CreateInstance(ambienceEventReference);
+        ambianceEventInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
         if (!ambianceEventInstance.isValid())
         {
             UnityEngine.Debug.LogError("Ambience event not found");
