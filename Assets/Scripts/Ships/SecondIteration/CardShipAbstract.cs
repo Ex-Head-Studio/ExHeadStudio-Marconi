@@ -65,7 +65,7 @@ public abstract class CardShipAbstract : MonoBehaviour, IPointerClickHandler
     //Funzione che viene chiamata quando la carta viene deselezionata
     protected virtual void OnCardDeselected(AbstractCard card)
     {
-        transform.DOKill(true);
+        transform.DOKill(false);
 
         isShipSelectable = false;
         shipCollider.enabled = false;

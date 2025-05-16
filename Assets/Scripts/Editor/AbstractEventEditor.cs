@@ -10,6 +10,7 @@ public class AbstractEventEditor : Editor
 {
     public override void OnInspectorGUI()
     {
+        
         DrawDefaultInspector();
 
         ScriptableObject scriptableObject = (ScriptableObject)target;
