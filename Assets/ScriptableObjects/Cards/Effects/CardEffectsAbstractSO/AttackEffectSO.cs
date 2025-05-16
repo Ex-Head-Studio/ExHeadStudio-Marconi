@@ -1,7 +1,6 @@
 using UnityEngine;
 using UnityEditor;
 using UnityEngine.UIElements;
-using UnityEditor.UIElements;
 
 [CreateAssetMenu(fileName = "Attack Effect", menuName = "Scriptable Objects/Card Effects/Attack Effect")]
 public class AttackEffect : AbstractEffectSO
