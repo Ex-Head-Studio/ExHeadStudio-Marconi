@@ -14,14 +14,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardEntityType: 0
   cardType: 0
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 21300000, guid: 15249aa5e50d85542952012df6c1e50b, type: 3}
+  cardIcon: {fileID: 21300000, guid: a152b2174d08ab84295fa5abdeb73ebe, type: 3}
   cardName: Movement Card
   cardDescription: One of your ships can move
+  cardColor: {r: 0.24705882, g: 0.2509804, b: 0.9098039, a: 1}
+  cardBaseSprite: {fileID: 21300000, guid: b46421da36d82b348b769c7dde1f988a, type: 3}
   cardCost: 1
   isWorldInteractive: 0
-  dragLayerMask:
-    serializedVersion: 2
-    m_Bits: 4294967295
   lastingTurns: 1
   cardEffects:
   - {fileID: 11400000, guid: 28b8616b3abb1764ca631b441e19f5ae, type: 2}

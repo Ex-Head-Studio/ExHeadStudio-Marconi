@@ -12,19 +12,12 @@ using System.Runtime.CompilerServices;
 
 
 
-public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, IPointerExitHandler//, IPointerDownHandler, IPointerUpHandler, IDragHandler,
+public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler, IPointerExitHandler//, IPointerDownHandler, IPointerUpHandler, IDragHandler,
 {
     //IMPORTANTE!! Per far funzionare lo script la camera deve avere un Raycaster3D!!!
     //Il prefab della carta è racchiuso in un wrapper, una empty a cui è associato il box collider
 
     //Lo script si occupa solo della visualizzazione della carta nella UI, riceve i dati dallo script della carta
-    
-
-    //questi campi sono da associare una volta che si ha i placeholder corretti
-    private UnityEngine.UI.Image cardImage;
-    private string cardName;
-    private string cardDescription;
-    private int cardCost;
 
     public static event Action<AbstractCard> cardSelectedEvent;
     public static event Action<AbstractCard> cardDeselectedEvent;
@@ -33,20 +26,19 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
     private Transform cardTransform;
 
-    [Header("Parametri di visualizzazione")]
-
-    [Range(0, 10)]
-    [SerializeField] private float cardDistanceFromCameraMultiplayer = 2f;
-    [Range(10, 20)]
-    [SerializeField] private float minCardOffesetFromCamera = 10f;
-
-    [Range(1,2)]
-    [Tooltip("Fattore che aumenta la scale dell'oggetto quando si va in hover")]
-    [SerializeField] private float hoverScaleFactor = 1.1f;
-
     [Header("Visual References")]
+
+    [Range(1, 2)]
+    [Tooltip("Fattore che aumenta la scale dell'oggetto quando si va in hover")]
+    [SerializeField] private float hoverScaleFactor = 1.7f;
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text costText;
+    [SerializeField] private TMP_Text descriptionText;
+    [SerializeField] private GameObject visualImage;
+    [SerializeField] private GameObject visualIcon;
+    [SerializeField] private GameObject cardBase;
+    private SpriteRenderer baseRenderer;
+    [SerializeField] private Color highlightColor;
 
     private Vector3 selectionScale;
     private Vector3 startingScale;
@@ -62,11 +54,11 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     private void OnDestroy()
     {
         //cardDeselectedEvent?.Invoke(cardScript);
-        isCardSelected = false;        
+        isCardSelected = false;
     }
     void Awake()
     {
-        selectionScale = transform.localScale * (hoverScaleFactor+0.1f);
+        selectionScale = transform.localScale * (hoverScaleFactor + 0.1f);
         hoverScale = transform.localScale * hoverScaleFactor;
         startingScale = transform.localScale;
     }
@@ -78,22 +70,24 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
     public void SetupUICard(AbstractCard card)
     {
+        //Assegno lo script
         cardScript = card;
-        cardImage = GetComponent<UnityEngine.UI.Image>();
-        cardName = cardScript.GetCardName();
-        gameObject.name = cardName;
 
-        nameText.text = cardName;
-        costText.text = "Cost:" + cardScript.GetCardCost().ToString();
-        
-        cardDescription = cardScript.GetCardDescription();
-        cardCost = cardScript.GetCardCost();
+        baseRenderer = cardBase.GetComponent<SpriteRenderer>();
+        baseRenderer.sprite = cardScript.GetCardBaseSprite();
+        baseRenderer.color = cardScript.GetBaseColor();
 
-        // Set the image of the card
-        if (cardImage != null && cardScript.GetCardImage() != null)
-        {
-            cardImage.sprite = cardScript.GetCardImage().sprite;
-        }
+        //Compilo il display
+        nameText.text = cardScript.GetCardName();
+        gameObject.name = cardScript.GetCardName();
+
+        costText.text = cardScript.GetCardCost().ToString();
+
+        descriptionText.text = cardScript.GetCardDescription();
+
+        visualImage.GetComponent<SpriteRenderer>().sprite = cardScript.GetCardImage();
+
+        visualIcon.GetComponent<SpriteRenderer>().sprite = cardScript.GetCardIcon();
     }
 
 
@@ -101,22 +95,22 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
-        if(energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
+        if (energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
         {
             transform.DOShakePosition(1f, 0.5f, 10, 90, false, true);
             //cambiare colore
-            
+
 
         }
         else
         {
-            if(!isCardSelected)
-            {   
+            if (!isCardSelected)
+            {
                 SelectCard();
                 PlayCardSelection();
             }
-            else if(isCardSelected)
-            {   
+            else if (isCardSelected)
+            {
                 DeselectCard(cardScript);
                 PlayCardDrop();
             }
@@ -124,21 +118,24 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     }
 
     private void SelectCard()
-    {       
+    {
         transform.DOLocalMoveY(transform.localPosition.y + 0.3f, 0.5f);
+
+        baseRenderer.color = highlightColor;
+
         cardSelectedEvent?.Invoke(cardScript);
         transform.localScale = selectionScale;
         isCardSelected = true;
     }
     public void DeselectCard(AbstractCard cardScript)
     {
-        if(this.cardScript.gameObject != null)
+        if (this.cardScript.gameObject != null)
         {
 
-                cardDeselectedEvent?.Invoke(cardScript);
-                transform.localScale = startingScale;
-                isCardSelected = false;
-                transform.DOLocalMoveY(transform.localPosition.y - 0.3f, 0.5f);
+            cardDeselectedEvent?.Invoke(cardScript);
+            transform.localScale = startingScale;
+            isCardSelected = false;
+            transform.DOLocalMoveY(transform.localPosition.y - 0.3f, 0.5f);
         }
     }
     public bool IsCardSelected()
@@ -149,7 +146,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
     //funzioni di hover
     public void OnPointerEnter(PointerEventData eventData)
     {
-        if(!isCardSelected)
+        if (!isCardSelected)
         {
             transform.localScale = hoverScale;
         }
@@ -157,7 +154,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
 
     public void OnPointerExit(PointerEventData eventData)
     {
-        if(!isCardSelected)
+        if (!isCardSelected)
         {
             transform.localScale = startingScale;
         }
@@ -183,7 +180,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
             Gizmos.DrawWireCube(transform.position, transform.localScale);
     }
 
-    // CARD SOUND EFFECTS
+    #region Sound Effects
     private FMOD.Studio.EventInstance cardSelection;
 
     public void PlayCardSelection()
@@ -210,4 +207,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler,IPointerEnterHandler, 
         cardError.start();
         cardError.release();
     }
+
+    #endregion
+
 }

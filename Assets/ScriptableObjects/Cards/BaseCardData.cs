@@ -15,9 +15,13 @@ public class BaseCardData : ScriptableObject
     [Header("Card Data")]
     [SerializeField] public CardEntityType cardEntityType;
     [SerializeField] public DeckType cardType;
-    [SerializeField] public Image cardImage;
+    [SerializeField] public Sprite cardImage;
+    [SerializeField] public Sprite cardIcon;
     [SerializeField] public string cardName;
     [SerializeField] public string cardDescription;
+    [SerializeField] public Color cardColor;
+    [SerializeField] public Sprite cardBaseSprite;
+
 
     [Tooltip("The cost of this card")]
     [SerializeField] public int cardCost;

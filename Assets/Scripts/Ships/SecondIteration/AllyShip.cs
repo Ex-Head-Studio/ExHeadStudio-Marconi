@@ -9,7 +9,7 @@ public class AllyShip : AShip
     int moveId = 0;
 
     private CardAllyShip cardAllyScript;
-    private DisplayHealth displayHealthScript;  
+
 
 
     private void OnEnable()
@@ -22,10 +22,6 @@ public class AllyShip : AShip
         Tile.tileSelected -= ReceiveTile;
     }
 
-    private void  Start()
-    {
-        displayHealthScript = GetComponent<DisplayHealth>();
-    }
     //Le funzioni che seguono servono per dare al giocatore la possibilità di scegliere solo azioni consentite
     //e non tutte le azioni possibili, come nel caso delle navi nemiche
     [ContextMenu("LookForMovement")]

@@ -42,10 +42,10 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.strings.bank
   Name: Desktop/Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638829267117474815
+  lastModified: 638829406433480245
   FileSizes:
   - Name: 
-    Value: 1502
+    Value: 1634
   Exists: 1
 --- !u!114 &-7545578330973327430
 MonoBehaviour:
@@ -62,7 +62,7 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.bank
   Name: Desktop/Master
   StudioPath: bank:/Master
-  lastModified: 638829267117454732
+  lastModified: 638829406433460108
   FileSizes: []
   Exists: 1
 --- !u!114 &-6303109462738554844
@@ -110,6 +110,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 750
+--- !u!114 &-5211294307489387100
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cards/CardDrop
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cards/CardDrop
+  Guid:
+    Data1: -338509697
+    Data2: 1314611496
+    Data3: -258445903
+    Data4: 1482897512
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 500
 --- !u!114 &-5048089156616822725
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -243,6 +270,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 13833
+--- !u!114 &-1194212527948179628
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cards/CardError
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cards/CardError
+  Guid:
+    Data1: -1484181788
+    Data2: 1122752682
+    Data3: 538298533
+    Data4: 2119208980
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 773
 --- !u!114 &-1030356980705620758
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -382,13 +436,16 @@ MonoBehaviour:
   - {fileID: -2545915401735414116}
   - {fileID: 1500750082751055525}
   - {fileID: -5734858657228106842}
+  - {fileID: -5211294307489387100}
+  - {fileID: 2569674889849407631}
+  - {fileID: -1194212527948179628}
   EditorParameters:
   - {fileID: 6883603748077967008}
   MasterBanks:
   - {fileID: -7545578330973327430}
   StringsBanks:
   - {fileID: -8517476599244968727}
-  cacheTime: 638829267117474815
+  cacheTime: 638829406433480245
   cacheVersion: 131846
 --- !u!114 &1500750082751055525
 MonoBehaviour:
@@ -471,6 +528,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 1000
+--- !u!114 &2569674889849407631
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cards/CardSelection
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cards/CardSelection
+  Guid:
+    Data1: -1433232457
+    Data2: 1118868703
+    Data3: -345668943
+    Data4: 1696427386
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 500
 --- !u!114 &5625964929855728779
 MonoBehaviour:
   m_ObjectHideFlags: 0

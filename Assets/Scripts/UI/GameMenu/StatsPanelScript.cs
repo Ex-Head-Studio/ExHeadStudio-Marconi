@@ -1,5 +1,6 @@
 using System.Collections;
 using TMPro;
+using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
 
@@ -11,10 +12,11 @@ public class StatsPanelScript : MonoBehaviour
     [Header("Generic Stat Prefab")]
     [SerializeField] private Transform statsParent; 
     [SerializeField] private GameObject genericStatPrefab;
-    [SerializeField] private GameObject taccaPrefab;  
+    [SerializeField] private GameObject taccaPrefab;
 
 
     [Header("Display parameters")]
+    [SerializeField] private TMP_Text shipClassName;
     [SerializeField] private int fontSize = 3;
     [SerializeField] private float waitTimeBeforeShow = 0.5f;
 
@@ -54,6 +56,7 @@ public class StatsPanelScript : MonoBehaviour
 
     private void SetShipClass(ShipSO shipClass)
    {
+        shipClassName.text = shipClass.name;
         foreach (string statName in shipClass.statNames)
         {
             GameObject statObject = Instantiate(genericStatPrefab, statsParent, false);
@@ -74,7 +77,7 @@ public class StatsPanelScript : MonoBehaviour
             horizontalLayoutGroup.padding.right = 10;
 
 
-            for(int i = 0; i < shipClass.statsDictionary[statName]-1; i++)
+            for (int i = 0; i < shipClass.statsDictionary[statName] - 1; i++)
             {
                 GameObject tacca = Instantiate(taccaPrefab, statObject.transform, false);
                 tacca.name = "Tacca" + i;

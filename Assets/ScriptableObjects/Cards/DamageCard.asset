@@ -14,9 +14,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardEntityType: 1
   cardType: 3
-  cardImage: {fileID: 0}
+  cardImage: {fileID: 21300000, guid: 15249aa5e50d85542952012df6c1e50b, type: 3}
+  cardIcon: {fileID: 21300000, guid: a152b2174d08ab84295fa5abdeb73ebe, type: 3}
   cardName: Mortar!
   cardDescription: Chose an enemy ship and attack it!
+  cardColor: {r: 0.24705882, g: 0.2509804, b: 0.9098039, a: 0.9019608}
+  cardBaseSprite: {fileID: 21300000, guid: b46421da36d82b348b769c7dde1f988a, type: 3}
   cardCost: 3
   isWorldInteractive: 0
   lastingTurns: 1

@@ -15,8 +15,11 @@ MonoBehaviour:
   cardEntityType: 1
   cardType: 0
   cardImage: {fileID: 0}
+  cardIcon: {fileID: 0}
   cardName: EnemyTest
   cardDescription: 
+  cardColor: {r: 0.24705882, g: 0.2509804, b: 0.9098039, a: 0.9019608}
+  cardBaseSprite: {fileID: 0}
   cardCost: 1
   isWorldInteractive: 0
   lastingTurns: 1

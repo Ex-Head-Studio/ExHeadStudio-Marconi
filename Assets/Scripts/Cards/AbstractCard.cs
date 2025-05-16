@@ -41,7 +41,20 @@ public abstract class AbstractCard : MonoBehaviour
 
     //Getters
 
-    public Image GetCardImage()
+    public Color GetBaseColor()
+    {
+        return cardData.cardColor;
+    }
+    public Sprite GetCardBaseSprite()
+    {
+        return cardData.cardBaseSprite;
+    }
+    public Sprite GetCardImage()
+    {
+        return cardData.cardImage;
+    }
+
+    public Sprite GetCardIcon()
     {
         return cardData.cardImage;
     }

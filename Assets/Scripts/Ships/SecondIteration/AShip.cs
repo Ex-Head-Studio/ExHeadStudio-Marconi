@@ -17,6 +17,9 @@ public abstract class AShip : MonoBehaviour
     [SerializeField] public Vector2Int position;
     public float shipInfluence;
 
+    [Header("Moves visualization")]
+    [SerializeField] protected bool canVisualizeMoves = false;
+
     [SerializeField] protected GridManager gridManager;
     
     protected int mapWidth;
@@ -58,6 +61,9 @@ public abstract class AShip : MonoBehaviour
     protected AbstractEffectSO effectSO;
 
 
+    //script di display della salute
+    protected DisplayHealth displayHealthScript;  
+
 
     void Awake()
     {
@@ -74,7 +80,12 @@ public abstract class AShip : MonoBehaviour
         impulseSource = GetComponent<CinemachineImpulseSource>();
     }
 
-    public virtual void ExecuteMove(){}
+    void Start()
+    {
+        displayHealthScript = GetComponent<DisplayHealth>();
+    }
+
+    public virtual void ExecuteMove() { }
     public virtual void ExecuteInstructions(AnswerStruct answer){
         
     }
@@ -162,7 +173,7 @@ public abstract class AShip : MonoBehaviour
     {
         this.effectSO = effectSO;
     }
-    
+
 
     public void ChangeClass(ShipSO newClass)
     {
@@ -172,10 +183,42 @@ public abstract class AShip : MonoBehaviour
         health = shipSO.health;
 
         //cambiare il modello della nave
+        ChangeClassModel(newClass);
+
+        //cambiare la salute nel display
+
 
         //aggiungere particellare/suono/animazione di cambio classe
+        if (newClass.changeClassParticle != null)
+        {
+            ParticleSystem tmpParticle = Instantiate(newClass.changeClassParticle, transform.position, Quaternion.identity);
+            tmpParticle.Play();
+        }
+
     }
 
+    private void ChangeClassModel(ShipSO newClass)
+    {
+        //la ricerca del children viene fatta a partire dall'animator perchè non posso fare diversamente
+        if (gameObject.GetComponentInChildren<Animator>() != null)
+        {
+            Animator shipAnim = gameObject.GetComponentInChildren<Animator>();
+            ShipModelMaterialAssignement shipModelMaterial = shipAnim.gameObject.GetComponentInChildren<ShipModelMaterialAssignement>();
+            GameObject newModel = Instantiate(newClass.shipClassModel, shipAnim.gameObject.transform, false);
+            Material oldMat = shipModelMaterial.GetMaterial();
+            newModel.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(oldMat);
+            Destroy(shipModelMaterial.gameObject);
+        }
+    }
+
+
+    /// <remark><summary>
+    /// This function acts as an attack on the ship
+    /// </summary>
+    /// <param name="damage"></param> 
+    /// <summary>
+    /// The damage the ship has to take
+    /// </summary></remark>
     public void TakeDamage(int damage)
     {
         Debug.Log("Damage received");

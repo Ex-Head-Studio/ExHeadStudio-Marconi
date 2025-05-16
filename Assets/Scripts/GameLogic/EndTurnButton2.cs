@@ -85,7 +85,7 @@ public class EndTurnButton2 : MonoBehaviour
     {
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(PlanningPhaseEnd);
-        buttonTextComponent.text = "Start Action phase";
+        buttonTextComponent.text = "Action phase";
     }
 
     public void PlanningPhaseEnd()

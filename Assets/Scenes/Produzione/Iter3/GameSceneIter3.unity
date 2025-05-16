@@ -1906,6 +1906,7 @@ MonoBehaviour:
   statsParent: {fileID: 0}
   genericStatPrefab: {fileID: 0}
   taccaPrefab: {fileID: 0}
+  shipClassName: {fileID: 0}
   fontSize: 3
   waitTimeBeforeShow: 0.5
 --- !u!114 &470126019
@@ -2942,43 +2943,43 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalPosition.x
-      value: -63.735382
+      value: -465.6712
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalPosition.y
-      value: -158.93353
+      value: -280.70114
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -1912.5552
+      value: -2034.3992
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 1
+      value: 0.85614836
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 0
+      value: 0.39145797
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalRotation.y
-      value: 0
+      value: -0.2124141
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalRotation.z
-      value: 0
+      value: 0.26201338
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 0
+      value: 14.478
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
-      value: 0
+      value: -39.231
       objectReference: {fileID: 0}
     - target: {fileID: 3456255958661744799, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
-      value: 0
+      value: 39.232
       objectReference: {fileID: 0}
     - target: {fileID: 3485776876077766571, guid: 12b61dad20217744b892da9cce638ae2, type: 3}
       propertyPath: m_LocalPosition.x
@@ -3040,7 +3041,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 119.99997, y: -40.00003}
+  m_AnchoredPosition: {x: 120, y: -40.00003}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1034951038
@@ -4373,6 +4374,7 @@ MonoBehaviour:
   statsParent: {fileID: 1435187317}
   genericStatPrefab: {fileID: 4189053802981799410, guid: 3a0d408835579d24aa9a93850f0332b7, type: 3}
   taccaPrefab: {fileID: 7040301176431300408, guid: 65d70dfad85b00844aa6dd5a3f650b46, type: 3}
+  shipClassName: {fileID: 0}
   fontSize: 25
   waitTimeBeforeShow: 0.5
 --- !u!114 &1435187324
