@@ -60,7 +60,7 @@ public class GridManager : MonoBehaviour, ICardDropArea
                 spawnedTile.transform.localScale = Vector3.one;
 
                 //non è corretto, i nomi non corrispondo alle posizioni
-                spawnedTile.name = $"Tile {Mathf.Abs(y-4)} {x}";
+                spawnedTile.name = $"Tile {x} {y}";
                 
 
                 /*var isOffset = (x + y) % 2 == 1;

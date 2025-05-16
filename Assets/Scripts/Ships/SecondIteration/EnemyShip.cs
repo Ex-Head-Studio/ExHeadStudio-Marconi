@@ -1,40 +1,51 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using Unity.VisualScripting;
+using System.Numerics;
 public class EnemyShip : AShip
 {
     int numberOfTurnsPredicted;
     Move initialMove;
     int idMove = 0;
+    private bool isBlocked = false;
     //Quando viene chiamata la fine del turno, Execute Instructions fa fare l'azione migliore alla nave, a meno che non sia stata bloccata
     //dal giocatore, in quel caso non fa nulla
     public override void ExecuteMove()
     {
-        if (!canMove && !canAttack)
+        if (isBlocked)
         {
-            SwitchOffMovesVisualization(shipMoves);
-
+            Debug.Log("Ship: " + shipName + " is blocked and cannot move.");
             shipMoves.Clear();
             return;
+
         }
+            if (!canMove && !canAttack)
+            {
+                SwitchOffMovesVisualization(shipMoves);
 
-        switch (initialMove.GetMessageType())
-        {
-            case MessageType.attack:
-                shipSO.attackEvent?.Invoke(new ShipAttackStruct(initialMove.GetTargetPos(), shipSO.attackPower));
-                break;
-            case MessageType.movement:
+                shipMoves.Clear();
+                return;
+            }
 
-                //QUI FORSE C'E' UNNBUG!!!! Initial move è sempre quella degli attacchi?
-                gridManager.MoveShip(position, initialMove.GetTargetPos(), faction);
+            switch (initialMove.GetMessageType())
+            {
+                case MessageType.attack:
+                    shipSO.attackEvent?.Invoke(new ShipAttackStruct(initialMove.GetTargetPos(), shipSO.attackPower));
+                    break;
+                case MessageType.movement:
 
-                position = initialMove.GetTargetPos();
-                break;
+                    //QUI FORSE C'E' UNNBUG!!!! Initial move è sempre quella degli attacchi?
+                    gridManager.MoveShip(position, initialMove.GetTargetPos(), faction);
+
+                    position = initialMove.GetTargetPos();
+                    break;
+            }
+            moveDone = true;
+
+            gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileNotInteractable(faction);
         }
-        moveDone = true;
-
-        gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileNotInteractable(faction);
-    }
+    
 
     public override bool LookForMovement()
     {
@@ -75,6 +86,8 @@ public class EnemyShip : AShip
                 }
             }
         }
+        // Rimuove le mosse che permettono di muoversi in diagonale
+        possibleMoves = possibleMoves.Where(x => x.GetTargetPos().x == position.x || x.GetTargetPos().y == position.y).ToList();
         //Fatto ciò, elimina le mosse che portano a posizioni già occupate.
         possibleMoves = possibleMoves.Where(x => gridManager.GetTileAtPosition(x.GetTargetPos())._type == TileType.Empty).ToList();
         //Ordina le mosse per valore decrescente, in modo da avere prima le mosse più vantaggiose.
@@ -201,7 +214,7 @@ public class EnemyShip : AShip
 
         }
 
-        //gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
+        gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
         //Debug.Log("Ship: " + shipName + " performs: " + initialMove.GetMessageType() + " on: " + initialMove.GetTargetPos());
         return canAttack;
     }
@@ -213,23 +226,16 @@ public class EnemyShip : AShip
     {
         throw new System.NotImplementedException();
     }
-    //Metodo da invocare nel caso si volesse bloccare l'azione di una nave nemica
-
-    public void DisableShip()
-    {
-        canAttack = false;
-        canMove = false;
-    }
-
     //Funzioni da utilizzare per la risoluzione degli effetti delle carte
     public void NegateAction()
     {
-        canAttack = false;
-        canMove = false;
-        //invoco ora la funzione per non attendere la fine del turno
+        isBlocked = true;
 
     }
-
+    public void ResetAction()
+    {
+        isBlocked = false;
+    }
     private void SwitchOffMovesVisualization(List<Move> shipMoves)
     {
         foreach (Move move in shipMoves)

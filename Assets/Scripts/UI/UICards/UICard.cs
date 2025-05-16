@@ -53,7 +53,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
     private void OnDestroy()
     {
-        //cardDeselectedEvent?.Invoke(cardScript);
+        cardDeselectedEvent?.Invoke(cardScript);
         isCardSelected = false;
     }
     void Awake()

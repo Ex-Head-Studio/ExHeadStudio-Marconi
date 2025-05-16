@@ -148,6 +148,10 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     public IEnumerator EndEnemyTurn(){
         yield return new WaitForSeconds(timeBeforeEndEnemyTurn);
         shipManagerSO.onEndEnemyTurn.Invoke(new VoidEvent(0));
+        foreach (EnemyShip enemy in enemies)
+        {
+            enemy.ResetAction();
+        }
         Debug.Log("Fine turno nemico");
     }
 
@@ -156,6 +160,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     public void EndTurn()
     {
         influenceMap.Propagate();
+        
     }
     
 

@@ -35,29 +35,28 @@ public class AllyShip : AShip
         {
             if(x >= 0 && x < gridManager._width)
             {
-                if(x != position.x)
-                {
+                
                     Vector2Int pos = new Vector2Int(x, position.y);
                     Move move = new Move(moveId++, shipName, pos, MessageType.movement, 0);
                     if(move != null && gridManager.GetTileAtPosition(pos).GetType()==TileType.Empty)
                         shipMoves.Add(move);
-                }
+                
             }
         }
         for(int y = position.y - shipSO.movementRange; y <= position.y + shipSO.movementRange; y++)
         {
             if(y >= 0 && y < gridManager._height)
             {
-                if(y != position.y)
-                {
+                
+                
                     Vector2Int pos = new Vector2Int(position.x, y);
                     Move move = new Move(moveId++, shipName, pos, MessageType.movement, 0);
                     if(move != null && gridManager.GetTileAtPosition(pos).GetType()==TileType.Empty)
                         shipMoves.Add(move);
-                }
+                
             }
         }
-
+        shipMoves=shipMoves.Where(x=> x.GetTargetPos() != position).ToList();
         //Se le carte permettono giusto di muoversi e poi il player decide dove, questa lista gli farà vedere solo dove potrà spostarsi.
         shipMoves = shipMoves.Where(x => gridManager.GetTileAtPosition(x.GetTargetPos())._type == TileType.Empty).ToList();
         if(shipMoves.Count > 0)
