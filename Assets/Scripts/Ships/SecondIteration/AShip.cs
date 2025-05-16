@@ -42,6 +42,7 @@ public abstract class AShip : MonoBehaviour
     //Servono per alterare il testo nel display dei comandi, vedi commento in start
     public int attackRange;
     public int movementRange;
+    public int attackPower;
     public bool moveDone;
 
     protected List<Vector2Int> nextPos;
@@ -59,6 +60,11 @@ public abstract class AShip : MonoBehaviour
 
     //la nave per gli eventi di movimento e attacco ha bisogno di sapere quale effetto sta usando
     protected AbstractEffectSO effectSO;
+
+    protected int oldStatValue;
+    protected string oldStatName;
+
+    protected bool hasStatChanged= false;
 
 
     //script di display della salute
@@ -166,6 +172,7 @@ public abstract class AShip : MonoBehaviour
 
             attackRange = shipData.attackRange;
             movementRange = shipData.movementRange;
+        attackPower = shipData.attackPower;
             health = shipData.health;
     }
 
@@ -181,6 +188,7 @@ public abstract class AShip : MonoBehaviour
         attackRange = shipSO.attackRange;
         movementRange = shipSO.movementRange;
         health = shipSO.health;
+        attackPower = shipSO.attackPower;
 
         //cambiare il modello della nave
         ChangeClassModel(newClass);
@@ -225,6 +233,47 @@ public abstract class AShip : MonoBehaviour
         shipSO.attackEvent?.Invoke(new ShipAttackStruct(this.position, damage));
     }
 
+
+    public void ChangeStat(string statName, int amount)
+    {
+        hasStatChanged = true;
+        oldStatName = statName;
+        oldStatValue = shipSO.statsDictionary[statName];
+
+        if (statName == "Movement Range")
+        {
+            movementRange = oldStatValue + amount;
+        }
+        else if (statName == "Attack Range")
+        {
+            attackRange = oldStatValue + amount;
+        }
+        else if (statName == "Attack Power")
+        {
+            attackPower = oldStatValue + amount;
+        }
+    }
+
+    public void RestoreStat()
+    {
+        if (hasStatChanged)
+        {
+            if (oldStatName == "Movement Range")
+            {
+                movementRange = oldStatValue;
+            }
+            else if (oldStatName == "Attack Range")
+            {
+                attackRange = oldStatValue;
+            }
+            else if (oldStatName == "Attack Power")
+            {
+                attackPower = oldStatValue;
+            }
+            hasStatChanged = false;
+        }
+
+    }
     public int GetHealth()
     {
         return health;

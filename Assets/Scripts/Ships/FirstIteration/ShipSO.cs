@@ -1,6 +1,7 @@
 using UnityEngine;
 using System.Collections.Generic;
 using UnityEditor.Animations;
+using Unity.Mathematics;
 
 [CreateAssetMenu(fileName = "ShipSO", menuName = "Scriptable Objects/ShipSO")]
 public class ShipSO : ScriptableObject
@@ -25,17 +26,14 @@ public class ShipSO : ScriptableObject
     [SerializeField] public ParticleSystem attackReceivedParticle;
     [SerializeField] public ParticleSystem changeClassParticle = null;
 
-    public Dictionary<string, int> statsDictionary =
-    new Dictionary<string, int>();
-
+    public Dictionary<string, int> statsDictionary = new Dictionary<string, int>();
     public float shipInfluence;
 
     [SerializeField] public GameObject shipModelPrefab;
     [SerializeField] public GameObject shipClassModel;
     [SerializeField] public GameObject shipModelMesh;
-    
 
-     private void OnEnable()
+    private void OnEnable()
     {
         statsDictionary["Movement Range"] = movementRange;
         statsDictionary["Attack Range"] = attackRange;
