@@ -611,6 +611,7 @@ GameObject:
   - component: {fileID: 8449598450516919117}
   - component: {fileID: -1841351686871509975}
   - component: {fileID: 2595778905530319872}
+  - component: {fileID: 2468502449942355650}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -725,17 +726,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: e5e6646c48930d045a2e1e742cf6a2c1, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _baseColor: {r: 0, g: 0, b: 0, a: 1}
-  _offsetColor: {r: 0.122641504, g: 0.122641504, b: 0.122641504, a: 1}
-  _allyColor: {r: 0.46786526, g: 1, b: 0.3726415, a: 1}
-  _enemyColor: {r: 1, g: 0.36320752, b: 0.36320752, a: 1}
   _emptyColor: {r: 0, g: 0, b: 0, a: 1}
-  _allyMaterial: {fileID: 2100000, guid: a94580fbbd0956044a0645f7b91e7197, type: 2}
-  _enemyMaterial: {fileID: 2100000, guid: 08241c99f6fdb814c9a1cf8d55ee7669, type: 2}
   _mesh: {fileID: 5641372172382555127}
   _highlight: {fileID: 1479984600342189217}
   _type: 0
-  tileShip: {fileID: 0}
   allyMovementSignal: {fileID: 1003079049219748415}
   enemyMovementSignal: {fileID: 7425577909506764158}
   allyAttackSignal: {fileID: 8150155357449518266}
@@ -791,6 +785,19 @@ MonoBehaviour:
           m_StringArgument: 
           m_BoolArgument: 0
         m_CallState: 2
+--- !u!114 &2468502449942355650
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8046514618781660489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2d0469b96bbd978428602a9102c0c0ca, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  tileCollider: {fileID: -1841351686871509975}
 --- !u!1 &8150155357449518266
 GameObject:
   m_ObjectHideFlags: 0

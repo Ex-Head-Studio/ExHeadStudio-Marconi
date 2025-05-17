@@ -15,10 +15,6 @@ public abstract class AbstractCard : MonoBehaviour
     private UICard UICardScript;
 
 
-    [Multiline(2)]
-    private string cardDataName = "";
-
-
     private void Start()
     {
         if(cardData.isWorldInteractive)
@@ -35,7 +31,6 @@ public abstract class AbstractCard : MonoBehaviour
     public void InvokeCardUsed(AbstractCard cardUsed)
     {
         abstractCardUsed?.Invoke(cardUsed);
-        Debug.Log("Card cost: " + cardData.cardCost);
         energyUsedEvent?.Invoke(cardData.cardCost);
     }
 
@@ -83,7 +78,6 @@ public abstract class AbstractCard : MonoBehaviour
     public void SetCardData(BaseCardData cardDataSO)
     {
         cardData = cardDataSO;
-        cardDataName = cardDataSO.cardName;
     }
 
     public bool isWolrdInteractive()
@@ -109,9 +103,5 @@ public abstract class AbstractCard : MonoBehaviour
             UICardScript.SetNotInteractable();
         }
         
-    }
-    private void OnDestroy()
-    {
-
     }
 }

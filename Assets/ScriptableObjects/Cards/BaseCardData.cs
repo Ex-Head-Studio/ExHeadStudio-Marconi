@@ -7,6 +7,9 @@ public enum CardEntityType
     EnemyShip,
     AllyAndEnemyShip,
     None,
+    Obstacle,
+
+    Tile, 
 }
 
 [CreateAssetMenu(fileName = "BaseCardData", menuName = "Scriptable Objects/BaseCardData")]

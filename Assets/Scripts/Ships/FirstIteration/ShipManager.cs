@@ -135,7 +135,7 @@ public class ShipManager : MonoBehaviour, IShipManager
             if(AShip is NewShip)
             {
                 AShip.LookForMovement();
-                AShip.LookForAttacks(enemies);
+                //AShip.LookForAttacks(enemies);
             }
 
         }
@@ -144,10 +144,10 @@ public class ShipManager : MonoBehaviour, IShipManager
             if(ship is NewShip)
             {
                 ship.LookForMovement();
-                ship.LookForAttacks(allies);
+                //ship.LookForAttacks(allies);
             }
             ship.LookForMovement();
-            ship.LookForAttacks(allies);
+            //ship.LookForAttacks(allies);
         }
 
         //Seleziona le navi che possono attaccare e decidi tra loro chi attaccherà

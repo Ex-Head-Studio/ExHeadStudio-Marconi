@@ -10,39 +10,30 @@ public enum TileType
 {
     Empty,
     Ally,
-    Enemy
+    Enemy,
+    Obstacle,
 }
 
 public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IPointerClickHandler, ICardDropArea
 {
-    public enum Entity 
+    public enum Entity
     {
         ally = 0,
         enemy = 1,
-        empty = 2
+        empty = 2,
+        obstacle = 3,
     } 
 
-    [SerializeField] private Color _baseColor, _offsetColor, _allyColor, _enemyColor, _emptyColor;
-    [SerializeField] private Material _allyMaterial, _enemyMaterial;
+    [SerializeField] private Color _emptyColor;
     [SerializeField] private MeshRenderer _mesh;
     [SerializeField] private GameObject _highlight;
-
-    private bool _isSelected = false;
-    private static bool _isRightClicking = false;
     private static List<Tile> _selectedTiles = new List<Tile>();
-    private GridManager _gridManager;
 
     //messo public per debug
     public TileType _type;
-    
-    private static int allyCount = 0;
-    private static int enemyCount = 0;
-    private static Material _currentMaterial;
-    int width;
-    int height;
 
-    //messo public per debug
-    public GameObject tileShip;
+    private GameObject tileShip;
+    private GameObject tileObstacle = null;
    
 
     [Header("Interaction")]
@@ -57,29 +48,6 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     public static event Action<Tile> tileSelected;
 
-    private bool dragNDropSelected = false;
-    private float InfluenceValue { get; set; }
-
-    // [SerializeField] private bool _isPlaceable;
-
-    // public BaseShip OccupiedShip;
-    // public bool Placeable => _isPlaceable && OccupiedShip == null;
-
-    #region Iscrizione agli eventi
-
-    private void OnEnable() 
-    {
-        UICardDragNDropHandler.droppableCardSelectedEvent += ActivateTileCollider;
-        UICardDragNDropHandler.droppableCardDeselectedEvent += DeactivateTileCollider;
-    }
-
-    private void OnDisable() 
-    {
-        UICardDragNDropHandler.droppableCardSelectedEvent -= ActivateTileCollider;
-        UICardDragNDropHandler.droppableCardDeselectedEvent -= DeactivateTileCollider;
-    }
-    #endregion
-
     void Awake()
     {
         //Forse si può migliorare, ma per ora va bene
@@ -91,41 +59,26 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         tileCollider.enabled = false;
         tileCollider.isTrigger = true;
         tileCollider.providesContacts = true;
-
-        /* 
-        int gridWidth = _gridManager._width;
-        int gridHeight = _gridManager._height;
-       
-        Debug.Log($"La griglia è {gridWidth}x{gridHeight}");
-
-        if (transform.position.x + transform.position.y < gridWidth - 1) { // Con questo codice non verifica che ci siano SEMPRE 3 ally e 3 enemy 
-            if (Random.value > 0.5f && allyCount < 3) {
-                _mesh.material = _allyMaterial;
-                _type = TileType.Ally;
-                allyCount++;
-            }
-        }
-        else if (transform.position.x + transform.position.y > gridWidth - 1) {
-            if (Random.value > 0.5f && enemyCount < 3) {
-                _mesh.material = _enemyMaterial;
-                _type = TileType.Enemy;
-                enemyCount++;
-            }
-        }
-        else if (transform.position.x + transform.position.y == gridWidth - 1){
-            _mesh.material.color = Color.white;
-            _type = TileType.Empty;
-        }
-        else {
-            _mesh.material.color = _emptyColor;
-            _type = TileType.Empty;
-        }
-       */
     }
 
-    // void OnMouseOver () {
-    //     if (Input.GetMouseButtonUpAsButton(0)) if (_type != TileType.Empty) GridManager.Instance.SwapTileTypes(this);
-    // }
+    #region Iscrizione agli eventi
+
+    private void OnEnable()
+    {
+        UICardDragNDropHandler.droppableCardSelectedEvent += ActivateTileCollider;
+        UICardDragNDropHandler.droppableCardDeselectedEvent += DeactivateTileCollider;
+        /*UICard.cardSelectedEvent +=
+        UICard.cardDeselectedEvent +=*/
+    }
+
+    private void OnDisable()
+    {
+        UICardDragNDropHandler.droppableCardSelectedEvent -= ActivateTileCollider;
+        UICardDragNDropHandler.droppableCardDeselectedEvent -= DeactivateTileCollider;
+        /*UICard.cardSelectedEvent -=
+        UICard.cardDeselectedEvent -=*/
+    }
+    #endregion
 
     #region Selezione della tile
 
@@ -231,55 +184,12 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         }
         //La tile comunica con un evento che è stata selezionata, lo riceverà una nave
     }
-    
+
 
     #endregion
 
-    /*void OnMouseUpAsButton() {
-		if (Input.GetMouseButtonUp(0))
-		{
-			if (_type != TileType.Empty) _gridManager.SwapTileTypes(this);
-			return;
-		}
-    }*/
-
-    /*void OnMouseOver() {
-        
-        if (Input.GetMouseButtonDown(1)) {
-            Debug.Log("cazzi");
-            _isRightClicking = true;
-            _selectedTiles.Clear();
-            SelectTile();
-        }
-    }
-
-    void OnMouseUp() {
-        if (Input.GetMouseButtonUp(1)) { // Tasto destro rilasciato
-            _isRightClicking = false;
-            ApplySelectionColor();
-        }
-    }*/
-
-    private void SelectTile() {
-        if (!_selectedTiles.Contains(this)) {
-            _selectedTiles.Add(this);
-        }
-    }
-
-    private void ApplySelectionColor() {
-        foreach (var tile in _selectedTiles) {
-            tile._mesh.material.color = Color.green;
-        }
-        _selectedTiles.Clear();
-    }
-
-    public bool IsEmpty() 
-    {
-        return _type == TileType.Empty;
-    }
-
-    //Occhio a scrivere nomi di metodi già presenti nella classe padre, rischiamo di sovrascrivere metodi importanti
-    public new TileType GetType() 
+    #region Gestione entità
+    public new TileType GetType()
     {
         return _type;
     }
@@ -287,13 +197,19 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     //ho dovuto modificare questo metodo perchè non viene registrato correttamente il tipo di tyle
     public void SetType(TileType type, int entity) 
     {
-        if (entity == (int)Entity.ally) {
+        if (entity == (int)Entity.ally)
+        {
             _type = TileType.Ally;
-           // _mesh.material = _allyMaterial;
+            // _mesh.material = _allyMaterial;
         }
-        else if (entity == (int)Entity.enemy) {
+        else if (entity == (int)Entity.enemy)
+        {
             _type = TileType.Enemy;
-           // _mesh.material = _enemyMaterial;
+            // _mesh.material = _enemyMaterial;
+        }
+        else if (entity == (int)Entity.obstacle)
+        {
+            _type = TileType.Obstacle;
         }
         else
         {
@@ -311,24 +227,63 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         }
        
     }
+
+    public void InstantiateObstacle(GameObject obstacle)
+    {
+        GameObject tmpObs = Instantiate(obstacle);
+        SetType(this._type, (int)Entity.obstacle);
+        SetObstacle(tmpObs);
+        tmpObs.GetComponent<AbstractObstacle>().obstaclePosition = gameObject.transform.position;
+    }
+
+    public void SetObstacle(GameObject obstacle)
+    {
+        if (obstacle != null)
+        {
+            tileObstacle = obstacle;
+            obstacle.transform.position = gameObject.transform.position;
+            SetType(this._type, (int)Entity.obstacle);
+        }
+
+    }
     public GameObject GetShip()
     {
-        if(tileShip==null)
+        if (tileShip == null)
         {
-            //Debug.Log("La nave non è presente");
             return null;
         }
         else
         {
             return tileShip;
         }
-        
     }
-    public void SetTypeEmpty() {
+
+
+    public void RemoveObstacle()
+    {
+        SetTypeEmpty();
+        SetObstacle(null);
+    }
+
+    public GameObject GetObstacle()
+    {
+        if (tileObstacle == null)
+        {
+            return null;
+        }
+        else
+        {
+            return tileObstacle;
+        }
+    }
+    public void SetTypeEmpty()
+    {
         _type = TileType.Empty;
         _mesh.material.color = _emptyColor;
     }
 
+
+    #endregion
 
     #region ICardDropArea
 

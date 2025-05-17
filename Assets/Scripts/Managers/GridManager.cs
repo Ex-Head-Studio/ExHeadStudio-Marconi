@@ -11,12 +11,26 @@ using Random = UnityEngine.Random;
 public class GridManager : MonoBehaviour, ICardDropArea
 {
 
+    private enum ObstacleMode
+    {
+        randomFromList,
+    }
+
     public static GridManager Instance;
 
     [Header("Grid Parameters")]
     public int _width;
     public int _height;
     [SerializeField] private GameObject _tilePrefab;
+
+    [Header("Obstacle Options")]
+    [SerializeField] private bool canGenerateObstacles = false;
+    [SerializeField] private ObstacleMode obstacleMode;
+    [SerializeField] private int numberOfObstacles;
+
+    [Header("Obstacle List")]
+    [SerializeField] private List<GameObject> obstaclePrefabsList = new List<GameObject>();
+
 
     public Dictionary<Vector2, Tile> _tiles;
     private Dictionary<int, Ship> _ships;
@@ -25,16 +39,6 @@ public class GridManager : MonoBehaviour, ICardDropArea
 
     //mi serve a tenere traccia del numero di tentativi per il riposizionamento
     int attempts = 0;
-    void Start()
-    {
-        GenerateGrid();
-        gridCollider = GetComponent<Collider>();
-        gridCollider.providesContacts = true;
-        gridCollider.bounds.Equals( new Vector3(_width, _height, 10));
-        gridCollider.bounds.center.Equals( new Vector3(_width/2, 0,_height/2));
-        gridCollider.bounds.size.Equals( new Vector3(_width, 0.5f, _height));
-    }
-
 
     void Awake()
     {
@@ -47,27 +51,66 @@ public class GridManager : MonoBehaviour, ICardDropArea
         //_cam= FindObjectsByType<Camera>()[0];
         //_shipManager = GetComponent<ShipManager>();
     }
+    void Start()
+    {
+        GenerateGrid();
+        gridCollider = GetComponent<Collider>();
+        gridCollider.providesContacts = true;
+        gridCollider.bounds.Equals( new Vector3(_width, _height, 10));
+        gridCollider.bounds.center.Equals( new Vector3(_width/2, 0,_height/2));
+        gridCollider.bounds.size.Equals( new Vector3(_width, 0.5f, _height));
+    }
 
-   public void GenerateGrid() 
-   {
+    public void GenerateGrid()
+    {
         _tiles = new Dictionary<Vector2, Tile>();
-        
-        for (int x = 0; x < _width; x++) {
-            for (int y = 0; y < _height; y++) {
+
+        for (int x = 0; x < _width; x++)
+        {
+            for (int y = 0; y < _height; y++)
+            {
                 //Nell'istanziare, prende lo script Tile attaccato all'oggetto creato
-                Tile spawnedTile = Instantiate(_tilePrefab, transform.position + new Vector3(x*transform.localScale.x, 0, y*transform.localScale.x), Quaternion.Euler(90,0,0), transform).GetComponent<Tile>();
+                Tile spawnedTile = Instantiate(_tilePrefab, transform.position + new Vector3(x * transform.localScale.x, 0, y * transform.localScale.x), Quaternion.Euler(90, 0, 0), transform).GetComponent<Tile>();
                 //spawnedTile.transform.SetParent(pivotGrid.transform);
                 spawnedTile.transform.localScale = Vector3.one;
 
                 //non è corretto, i nomi non corrispondo alle posizioni
-                spawnedTile.name = $"Tile {Mathf.Abs(y-4)} {x}";
-                
+                spawnedTile.name = $"Tile {Mathf.Abs(y - 4)} {x}";
+
 
                 /*var isOffset = (x + y) % 2 == 1;
                 spawnedTile.Init(isOffset);
                 */
                 _tiles[new Vector2(x, y)] = spawnedTile;
-                
+
+            }
+        }
+
+        if (canGenerateObstacles)
+        {
+            switch ((int)obstacleMode)
+            {
+                case (int)ObstacleMode.randomFromList:
+
+                    for (int i = 0; i < numberOfObstacles; i++)
+                    {
+                        int listIndex = Random.Range(0, obstaclePrefabsList.Count - 1);
+                        Vector2 randomTilePos = new Vector2(Random.Range(0, _width - 1), Random.Range(0, _height - 1));
+
+                        while(!IsValidPosition(randomTilePos))
+                        {
+                            randomTilePos = new Vector2(Random.Range(0, _width-1), Random.Range(0, _height-1));
+                        }
+
+                        Tile randomTile = _tiles[randomTilePos];
+                        randomTile.InstantiateObstacle(obstaclePrefabsList[listIndex]);
+                    }
+                    break;
+
+                default:
+
+                    break;
+
             }
         }
     }
@@ -89,7 +132,6 @@ public class GridManager : MonoBehaviour, ICardDropArea
             Vector2Int position = new Vector2Int(Random.Range(0, _width), Random.Range(0, _height));
             if(IsValidPosition(position) && attempts < (_width * _height))
             {
-                //fare un controllo su questa logica
                 Tile tile = GetTileAtPosition(position);
                 tile.SetType(tile.GetType(), ship.faction);
                 tile.SetShip(ship.gameObject);
@@ -171,6 +213,12 @@ public class GridManager : MonoBehaviour, ICardDropArea
         tile.SetShip(null);
     }
 
+    #region Gestione Ostacoli
+
+
+
+    #endregion
+
     //Metodo per il drop della carta
     public void CardDrop(AbstractCard card)
     {
@@ -202,5 +250,4 @@ public class GridManager : MonoBehaviour, ICardDropArea
         }
         
     }*/
-
 }
