@@ -10,20 +10,20 @@ MonoBehaviour:
   m_Enabled: 1
   m_EditorHideFlags: 0
   m_Script: {fileID: 11500000, guid: cfc6d05c17513294494b444943d35d9b, type: 3}
-  m_Name: ChangeMovementStatA
+  m_Name: DenyEnemyAction
   m_EditorClassIdentifier: 
-  cardEntityType: 0
-  cardType: 0
-  cardImage: {fileID: 21300000, guid: 80b5a71a0cfaac241a51bee790cb2300, type: 3}
+  cardEntityType: 1
+  cardType: 3
+  cardImage: {fileID: 21300000, guid: 15249aa5e50d85542952012df6c1e50b, type: 3}
   cardIcon: {fileID: 21300000, guid: a152b2174d08ab84295fa5abdeb73ebe, type: 3}
-  cardName: Change movement
-  cardDescription: Add 1 to movement
-  cardColor: {r: 0.108999595, g: 0.23270908, b: 0.9169811, a: 1}
+  cardName: Deny Enemy Action
+  cardDescription: Deny the action of an enemy ship
+  cardColor: {r: 0, g: 0, b: 0, a: 0}
   cardBaseSprite: {fileID: 21300000, guid: 80b5a71a0cfaac241a51bee790cb2300, type: 3}
-  cardCost: 0
+  cardCost: 1
   isWorldInteractive: 0
   lastingTurns: 1
   cardEffects:
-  - {fileID: 11400000, guid: fdb562e1e84df8d4186e16c0ca717c3e, type: 2}
+  - {fileID: 11400000, guid: ff5127f4732177448aa1e4dacfac03e1, type: 2}
   energyUsedEvent: {fileID: 11400000, guid: 3a986c728b37b99438be18298d645fb4, type: 2}
   energySystem: {fileID: 11400000, guid: 136cca535f0baba46ab62bf1a16ce78d, type: 2}

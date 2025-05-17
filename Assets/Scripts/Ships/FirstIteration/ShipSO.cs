@@ -1,6 +1,6 @@
 using UnityEngine;
 using System.Collections.Generic;
-using UnityEditor.Animations;
+using UnityEngine.Animations;
 using Unity.Mathematics;
 
 [CreateAssetMenu(fileName = "ShipSO", menuName = "Scriptable Objects/ShipSO")]
@@ -20,7 +20,7 @@ public class ShipSO : ScriptableObject
     [SerializeField] public OnShipAttackEvent attackEvent;
 
     [Header("Animator")]
-    [SerializeField] public AnimatorController shipAnimatorController;
+    [SerializeField] public RuntimeAnimatorController shipAnimatorController;
 
     [Header("Effects")]
     [SerializeField] public ParticleSystem attackReceivedParticle;

@@ -115,7 +115,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
             {
                 if(move.GetMessageType() == MessageType.attack)
                 {
-                    enemyAttackSignal.SetActive(true);
+                    //enemyAttackSignal.SetActive(true);
                     activeSignal = enemyAttackSignal;
                 }
                 else if(move.GetMessageType() == MessageType.movement)
@@ -125,7 +125,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
                     _type = TileType.Enemy;
                     
 
-                    enemyMovementSignal.SetActive(true);
+                    //enemyMovementSignal.SetActive(true);
                     activeSignal = enemyMovementSignal;
                 }
             }

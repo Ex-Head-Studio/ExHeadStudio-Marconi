@@ -46,6 +46,7 @@ public class StatsPanelScript : MonoBehaviour
     }
     private void HideStatsPanel(ShipSO shipSO)
     {
+        shipClassName.text = "";
         StopCoroutine(WaitBeforeShow(waitTimeBeforeShow, shipSO));
         foreach (Transform child in statsParent)
         {
@@ -63,8 +64,11 @@ public class StatsPanelScript : MonoBehaviour
             statObject.name = statName;
             statObject.GetComponentInChildren<TMP_Text>().text = statName;
             statObject.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-
-            statObject.AddComponent<HorizontalLayoutGroup>();
+            if(statObject.GetComponent<HorizontalLayoutGroup>() == null)
+            {
+                statObject.AddComponent<HorizontalLayoutGroup>();
+            }
+            
 
             horizontalLayoutGroup = statObject.GetComponent<HorizontalLayoutGroup>();
             horizontalLayoutGroup.childScaleHeight = true;
