@@ -98,7 +98,7 @@ public class PlayerHandManagerScript : MonoBehaviour
             Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross(up, forward).normalized);
 
             cardsInHand[i].transform.DOMove(splinePosition, 0.25f);
-            cardsInHand[i].transform.DOLocalRotateQuaternion(rotation, 0.25f);
+            cardsInHand[i].transform.DOLocalRotateQuaternion(rotation, 0.15f);
         }
     }
 

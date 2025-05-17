@@ -18,7 +18,7 @@ public abstract class AShip : MonoBehaviour
     public float shipInfluence;
 
     [Header("Moves visualization")]
-    [SerializeField] protected bool canVisualizeMoves = false;
+    [SerializeField] protected bool canVisualizeMoves = true;
 
     [SerializeField] protected GridManager gridManager;
     

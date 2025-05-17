@@ -19,7 +19,7 @@ MonoBehaviour:
   cardName: DropTest
   cardDescription: 
   cardColor: {r: 0.24705882, g: 0.2509804, b: 0.9098039, a: 1}
-  cardBaseSprite: {fileID: 21300000, guid: b46421da36d82b348b769c7dde1f988a, type: 3}
+  cardBaseSprite: {fileID: 21300000, guid: 80b5a71a0cfaac241a51bee790cb2300, type: 3}
   cardCost: 2
   isWorldInteractive: 1
   lastingTurns: 1
