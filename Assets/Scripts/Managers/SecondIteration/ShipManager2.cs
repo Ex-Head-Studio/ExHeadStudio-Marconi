@@ -150,7 +150,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
         shipManagerSO.onEndEnemyTurn.Invoke(new VoidEvent(0));
         foreach (EnemyShip enemy in enemies)
         {
-            enemy.ResetAction();
+            //enemy.ResetAction();
         }
         Debug.Log("Fine turno nemico");
     }
