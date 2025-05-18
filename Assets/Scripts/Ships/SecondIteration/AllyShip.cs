@@ -88,7 +88,7 @@ public class AllyShip : AShip
         }
         
         //ricerca verso alto
-        for (int y = position.y; y <= position.y - movementRange; y++)
+        for (int y = position.y; y <= position.y + movementRange; y++)
         {
             if (y >= 0 && y < gridManager._height && y != position.y)
             {
@@ -139,6 +139,9 @@ public class AllyShip : AShip
 
                 if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                 {
+                    Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
+                    shipMoves.Add(move);
+                    canAttack = true;
                     break;
                 }
 
@@ -161,6 +164,9 @@ public class AllyShip : AShip
 
                 if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                 {
+                    Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
+                    shipMoves.Add(move);
+                    canAttack = true;
                     break;
                 }
 
@@ -183,6 +189,9 @@ public class AllyShip : AShip
 
                 if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                 {
+                    Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
+                    shipMoves.Add(move);
+                    canAttack = true;
                     break;
                 }
 
@@ -197,7 +206,7 @@ public class AllyShip : AShip
         }
 
         //ricerca verso alto
-        for (int y = position.y; y <= position.y - attackRange; y++)
+        for (int y = position.y; y <= position.y + attackRange; y++)
         {
             if (y >= 0 && y < gridManager._height && y != position.y)
             {
@@ -205,6 +214,9 @@ public class AllyShip : AShip
 
                 if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                 {
+                    Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
+                    shipMoves.Add(move);
+                    canAttack = true;
                     break;
                 }
 
@@ -221,7 +233,8 @@ public class AllyShip : AShip
        
         //Se il giocatore ha la libertà di scegliere in quale posizione attaccare, allora questo metodo
         //gli farà vedere solo le posizioni in cui può attaccare.
-        shipMoves = shipMoves.Where(x => gridManager.GetTileAtPosition(x.GetTargetPos())._type == TileType.Enemy).ToList();
+        shipMoves = shipMoves.Where(x => (gridManager.GetTileAtPosition(x.GetTargetPos())._type == TileType.Enemy ||
+                                    gridManager.GetTileAtPosition(x.GetTargetPos())._type == TileType.Obstacle)).ToList();
         if(shipMoves.Count > 0)
         {
             foreach(Move move in shipMoves)
@@ -265,14 +278,14 @@ public class AllyShip : AShip
             gridManager.MoveShip(this.position, gridManager.GetPositionFromTile(tile), this.faction);
             this.position = Vector2Int.RoundToInt(gridManager.GetPositionFromTile(tile));
         }
-        else if (tile._type == TileType.Enemy)
+        else if (tile._type == TileType.Enemy || tile._type == TileType.Obstacle)
         {
             Debug.Log("Attack in tile: " + tile.name);
             PerformAttack(gridManager.GetPositionFromTile(tile));
         }  
 
         //disattivo le tile interagibili
-        foreach(Move move in shipMoves)
+        foreach (Move move in shipMoves)
         {
             gridManager.GetTileAtPosition(move.GetTargetPos()).SetTileNotInteractable(faction);
         }

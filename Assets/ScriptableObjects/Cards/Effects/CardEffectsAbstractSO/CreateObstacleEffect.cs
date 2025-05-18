@@ -25,11 +25,11 @@ public class CreateObstacleEffect : AbstractEffectSO
                 case GenerationMode.randomFromList:
 
                     int randomIndex = UnityEngine.Random.Range(0, obstacleList.Count - 1);
-                    tileScript.InstantiateObstacle(obstacleList[randomIndex]);
+                    tileScript.InstantiateObstacle(obstacleList[randomIndex], tileScript);
                     break;
 
                 case GenerationMode.firstOfList:
-                    tileScript.InstantiateObstacle(obstacleList[0]);
+                    tileScript.InstantiateObstacle(obstacleList[0], tileScript);
                     break;
 
                 default:

@@ -67,16 +67,12 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     {
         UICardDragNDropHandler.droppableCardSelectedEvent += ActivateTileCollider;
         UICardDragNDropHandler.droppableCardDeselectedEvent += DeactivateTileCollider;
-        /*UICard.cardSelectedEvent +=
-        UICard.cardDeselectedEvent +=*/
     }
 
     private void OnDisable()
     {
         UICardDragNDropHandler.droppableCardSelectedEvent -= ActivateTileCollider;
         UICardDragNDropHandler.droppableCardDeselectedEvent -= DeactivateTileCollider;
-        /*UICard.cardSelectedEvent -=
-        UICard.cardDeselectedEvent -=*/
     }
     #endregion
 
@@ -228,12 +224,13 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
        
     }
 
-    public void InstantiateObstacle(GameObject obstacle)
+    public void InstantiateObstacle(GameObject obstacle, Tile tile)
     {
         GameObject tmpObs = Instantiate(obstacle);
         SetType(this._type, (int)Entity.obstacle);
         SetObstacle(tmpObs);
-        tmpObs.GetComponent<AbstractObstacle>().obstaclePosition = gameObject.transform.position;
+        tmpObs.GetComponent<AbstractObstacle>().SetPosition(GetComponentInParent<GridManager>().GetPositionFromTile(tile));
+        tmpObs.GetComponent<AbstractObstacle>().SetTile(tile);
     }
 
     public void SetObstacle(GameObject obstacle)
@@ -261,6 +258,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     public void RemoveObstacle()
     {
+        Destroy(GetObstacle());
         SetTypeEmpty();
         SetObstacle(null);
     }

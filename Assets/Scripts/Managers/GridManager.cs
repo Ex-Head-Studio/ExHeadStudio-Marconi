@@ -103,7 +103,7 @@ public class GridManager : MonoBehaviour, ICardDropArea
                         }
 
                         Tile randomTile = _tiles[randomTilePos];
-                        randomTile.InstantiateObstacle(obstaclePrefabsList[listIndex]);
+                        randomTile.InstantiateObstacle(obstaclePrefabsList[listIndex], randomTile);
                     }
                     break;
 

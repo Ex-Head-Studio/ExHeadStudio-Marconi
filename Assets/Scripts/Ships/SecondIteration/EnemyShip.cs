@@ -43,7 +43,7 @@ public class EnemyShip : AShip
         // in verticale e orizzontale
 
         //ricerca verso sx
-        for (int x = position.x; x >= position.x - attackRange; x--)
+        for (int x = position.x; x >= position.x - movementRange; x--)
         {
             if (x >= 0 && x < gridManager._width && x != position.x)
             {
@@ -63,7 +63,7 @@ public class EnemyShip : AShip
         }
 
         //ricerca verso dx
-        for (int x = position.x; x <= position.x + attackRange; x++)
+        for (int x = position.x; x <= position.x + movementRange; x++)
         {
             if (x >= 0 && x < gridManager._width && x != position.x)
             {
@@ -83,7 +83,7 @@ public class EnemyShip : AShip
         }
 
         //ricerca verso basso
-        for (int y = position.y; y >= position.y - attackRange; y--)
+        for (int y = position.y; y >= position.y - movementRange; y--)
         {
             if (y >= 0 && y < gridManager._height && y != position.y)
             {
@@ -103,7 +103,7 @@ public class EnemyShip : AShip
         }
 
         //ricerca verso alto
-        for (int y = position.y; y <= position.y - attackRange; y++)
+        for (int y = position.y; y <= position.y + movementRange; y++)
         {
             if (y >= 0 && y < gridManager._height && y != position.y)
             {

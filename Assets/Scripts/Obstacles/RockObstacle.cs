@@ -37,37 +37,43 @@ public class RockObstacle : AbstractObstacle, IObstacleHealth
     {
         if (attackStruct.gridPosition == obstaclePosition)
         {
+            Debug.Log("Roccia colpita");
             ReduceHealth(attackStruct.damage);
         }
     }
     public void ReduceHealth(int damage)
     {
-        if (healthBarPrefab != null && healthBarCanvasPrefab != null)
-        {
-            int endIndex = healthBarCount - damage - 1;
+        obstacleHealth -= damage;
 
-            for (int i = 0; i < damage; i++)
+        if (obstacleHealth <= 0)
+        {
+            tile.RemoveObstacle();
+        }
+        if (healthBarPrefab != null && healthBarCanvasPrefab != null)
             {
 
-                int index = healthBarCount - i - 1;
-                if (index < 0)
+                for (int i = 0; i < damage; i++)
                 {
-                    index = 0;
-                }
-                if (healthObjectsList.Count > 0)
-                {
-                    GameObject healthBar = healthObjectsList[index];
-                    healthObjectsList.RemoveAt(index);
-                    Destroy(healthBar);
-                }
-                else
-                {
-                    break;
-                }
 
+                    int index = healthBarCount - i - 1;
+                    if (index < 0)
+                    {
+                        index = 0;
+                    }
+                    if (healthObjectsList.Count > 0)
+                    {
+                        GameObject healthBar = healthObjectsList[index];
+                        healthObjectsList.RemoveAt(index);
+                        Destroy(healthBar);
+                    }
+                    else
+                    {
+                        break;
+                    }
+
+                }
+                healthBarCount -= damage;
             }
-            healthBarCount -= damage;
-        }
     }
     #endregion
 

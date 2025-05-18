@@ -57,7 +57,7 @@ public class CardObstacleAbstract : MonoBehaviour, IPointerClickHandler
     //Funzione che viene chiamata quando la carta viene deselezionata
     protected virtual void OnCardDeselected(AbstractCard card)
     {
-        transform.DOKill(false);
+        transform.DOKill(gameObject);
 
         isObstacleSelectable = false;
         obstacleCollider.enabled = false;

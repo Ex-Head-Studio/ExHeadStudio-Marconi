@@ -81,6 +81,7 @@ public abstract class AShip : MonoBehaviour
         mapWidth=FindFirstObjectByType<GridManager>()._width;
 
         GetComponent<OnShipAttackEventListener>().AddMethodToExecute(OnAttacked);
+        GetComponent<StartedTurnEventListener>().AddMethodToExecute(RestoreStat);
 
         //camera shake
         impulseSource = GetComponent<CinemachineImpulseSource>();
@@ -254,7 +255,9 @@ public abstract class AShip : MonoBehaviour
         }
     }
 
-    public void RestoreStat()
+
+    //Bisogna associare questa funzione all'ascoltatore del turno
+    public void RestoreStat(VoidEvent voidEvent)
     {
         if (hasStatChanged)
         {

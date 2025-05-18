@@ -4,14 +4,41 @@ using System.Collections.Generic;
 [CreateAssetMenu(fileName = "ChangeClassEffect", menuName = "Scriptable Objects/Card Effects/ChangeClassEffect")]
 public class ChangeClassEffect : AbstractEffectSO
 {
+    private enum ClassSelectionMode
+    {
+        random, 
+        chooseByPlayer
+    }
     [SerializeField] private List<ShipSO> shipClasses = new List<ShipSO>();
+    [SerializeField] private ClassSelectionMode classSelectionMode;
     public override void PerformEffect(EffectStruct effectStruct)
     {
-        ShipSO newClass = shipClasses[Random.Range(0, shipClasses.Count)];
-        if (effectStruct.obj.TryGetComponent<AShip>(out AShip shipScript))
+
+
+        switch (classSelectionMode)
         {
-            shipScript.ChangeClass(newClass);
-            EndEffect(0);
+            case ClassSelectionMode.random:
+                if (effectStruct.obj.TryGetComponent<AShip>(out AShip shipScript))
+                {
+                    ShipSO newClass = shipClasses[Random.Range(0, shipClasses.Count)];
+                    shipScript.ChangeClass(newClass);
+
+                }
+
+                break;
+
+            case ClassSelectionMode.chooseByPlayer:
+
+                //capire come faccio a visualizzarlo???
+                
+
+                break;
+
+
+            default:
+                break;
         }
+
+        EndEffect(0);
     }
 }
