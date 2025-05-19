@@ -1,0 +1,126 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &7958013471183585549
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_Name
+      value: BaseMineObstaclePrefab
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -8485611795685019206}
+    - targetCorrespondingSourceObject: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -3818410615878564393}
+  m_SourcePrefab: {fileID: 100100000, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+--- !u!1 &1233278570776886759 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+  m_PrefabInstance: {fileID: 7958013471183585549}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-8485611795685019206
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233278570776886759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 9d7c0cae3bfe4bf4b8196476f2f217b4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 1, g: 0.82159084, b: 0, a: 1}
+  obstaclePosition: {x: 0, y: 0}
+  tile: {fileID: 0}
+  healthBarPrefab: {fileID: 5625949989435475814, guid: b55440878e3e5d6458df9eb2294425b5, type: 3}
+  healthBarCanvasPrefab: {fileID: 3580521795796460017}
+  obstacleHealth: 1
+  areaDamage: 2
+  areaDamageRadius: 1
+  areaDamageType: 1
+  attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
+  explosionPrefab: {fileID: 2770211866682839690, guid: 606e5509842850445bde19a5693b1256, type: 3}
+--- !u!114 &-3818410615878564393
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1233278570776886759}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6d7cf1e54f24d45ac4e708955fe478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -8485611795685019206}
+        m_TargetAssemblyTypeName: MineObstacle, Assembly-CSharp
+        m_MethodName: OnAttacked
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
+--- !u!1 &3580521795796460017 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6899543821610524924, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+  m_PrefabInstance: {fileID: 7958013471183585549}
+  m_PrefabAsset: {fileID: 0}
