@@ -14,7 +14,7 @@ public class ShipSounds: MonoBehaviour
     private FMOD.Studio.EventInstance shipMove;
     public void PlayShipMove()
     {
-        shipMove = FMODUnity.RuntimeManager.CreateInstance("event:/UI/ShipMove");
+        shipMove = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipMoving");
         shipMove.start();
         shipMove.release();
     }
