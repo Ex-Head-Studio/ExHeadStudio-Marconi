@@ -36,23 +36,13 @@ public abstract class AbstractCard : MonoBehaviour
 
     //Getters
 
-    public Color GetBaseColor()
-    {
-        return cardData.cardColor;
-    }
-    public Sprite GetCardBaseSprite()
-    {
-        return cardData.cardBaseSprite;
-    }
+    
     public Sprite GetCardImage()
     {
         return cardData.cardImage;
     }
 
-    public Sprite GetCardIcon()
-    {
-        return cardData.cardImage;
-    }
+
     public string GetCardName()
     {
         return cardData.cardName;
@@ -73,6 +63,11 @@ public abstract class AbstractCard : MonoBehaviour
     public int GetCardEntity()
     {
         return (int)cardData.cardEntityType;
+    }
+
+    public int GetCardType()
+    {
+        return (int)cardData.cardType;
     }
 
     public void SetCardData(BaseCardData cardDataSO)

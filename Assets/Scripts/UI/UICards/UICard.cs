@@ -9,6 +9,7 @@ using TMPro;
 using UnityEngine.Assertions;
 using UnityEngine.Serialization;
 using System.Runtime.CompilerServices;
+using UnityEngine.Rendering;
 
 
 
@@ -35,9 +36,8 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     [SerializeField] private TMP_Text costText;
     [SerializeField] private TMP_Text descriptionText;
     [SerializeField] private GameObject visualImage;
-    [SerializeField] private GameObject visualIcon;
-    [SerializeField] private GameObject cardBase;
-    private SpriteRenderer baseRenderer;
+    [SerializeField] private SpriteRenderer spriteRendererBorder;
+    [SerializeField] private SpriteRenderer spriteRendererCost;
     [SerializeField] private Color highlightColor;
 
     private Vector3 selectionScale;
@@ -47,9 +47,17 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     [Header("Energy System")]
     [SerializeField] private EnergySystem energySystem;
 
+    [Header("Colori Carta")]
+    [SerializeField] private Color colorCommandCard;
+    [SerializeField] private Color colorSupportCard;
+    [SerializeField] private Color colorSpySupportCard;
+    private Color tempColor;
+
     private bool drawGizmos;
 
     private bool isCardSelected = false;
+
+    private SortingGroup sortingGroup;
 
     private void OnDestroy()
     {
@@ -60,12 +68,14 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     {
         selectionScale = transform.localScale * (hoverScaleFactor + 0.1f);
         hoverScale = transform.localScale * hoverScaleFactor;
-        startingScale = transform.localScale;
+        startingScale = transform.localScale;  
     }
+
     private void Start()
     {
         cardTransform = GetComponent<Transform>();
         drawGizmos = true;
+        sortingGroup = GetComponent<SortingGroup>();
     }
 
     public void SetupUICard(AbstractCard card)
@@ -73,9 +83,25 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         //Assegno lo script
         cardScript = card;
 
-        baseRenderer = cardBase.GetComponent<SpriteRenderer>();
-        baseRenderer.sprite = cardScript.GetCardBaseSprite();
-        baseRenderer.color = cardScript.GetBaseColor();
+        switch (card.GetCardType())
+        {
+            case (int)DeckType.CommandDeck:
+                spriteRendererBorder.color = colorCommandCard;
+                spriteRendererCost.color = colorCommandCard;
+                break;
+            case (int)DeckType.SupportDeck:
+                spriteRendererBorder.color = colorSupportCard;
+                spriteRendererCost.color = colorSupportCard;
+                break;
+            case (int)DeckType.SpyAndSupportDeck:
+                spriteRendererBorder.color = colorSpySupportCard;
+                spriteRendererCost.color = colorSpySupportCard;
+                break;
+            default:
+                Assert.IsTrue(false, "Card type not supported");
+                break;
+            
+        }
 
         //Compilo il display
         nameText.text = cardScript.GetCardName();
@@ -87,7 +113,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
         visualImage.GetComponent<SpriteRenderer>().sprite = cardScript.GetCardImage();
 
-        visualIcon.GetComponent<SpriteRenderer>().sprite = cardScript.GetCardIcon();
+       
     }
 
 
@@ -121,7 +147,12 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     {
         transform.DOLocalMoveY(transform.localPosition.y + 0.3f, 0.5f);
 
-        baseRenderer.color = highlightColor;
+        tempColor = spriteRendererBorder.color;
+
+        sortingGroup.sortingOrder = 10;
+
+        spriteRendererBorder.color = highlightColor;
+        spriteRendererCost.color = highlightColor;
 
         cardSelectedEvent?.Invoke(cardScript);
         transform.localScale = selectionScale;
@@ -131,6 +162,10 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     {
         if (this.cardScript.gameObject != null)
         {
+            sortingGroup.sortingOrder = 0;
+
+            spriteRendererBorder.color = tempColor;
+            spriteRendererCost.color = tempColor;
 
             cardDeselectedEvent?.Invoke(cardScript);
             transform.localScale = startingScale;

@@ -8,7 +8,6 @@ public enum CardEntityType
     AllyAndEnemyShip,
     None,
     Obstacle,
-
     Tile, 
 }
 
@@ -19,11 +18,8 @@ public class BaseCardData : ScriptableObject
     [SerializeField] public CardEntityType cardEntityType;
     [SerializeField] public DeckType cardType;
     [SerializeField] public Sprite cardImage;
-    [SerializeField] public Sprite cardIcon;
     [SerializeField] public string cardName;
     [SerializeField] public string cardDescription;
-    [SerializeField] public Color cardColor;
-    [SerializeField] public Sprite cardBaseSprite;
 
 
     [Tooltip("The cost of this card")]

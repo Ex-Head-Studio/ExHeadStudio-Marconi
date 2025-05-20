@@ -14,12 +14,9 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardEntityType: 0
   cardType: 1
-  cardImage: {fileID: 21300000, guid: 15249aa5e50d85542952012df6c1e50b, type: 3}
-  cardIcon: {fileID: 21300000, guid: a152b2174d08ab84295fa5abdeb73ebe, type: 3}
+  cardImage: {fileID: 21300000, guid: a07ef07cbc302624ea688f033047e26d, type: 3}
   cardName: Add Health
   cardDescription: Add 1 health to your unit
-  cardColor: {r: 0.24705882, g: 0.2509804, b: 0.9098039, a: 1}
-  cardBaseSprite: {fileID: 21300000, guid: 80b5a71a0cfaac241a51bee790cb2300, type: 3}
   cardCost: 2
   isWorldInteractive: 0
   lastingTurns: 1
