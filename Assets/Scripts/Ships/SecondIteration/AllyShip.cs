@@ -45,7 +45,7 @@ public class AllyShip : AShip
 
                 Move move = new Move(moveId++, shipName, pos, MessageType.movement, 0);
                 if (move != null && gridManager.GetTileAtPosition(pos).GetType() == TileType.Empty)
-                shipMoves.Add(move);
+                    shipMoves.Add(move);
             }
         }
 
@@ -64,7 +64,7 @@ public class AllyShip : AShip
 
                 Move move = new Move(moveId++, shipName, pos, MessageType.movement, 0);
                 if (move != null && gridManager.GetTileAtPosition(pos).GetType() == TileType.Empty)
-                shipMoves.Add(move);
+                    shipMoves.Add(move);
             }
         }
 
@@ -83,7 +83,7 @@ public class AllyShip : AShip
 
                 Move move = new Move(moveId++, shipName, pos, MessageType.movement, 0);
                 if (move != null && gridManager.GetTileAtPosition(pos).GetType() == TileType.Empty)
-                shipMoves.Add(move);
+                    shipMoves.Add(move);
             }
         }
         
@@ -102,7 +102,7 @@ public class AllyShip : AShip
 
                 Move move = new Move(moveId++, shipName, pos, MessageType.movement, 0);
                 if (move != null && gridManager.GetTileAtPosition(pos).GetType() == TileType.Empty)
-                shipMoves.Add(move);
+                    shipMoves.Add(move);
             }
         }
 

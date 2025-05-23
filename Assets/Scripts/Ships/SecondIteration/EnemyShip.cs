@@ -49,13 +49,14 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(x, position.y);
 
-                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle ||
+                    gridManager.GetTileAtPosition(pos).GetType() == TileType.Ally)
                 {
                     break;
                 }
 
                 float value = manager.InfluenceMap.CalculateMoveValue(pos.x, pos.y);
-                if (gridManager.GetTileAtPosition(pos)._type == TileType.Empty)
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Empty)
                 {
                     possibleMoves.Add(new Move(idMove++, shipName, pos, MessageType.movement, value));
                 }
@@ -69,13 +70,14 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(x, position.y);
 
-                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle||
+                    gridManager.GetTileAtPosition(pos).GetType() == TileType.Ally)
                 {
                     break;
                 }
 
                 float value = manager.InfluenceMap.CalculateMoveValue(pos.x, pos.y);
-                if (gridManager.GetTileAtPosition(pos)._type == TileType.Empty)
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Empty)
                 {
                     possibleMoves.Add(new Move(idMove++, shipName, pos, MessageType.movement, value));
                 }
@@ -89,13 +91,14 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(position.x, y);
 
-                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle||
+                    gridManager.GetTileAtPosition(pos).GetType() == TileType.Ally)
                 {
                     break;
                 }
 
                 float value = manager.InfluenceMap.CalculateMoveValue(pos.x, pos.y);
-                if (gridManager.GetTileAtPosition(pos)._type == TileType.Empty)
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Empty)
                 {
                     possibleMoves.Add(new Move(idMove++, shipName, pos, MessageType.movement, value));
                 }
@@ -109,13 +112,14 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(position.x, y);
 
-                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle||
+                    gridManager.GetTileAtPosition(pos).GetType() == TileType.Ally)
                 {
                     break;
                 }
 
                 float value = manager.InfluenceMap.CalculateMoveValue(pos.x, pos.y);
-                if (gridManager.GetTileAtPosition(pos)._type == TileType.Empty)
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Empty)
                 {
                     possibleMoves.Add(new Move(idMove++, shipName, pos, MessageType.movement, value));
                 }
@@ -124,7 +128,7 @@ public class EnemyShip : AShip
 
 
         //Fatto ciò, elimina le mosse che portano a posizioni già occupate.
-        possibleMoves = possibleMoves.Where(x => gridManager.GetTileAtPosition(x.GetTargetPos())._type == TileType.Empty).ToList();
+        possibleMoves = possibleMoves.Where(x => gridManager.GetTileAtPosition(x.GetTargetPos()).GetType() == TileType.Empty).ToList();
         //Ordina le mosse per valore decrescente, in modo da avere prima le mosse più vantaggiose.
         possibleMoves = possibleMoves.OrderByDescending(x => x.value).ToList();
         if (possibleMoves.Count > 0)
@@ -161,6 +165,7 @@ public class EnemyShip : AShip
 
                         if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                         {
+                            Debug.Log("Break");
                             break;
                         }
 
@@ -183,12 +188,13 @@ public class EnemyShip : AShip
                 {
 
                     //Controlla se la tile è occupata da un nemico, se si, aggiungi il valore della mossa
-                    if (gridManager.GetTileAtPosition(new Vector2Int(x, move.GetTargetPos().y))._type == TileType.Ally)
+                    if (gridManager.GetTileAtPosition(new Vector2Int(x, move.GetTargetPos().y)).GetType() == TileType.Ally)
                     {
                         Vector2Int pos = new Vector2Int(x, move.GetTargetPos().y);
 
                         if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                         {
+                            Debug.Log("Break");
                             break;
                         }
 
@@ -211,14 +217,10 @@ public class EnemyShip : AShip
                 {
 
                     //Controlla se la tile è occupata da un nemico, se si, aggiungi il valore della mossa
-                    if (gridManager.GetTileAtPosition(new Vector2Int(move.GetTargetPos().x, y))._type == TileType.Ally)
+                    if (gridManager.GetTileAtPosition(new Vector2Int(move.GetTargetPos().x, y)).GetType() == TileType.Ally)
                     {
                         Vector2Int pos = new Vector2Int(move.GetTargetPos().x, y);
 
-                        if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
-                        {
-                            break;
-                        }
 
                         if (Vector2Int.Distance(move.GetTargetPos(), pos) == attackRange)
                         {
@@ -239,14 +241,9 @@ public class EnemyShip : AShip
                 {
 
                     //Controlla se la tile è occupata da un nemico, se si, aggiungi il valore della mossa
-                    if (gridManager.GetTileAtPosition(new Vector2Int(move.GetTargetPos().x, y))._type == TileType.Ally)
+                    if (gridManager.GetTileAtPosition(new Vector2Int(move.GetTargetPos().x, y)).GetType() == TileType.Ally)
                     {
                         Vector2Int pos = new Vector2Int(move.GetTargetPos().x, y);
-
-                        if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
-                        {
-                            break;
-                        }
 
                         if (Vector2Int.Distance(move.GetTargetPos(), pos) == attackRange)
                         {
@@ -264,11 +261,12 @@ public class EnemyShip : AShip
         //Aggiungi le mosse di attacco dalla posizioni attuale della nave, non quelle future, aggiungi il valore della mossa
         // più distanza c'è col nemico, più il valore è alto, valori così alti servono perché se la nave può già attaccare,
         // non ha senso muoverla, quindi il valore della mossa di attacco deve essere più alto di quello di movimento
-        for (int x = position.x - shipSO.attackRange; x < position.x + shipSO.attackRange; x++)
+
+
+        //Cerca a sx
+        for (int x = position.x - 1; x >= position.x - attackRange && x>=0 && x < gridManager._width; x--)
         {
-            if (x >= 0 && x < gridManager._width && x != position.x)
-            {
-                if (gridManager.GetTileAtPosition(new Vector2Int(x, position.y))._type == TileType.Ally)
+            if (gridManager.GetTileAtPosition(new Vector2Int(x, position.y)).GetType() == TileType.Ally)
                 {
                     Vector2Int pos = new Vector2Int(x, position.y);
                     Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
@@ -285,14 +283,53 @@ public class EnemyShip : AShip
                     }
                     shipMoves.Add(newMove);
                 }
-            }
         }
-        for (int y = position.y - shipSO.attackRange; y < position.y + shipSO.attackRange; y++)
+        //Cerca a dx
+        for (int x = position.x + 1; x <= position.x + attackRange && x >= 0 && x < gridManager._width; x++)
         {
-            if (y >= 0 && y < gridManager._height && y != position.y)
+            if (gridManager.GetTileAtPosition(new Vector2Int(x, position.y)).GetType() == TileType.Ally)
             {
+                Vector2Int pos = new Vector2Int(x, position.y);
+                Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                if (Vector2Int.Distance(position, pos) == shipSO.attackRange)
+                {
+
+                    newMove.value += 6;
+
+
+                }
+                else if (Vector2Int.Distance(position, pos) < shipSO.attackRange && Vector2Int.Distance(position, pos) > 0)
+                {
+                    newMove.value += 5;
+                }
+                shipMoves.Add(newMove);
+            }
+
+        }
+        for (int y = position.y - 1; y >= position.y - attackRange && y >= 0 && y < gridManager._height; y--)
+        {
+            if (gridManager.GetTileAtPosition(new Vector2Int(position.x, y))._type == TileType.Ally)
+                {
+                    Vector2Int pos = new Vector2Int(position.x, y);
+                    Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                    if (Vector2Int.Distance(position, pos) == attackRange)
+                    {
+
+                        newMove.value += 6;
+                    }
+                    else if (Vector2Int.Distance(position, pos) < attackRange && Vector2Int.Distance(position, pos) > 0)
+                    {
+
+                        newMove.value += 5;
+                    }
+                    shipMoves.Add(newMove);
+                }
+        }
+        for (int y = position.y + 1 ; y <= position.y + attackRange && y >= 0 && y < gridManager._height; y++)
+        {
+            
                 //Controlla se la tile è occupata da un nemico, se si, aggiungi il valore della mossa
-                if (gridManager.GetTileAtPosition(new Vector2Int(position.x, y))._type == TileType.Ally)
+                if (gridManager.GetTileAtPosition(new Vector2Int(position.x, y)).GetType() == TileType.Ally)
                 {
                     Vector2Int pos = new Vector2Int(position.x, y);
                     Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
@@ -308,7 +345,7 @@ public class EnemyShip : AShip
                     }
                     shipMoves.Add(newMove);
                 }
-            }
+            
         }
 
 
@@ -316,15 +353,19 @@ public class EnemyShip : AShip
         
         //Ordina le mosse per valore decrescente, in modo da avere prima le mosse più vantaggiose.
         shipMoves = shipMoves.OrderByDescending(x => x.value).ToList();
-        initialMove = shipMoves[0];
+        
         if (shipMoves.Count > 0 && shipMoves.Where(x => x.GetMessageType() == MessageType.attack).ToList().Count > 0)
         {
             canAttack = true;
-
             //Chiamo la funzione per il display delle mosse nemiche
 
         }
 
+        if (canAttack || canMove)
+        {
+            initialMove = shipMoves[0];
+        }
+        Debug.Log(shipMoves.Count);
         //gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
         //Debug.Log("Ship: " + shipName + " performs: " + initialMove.GetMessageType() + " on: " + initialMove.GetTargetPos());
         return canAttack;
