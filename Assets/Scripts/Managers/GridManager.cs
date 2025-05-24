@@ -21,7 +21,7 @@ public class GridManager : MonoBehaviour, ICardDropArea
     [Header("Grid Parameters")]
     public int _width;
     public int _height;
-    [SerializeField] private GameObject _tilePrefab;
+    [SerializeField] private GameObject[] _tilePrefab;
 
     [Header("Obstacle Options")]
     [SerializeField] private bool canGenerateObstacles = false;
@@ -69,6 +69,7 @@ public class GridManager : MonoBehaviour, ICardDropArea
         {
             for (int y = 0; y < _height; y++)
             {
+                //int tileIndex = Random.Range(0, );
                 //Nell'istanziare, prende lo script Tile attaccato all'oggetto creato
                 Tile spawnedTile = Instantiate(_tilePrefab, transform.position + new Vector3(x * transform.localScale.x, 0, y * transform.localScale.x), Quaternion.Euler(90, 0, 0), transform).GetComponent<Tile>();
                 //spawnedTile.transform.SetParent(pivotGrid.transform);

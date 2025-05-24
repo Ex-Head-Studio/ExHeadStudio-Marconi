@@ -25,10 +25,17 @@ public abstract class CardShipAbstract : MonoBehaviour, IPointerClickHandler
     //Coda per gli effetti da applicare
     protected Queue<AbstractEffectSO> effectQueue = new Queue<AbstractEffectSO>();
 
+    //Tile sulla quale la nave è posizionata
+    protected Tile actualTile;
+    protected AShip shipScript;
+
+
     public virtual void Start()
     {
         shipCollider = GetComponent<Collider>();
+        shipScript = GetComponent<AShip>();
     }
+
     
     #region Iscrizione agli eventi
 
@@ -59,7 +66,7 @@ public abstract class CardShipAbstract : MonoBehaviour, IPointerClickHandler
     //Funzione che viene chiamata quando la carta viene selezionata
     protected virtual void OnCardSelected(AbstractCard card)
     {
-        cardToUse = card;
+        cardToUse = card;       
     }
 
     //Funzione che viene chiamata quando la carta viene deselezionata
@@ -70,6 +77,12 @@ public abstract class CardShipAbstract : MonoBehaviour, IPointerClickHandler
         isShipSelectable = false;
         shipCollider.enabled = false;
         cardToUse = null;
+
+        if (actualTile != null)
+        {
+            actualTile.SetTileHighlight(false);   
+        }
+
     }
 
     #endregion

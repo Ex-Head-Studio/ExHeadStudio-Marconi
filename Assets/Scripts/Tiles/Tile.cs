@@ -48,6 +48,10 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     public static event Action<Tile> tileSelected;
 
+    [Header("Highlight Effects")]
+    [Tooltip("Effetto che si attiva quando la nave che sta sopra la tile può essere attività")]
+    [SerializeField] private ParticleSystem highlightEffect;
+
     void Awake()
     {
         //Forse si può migliorare, ma per ora va bene
@@ -59,6 +63,8 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         tileCollider.enabled = false;
         tileCollider.isTrigger = true;
         tileCollider.providesContacts = true;
+
+        SetTileHighlight(false);
     }
 
     #region Iscrizione agli eventi
@@ -190,6 +196,12 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         shipMove.start();
         shipMove.release();
     }
+
+    public void SetTileHighlight(bool value)
+    {
+        highlightEffect.gameObject.SetActive(value);
+    }
+
 
     #endregion
 

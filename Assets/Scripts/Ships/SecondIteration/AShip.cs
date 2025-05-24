@@ -5,7 +5,8 @@ using Unity.Cinemachine;
 
 public abstract class AShip : MonoBehaviour
 {
-        protected enum StrategyState{
+    protected enum StrategyState
+    {
         InRange,
         Patrolling
     }
@@ -21,19 +22,20 @@ public abstract class AShip : MonoBehaviour
     [SerializeField] protected bool canVisualizeMoves = true;
 
     [SerializeField] protected GridManager gridManager;
-    
+
     protected int mapWidth;
     protected int mapHeight;
     public LayerMask adversaryShipLayer;
-    public enum ShipState{
+    public enum ShipState
+    {
         Attacking,
         Moving,
         Waiting
     }
-    
+
     public string shipName;
     public IShipManager manager;
-    
+
 
     // questa va inserita nella logica delle navi
     protected int health;
@@ -46,7 +48,7 @@ public abstract class AShip : MonoBehaviour
     public bool moveDone;
 
     protected List<Vector2Int> nextPos;
-    public ShipState currentState=ShipState.Waiting;
+    public ShipState currentState = ShipState.Waiting;
     public List<Vector2Int> targetPos;
     public List<Move> shipMoves;
     protected bool canMove;
@@ -64,11 +66,17 @@ public abstract class AShip : MonoBehaviour
     protected int oldStatValue;
     protected string oldStatName;
 
-    protected bool hasStatChanged= false;
+    protected bool hasStatChanged = false;
 
 
     //script di display della salute
-    protected DisplayHealth displayHealthScript;  
+    protected DisplayHealth displayHealthScript;
+
+    [Header("Ship Chances")]
+
+    [Tooltip("Parametro per gestire la probabilità di essere colpiti da un attacco")]
+    [SerializeField] public int hitChance = 0;
+    [SerializeField] ParticleSystem dodgeEffect;
 
 
     void Awake()
@@ -76,9 +84,9 @@ public abstract class AShip : MonoBehaviour
 
         shipMoves = new List<Move>();
         //TODO come detto in altri script, questa cosa va sistemata facendo un singleton corretto
-        gridManager= FindFirstObjectByType<GridManager>();
-        mapHeight=FindAnyObjectByType<GridManager>()._height;
-        mapWidth=FindFirstObjectByType<GridManager>()._width;
+        gridManager = FindFirstObjectByType<GridManager>();
+        mapHeight = FindAnyObjectByType<GridManager>()._height;
+        mapWidth = FindFirstObjectByType<GridManager>()._width;
 
         GetComponent<OnShipAttackEventListener>().AddMethodToExecute(OnAttacked);
         GetComponent<StartedTurnEventListener>().AddMethodToExecute(RestoreStat);
@@ -93,8 +101,9 @@ public abstract class AShip : MonoBehaviour
     }
 
     public virtual void ExecuteMove() { }
-    public virtual void ExecuteInstructions(AnswerStruct answer){
-        
+    public virtual void ExecuteInstructions(AnswerStruct answer)
+    {
+
     }
 
     public abstract bool LookForMovement();
@@ -104,7 +113,17 @@ public abstract class AShip : MonoBehaviour
     public void OnAttacked(ShipAttackStruct attackStruct)
     {
 
-        if(position.x == attackStruct.gridPosition.x && position.y == attackStruct.gridPosition.y)
+        if(Random.Range(0f, 1f) >= hitChance)
+        {
+            Debug.Log("Ship " + shipName + " dodged the attack!");
+
+            // Play dodge effect!!!
+
+            //Se la nave non viene colpita, non fa nulla
+            return;
+        }
+
+        if (position.x == attackStruct.gridPosition.x && position.y == attackStruct.gridPosition.y)
         {
             //Test per la creazione dei particle
             //calcolo dell'angolo
@@ -117,8 +136,8 @@ public abstract class AShip : MonoBehaviour
             //camera shake
             CameraShakeManager.instance.CameraShake(impulseSource);
 
-            health-=attackStruct.damage;
-            if(health<=0)
+            health -= attackStruct.damage;
+            if (health <= 0)
             {
                 GetComponentInChildren<Animator>().SetTrigger("Death");
             }
@@ -137,14 +156,14 @@ public abstract class AShip : MonoBehaviour
 
     public void SetFaction(int faction)
     {
-        this.faction=faction;
-        if(faction==0)
+        this.faction = faction;
+        if (faction == 0)
         {
-            adversaryShipLayer=LayerMask.GetMask("Enemy");
+            adversaryShipLayer = LayerMask.GetMask("Enemy");
         }
-        else if(faction==1)
+        else if (faction == 1)
         {
-            adversaryShipLayer=LayerMask.GetMask("Ally");
+            adversaryShipLayer = LayerMask.GetMask("Ally");
         }
     }
 
@@ -162,19 +181,19 @@ public abstract class AShip : MonoBehaviour
     public void SetupShip(ShipSO shipData, string name, int faction, ShipManager2 shipManager2)
     {
 
-            this.shipSO = shipData;
-            this.shipName = name;
-            this.gameObject.name = this.shipName;
-            this.manager= shipManager2;
-            this.SetFaction(faction);
-            
-            if(faction == (int)Entity.ally) shipInfluence = 1;
-            else shipInfluence = -1;
+        this.shipSO = shipData;
+        this.shipName = name;
+        this.gameObject.name = this.shipName;
+        this.manager = shipManager2;
+        this.SetFaction(faction);
 
-            attackRange = shipData.attackRange;
-            movementRange = shipData.movementRange;
+        if (faction == (int)Entity.ally) shipInfluence = 1;
+        else shipInfluence = -1;
+
+        attackRange = shipData.attackRange;
+        movementRange = shipData.movementRange;
         attackPower = shipData.attackPower;
-            health = shipData.health;
+        health = shipData.health;
     }
 
     public virtual void ReceiveEffect(AbstractEffectSO effectSO)
@@ -291,6 +310,12 @@ public abstract class AShip : MonoBehaviour
     {
         return shipSO;
     }
+
+    public Tile GetTileFromShipPosition()
+    {
+        return gridManager.GetTileAtPosition(position);
+    }
+
 }
 
 
