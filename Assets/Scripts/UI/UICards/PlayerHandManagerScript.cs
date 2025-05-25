@@ -95,10 +95,10 @@ public class PlayerHandManagerScript : MonoBehaviour
             Vector3 splinePosition = splineContainer.EvaluatePosition(t);
             Vector3 forward = splineContainer.EvaluateTangent(t);
             Vector3 up = splineContainer.EvaluateUpVector(t);
-            Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross(up, forward).normalized);
+            //Quaternion rotation = Quaternion.LookRotation(up, Vector3.Cross(up, forward).normalized);
 
             cardsInHand[i].transform.DOMove(splinePosition, 0.25f);
-            cardsInHand[i].transform.DOLocalRotateQuaternion(rotation, 0.15f);
+            cardsInHand[i].transform.DOLocalRotateQuaternion(spawnPoint.rotation, 0f);
         }
     }
 
