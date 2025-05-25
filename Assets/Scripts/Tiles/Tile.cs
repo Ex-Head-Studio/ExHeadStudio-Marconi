@@ -24,33 +24,33 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         obstacle = 3,
     } 
 
-    [SerializeField] private Color _emptyColor;
-    [SerializeField] private MeshRenderer _mesh;
-    [SerializeField] private GameObject _highlight;
-    private static List<Tile> _selectedTiles = new List<Tile>();
+    [SerializeField] protected Color _emptyColor;
+    [SerializeField] protected MeshRenderer _mesh;
+    [SerializeField] protected GameObject _highlight;
+    protected static List<Tile> _selectedTiles = new List<Tile>();
 
     //messo public per debug
     public TileType _type;
 
-    private GameObject tileShip;
-    private GameObject tileObstacle = null;
+    protected GameObject tileShip;
+    protected GameObject tileObstacle = null;
    
 
     [Header("Interaction")]
-    [SerializeField] private GameObject allyMovementSignal;
-    [SerializeField] private GameObject enemyMovementSignal;
-    [SerializeField] private GameObject allyAttackSignal;
-    [SerializeField] private GameObject enemyAttackSignal;
+    [SerializeField] protected GameObject allyMovementSignal;
+    [SerializeField] protected GameObject enemyMovementSignal;
+    [SerializeField] protected GameObject allyAttackSignal;
+    [SerializeField] protected GameObject enemyAttackSignal;
 
-    private GameObject activeSignal = null;
-    [SerializeField] bool isInteractable = false;
-    [SerializeField] private Collider tileCollider;
+    protected GameObject activeSignal = null;
+    [SerializeField] protected bool isInteractable = false;
+    [SerializeField] protected Collider tileCollider;
 
     public static event Action<Tile> tileSelected;
 
     [Header("Highlight Effects")]
     [Tooltip("Effetto che si attiva quando la nave che sta sopra la tile può essere attività")]
-    [SerializeField] private ParticleSystem highlightEffect;
+    [SerializeField] protected ParticleSystem highlightEffect;
 
     void Awake()
     {
@@ -69,13 +69,13 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     #region Iscrizione agli eventi
 
-    private void OnEnable()
+    protected void OnEnable()
     {
         UICardDragNDropHandler.droppableCardSelectedEvent += ActivateTileCollider;
         UICardDragNDropHandler.droppableCardDeselectedEvent += DeactivateTileCollider;
     }
 
-    private void OnDisable()
+    protected void OnDisable()
     {
         UICardDragNDropHandler.droppableCardSelectedEvent -= ActivateTileCollider;
         UICardDragNDropHandler.droppableCardDeselectedEvent -= DeactivateTileCollider;
@@ -234,13 +234,14 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
             //_mesh.material = _emptyMaterial;
         }
     }
-    public void SetShip(GameObject ship) 
+    public virtual void SetShip(GameObject ship) 
     {
-        if(ship != null)
+        if (ship != null)
         {
             tileShip = ship;
             tileShip.transform.position = gameObject.transform.position;
             SetType(this._type, ship.GetComponent<AShip>().faction);
+            ship.GetComponent<AShip>().hitChance = 1f;
         }
        
     }
@@ -311,12 +312,12 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         Debug.Log("Card dropped on tile: " + gameObject.name);
     }
 
-    private void ActivateTileCollider(AbstractCard card)
+    protected void ActivateTileCollider(AbstractCard card)
     {
         tileCollider.enabled = true;
     }
 
-    private void DeactivateTileCollider(AbstractCard card)
+    protected void DeactivateTileCollider(AbstractCard card)
     {
         tileCollider.enabled = false;
     }
@@ -343,7 +344,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     #endregion
 
-    private void OnDrawGizmos()
+    protected void OnDrawGizmos()
     {
         if (tileCollider.enabled)
         {

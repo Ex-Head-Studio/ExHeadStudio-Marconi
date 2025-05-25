@@ -4825,8 +4825,16 @@ PrefabInstance:
     m_TransformParent: {fileID: 584846462}
     m_Modifications:
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
+      propertyPath: gridLayout
+      value: 
+      objectReference: {fileID: 11400000, guid: 8fd076dfc6a69a2409d2dbf570dd47fc, type: 2}
+    - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: _shipManager
       value: 
+      objectReference: {fileID: 0}
+    - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
+      propertyPath: generationMode
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: numberOfObstacles
@@ -4834,7 +4842,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: canGenerateObstacles
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: obstaclePrefabsList.Array.size

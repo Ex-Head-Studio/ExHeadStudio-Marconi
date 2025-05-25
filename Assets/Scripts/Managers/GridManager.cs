@@ -16,12 +16,18 @@ public class GridManager : MonoBehaviour, ICardDropArea
         randomFromList,
     }
 
+    private enum GenerationMode
+    {
+        random,
+        layout,
+    }
+
     public static GridManager Instance;
 
     [Header("Grid Parameters")]
     public int _width;
     public int _height;
-    [SerializeField] private GameObject[] _tilePrefab;
+    [SerializeField] private GameObject _tilePrefab;
 
     [Header("Obstacle Options")]
     [SerializeField] private bool canGenerateObstacles = false;
@@ -30,6 +36,11 @@ public class GridManager : MonoBehaviour, ICardDropArea
 
     [Header("Obstacle List")]
     [SerializeField] private List<GameObject> obstaclePrefabsList = new List<GameObject>();
+
+    [Header("Generation Mode")]
+    [SerializeField] private GenerationMode generationMode = GenerationMode.random;
+    [Tooltip("If you want to use a specific layout, set the generation mode to layout and assign the grid layout scriptable object.")]
+    [SerializeField] private GridLayoutScript gridLayout;
 
 
     public Dictionary<Vector2, Tile> _tiles;
@@ -64,7 +75,52 @@ public class GridManager : MonoBehaviour, ICardDropArea
     public void GenerateGrid()
     {
         _tiles = new Dictionary<Vector2, Tile>();
+        switch ((int)generationMode)
+        {
+            case (int)GenerationMode.random:
+                GenerateRandomGrid();
+                break;
 
+            case (int)GenerationMode.layout:
+                GenerateLayoutGrid(gridLayout);
+                break;
+            default:
+                Debug.LogError("Invalid Generation Mode");
+                break;
+        }
+
+
+        if (canGenerateObstacles)
+                {
+                    switch ((int)obstacleMode)
+                    {
+                        case (int)ObstacleMode.randomFromList:
+
+                            for (int i = 0; i < numberOfObstacles; i++)
+                            {
+                                int listIndex = Random.Range(0, obstaclePrefabsList.Count - 1);
+                                Vector2 randomTilePos = new Vector2(Random.Range(0, _width - 1), Random.Range(0, _height - 1));
+
+                                while (!IsValidPosition(randomTilePos))
+                                {
+                                    randomTilePos = new Vector2(Random.Range(0, _width - 1), Random.Range(0, _height - 1));
+                                }
+
+                                Tile randomTile = _tiles[randomTilePos];
+                                randomTile.InstantiateObstacle(obstaclePrefabsList[listIndex], randomTile);
+                            }
+                            break;
+
+                        default:
+
+                            break;
+
+                    }
+                }
+    }
+
+    private void GenerateRandomGrid()
+    {
         for (int x = 0; x < _width; x++)
         {
             for (int y = 0; y < _height; y++)
@@ -86,40 +142,37 @@ public class GridManager : MonoBehaviour, ICardDropArea
 
             }
         }
+    }
 
-        if (canGenerateObstacles)
+    private void GenerateLayoutGrid(GridLayoutScript gridLayout)
+    {
+        if (gridLayout == null)
         {
-            switch ((int)obstacleMode)
+            Debug.LogError("Grid Layout is not assigned!");
+            return;
+        }
+
+        for (int x = 0; x < _width; x++)
+        {
+            for (int y = 0; y < _height; y++)
             {
-                case (int)ObstacleMode.randomFromList:
+                Tile spawnedTile = Instantiate(gridLayout.grid[x].values[y], transform.position + new Vector3(x * transform.localScale.x, 0, y * transform.localScale.x), Quaternion.Euler(90, 0, 0), transform).GetComponent<Tile>();
+                //spawnedTile.transform.SetParent(pivotGrid.transform);
+                spawnedTile.transform.localScale = Vector3.one;
 
-                    for (int i = 0; i < numberOfObstacles; i++)
-                    {
-                        int listIndex = Random.Range(0, obstaclePrefabsList.Count - 1);
-                        Vector2 randomTilePos = new Vector2(Random.Range(0, _width - 1), Random.Range(0, _height - 1));
+                //non è corretto, i nomi non corrispondo alle posizioni
+                spawnedTile.name = $"Tile {Mathf.Abs(y - 4)} {x}";
 
-                        while(!IsValidPosition(randomTilePos))
-                        {
-                            randomTilePos = new Vector2(Random.Range(0, _width-1), Random.Range(0, _height-1));
-                        }
-
-                        Tile randomTile = _tiles[randomTilePos];
-                        randomTile.InstantiateObstacle(obstaclePrefabsList[listIndex], randomTile);
-                    }
-                    break;
-
-                default:
-
-                    break;
+                _tiles[new Vector2(x, y)] = spawnedTile;
 
             }
         }
-    }
 
+    }
     public bool IsValidPosition(Vector2 position)
-     {
+    {
         //Debug.Log(position + "è valida: "+_tiles.ContainsKey(position));
-        if(_tiles.ContainsKey(position) && _tiles[position].GetType() == TileType.Empty)
+        if (_tiles.ContainsKey(position) && _tiles[position].GetType() == TileType.Empty)
         {
             return true;
         }
