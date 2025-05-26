@@ -54,6 +54,7 @@ public abstract class AShip : MonoBehaviour
     protected bool canMove;
     protected bool canAttack;
     public int faction;
+    public bool startMoveAnimation = false;
 
     //per il camera shake
     private CinemachineImpulseSource impulseSource;
@@ -65,7 +66,7 @@ public abstract class AShip : MonoBehaviour
 
     protected int oldStatValue;
     protected string oldStatName;
-
+    public float timeToMove=3f;
     protected bool hasStatChanged = false;
 
 
@@ -78,7 +79,8 @@ public abstract class AShip : MonoBehaviour
     [SerializeField] public float hitChance = 1f;
     [SerializeField] ParticleSystem dodgeEffect;
 
-
+    [SerializeField] Animator shipAnimator;
+    
     void Awake()
     {
 

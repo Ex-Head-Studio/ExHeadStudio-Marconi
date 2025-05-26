@@ -1,10 +1,12 @@
 using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
+using System.Collections;
 public class EnemyShip : AShip
 {
     Move initialMove;
     int idMove = 0;
+    
     //Quando viene chiamata la fine del turno, Execute Instructions fa fare l'azione migliore alla nave, a meno che non sia stata bloccata
     //dal giocatore, in quel caso non fa nulla
     public override void ExecuteMove()
@@ -23,14 +25,35 @@ public class EnemyShip : AShip
                 shipSO.attackEvent?.Invoke(new ShipAttackStruct(initialMove.GetTargetPos(), shipSO.attackPower));
                 break;
             case MessageType.movement:
-                gridManager.MoveShip(position, initialMove.GetTargetPos(), faction);
 
-                position = initialMove.GetTargetPos();
+                
+                startMoveAnimation = true;
+                StartCoroutine(MoveShip());
+                
                 break;
         }
         moveDone = true;
 
         gridManager.GetTileAtPosition(initialMove.GetTargetPos()).SetTileNotInteractable(faction);
+    }
+
+    IEnumerator MoveShip()
+    {
+        yield return new WaitForSeconds(timeToMove);
+        gridManager.MoveShip(position, initialMove.GetTargetPos(), faction);
+        position = initialMove.GetTargetPos();
+    }
+    void Update()
+    {
+        if (startMoveAnimation)
+        {
+            //Attiva l'animazione di movimento della nave
+            transform.position = Vector3.MoveTowards(transform.position, gridManager.GetTileAtPosition(initialMove.GetTargetPos()).transform.position, (Vector3.Distance(transform.position, gridManager.GetTileAtPosition(initialMove.GetTargetPos()).transform.position))/timeToMove * Time.fixedDeltaTime);
+            if (Vector3.Distance(transform.position, gridManager.GetTileAtPosition(initialMove.GetTargetPos()).transform.position) < 0.01f)
+            {
+                startMoveAnimation = false;
+            }
+        }
     }
 
     public override bool LookForMovement()
@@ -70,7 +93,7 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(x, position.y);
 
-                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle||
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle ||
                     gridManager.GetTileAtPosition(pos).GetType() == TileType.Ally)
                 {
                     break;
@@ -91,7 +114,7 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(position.x, y);
 
-                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle||
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle ||
                     gridManager.GetTileAtPosition(pos).GetType() == TileType.Ally)
                 {
                     break;
@@ -112,7 +135,7 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(position.x, y);
 
-                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle||
+                if (gridManager.GetTileAtPosition(pos).GetType() == TileType.Obstacle ||
                     gridManager.GetTileAtPosition(pos).GetType() == TileType.Ally)
                 {
                     break;

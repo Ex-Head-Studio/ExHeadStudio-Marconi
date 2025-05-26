@@ -2,12 +2,14 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using DG.Tweening;
+using Unity.Cinemachine;
+using System.Collections;
 
 
 public class AllyShip : AShip
 {
     int moveId = 0;
-
+    Vector3 targetPosition;
     private CardAllyShip cardAllyScript;
 
     private void OnEnable()
@@ -264,7 +266,18 @@ public class AllyShip : AShip
     {
         shipSO.attackEvent.Invoke(new ShipAttackStruct(targetPos, shipSO.attackPower));
     }
-
+    void Update()
+    {
+        if (startMoveAnimation)
+        {
+            //Attiva l'animazione di movimento della nave
+            transform.position = Vector3.MoveTowards(transform.position, targetPosition, (Vector3.Distance(transform.position, targetPosition))/timeToMove * Time.fixedDeltaTime);
+            if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
+            {
+                startMoveAnimation = false;
+            }
+        }
+    }
     public void ReceiveTile(Tile tile)
     {
 
@@ -275,8 +288,10 @@ public class AllyShip : AShip
         if(tile._type == TileType.Empty)
         {
             Debug.Log("Movement in tile: " + tile.name);
-            gridManager.MoveShip(this.position, gridManager.GetPositionFromTile(tile), this.faction);
-            this.position = Vector2Int.RoundToInt(gridManager.GetPositionFromTile(tile));
+            targetPosition = tile.transform.position;
+            startMoveAnimation = true;
+            StartCoroutine(MoveShip(tile));
+            
         }
         else if (tile._type == TileType.Enemy || tile._type == TileType.Obstacle)
         {
@@ -293,6 +308,12 @@ public class AllyShip : AShip
         //comunico che l'evento è terminato
         Debug.Log("Effect ended: " + effectSO.name);
         effectSO.EndEffect(0);
+    }
+    IEnumerator MoveShip(Tile tile)
+    {
+        yield return new WaitForSeconds(timeToMove);
+        gridManager.MoveShip(this.position, gridManager.GetPositionFromTile(tile), this.faction);
+        this.position = Vector2Int.RoundToInt(gridManager.GetPositionFromTile(tile));
     }
 
     private void ByPassEffect()
