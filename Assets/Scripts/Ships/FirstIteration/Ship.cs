@@ -8,10 +8,9 @@ public class Ship : AShip
     
     void Awake()
     {
-        gridManager= FindFirstObjectByType<GridManager>();
         
-        mapHeight=FindAnyObjectByType<GridManager>()._height;
-        mapWidth=FindFirstObjectByType<GridManager>()._width;
+        mapHeight=GridManager.Instance._height;
+        mapWidth=GridManager.Instance._width;
     }
 
     void Start()
@@ -106,7 +105,7 @@ public class Ship : AShip
                         shipSO.attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
                     }
                     else{
-                        gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
+                        GridManager.Instance.MoveShip(position, selectedMove.GetTargetPos(), entity);
                         position=selectedMove.GetTargetPos();
                     }
                 }
@@ -136,7 +135,7 @@ public class Ship : AShip
                     else if(selectedMove.GetMessageType()==MessageType.movement && canMove)
                     {
                         //qui siamo sicuri di non dover chiamare un metodo?
-                        gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
+                        GridManager.Instance.MoveShip(position, selectedMove.GetTargetPos(), entity);
                         position=selectedMove.GetTargetPos();
                         canMove=false;
                         //nextPos=Vector2.negativeInfinity;
@@ -202,7 +201,7 @@ public class Ship : AShip
         if(nearbyShips.Count>0){
             List<Vector2Int> notValid= possibleMoves.Where(p => nearbyShips.Contains(p) ).ToList();
             possibleMoves=possibleMoves.Except(notValid).ToList();
-            //possibleMoves = possibleMoves.Where(p => !nearbyShips.Contains(p) && gridManager.IsValidPosition(p)).ToList();
+            //possibleMoves = possibleMoves.Where(p => !nearbyShips.Contains(p) && GridManager.Instance.IsValidPosition(p)).ToList();
         }
         
         //possibleMoves contiene tutte le possibili mosse rimaste alla nave, se è vuota, significa che non ha mosse a disposizione

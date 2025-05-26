@@ -251,7 +251,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         GameObject tmpObs = Instantiate(obstacle);
         SetType(this._type, (int)Entity.obstacle);
         SetObstacle(tmpObs);
-        tmpObs.GetComponent<AbstractObstacle>().SetPosition(GetComponentInParent<GridManager>().GetPositionFromTile(tile));
+        tmpObs.GetComponent<AbstractObstacle>().SetPosition(GridManager.Instance.GetPositionFromTile(tile));
         tmpObs.GetComponent<AbstractObstacle>().SetTile(tile);
     }
 

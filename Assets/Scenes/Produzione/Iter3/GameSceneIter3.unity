@@ -947,7 +947,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2017085531}
         m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
-        m_MethodName: ExitGame
+        m_MethodName: Resume
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -1989,6 +1989,11 @@ CanvasRenderer:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 470126016}
   m_CullTransparentMesh: 1
+--- !u!1 &488318153 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 1468267785584294830, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+  m_PrefabInstance: {fileID: 1809813221}
+  m_PrefabAsset: {fileID: 0}
 --- !u!1 &584846461
 GameObject:
   m_ObjectHideFlags: 0
@@ -2019,7 +2024,6 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children:
   - {fileID: 1704160557}
-  - {fileID: 1458177710}
   - {fileID: 1494105659}
   m_Father: {fileID: 1072743152}
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -2567,8 +2571,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 2017085531}
+        m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
         m_MethodName: BackToMainMenu
         m_Mode: 1
         m_Arguments:
@@ -3143,7 +3147,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 1}
   m_AnchorMax: {x: 0, y: 1}
-  m_AnchoredPosition: {x: 120, y: -40.00006}
+  m_AnchoredPosition: {x: 120, y: -40}
   m_SizeDelta: {x: 200, y: 50}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1034951038
@@ -4748,7 +4752,7 @@ MonoBehaviour:
       m_Calls:
       - m_Target: {fileID: 2017085531}
         m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
-        m_MethodName: Resume
+        m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
           m_ObjectArgument: {fileID: 0}
@@ -4905,7 +4909,7 @@ PrefabInstance:
   serializedVersion: 2
   m_Modification:
     serializedVersion: 3
-    m_TransformParent: {fileID: 584846462}
+    m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: gridLayout
@@ -5003,11 +5007,6 @@ PrefabInstance:
       insertIndex: -1
       addedObject: {fileID: 1859785326}
   m_SourcePrefab: {fileID: 100100000, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
---- !u!4 &1458177710 stripped
-Transform:
-  m_CorrespondingSourceObject: {fileID: 1923256824063914048, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
-  m_PrefabInstance: {fileID: 1458177709}
-  m_PrefabAsset: {fileID: 0}
 --- !u!1 &1484478381
 GameObject:
   m_ObjectHideFlags: 0
@@ -5758,13 +5757,55 @@ PrefabInstance:
     m_RemovedComponents: []
     m_RemovedGameObjects: []
     m_AddedGameObjects: []
-    m_AddedComponents: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 1468267785584294830, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 1809813227}
   m_SourcePrefab: {fileID: 100100000, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
 --- !u!4 &1809813222 stripped
 Transform:
   m_CorrespondingSourceObject: {fileID: 3060470617468302632, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
   m_PrefabInstance: {fileID: 1809813221}
   m_PrefabAsset: {fileID: 0}
+--- !u!114 &1809813226 stripped
+MonoBehaviour:
+  m_CorrespondingSourceObject: {fileID: 2505504855065462051, guid: ded2dde4b0a7691428585ba73966d00d, type: 3}
+  m_PrefabInstance: {fileID: 1809813221}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488318153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 921917491df30ff46a97d3dd719cf083, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+--- !u!114 &1809813227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 488318153}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 84a75613bbdc5e1448b231d8569bd51d, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: 06df3bc33fb168b47ba6981ee9435d64, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: 1809813226}
+        m_TargetAssemblyTypeName: ShipManager2, Assembly-CSharp
+        m_MethodName: GenerateShips
+        m_Mode: 1
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2
 --- !u!1 &1836246353
 GameObject:
   m_ObjectHideFlags: 0
@@ -5848,8 +5889,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 2017085531}
+        m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
         m_MethodName: ExitGame
         m_Mode: 1
         m_Arguments:
@@ -6204,8 +6245,8 @@ MonoBehaviour:
   m_OnClick:
     m_PersistentCalls:
       m_Calls:
-      - m_Target: {fileID: 0}
-        m_TargetAssemblyTypeName: GameMenuManager, Assembly-CSharp
+      - m_Target: {fileID: 2017085531}
+        m_TargetAssemblyTypeName: GameMenuManager2, Assembly-CSharp
         m_MethodName: RestartGame
         m_Mode: 1
         m_Arguments:
@@ -7770,6 +7811,10 @@ PrefabInstance:
       value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 5758680995345812927, guid: 3fefeba251285714caac5039ec07c6a0, type: 3}
+      propertyPath: timeBeforeStartGame
+      value: 0.3
+      objectReference: {fileID: 0}
+    - target: {fileID: 5758680995345812927, guid: 3fefeba251285714caac5039ec07c6a0, type: 3}
       propertyPath: actionPhaseStartEvent
       value: 
       objectReference: {fileID: 11400000, guid: 01e5b21d682c3a94b9c6a141771e6a2b, type: 2}
@@ -7914,5 +7959,6 @@ SceneRoots:
   - {fileID: 913756282}
   - {fileID: 702936530}
   - {fileID: 704120993}
+  - {fileID: 1458177709}
   - {fileID: 895685779}
   - {fileID: 2074974239}

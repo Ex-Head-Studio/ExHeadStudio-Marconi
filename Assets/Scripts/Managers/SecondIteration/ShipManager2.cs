@@ -24,30 +24,23 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     private static int allyCount = 0;
     private static int enemyCount = 0;
 
-    //TODO sistemare correttamente questo singleton 
-    private GridManager gridManager;
-
     private int modelIndex;
     
     //Attacca i componenti di ship manager a ship manager
     void Awake()
     {
-        shipsD = new Dictionary<string, AShip>();
-
-        //TODO rivedere questa cosa, la reference al singleton va fatta in modo diverso
-        gridManager = FindFirstObjectByType<GridManager>();
         
 
+        shipsD = new Dictionary<string, AShip>();
         shipManagerSO.RandomizeShips();
 
-        influenceMap = new InfluenceMap(gridManager._width, gridManager._height, shipManagerSO.influenceDecay, shipManagerSO.decayMomentum);
+        influenceMap = new InfluenceMap(GridManager.Instance._width, GridManager.Instance._height, shipManagerSO.influenceDecay, shipManagerSO.decayMomentum);
     }
 
     
-    
-    private void Start()
+    //Funzione che viene chiamata all'inizio del gioco per generare le navi
+    public void GenerateShips()
     {
-        //Togliere da start e creare l'evento nuovo di inizio gioco
         StartCoroutine(ShipGeneration());
     }
 
@@ -94,7 +87,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
             shipsD.Add(newShip.shipName, newShip);
             allies.Add(newShip);
             allyCount++;
-            gridManager.InsertShips(newShip);
+            GridManager.Instance.InsertShips(newShip);
             influenceMap.RegisterPropagator(newShip);
     }
 
@@ -104,14 +97,14 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     /// </summary>
 
     public void InstantiateEnemyShip(string shipName, int faction)
-        {
-            AShip newShip= SetupShip(shipName, faction);
-            shipsD.Add(newShip.shipName, newShip);
-            enemies.Add(newShip);
-            enemyCount++;
-            gridManager.InsertShips(newShip);
-            influenceMap.RegisterPropagator(newShip);
-        }
+    {
+        AShip newShip= SetupShip(shipName, faction);
+        shipsD.Add(newShip.shipName, newShip);
+        enemies.Add(newShip);
+        enemyCount++;
+        GridManager.Instance.InsertShips(newShip);
+        influenceMap.RegisterPropagator(newShip);
+    }
 
 
 
@@ -187,7 +180,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
             
             influenceMap.UnregisterPropagator(shipDestroyedStruct.shipScript);
             influenceMap.Propagate();
-            gridManager.RemoveShip(shipDestroyedStruct.shipScript);
+            GridManager.Instance.RemoveShip(shipDestroyedStruct.shipScript);
         
             shipsD.Remove(shipDestroyedStruct.shipName);
             Destroy(shipDestroyedStruct.shipScript.gameObject);

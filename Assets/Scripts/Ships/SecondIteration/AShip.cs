@@ -21,8 +21,6 @@ public abstract class AShip : MonoBehaviour
     [Header("Moves visualization")]
     [SerializeField] protected bool canVisualizeMoves = true;
 
-    [SerializeField] protected GridManager gridManager;
-
     protected int mapWidth;
     protected int mapHeight;
     public LayerMask adversaryShipLayer;
@@ -83,12 +81,12 @@ public abstract class AShip : MonoBehaviour
     
     void Awake()
     {
+        mapHeight = GridManager.Instance._height;
+        mapWidth = GridManager.Instance._width;
 
         shipMoves = new List<Move>();
-        //TODO come detto in altri script, questa cosa va sistemata facendo un singleton corretto
-        gridManager = FindFirstObjectByType<GridManager>();
-        mapHeight = FindAnyObjectByType<GridManager>()._height;
-        mapWidth = FindFirstObjectByType<GridManager>()._width;
+
+
 
         GetComponent<OnShipAttackEventListener>().AddMethodToExecute(OnAttacked);
         GetComponent<StartedTurnEventListener>().AddMethodToExecute(RestoreStat);
@@ -315,7 +313,7 @@ public abstract class AShip : MonoBehaviour
 
     public Tile GetTileFromShipPosition()
     {
-        return gridManager.GetTileAtPosition(position);
+        return GridManager.Instance.GetTileAtPosition(position);
     }
 
 }

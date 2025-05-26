@@ -6,8 +6,6 @@ using Unity.VisualScripting;
 using UnityEngine;
 using Random = UnityEngine.Random;
 
-[RequireComponent(typeof(Collider))]
-
 public class GridManager : MonoBehaviour, ICardDropArea
 {
 
@@ -21,8 +19,6 @@ public class GridManager : MonoBehaviour, ICardDropArea
         random,
         layout,
     }
-
-    public static GridManager Instance;
 
     [Header("Grid Parameters")]
     public int _width;
@@ -44,24 +40,54 @@ public class GridManager : MonoBehaviour, ICardDropArea
 
 
     public Dictionary<Vector2, Tile> _tiles;
-    private Dictionary<int, Ship> _ships;
 
     private Collider gridCollider;
 
     //mi serve a tenere traccia del numero di tentativi per il riposizionamento
     int attempts = 0;
 
+    #region Singleton
+    private static GridManager instance;
+    public static GridManager Instance
+    {
+        get
+        {
+            if (instance == null)
+            {
+                SetUpInstance();
+            }
+            return instance;
+        }
+    }
+
     void Awake()
     {
-        if(!Instance) {
-            Instance = this;
-        } else {
+        if (instance != null && instance != this)
+        {
             Destroy(gameObject);
         }
-        //_tilePrefab = GetComponent<Tile>();
-        //_cam= FindObjectsByType<Camera>()[0];
-        //_shipManager = GetComponent<ShipManager>();
+        else
+        {
+            instance = this;
+            DontDestroyOnLoad(gameObject);
+        }
     }
+
+    private static void SetUpInstance()
+    {
+        instance = FindAnyObjectByType<GridManager>();
+        if (instance == null)
+        {
+            GameObject gridManagerObject = new GameObject();
+            gridManagerObject.name = "GridManager";
+            instance = gridManagerObject.AddComponent<GridManager>();
+            DontDestroyOnLoad(gridManagerObject);
+        }
+    }
+
+    #endregion
+
+
     void Start()
     {
         GenerateGrid();
@@ -180,7 +206,6 @@ public class GridManager : MonoBehaviour, ICardDropArea
     }
     public void InsertShips(AShip ship)
     {
-        //brutto, da rifare appena abbiamo tempo
         while(true)
         {
             Vector2Int position = new Vector2Int(Random.Range(0, _width), Random.Range(0, _height));
@@ -279,29 +304,4 @@ public class GridManager : MonoBehaviour, ICardDropArea
         //throw new NotImplementedException();
     }
 
-
-    //serve ancora questo metodo? (Stefano)
-    /*public void SwapTileTypes(Tile selectedTile) {
-        if (selectedTile == null) return;
-
-        Vector2 currentPos = new Vector2(selectedTile.transform.position.x, selectedTile.transform.position.y);
-        Vector2[] adjacentPositions = {
-            currentPos + Vector2.up,
-            currentPos + Vector2.down,
-            currentPos + Vector2.left,
-            currentPos + Vector2.right
-        };
-
-        adjacentPositions = adjacentPositions.OrderBy(x => UnityEngine.Random.value).ToArray();
-
-        foreach (var pos in adjacentPositions) {
-            Tile adjacentTile = GetTileAtPosition(pos);
-            if (adjacentTile != null && adjacentTile.IsEmpty()) {
-                adjacentTile.SetType(selectedTile.GetType());
-                selectedTile.SetTypeEmpty();
-                break;
-            }
-        }
-        
-    }*/
 }

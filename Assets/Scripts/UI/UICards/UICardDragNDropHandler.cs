@@ -20,8 +20,6 @@ public class UICardDragNDropHandler : MonoBehaviour, IPointerDownHandler, IPoint
     private EnergySystem energySystem;
     private Collider cardCollider;
 
-    private GridManager gridManager;
-
 
     private void Start()
     {
@@ -29,9 +27,7 @@ public class UICardDragNDropHandler : MonoBehaviour, IPointerDownHandler, IPoint
         cardCollider = GetComponent<Collider>();
         //molto importante, non modificare, evita che le navi debbano avere un rigidbody
         cardCollider.providesContacts = true;
-
-        gridManager = FindFirstObjectByType<GridManager>();
-        //  minCardOffesetFromCamera = Vector3.Distance(this.gameObject.transform.position, gridManager.transform.position);
+        
     }
 
     public void OnPointerDown(PointerEventData eventData)

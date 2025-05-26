@@ -38,7 +38,7 @@ public class GameManager2 : MonoBehaviour
     [SerializeField] private ActionPhaseStartEvent actionPhaseStartEvent;
 
     private int numberOfRounds = 0;
-    private void Start()
+    private void Awake()
     {
         StartCoroutine(StartGame());
     }
@@ -49,6 +49,7 @@ public class GameManager2 : MonoBehaviour
     /// </summary>
     public void OnGameStarted()
     {
+        Debug.Log("Game started");
         startedTurnEvent?.Invoke(new VoidEvent(numberOfRounds));
     }
 

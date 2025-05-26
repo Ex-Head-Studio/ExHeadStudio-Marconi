@@ -26,7 +26,7 @@ public class NewShip : AShip
             Debug.Log("Nave "+shipName+" muove in "+newMove.GetTargetPos()+" con value: "+newMove.value);
         }
         //Recupera tutte le posizioni occupate da navi, tra quelle che può fare la nave corrente
-        List<Vector2Int> occupiedPositions = possibleMoves.Where(x=>gridManager._tiles[x].GetShip()!=null).ToList();
+        List<Vector2Int> occupiedPositions = possibleMoves.Where(x=>GridManager.Instance._tiles[x].GetShip()!=null).ToList();
 
         Debug.Log("Navi affianco: "+ occupiedPositions.Count());
         //Toglie tutti i movimenti che porterebbero a caselle già occupate
@@ -86,7 +86,7 @@ public class NewShip : AShip
                         shipSO.attackEvent?.Invoke(new ShipAttackStruct(selectedMove.GetTargetPos(), shipSO.attackPower));
                     }
                     else{
-                        gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
+                        GridManager.Instance.MoveShip(position, selectedMove.GetTargetPos(), entity);
                         position=selectedMove.GetTargetPos();
                     }
                 }
@@ -116,7 +116,7 @@ public class NewShip : AShip
                     else if(selectedMove.GetMessageType()==MessageType.movement && canMove)
                     {
                         //qui siamo sicuri di non dover chiamare un metodo?
-                        gridManager.MoveShip(position, selectedMove.GetTargetPos(), entity);
+                        GridManager.Instance.MoveShip(position, selectedMove.GetTargetPos(), entity);
                         position=selectedMove.GetTargetPos();
                         canMove=false;
                         //nextPos=Vector2.negativeInfinity;
