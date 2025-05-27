@@ -85,12 +85,14 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
     [Header("Area Damage parameters")]
     [SerializeField] private int areaDamage;
     [Range(1, 10)]
+    [Tooltip("The radius of the area damage around the obstacle, if the mode is \"Square\" the radius is 1.")]
     [SerializeField] private int areaDamageRadius;
 
     private enum AreaDamageType
     {
         Circle,
-        Cross
+        Cross, 
+        Square
     }
 
     [SerializeField] private AreaDamageType areaDamageType;
@@ -115,7 +117,14 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
                 CicloX();
                 CicloY();
                 break;
+            case AreaDamageType.Square:
 
+                areaDamageRadius = 1; // Forza il raggio a 1 per il quadrato
+
+                CicloX();
+                CicloY();
+                CicloDiagonaliQuadrato();
+                break;
             default:
                 Debug.LogError("Area Damage Type not set");
                 break;
@@ -173,12 +182,39 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
             }
         }
     }
+    private void CicloDiagonaliQuadrato()
+    {
+
+        //diagonale
+        for (int x = (int)obstaclePosition.x - areaDamageRadius, y = (int)obstaclePosition.y - areaDamageRadius;
+            x < (int)obstaclePosition.x + areaDamageRadius && y < (int)obstaclePosition.y + areaDamageRadius;
+            x++, y++)
+        {
+            if (x != (int)obstaclePosition.x && y != (int)obstaclePosition.y)
+            {
+                attackEvent.Invoke(new ShipAttackStruct(new Vector2(x, y), areaDamage));
+                InstantiateEffect(new Vector2(x, y));
+            }
+        }
+
+        //antidiagonale
+        for (int x = (int)obstaclePosition.x - areaDamageRadius, y = (int)obstaclePosition.y + areaDamageRadius;
+            x < (int)obstaclePosition.x + areaDamageRadius && y > (int)obstaclePosition.y - areaDamageRadius;
+            x++, y--)
+        {
+            if (x != (int)obstaclePosition.x && y != (int)obstaclePosition.y)
+            {
+                attackEvent.Invoke(new ShipAttackStruct(new Vector2(x, y), areaDamage));
+                InstantiateEffect(new Vector2(x, y));
+            }
+        }
+    }
     
     private void InstantiateEffect(Vector2 position)
     {
         if (explosionPrefab != null)
         {
-            ParticleSystem explosion =Instantiate(explosionPrefab, position, Quaternion.identity);
+            ParticleSystem explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
             Destroy(explosion, 2f);
         }
     }   

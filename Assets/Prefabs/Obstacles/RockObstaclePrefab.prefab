@@ -71,9 +71,6 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
       insertIndex: -1
       addedObject: {fileID: -1883285261805580799}
-    - targetCorrespondingSourceObject: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
-      insertIndex: -1
-      addedObject: {fileID: -3287630063289582793}
     - targetCorrespondingSourceObject: {fileID: 6899543821610524924, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2055035710268009402}
@@ -95,39 +92,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2190137c2778b7441ad4af79ded2cc78, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  color: {r: 0.335849, g: 0.19137643, b: 0.1058241, a: 1}
+  color: {r: 0.4566037, g: 0.28857878, b: 0.1886721, a: 0.88235295}
   obstaclePosition: {x: 0, y: 0}
-  healthBarPrefab: {fileID: 5625949989435475814, guid: b55440878e3e5d6458df9eb2294425b5, type: 3}
-  healthBarCanvasPrefab: {fileID: 2853408314217768423}
-  obstacleHealth: 3
---- !u!114 &-3287630063289582793
-MonoBehaviour:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 519244878604188145}
-  m_Enabled: 1
-  m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: 0b6d7cf1e54f24d45ac4e708955fe478, type: 3}
-  m_Name: 
-  m_EditorClassIdentifier: 
-  eventToListen: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
-  onEvent:
-    m_PersistentCalls:
-      m_Calls:
-      - m_Target: {fileID: -1883285261805580799}
-        m_TargetAssemblyTypeName: RockObstacle, Assembly-CSharp
-        m_MethodName: OnAttacked
-        m_Mode: 0
-        m_Arguments:
-          m_ObjectArgument: {fileID: 0}
-          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
-          m_IntArgument: 0
-          m_FloatArgument: 0
-          m_StringArgument: 
-          m_BoolArgument: 0
-        m_CallState: 2
+  tile: {fileID: 0}
 --- !u!1 &2853408314217768423 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 6899543821610524924, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
