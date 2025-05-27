@@ -9,9 +9,6 @@ MonoBehaviour:
   m_GameObject: {fileID: 0}
   m_Enabled: 1
   m_EditorHideFlags: 0
-  m_Script: {fileID: 11500000, guid: e444c77f2f2f98f4b92dbfa53ba0f511, type: 3}
-  m_Name: CreateObstacleEffectSOB
+  m_Script: {fileID: 11500000, guid: 32c01b6c9cecf784ba21ce8a68272c66, type: 3}
+  m_Name: AttackNoObstacleEffectSO
   m_EditorClassIdentifier: 
-  obstacleList:
-  - {fileID: 2832146131443869211, guid: 16bc9ad58b9a4b64f84d39f8d55b7bec, type: 3}
-  generationMode: 1
