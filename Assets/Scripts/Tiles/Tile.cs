@@ -299,7 +299,6 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     public void SetTypeEmpty()
     {
         _type = TileType.Empty;
-        _mesh.material.color = _emptyColor;
     }
 
 
