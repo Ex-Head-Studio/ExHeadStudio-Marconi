@@ -9,6 +9,18 @@ PrefabInstance:
     m_TransformParent: {fileID: 0}
     m_Modifications:
     - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 150
+      objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
       propertyPath: m_LocalPosition.x
       value: -0
       objectReference: {fileID: 0}
@@ -22,11 +34,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
       propertyPath: m_LocalRotation.w
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
       propertyPath: m_LocalRotation.x
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
       propertyPath: m_LocalRotation.y
@@ -38,7 +50,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.x
-      value: 180
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
       propertyPath: m_LocalEulerAnglesHint.y
@@ -48,9 +60,37 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -8679921383154817045, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_ConstrainProportionsScale
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 919132149155446097, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
       propertyPath: m_Name
       value: ScoutShipV2
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137484952533087393, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137484952533087393, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137484952533087393, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137484952533087393, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137484952533087393, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 5137484952533087393, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 180
       objectReference: {fileID: 0}
     m_RemovedComponents: []
     m_RemovedGameObjects: []
@@ -59,6 +99,9 @@ PrefabInstance:
     - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
       insertIndex: -1
       addedObject: {fileID: 2603509762579555695}
+    - targetCorrespondingSourceObject: {fileID: 919132149155446097, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 8786541830179391576}
   m_SourcePrefab: {fileID: 100100000, guid: 846ebf4e2d8e37540bd93ab82621a57c, type: 3}
 --- !u!23 &2646176452071128663 stripped
 MeshRenderer:
@@ -90,3 +133,25 @@ MonoBehaviour:
   shipMeshRenderers:
   - {fileID: 3481998981138686636}
   - {fileID: 2646176452071128663}
+--- !u!95 &8786541830179391576
+Animator:
+  serializedVersion: 7
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 7146724821592669780}
+  m_Enabled: 1
+  m_Avatar: {fileID: 0}
+  m_Controller: {fileID: 9100000, guid: 7bd018b731fa46d4c8cf2a93e29cff98, type: 2}
+  m_CullingMode: 0
+  m_UpdateMode: 0
+  m_ApplyRootMotion: 0
+  m_LinearVelocityBlending: 0
+  m_StabilizeFeet: 0
+  m_AnimatePhysics: 0
+  m_WarningMessage: 
+  m_HasTransformHierarchy: 1
+  m_AllowConstantClipSamplingOptimization: 1
+  m_KeepAnimatorStateOnDisable: 0
+  m_WriteDefaultValuesOnDisable: 0

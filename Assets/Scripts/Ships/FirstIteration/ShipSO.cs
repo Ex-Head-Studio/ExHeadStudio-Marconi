@@ -19,8 +19,8 @@ public class ShipSO : ScriptableObject
     [SerializeField] public OnShipDestroyedEvent shipDestroyedEvent;
     [SerializeField] public OnShipAttackEvent attackEvent;
 
-    [Header("Animator")]
-    [SerializeField] public RuntimeAnimatorController shipAnimatorController;
+    /*[Header("Animator")]
+    [SerializeField] public RuntimeAnimatorController shipAnimatorController;*/
 
     [Header("Effects")]
     [SerializeField] public ParticleSystem attackReceivedParticle;

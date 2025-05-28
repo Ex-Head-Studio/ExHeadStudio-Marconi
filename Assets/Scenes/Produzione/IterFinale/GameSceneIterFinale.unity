@@ -488,7 +488,7 @@ Camera:
   m_Enabled: 1
   serializedVersion: 2
   m_ClearFlags: 2
-  m_BackGroundColor: {r: 0.11320752, g: 0.11320752, b: 0.11320752, a: 0}
+  m_BackGroundColor: {r: 0.23471065, g: 0.33802596, b: 0.42138356, a: 0}
   m_projectionMatrixMode: 1
   m_GateFitMode: 2
   m_FOVAxisMode: 0
@@ -1559,12 +1559,12 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: cardsInDeck.Array.size
-      value: 6
+      value: 5
       objectReference: {fileID: 0}
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: cardsInDeck.Array.data[2].cardData
       value: 
-      objectReference: {fileID: 11400000, guid: c1b2c2c0eec7e6e4fbe03841a3f7a7cc, type: 2}
+      objectReference: {fileID: 11400000, guid: d049f30d0e12e1940b64e6ff765a2c56, type: 2}
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: cardsInDeck.Array.data[2].quantity
       value: 1
@@ -1572,7 +1572,7 @@ PrefabInstance:
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: cardsInDeck.Array.data[3].cardData
       value: 
-      objectReference: {fileID: 11400000, guid: d049f30d0e12e1940b64e6ff765a2c56, type: 2}
+      objectReference: {fileID: 11400000, guid: 138485cb7e225214393e556803582d70, type: 2}
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: cardsInDeck.Array.data[3].quantity
       value: 1
@@ -1580,7 +1580,7 @@ PrefabInstance:
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: cardsInDeck.Array.data[4].cardData
       value: 
-      objectReference: {fileID: 11400000, guid: 138485cb7e225214393e556803582d70, type: 2}
+      objectReference: {fileID: 11400000, guid: 44d96f3d3bae69d41819d7dc549bf2ce, type: 2}
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: cardsInDeck.Array.data[4].quantity
       value: 1
@@ -4444,7 +4444,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -694, y: 204}
+  m_AnchoredPosition: {x: -694.00006, y: 204}
   m_SizeDelta: {x: -1458, y: -828.11865}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1435187321
@@ -5998,7 +5998,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -665.5, y: -320.99997}
+  m_AnchoredPosition: {x: -665.50006, y: -320.99982}
   m_SizeDelta: {x: -1449, y: -965}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1856432971

@@ -6,7 +6,7 @@ using UnityEngine;
 using Random=UnityEngine.Random;
 public class ShipManager2 : MonoBehaviour, IShipManager
 {
-    
+
     [Header("Parameters")]
     [SerializeField] private ShipManagerSO shipManagerSO;
     [SerializeField] private float timeBeforeGeneration = 1f;
@@ -18,18 +18,18 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     public InfluenceMap influenceMap;
 
 
-    private List<AShip>enemies=new List<AShip>();
-    private List<AShip>allies=new List<AShip>();
+    private List<AShip> enemies = new List<AShip>();
+    private List<AShip> allies = new List<AShip>();
 
     private static int allyCount = 0;
     private static int enemyCount = 0;
 
     private int modelIndex;
-    
+
     //Attacca i componenti di ship manager a ship manager
     void Awake()
     {
-        
+
 
         shipsD = new Dictionary<string, AShip>();
         shipManagerSO.RandomizeShips();
@@ -37,7 +37,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
         influenceMap = new InfluenceMap(GridManager.Instance._width, GridManager.Instance._height, shipManagerSO.influenceDecay, shipManagerSO.decayMomentum);
     }
 
-    
+
     //Funzione che viene chiamata all'inizio del gioco per generare le navi
     public void GenerateShips()
     {
@@ -56,18 +56,19 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
     public void InstantiateInMap(string shipName)
     {
-        if(shipManagerSO.allyShips+shipManagerSO.enemyShips>shipManagerSO.startingShips.Count)
+        if (shipManagerSO.allyShips + shipManagerSO.enemyShips > shipManagerSO.startingShips.Count)
         {
             Debug.LogError("Not enough shipsD for the number of allies and enemies");
             return;
         }
 
-        if(allyCount<shipManagerSO.allyShips)
+        if (allyCount < shipManagerSO.allyShips)
         {
             InstantiateAllyShip(shipName, (int)Entity.ally);
             return;
         }
-        if(enemyCount<shipManagerSO.enemyShips){
+        if (enemyCount < shipManagerSO.enemyShips)
+        {
             InstantiateEnemyShip(shipName, (int)Entity.enemy);
             return;
         }
@@ -78,17 +79,17 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     /// </summary>
     /// <param name="shipName"></param>
     /// 
-    
+
 
     //Possiamo invocare questo metodo da parte di una carta supporto
     public void InstantiateAllyShip(string shipName, int faction)
     {
         AShip newShip = SetupShip(shipName, faction);
-            shipsD.Add(newShip.shipName, newShip);
-            allies.Add(newShip);
-            allyCount++;
-            GridManager.Instance.InsertShips(newShip);
-            influenceMap.RegisterPropagator(newShip);
+        shipsD.Add(newShip.shipName, newShip);
+        allies.Add(newShip);
+        allyCount++;
+        GridManager.Instance.InsertShips(newShip);
+        influenceMap.RegisterPropagator(newShip);
     }
 
     /// <summary>
@@ -98,7 +99,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
     public void InstantiateEnemyShip(string shipName, int faction)
     {
-        AShip newShip= SetupShip(shipName, faction);
+        AShip newShip = SetupShip(shipName, faction);
         shipsD.Add(newShip.shipName, newShip);
         enemies.Add(newShip);
         enemyCount++;
@@ -113,24 +114,28 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     public void EnemyMovesSelection()
     {
         //Debug.Log("Ricerca mosse del nemico");
-        
-        
+
+
     }
     //Il metodo viene chiamato dall'evento di fine turno giocatore e fa eseguire alle navi la loro mossa preferita
-    public void EnemyMovesExecution(){
-        foreach(AShip enemy in enemies)
+    public void EnemyMovesExecution()
+    {
+        foreach (AShip enemy in enemies)
         {
             enemy.LookForMovement();
             enemy.LookForAttacks();
         }
         Debug.Log("Esecuzione turno nemico");
-        for(int i=0, j=0 ;j<shipManagerSO.initialEnemyShips; i++, j++){
-            if(j>=enemies.Count){
-                i=0;
+        for (int i = 0, j = 0; j < shipManagerSO.initialEnemyShips; i++, j++)
+        {
+            if (j >= enemies.Count)
+            {
+                i = 0;
             }
-            if(!enemies[i].moveDone)
+            if (!enemies[i].moveDone)
                 enemies[i].ExecuteMove();
-            else {
+            else
+            {
                 enemies[i].LookForMovement();
                 enemies[i].LookForAttacks();
                 enemies[i].ExecuteMove();
@@ -139,7 +144,8 @@ public class ShipManager2 : MonoBehaviour, IShipManager
         StartCoroutine(EndEnemyTurn());
     }
 
-    public IEnumerator EndEnemyTurn(){
+    public IEnumerator EndEnemyTurn()
+    {
         yield return new WaitForSeconds(timeBeforeEndEnemyTurn);
         shipManagerSO.onEndEnemyTurn.Invoke(new VoidEvent(0));
         foreach (EnemyShip enemy in enemies)
@@ -154,9 +160,9 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     public void EndTurn()
     {
         influenceMap.Propagate();
-        
+
     }
-    
+
 
     /// <summary>
     /// Callback functiont which removes the ship from the map, the dictionary of shipsD and the infuence map.
@@ -165,23 +171,24 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     /// </summary>
     public void RemoveShip(ShipDestroyedStruct shipDestroyedStruct)
     {
-        if(shipsD.ContainsKey(shipDestroyedStruct.shipName)){
-            if(shipDestroyedStruct.entity == (int)Entity.ally )
+        if (shipsD.ContainsKey(shipDestroyedStruct.shipName))
+        {
+            if (shipDestroyedStruct.entity == (int)Entity.ally)
             {
                 allies.Remove(shipsD[shipDestroyedStruct.shipName]);
                 allyCount--;
             }
-            else if(shipDestroyedStruct.entity == (int)Entity.enemy && shipsD.ContainsKey(shipDestroyedStruct.shipName))
+            else if (shipDestroyedStruct.entity == (int)Entity.enemy && shipsD.ContainsKey(shipDestroyedStruct.shipName))
             {
                 enemies.Remove(shipsD[shipDestroyedStruct.shipName]);
-                enemyCount--; 
+                enemyCount--;
             }
-        
-            
+
+
             influenceMap.UnregisterPropagator(shipDestroyedStruct.shipScript);
             influenceMap.Propagate();
             GridManager.Instance.RemoveShip(shipDestroyedStruct.shipScript);
-        
+
             shipsD.Remove(shipDestroyedStruct.shipName);
             Destroy(shipDestroyedStruct.shipScript.gameObject);
         }
@@ -190,9 +197,8 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
     private AShip SetupShip(string shipName, int faction)
     {
-
-        //Aggiunto per istanziare sempre la classe base se ho solo una nave alleata
-        if(faction == (int)Entity.ally && shipManagerSO.allyShips == 1)
+        // Selezione del modello
+        if (faction == (int)Entity.ally && shipManagerSO.allyShips == 1)
         {
             modelIndex = shipManagerSO.shipSOarray.Count - 1;
         }
@@ -201,49 +207,137 @@ public class ShipManager2 : MonoBehaviour, IShipManager
             modelIndex = Random.Range(0, shipManagerSO.shipSOarray.Count);
         }
 
+        // Istanzia il prefab principale
         GameObject newShip = Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90, 0, 0));
 
-        Animator childAnim = newShip.gameObject.GetComponentInChildren<Animator>();
-        childAnim.runtimeAnimatorController = shipManagerSO.shipSOarray[modelIndex].shipAnimatorController;
+        // Trova Ship nella gerarchia
+        Transform shipTransform = null;
+        foreach (Transform child in newShip.transform)
+        {
+            if (child.name.ToLower().Contains("ship"))
+            {
+                shipTransform = child;
+                break;
+            }
+        }
 
-        Instantiate(shipManagerSO.shipSOarray[modelIndex].shipClassModel, childAnim.gameObject.transform, false);
+        // Variabile che terrà il riferimento al GameObject del modello della classe
+        GameObject shipClassModelInstance = null;
 
-        //tolgo il component NewShip
-        if(newShip.TryGetComponent<NewShip>(out NewShip oldScript))
+        // Istanzia SEMPRE il modello nell'oggetto Ship, se lo troviamo
+        if (shipTransform != null)
+        {
+            shipClassModelInstance = Instantiate(shipManagerSO.shipSOarray[modelIndex].shipClassModel, shipTransform, false);
+            Debug.Log($"Modello istanziato in: {shipTransform.name}");
+        }
+        else
+        {
+            // Fallback: istanzia direttamente sulla nave
+            shipClassModelInstance = Instantiate(shipManagerSO.shipSOarray[modelIndex].shipClassModel, newShip.transform, false);
+            Debug.LogWarning("Oggetto Ship non trovato, modello istanziato direttamente sulla nave");
+        }
+
+        // Tolgo il component NewShip
+        if (newShip.TryGetComponent<NewShip>(out NewShip oldScript))
         {
             Destroy(oldScript);
         }
 
-        if(faction == (int)Entity.ally)
-        {
-            //assegno ad ogni nuova nave i component per reagire alle carte
+        // ORA che tutto è istanziato, cerca l'animator
+        Animator shipAnimator = null;
 
+        // Cercalo direttamente nel GameObject istanziato dentro Ship
+        if (shipTransform != null)
+        {
+            // Prima cerca direttamente nel figlio immediato di Ship (il primo GameObject istanziato dentro)
+            if (shipTransform.childCount > 0)
+            {
+                // Cerca l'animator nel primo figlio di Ship
+                Transform firstChild = shipTransform.GetChild(0);
+                shipAnimator = firstChild.GetComponent<Animator>();
+
+                Debug.Log("ShipAnimator: " +shipAnimator.name);
+                
+                if (shipAnimator != null)
+                {
+                    Debug.Log($"Trovato animator nel primo figlio di Ship: {firstChild.name}");
+                }
+                else
+                {
+                    // Se non l'abbiamo trovato sul primo figlio diretto, non cercare ricorsivamente
+                    Debug.LogWarning($"Nessun animator trovato nel primo figlio di Ship: {firstChild.name}");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Ship non ha figli, impossibile trovare animator");
+            }
+        }
+
+        // Se non abbiamo trovato l'animator con il metodo specifico, NON usare fallback
+        if (shipAnimator == null)
+        {
+            Debug.LogError("Animator non trovato nel figlio diretto di Ship");
+        }
+        else
+        {
+            // Assegna il controller all'animator
+            //shipAnimator.runtimeAnimatorController = shipManagerSO.shipSOarray[modelIndex].shipAnimatorController;
+            //Debug.Log($"Controller assegnato all'animator: {shipAnimator.gameObject.name}");
+        }
+
+        // Ora crea il componente nave appropriato
+        if (faction == (int)Entity.ally)
+        {
             newShip.AddComponent<AllyShip>();
             newShip.AddComponent<CardAllyShip>();
-            
+
             AllyShip shipScript = newShip.GetComponent<AllyShip>();
             shipScript.SetupShip(shipManagerSO.shipSOarray[modelIndex], shipName, faction, this);
+
+            // Assegna l'animator trovato
+            if (shipAnimator != null)
+            {
+                shipScript.SetShipAnimator(shipAnimator);
+                Debug.Log($"Animator assegnato alla nave alleata {shipName}: {shipAnimator.gameObject.name}");
+            }
+            else
+            {
+                Debug.LogError($"Nessun animator da assegnare alla nave alleata {shipName}");
+            }
+
             newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.allyMaterial);
             return shipScript;
         }
         else
         {
-
+            // Codice per le navi nemiche (stesso pattern)
             newShip.AddComponent<EnemyShip>();
             newShip.AddComponent<CardEnemyShip>();
-            
+
             EnemyShip shipScript = newShip.GetComponent<EnemyShip>();
             shipScript.SetupShip(shipManagerSO.shipSOarray[modelIndex], shipName, faction, this);
+
+            // Assegna l'animator trovato
+            if (shipAnimator != null)
+            {
+                shipScript.SetShipAnimator(shipAnimator);
+                Debug.Log($"Animator assegnato alla nave nemica {shipName}: {shipAnimator.gameObject.name}");
+            }
+
             newShip.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(shipManagerSO.enemyMaterial);
             return shipScript;
         }
     }
 
 
-    public int NumberOfMessages{
+    public int NumberOfMessages
+    {
         get { return shipManagerSO.numberOfMessages; }
     }
-    public InfluenceMap InfluenceMap{
+
+    public InfluenceMap InfluenceMap
+    {
         get { return influenceMap; }
     }
 }
