@@ -52,7 +52,7 @@ public abstract class AShip : MonoBehaviour
     protected bool canMove;
     protected bool canAttack;
     public int faction;
-    public bool startMoveAnimation = false;
+    public bool startMovement = false;
 
     //per il camera shake
     private CinemachineImpulseSource impulseSource;
@@ -74,10 +74,10 @@ public abstract class AShip : MonoBehaviour
     [Header("Ship Chances")]
 
     [Tooltip("Parametro per gestire la probabilità di essere colpiti da un attacco")]
-    [SerializeField] public float hitChance = 1f;
+    [SerializeField] public float hitChance = 0.3f;
     [SerializeField] ParticleSystem dodgeEffect;
 
-    [SerializeField] Animator shipAnimator;
+    [SerializeField] protected Animator shipAnimator;
     
     void Awake()
     {
@@ -112,8 +112,11 @@ public abstract class AShip : MonoBehaviour
 
     public void OnAttacked(ShipAttackStruct attackStruct)
     {
+        if (position.x != attackStruct.gridPosition.x || position.y != attackStruct.gridPosition.y) {
+            return;
+        }
 
-        if(Random.Range(0f, 1f) <= hitChance)
+        /*if ( Random.Range(0f, 1f) <= hitChance)
         {
             Debug.Log("Ship " + shipName + " dodged the attack!");
 
@@ -121,27 +124,28 @@ public abstract class AShip : MonoBehaviour
 
             //Se la nave non viene colpita, non fa nulla
             return;
-        }
+        }*/
 
-        if (position.x == attackStruct.gridPosition.x && position.y == attackStruct.gridPosition.y)
+        
+        //Test per la creazione dei particle
+        //calcolo dell'angolo
+        Quaternion correctAngle = Quaternion.FromToRotation(shipSO.attackReceivedParticle.gameObject.transform.up, gameObject.transform.up);
+        particleSystemInstance = Instantiate(shipSO.attackReceivedParticle, transform.position, correctAngle);
+        particleSystemInstance.Play();
+
+        PlayShipDamage();
+
+        //camera shake
+        CameraShakeManager.instance.CameraShake(impulseSource);
+
+        health -= attackStruct.damage;
+        Debug.Log("health: " + health);
+        if (health <= 0)
         {
-            //Test per la creazione dei particle
-            //calcolo dell'angolo
-            Quaternion correctAngle = Quaternion.FromToRotation(shipSO.attackReceivedParticle.gameObject.transform.up, gameObject.transform.up);
-            particleSystemInstance = Instantiate(shipSO.attackReceivedParticle, transform.position, correctAngle);
-            particleSystemInstance.Play();
-
-            PlayShipDamage();
-
-            //camera shake
-            CameraShakeManager.instance.CameraShake(impulseSource);
-
-            health -= attackStruct.damage;
-            if (health <= 0)
-            {
-                GetComponentInChildren<Animator>().SetTrigger("Death");
-            }
+            GetComponentInChildren<Animator>().SetTrigger("Death");
+            shipSO.shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position, this));
         }
+        
     }
 
     private FMOD.Studio.EventInstance shipDamage;

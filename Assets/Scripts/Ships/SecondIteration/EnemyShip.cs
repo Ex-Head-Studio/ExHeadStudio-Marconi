@@ -22,12 +22,10 @@ public class EnemyShip : AShip
         switch (initialMove.GetMessageType())
         {
             case MessageType.attack:
-                shipSO.attackEvent?.Invoke(new ShipAttackStruct(initialMove.GetTargetPos(), shipSO.attackPower));
+                StartCoroutine(Attack());
                 break;
             case MessageType.movement:
 
-                
-                startMoveAnimation = true;
                 StartCoroutine(MoveShip());
                 
                 break;
@@ -36,22 +34,32 @@ public class EnemyShip : AShip
 
         GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).SetTileNotInteractable(faction);
     }
+    IEnumerator Attack()
+    {
 
+        //shipAnimator.Play("Attack");
+        //yield return new WaitForSeconds(shipAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+        yield return new WaitForSeconds(0);
+        shipSO.attackEvent?.Invoke(new ShipAttackStruct(initialMove.GetTargetPos(), shipSO.attackPower));
+    }
     IEnumerator MoveShip()
     {
+        //shipAnimator.Play("Startup");
+        startMovement = true;
+        //yield return new WaitForSeconds(shipAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length + shipAnimator.GetNextAnimatorClipInfo(0)[0].clip.length);
         yield return new WaitForSeconds(timeToMove);
         GridManager.Instance.MoveShip(position, initialMove.GetTargetPos(), faction);
         position = initialMove.GetTargetPos();
     }
     void Update()
     {
-        if (startMoveAnimation)
+        if (startMovement)
         {
             //Attiva l'animazione di movimento della nave
             transform.position = Vector3.MoveTowards(transform.position, GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).transform.position, (Vector3.Distance(transform.position, GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).transform.position))/timeToMove * Time.fixedDeltaTime);
             if (Vector3.Distance(transform.position, GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).transform.position) < 0.01f)
             {
-                startMoveAnimation = false;
+                startMovement = false;
             }
         }
     }

@@ -268,13 +268,13 @@ public class AllyShip : AShip
     }
     void Update()
     {
-        if (startMoveAnimation)
+        if (startMovement)
         {
             //Attiva l'animazione di movimento della nave
             transform.position = Vector3.MoveTowards(transform.position, targetPosition, (Vector3.Distance(transform.position, targetPosition)) / timeToMove * Time.fixedDeltaTime);
             if (Vector3.Distance(transform.position, targetPosition) < 0.01f)
             {
-                startMoveAnimation = false;
+                startMovement = false;
             }
         }
     }
@@ -289,14 +289,14 @@ public class AllyShip : AShip
         {
             Debug.Log("Movement in tile: " + tile.name);
             targetPosition = tile.transform.position;
-            startMoveAnimation = true;
+            
             StartCoroutine(MoveShip(tile));
 
         }
         else if (tile._type == TileType.Enemy || tile._type == TileType.Obstacle)
         {
             Debug.Log("Attack in tile: " + tile.name);
-            PerformAttack(GridManager.Instance.GetPositionFromTile(tile));
+            StartCoroutine(Attack(tile));
         }
 
         //disattivo le tile interagibili
@@ -309,8 +309,18 @@ public class AllyShip : AShip
         Debug.Log("Effect ended: " + effectSO.name);
         effectSO.EndEffect(0);
     }
+    IEnumerator Attack(Tile tile)
+    {
+        //shipAnimator.Play("Attack");
+        //yield return new WaitForSeconds(shipAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
+        yield return new WaitForSeconds(0);
+        PerformAttack(GridManager.Instance.GetPositionFromTile(tile));
+    }
     IEnumerator MoveShip(Tile tile)
     {
+        //shipAnimator.Play("Startup");
+        startMovement = true;
+        //yield return new WaitForSeconds(shipAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length + shipAnimator.GetNextAnimatorClipInfo(0)[0].clip.length);
         yield return new WaitForSeconds(timeToMove);
         GridManager.Instance.MoveShip(this.position, GridManager.Instance.GetPositionFromTile(tile), this.faction);
         this.position = Vector2Int.RoundToInt(GridManager.Instance.GetPositionFromTile(tile));
