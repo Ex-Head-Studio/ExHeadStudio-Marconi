@@ -45,6 +45,8 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         Probability,
         [Tooltip("Selected list of card to draw")]
         ScriptedList,
+        [Tooltip("Pesca una carta fissa, le altre a random e senza ripetizioni")]
+        OneFixedAndRandom,
     }
     
 
@@ -60,11 +62,17 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     private int drawingCost = 1;
     
     [Header("Cards in the deck")]
+    [Tooltip("Puoi usare questa lista anche per la modalità \"1 Fixed and Random\", la prima è quella fissa")]
     [SerializeField] private List<CardForDeck> cardsInDeck;
 
     [Tooltip("Lista di carte da pescare in modo scriptato")]
     [SerializeField] private List<CardForDeck> scriptedCards;
     private List<BaseCardData> localScriptedCards;
+
+    [Tooltip("Solo per la versione 1 fissa e altre random")]
+
+    private int fixIndex = 0;
+    private List<int> alreadyDrawedIndexes = new List<int>();
 
     [Header("Deck Parameters")]
     [SerializeField] private float drawTime = 0.1f;
@@ -111,6 +119,11 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         {
             localScriptedCards = new List<BaseCardData>();
             localScriptedCards = scriptedCards.Select(card => card.cardData).ToList();
+        }
+        else if(drawModeEnum == DrawMode.OneFixedAndRandom)
+        {
+            alreadyDrawedIndexes.Clear();
+            alreadyDrawedIndexes.Add(fixIndex);
         }
         StartCoroutine(WaitBeforeDraw(drawTime, cardsGivenAtTurn-1));
     }
@@ -178,6 +191,30 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         localScriptedCards.RemoveAt(localScriptedCards.Count - 1);
         return drawnCard;
     }
+
+    private BaseCardData DrawFixedAndRandom(int fixedIndex, int cardIndex)
+    {
+        BaseCardData drawnCard;
+        int randomIndex;
+        if (cardIndex == 0)
+        {
+            drawnCard = cardsInDeck[fixedIndex].cardData;
+            return drawnCard;
+        }
+        else
+        {
+            randomIndex = UnityEngine.Random.Range(fixedIndex, cardsInDeck.Count);
+            while (alreadyDrawedIndexes.Contains(randomIndex))
+            {
+                randomIndex = UnityEngine.Random.Range(fixedIndex, cardsInDeck.Count);
+            }
+
+            alreadyDrawedIndexes.Add(randomIndex);
+
+            drawnCard = cardsInDeck[randomIndex].cardData;
+            return drawnCard;
+        }
+    }
     #endregion
 
     #region Gestione del puntatore
@@ -195,17 +232,17 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
             var drawnCard = DrawCardWithProbability();
             cardDrawed?.Invoke(drawnCard);
             drawingCost++;
-            
+
         }
         //se non ho costo di pesca e mazzo non vuoto
-        else if(!hasDrawingCost && cardsInDeck.Count > 0) 
+        else if (!hasDrawingCost && cardsInDeck.Count > 0)
         {
             cardDrawed?.Invoke(cardsInDeck[0].cardData);
             cardsInDeck.RemoveAt(0);
         }
 
 
-        if(drawingCost >= energySystem.defaultEnergy)
+        if (drawingCost >= energySystem.defaultEnergy)
         {
             drawingCost = energySystem.defaultEnergy;
         }
@@ -245,8 +282,13 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
                 cardDrawed?.Invoke(DrawCardWithProbability());
                 break;
             case DrawMode.ScriptedList:
-            
+
                 cardDrawed?.Invoke(DrawCardByList());
+                break;
+
+            case DrawMode.OneFixedAndRandom:
+
+                cardDrawed?.Invoke(DrawFixedAndRandom(fixIndex, cardIndex));
                 break;
         }
 

@@ -285,11 +285,23 @@ public class AllyShip : AShip
         {
             if (!cardAllyScript.IsSelected()) return;
         }
-        if (tile._type == TileType.Empty)
+        
+        if (effectSO is AttackInLineEffect)
+        {
+            if(GridManager.Instance.GetPositionFromTile(tile).x == position.x)
+            {
+                AttackInLine(true);
+            }
+            else
+            {
+                AttackInLine(false);
+            }
+        }
+        else if (tile._type == TileType.Empty)
         {
             Debug.Log("Movement in tile: " + tile.name);
             targetPosition = tile.transform.position;
-            
+
             StartCoroutine(MoveShip(tile));
 
         }
@@ -517,91 +529,39 @@ public class AllyShip : AShip
 
 
 
-    //da capire -> attacco sulla singola riga
-    /*public bool LookForAttackInLine()
+    public bool LookForAttackInLine()
     {
         //quando la invoco, pulisco la lista delle azioni possibili e la riempio con le nuove
         shipMoves.Clear();
 
-        canAttack = false;
+        int gridHeight = GridManager.Instance._height;
+        int gridWidth = GridManager.Instance._width;
 
-        //ricerca verso sx
-        for (int x = position.x; x >= position.x - attackRange; x--)
+        for (int x = 0; x < gridWidth; x++)
         {
-            if (x >= 0 && x < GridManager.Instance._width && x != position.x)
+            //tengo y fissa
+            if (x != position.x)
             {
                 Vector2Int pos = new Vector2Int(x, position.y);
-
-                if ((GridManager.Instance.GetTileAtPosition(pos)._type == TileType.Enemy ||
-                    GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
-                     && GridManager.Instance.GetTileAtPosition(pos).GetShip() != null)
-                {
-                    Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
-                    shipMoves.Add(move);
-                    canAttack = true;
-                }
+                Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
+                shipMoves.Add(move);
+                canAttack = true;
             }
         }
 
-        //ricerca verso dx
-        for (int x = position.x; x <= position.x + attackRange; x++)
+        for (int y = 0; y < gridHeight; y++)
         {
-            if (x >= 0 && x < GridManager.Instance._width && x != position.x)
-            {
-                Vector2Int pos = new Vector2Int(x, position.y);
-
-                if (GridManager.Instance.GetTileAtPosition(pos)._type == TileType.Enemy
-                    || GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle
-                     && GridManager.Instance.GetTileAtPosition(pos).GetShip() != null)
-                {
-                    Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
-                    shipMoves.Add(move);
-                    canAttack = true;
-                }
-            }
-        }
-
-        //ricerca verso basso
-        for (int y = position.y; y >= position.y - attackRange; y--)
-        {
-            if (y >= 0 && y < GridManager.Instance._height && y != position.y)
+            //tengo x fissa
+            if (y != position.y)
             {
                 Vector2Int pos = new Vector2Int(position.x, y);
-
-                if ((GridManager.Instance.GetTileAtPosition(pos)._type == TileType.Enemy
-                    || GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
-                     && GridManager.Instance.GetTileAtPosition(pos).GetShip() != null)
-                {
-                    Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
-                    shipMoves.Add(move);
-                    canAttack = true;
-                }
+                Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
+                shipMoves.Add(move);
+                canAttack = true;
             }
-        }
+        }    
 
-        //ricerca verso alto
-        for (int y = position.y; y <= position.y + attackRange; y++)
-        {
-            if (y >= 0 && y < GridManager.Instance._height && y != position.y)
-            {
-                Vector2Int pos = new Vector2Int(position.x, y);
-
-                if ((GridManager.Instance.GetTileAtPosition(pos)._type == TileType.Enemy
-                    || GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
-                     && GridManager.Instance.GetTileAtPosition(pos).GetShip() != null)
-                {
-                    Move move = new Move(moveId++, shipName, pos, MessageType.attack, 0);
-                    shipMoves.Add(move);
-                    canAttack = true;
-                }
-            }
-        }
-
-
-        //Se il giocatore ha la libertà di scegliere in quale posizione attaccare, allora questo metodo
-        //gli farà vedere solo le posizioni in cui può attaccare.
-        shipMoves = shipMoves.Where(x => GridManager.Instance.GetTileAtPosition(x.GetTargetPos())._type == TileType.Enemy ||
-                                    GridManager.Instance.GetTileAtPosition(x.GetTargetPos())._type == TileType.Obstacle).ToList();
+        shipMoves = shipMoves.Where(x => GridManager.Instance.GetTileAtPosition(x.GetTargetPos())).ToList();
         if (shipMoves.Count > 0)
         {
             foreach (Move move in shipMoves)
@@ -615,9 +575,34 @@ public class AllyShip : AShip
             ByPassEffect();
         }
         return canAttack;
-    }*/
+    }
 
-    
+    private void AttackInLine(bool isRow)
+    {
+        if (isRow)
+        {
+            for (int x = 0; x < GridManager.Instance._width; x++)
+            {
+                if (x != position.x)
+                {
+                    shipSO.attackEvent.Invoke(new ShipAttackStruct(new Vector2(x, position.y), 1));
+                    InstantiateEffect(new Vector2(x, position.y));
+                }
+            }
+        }
+        else
+        {
+            for (int y = 0; y < GridManager.Instance._height; y++)
+            {
+                if (y != position.y)
+                {
+                    shipSO.attackEvent.Invoke(new ShipAttackStruct(new Vector2(position.x, y), 1));
+                    InstantiateEffect(new Vector2(position.x, y));
+                }
+            }
+
+        }
+    }
 
 
     #endregion

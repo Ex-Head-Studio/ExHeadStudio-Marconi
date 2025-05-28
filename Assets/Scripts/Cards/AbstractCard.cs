@@ -14,10 +14,14 @@ public abstract class AbstractCard : MonoBehaviour
 
     private UICard UICardScript;
 
+    [Header("If entity == tile")]
+    [Tooltip("If true, the card will be placed on a ship-range")]
+    public bool hasToPlaceSomethingOnTile = false;
+
 
     private void Start()
     {
-        if(cardData.isWorldInteractive)
+        if (cardData.isWorldInteractive)
         {
             gameObject.AddComponent<UICardDragNDropHandler>();
             UICardDragNDropHandler cardDragNDropHandler = GetComponent<UICardDragNDropHandler>();

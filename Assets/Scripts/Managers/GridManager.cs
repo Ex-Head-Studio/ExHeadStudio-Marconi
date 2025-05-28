@@ -247,26 +247,38 @@ public class GridManager : MonoBehaviour, ICardDropArea
         return Vector2.negativeInfinity;
     }
 
+    public Vector2 GetAllyShipPosition()
+    {
+        foreach (var tile in _tiles.Values)
+        {
+            if (tile.GetShip() != null && tile.GetShip().GetComponent<AShip>().faction == (int)Entity.ally)
+            {
+                return GetPositionFromTile(tile);
+            }
+        }
+        return Vector2.negativeInfinity; // Se non trovata, ritorna un valore negativo
+    }
+
     #endregion
     public void MoveShip(Vector2 currentPosition, Vector2 newPosition, int entity)
     {
 
         GameObject tmpShip;
         Tile currentTile = _tiles[currentPosition];
-        Tile newTile =  _tiles[newPosition];
+        Tile newTile = _tiles[newPosition];
 
-        if(currentPosition == Vector2.negativeInfinity || newPosition == Vector2.negativeInfinity)
+        if (currentPosition == Vector2.negativeInfinity || newPosition == Vector2.negativeInfinity)
         {
             return;
         }
 
-        if(!_tiles.ContainsKey(currentPosition) || !_tiles.ContainsKey(newPosition))
+        if (!_tiles.ContainsKey(currentPosition) || !_tiles.ContainsKey(newPosition))
         {
             Debug.Log("La nave non può muoversi in questa posizione");
             return;
         }
 
-        if(currentTile == null || newTile == null) 
+        if (currentTile == null || newTile == null)
         {
             Debug.Log("La nave non può muoversi in questa posizione");
             return;
@@ -276,7 +288,7 @@ public class GridManager : MonoBehaviour, ICardDropArea
         newTile.SetType(currentTile.GetType(), entity);
 
         //qui ho rimosso un GetShip().gameObject (stefano)
-        if(tmpShip != null)
+        if (tmpShip != null)
         {
             newTile.SetShip(tmpShip.gameObject);
             currentTile.SetTypeEmpty();

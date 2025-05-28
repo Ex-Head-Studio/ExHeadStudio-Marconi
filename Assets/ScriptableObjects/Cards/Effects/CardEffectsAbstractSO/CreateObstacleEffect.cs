@@ -20,6 +20,7 @@ public class CreateObstacleEffect : AbstractEffectSO
     public override void PerformEffect(EffectStruct effectStruct)
     {
         if (effectStruct.obj.TryGetComponent<Tile>(out tileScript))
+
             switch (generationMode)
             {
                 case GenerationMode.randomFromList:
