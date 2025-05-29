@@ -5,7 +5,11 @@ using UnityEngine;
 using Random= UnityEngine.Random;
 public class NewShip : AShip
 {
-    protected int moveId=0;
+    public override void LookForMoves()
+    {
+        throw new NotImplementedException();
+    }
+    protected int moveId = 0;
    
     public override bool LookForMovement()
     {

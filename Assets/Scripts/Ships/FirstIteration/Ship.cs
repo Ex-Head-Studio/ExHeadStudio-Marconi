@@ -5,7 +5,10 @@ using Random=UnityEngine.Random;
 using System;
 public class Ship : AShip
 {
-    
+    public override void LookForMoves()
+    {
+        throw new NotImplementedException();
+    }
     void Awake()
     {
         

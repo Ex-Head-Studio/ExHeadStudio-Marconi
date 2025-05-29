@@ -74,7 +74,7 @@ public abstract class AShip : MonoBehaviour
     [Header("Ship Chances")]
 
     [Tooltip("Parametro per gestire la probabilità di essere colpiti da un attacco")]
-    [SerializeField] public float hitChance = 0.3f;
+    [SerializeField] public float hitChance = 0.25f;
     [SerializeField] ParticleSystem dodgeEffect;
 
     [SerializeField] protected Animator shipAnimator;
@@ -85,7 +85,7 @@ public abstract class AShip : MonoBehaviour
         mapWidth = GridManager.Instance._width;
 
         shipMoves = new List<Move>();
-
+        displayHealthScript = GetComponent<DisplayHealth>();
 
 
         GetComponent<OnShipAttackEventListener>().AddMethodToExecute(OnAttacked);
@@ -105,6 +105,7 @@ public abstract class AShip : MonoBehaviour
     {
 
     }
+    public abstract void LookForMoves();
 
     public abstract bool LookForMovement();
     public abstract bool LookForAttacks();
@@ -115,16 +116,12 @@ public abstract class AShip : MonoBehaviour
         if (position.x != attackStruct.gridPosition.x || position.y != attackStruct.gridPosition.y) {
             return;
         }
-
-        /*if ( Random.Range(0f, 1f) <= hitChance)
+        int dodgeChance = Random.Range(0, 4);
+        if (dodgeChance == 0)
         {
-            Debug.Log("Ship " + shipName + " dodged the attack!");
-
-            // Play dodge effect!!!
-
-            //Se la nave non viene colpita, non fa nulla
+            Debug.Log(dodgeChance);
             return;
-        }*/
+        }
 
         
         //Test per la creazione dei particle
@@ -139,6 +136,7 @@ public abstract class AShip : MonoBehaviour
         CameraShakeManager.instance.CameraShake(impulseSource);
 
         health -= attackStruct.damage;
+        displayHealthScript.UpdateHealthBar(attackStruct.damage);
         Debug.Log("health: " + health);
         if (health <= 0)
         {

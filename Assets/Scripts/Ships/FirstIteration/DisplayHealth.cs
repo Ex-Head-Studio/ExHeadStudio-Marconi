@@ -42,15 +42,13 @@ public class DisplayHealth : MonoBehaviour
 
 
     //funzione da chiamare quando la nave subisce danni, in concomitanza con l'evento
-    public void UpdateHealthBar(ShipAttackStruct shipAttackStruct)
+    public void UpdateHealthBar(int damage)
     {
-        if (healthBarPrefab != null && healthBarCanvasPrefab != null 
-            && shipAttackStruct.gridPosition == shipScript.GetPosition())
-        {
-            int endIndex = healthBarCount - shipAttackStruct.damage - 1;
+        
+            int endIndex = healthBarCount - damage - 1;
             if (endIndex < 0) endIndex = 0;
 
-            for(int i = 0; i < shipAttackStruct.damage; i++)
+            for(int i = 0; i < damage; i++)
             {
 
                 int index = healthBarCount - i - 1;
@@ -70,8 +68,8 @@ public class DisplayHealth : MonoBehaviour
                 }
 
             }
-            healthBarCount -= shipAttackStruct.damage;
-        }
+            healthBarCount -= damage;
+        
     }
 
 

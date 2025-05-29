@@ -63,7 +63,12 @@ public class EnemyShip : AShip
             }
         }
     }
-
+    public override void LookForMoves()
+    {
+        LookForMovement();
+        LookForAttacks();
+        ExecuteMove();
+    }
     public override bool LookForMovement()
     {
         moveDone = false;

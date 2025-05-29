@@ -118,23 +118,10 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     }
     //Il metodo viene chiamato dall'evento di fine turno giocatore e fa eseguire alle navi la loro mossa preferita
     public void EnemyMovesExecution(){
-        foreach(AShip enemy in enemies)
-        {
-            enemy.LookForMovement();
-            enemy.LookForAttacks();
-        }
+       
         Debug.Log("Esecuzione turno nemico");
-        for(int i=0, j=0 ;j<shipManagerSO.initialEnemyShips; i++, j++){
-            if(j>=enemies.Count){
-                i=0;
-            }
-            if(!enemies[i].moveDone)
-                enemies[i].ExecuteMove();
-            else {
-                enemies[i].LookForMovement();
-                enemies[i].LookForAttacks();
-                enemies[i].ExecuteMove();
-            }
+        for(int j=0 ;j<shipManagerSO.initialEnemyShips; j++){
+            enemies[j].LookForMoves();
         }
         StartCoroutine(EndEnemyTurn());
     }

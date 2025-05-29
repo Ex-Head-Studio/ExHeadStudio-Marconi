@@ -11,7 +11,7 @@ public class AllyShip : AShip
     int moveId = 0;
     Vector3 targetPosition;
     private CardAllyShip cardAllyScript;
-
+    
     private void OnEnable()
     {
         Tile.tileSelected += ReceiveTile;
@@ -278,6 +278,10 @@ public class AllyShip : AShip
             }
         }
     }
+    public override void LookForMoves()
+    {
+        throw new System.NotImplementedException();
+    }
     public void ReceiveTile(Tile tile)
     {
 
@@ -289,7 +293,7 @@ public class AllyShip : AShip
         {
             Debug.Log("Movement in tile: " + tile.name);
             targetPosition = tile.transform.position;
-            
+
             StartCoroutine(MoveShip(tile));
 
         }
