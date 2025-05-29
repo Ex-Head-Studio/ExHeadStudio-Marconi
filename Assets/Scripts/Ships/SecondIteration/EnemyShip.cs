@@ -47,6 +47,7 @@ public class EnemyShip : AShip
     {
         // Impostiamo la destinazione del movimento
         Vector3 targetPosition = GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).transform.position;
+        
         GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).SetType(TileType.Enemy, faction);
         GridManager.Instance.GetTileAtPosition(position).SetTypeEmpty();
         

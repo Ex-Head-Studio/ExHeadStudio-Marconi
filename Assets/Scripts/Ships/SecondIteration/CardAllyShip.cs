@@ -29,8 +29,7 @@ public class CardAllyShip : CardShipAbstract
 
     protected override void OnCardDropped(AbstractCard card)
     {
-
-        if(card.GetCardEntity() == (int)CardEntityType.AllyShip)
+        if(card.GetCardEntity() == (int)CardEntityType.AllyShip && !shipScript.IsMoving())
         {
             if (card.GetCardEffects() == null)
             {

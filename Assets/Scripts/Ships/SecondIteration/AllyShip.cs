@@ -1036,7 +1036,7 @@ public class AllyShip : AShip
 
     private void AttackInLine(bool isRow)
     {
-        if (isRow)
+        if (!isRow)
         {
             for (int x = 0; x < GridManager.Instance._width; x++)
             {
