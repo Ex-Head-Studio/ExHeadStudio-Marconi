@@ -47,6 +47,8 @@ public class EnemyShip : AShip
     {
         // Impostiamo la destinazione del movimento
         Vector3 targetPosition = GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).transform.position;
+        GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).SetType(TileType.Enemy, faction);
+        GridManager.Instance.GetTileAtPosition(position).SetTypeEmpty();
         
         // Calcoliamo la direzione verso cui la nave deve guardare
         Vector3 direction = targetPosition - transform.position;
@@ -609,7 +611,15 @@ public class EnemyShip : AShip
         {
             if (GridManager.Instance.GetTileAtPosition(new Vector2Int(x, position.y)).GetType() == TileType.Ally)
                 {
+
                     Vector2Int pos = new Vector2Int(x, position.y);
+                    if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                    {
+                    Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                    shipMoves.Add(move);
+                    canAttack = true;
+                    break;
+                    }
                     Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     if (Vector2Int.Distance(position, pos) == shipSO.attackRange)
                     {
@@ -631,6 +641,13 @@ public class EnemyShip : AShip
             if (GridManager.Instance.GetTileAtPosition(new Vector2Int(x, position.y)).GetType() == TileType.Ally)
             {
                 Vector2Int pos = new Vector2Int(x, position.y);
+                if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                    {
+                    Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                    shipMoves.Add(move);
+                    canAttack = true;
+                    break;
+                    }
                 Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
                 if (Vector2Int.Distance(position, pos) == shipSO.attackRange)
                 {
@@ -652,6 +669,13 @@ public class EnemyShip : AShip
             if (GridManager.Instance.GetTileAtPosition(new Vector2Int(position.x, y))._type == TileType.Ally)
                 {
                     Vector2Int pos = new Vector2Int(position.x, y);
+                    if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                    {
+                    Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                    shipMoves.Add(move);
+                    canAttack = true;
+                    break;
+                    }
                     Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     if (Vector2Int.Distance(position, pos) == attackRange)
                     {
@@ -673,6 +697,13 @@ public class EnemyShip : AShip
                 if (GridManager.Instance.GetTileAtPosition(new Vector2Int(position.x, y)).GetType() == TileType.Ally)
                 {
                     Vector2Int pos = new Vector2Int(position.x, y);
+                    if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                    {
+                    Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                    shipMoves.Add(move);
+                    canAttack = true;
+                    break;
+                    }
                     Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     if (Vector2Int.Distance(position, pos) == shipSO.attackRange)
                     {
@@ -707,6 +738,7 @@ public class EnemyShip : AShip
             initialMove = shipMoves[0];
         }
         Debug.Log(shipMoves.Count);
+        
         //GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
         //Debug.Log("Ship: " + shipName + " performs: " + initialMove.GetMessageType() + " on: " + initialMove.GetTargetPos());
         return canAttack;

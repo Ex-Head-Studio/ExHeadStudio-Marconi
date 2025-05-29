@@ -78,7 +78,7 @@ public abstract class AShip : MonoBehaviour
     [SerializeField] ParticleSystem dodgeEffect;
 
     [SerializeField] protected Animator shipAnimator;
-
+    
     void Awake()
     {
         mapHeight = GridManager.Instance._height;
