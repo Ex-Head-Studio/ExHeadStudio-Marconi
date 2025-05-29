@@ -202,7 +202,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     {
         //cardImage.raycastTarget = false;
         //gameObject.raycastTarget = false;
-        PlayCardError();
+        //PlayCardError();
     }
 
     #endregion

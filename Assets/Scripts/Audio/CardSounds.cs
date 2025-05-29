@@ -29,5 +29,32 @@ public class CardSounds: MonoBehaviour
         cardError.release();
     }
 
+    private FMOD.Studio.EventInstance cardHeal;
+
+    public void PlayHeal()
+    {
+        cardHeal = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Heal");
+        cardHeal.start();
+        cardHeal.release();
+    }
+
+    private FMOD.Studio.EventInstance soundChange;
+
+    public void PlayClassChange()
+    {
+        soundChange = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/ClassChange");
+        soundChange.start();
+        soundChange.release();
+    }
+
+    private FMOD.Studio.EventInstance soundObstacle;
+
+    public void PlayObstacle()
+    {
+        soundObstacle = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Obstacle");
+        soundObstacle.start();
+        soundObstacle.release();
+    }
+
 
 }

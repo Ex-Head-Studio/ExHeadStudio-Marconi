@@ -285,12 +285,17 @@ public class EnemyShip : AShip
                 {
                     yield return null;
                 }
+
                 
+
                 // Minima attesa per assicurarci che l'animazione di Move sia iniziata
                 while (shipAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.05f)
                 {
                     yield return null;
                 }
+                // suono di movimento
+
+                PlayShipMove();
             }
             else
             {
@@ -786,5 +791,13 @@ public class EnemyShip : AShip
     public override void SendMessage(Move move)
     {
         throw new System.NotImplementedException();
+    }
+
+    private FMOD.Studio.EventInstance shipMove;
+    public void PlayShipMove()
+    {
+        shipMove = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipMoving");
+        shipMove.start();
+        shipMove.release();
     }
 }

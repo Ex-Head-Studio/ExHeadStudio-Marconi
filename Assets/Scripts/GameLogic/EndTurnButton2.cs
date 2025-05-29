@@ -91,6 +91,8 @@ public class EndTurnButton2 : MonoBehaviour
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(PlanningPhaseEnd);
         buttonTextComponent.text = "Action phase";
+        PlayPhaseButton();
+
     }
 
     public void PlanningPhaseEnd()
@@ -106,6 +108,7 @@ public class EndTurnButton2 : MonoBehaviour
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(ActionPhaseEnded);
         buttonTextComponent.text = "End Turn";
+        PlayPhaseButton();
     }
 
     public void ActionPhaseEnded()
@@ -113,6 +116,14 @@ public class EndTurnButton2 : MonoBehaviour
         actionPhaseEndEvent?.Invoke(new VoidEvent(0));
         button.interactable = false;
         buttonGameObject.transform.DORotate(new Vector3(0, 0, 180), 0.5f);
+    }
+
+    private FMOD.Studio.EventInstance bigButton;
+    public void PlayPhaseButton()
+    {
+        bigButton = FMODUnity.RuntimeManager.CreateInstance("event:/UI/BigButton");
+        bigButton.start();
+        bigButton.release();
     }
 
     #endregion

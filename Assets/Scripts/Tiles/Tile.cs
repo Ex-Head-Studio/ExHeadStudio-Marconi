@@ -253,6 +253,17 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         SetObstacle(tmpObs);
         tmpObs.GetComponent<AbstractObstacle>().SetPosition(GridManager.Instance.GetPositionFromTile(tile));
         tmpObs.GetComponent<AbstractObstacle>().SetTile(tile);
+        PlayObstacle();
+    }
+
+    // suono di ostacolo
+    private FMOD.Studio.EventInstance soundObstacle;
+
+    public void PlayObstacle()
+    {
+        soundObstacle = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Obstacle");
+        soundObstacle.start();
+        soundObstacle.release();
     }
 
     public void SetObstacle(GameObject obstacle)

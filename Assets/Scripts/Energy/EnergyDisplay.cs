@@ -20,7 +20,7 @@ public class EnergyDisplay : MonoBehaviour
     
     [Header("Energy Dial")]
     [SerializeField] private Transform dialTransform; // La manopola che ruota
-    [SerializeField] private float rotationDuration = 0.5f; // Durata dell'animazione di rotazione
+    [SerializeField] private float rotationDuration = 1f; // Durata dell'animazione di rotazione
     [SerializeField] private float degreesPerEnergyUnit = -60f; // Gradi di rotazione per unità di energia
 
    
@@ -67,6 +67,7 @@ public class EnergyDisplay : MonoBehaviour
     // Ruota la manopola da un valore di energia a un altro
     private void RotateDial(int fromEnergy, int toEnergy)
     {
+        PlayEnergySound();
         if (dialTransform == null) return;
 
         // Per rotazione antioraria, l'angolo deve aumentare quando l'energia aumenta
@@ -97,10 +98,13 @@ public class EnergyDisplay : MonoBehaviour
             toAngle,  // Valore target per Z
             rotationDuration  // Durata dell'animazione
         ).SetEase(Ease.OutBack);
-    }
-  
 
-   public void AddTurnEnergy(VoidEvent numberOfRound)
+        // Riproduci il suono di energia quando la manopola ruota
+        
+    }
+
+
+    public void AddTurnEnergy(VoidEvent numberOfRound)
     {
         switch (energyRechargeType)
         {
@@ -170,5 +174,15 @@ public class EnergyDisplay : MonoBehaviour
         {
             SetLightActive(energyLights[i], i < energyAmount);
         }
+    }
+
+    // Suono di energia
+    private FMOD.Studio.EventInstance energySound;
+
+    public void PlayEnergySound()
+    {
+        energySound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Energy");
+        energySound.start();
+        energySound.release();
     }
 }
