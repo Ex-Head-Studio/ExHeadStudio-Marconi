@@ -19,6 +19,7 @@ MonoBehaviour:
   cardDescription: Place a mine on the grid
   cardCost: 3
   isWorldInteractive: 0
+  hasToPlaceSomethingOnTile: 1
   lastingTurns: 1
   cardEffects:
   - {fileID: 11400000, guid: 076344e6a33c35e40862b8f53c71248d, type: 2}

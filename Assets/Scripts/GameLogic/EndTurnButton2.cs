@@ -2,6 +2,7 @@ using System;
 using TMPro;
 using UnityEngine;
 using UnityEngine.UI;
+using DG.Tweening;
 
 [RequireComponent(typeof(PlanningPhaseStartListener))]
 [RequireComponent(typeof(ActionPhaseStartListener))]
@@ -20,6 +21,7 @@ public class EndTurnButton2 : MonoBehaviour
     [SerializeField] private Animator executeAnimator;
     [SerializeField] private Material materialButton;
 
+    [SerializeField] private GameObject buttonGameObject;
     private Button  button;
     private TMP_Text buttonTextComponent;
 
@@ -83,6 +85,9 @@ public class EndTurnButton2 : MonoBehaviour
 
     public void OnPlanningPhaseStart()
     {
+        button.interactable = true;
+ 
+        //transform.DORotate(new Vector3(0, 0, 0), 0.5f);
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(PlanningPhaseEnd);
         buttonTextComponent.text = "Action phase";
@@ -91,10 +96,13 @@ public class EndTurnButton2 : MonoBehaviour
     public void PlanningPhaseEnd()
     {
         planningPhaseEndEvent?.Invoke(new VoidEvent(0));
+        button.interactable = false;
+        buttonGameObject.transform.DORotate(new Vector3(0, 180, 180), 0.5f);
     }
 
     public void OnActionPhaseStart()
     {
+        button.interactable = true;
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(ActionPhaseEnded);
         buttonTextComponent.text = "End Turn";
@@ -103,6 +111,8 @@ public class EndTurnButton2 : MonoBehaviour
     public void ActionPhaseEnded()
     {
         actionPhaseEndEvent?.Invoke(new VoidEvent(0));
+        button.interactable = false;
+        buttonGameObject.transform.DORotate(new Vector3(0, 0, 180), 0.5f);
     }
 
     #endregion

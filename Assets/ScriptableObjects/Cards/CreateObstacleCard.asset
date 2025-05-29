@@ -19,6 +19,7 @@ MonoBehaviour:
   cardDescription: Place an Obstacle on the grid
   cardCost: 2
   isWorldInteractive: 0
+  hasToPlaceSomethingOnTile: 1
   lastingTurns: 1
   cardEffects:
   - {fileID: 11400000, guid: 5a265ffba26632a4da7a05c1c9854aea, type: 2}

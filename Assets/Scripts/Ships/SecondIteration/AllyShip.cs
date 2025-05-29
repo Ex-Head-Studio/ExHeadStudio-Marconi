@@ -491,6 +491,8 @@ public class AllyShip : AShip
 
     IEnumerator MoveShip(Tile tile)
     {
+        //Setto il bool di movimento
+        isMoving = true;
         // Impostiamo la destinazione del movimento
         targetPosition = tile.transform.position;
         
@@ -788,6 +790,9 @@ public class AllyShip : AShip
         // Aggiorniamo la posizione della nave sulla griglia
         GridManager.Instance.MoveShip(this.position, GridManager.Instance.GetPositionFromTile(tile), this.faction);
         this.position = Vector2Int.RoundToInt(GridManager.Instance.GetPositionFromTile(tile));
+
+        isMoving = false;
+
     }
 
     private void ByPassEffect()

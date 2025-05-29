@@ -27,6 +27,8 @@ public class BaseCardData : ScriptableObject
 
     [Tooltip("Whether the card can be dragged in the world or not")]
     [SerializeField] public bool isWorldInteractive = false;
+    [Header("Card Placement")]
+    public bool hasToPlaceSomethingOnTile = false;
     
     [SerializeField] public int lastingTurns = 1;
 

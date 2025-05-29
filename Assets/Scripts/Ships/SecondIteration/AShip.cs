@@ -68,6 +68,10 @@ public abstract class AShip : MonoBehaviour
     protected bool hasStatChanged = false;
 
 
+    //ANIMAZIONE DI MOVIMENTO
+    protected bool isMoving = false;
+
+
     //script di display della salute
     protected DisplayHealth displayHealthScript;
 
@@ -457,6 +461,15 @@ public abstract class AShip : MonoBehaviour
     {
         shipAnimator = animator;
         Debug.Log($"Animator assegnato manualmente alla nave: {shipName}");
+    }
+
+    public bool IsMoving()
+    {
+        if(faction == (int)Entity.ally)
+        {
+            return isMoving;
+        }
+        return false;
     }
 }
 
