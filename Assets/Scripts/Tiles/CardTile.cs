@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using UnityEngine.EventSystems;
 using DG.Tweening;
+using System;
 
 public class CardTile : MonoBehaviour, IPointerClickHandler
 {
@@ -16,6 +17,15 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
 
     //Coda per gli effetti da applicare
     protected Queue<AbstractEffectSO> effectQueue = new Queue<AbstractEffectSO>();
+
+    private Tile tileScript;
+    private UnityEngine.Vector2 tilePosition;
+
+    private void Start()
+    {
+        tileScript = GetComponent<Tile>();
+        tilePosition = GridManager.Instance.GetPositionFromTile(tileScript);
+    }
     
     #region Iscrizione agli eventi
 
@@ -66,13 +76,43 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
     {
         cardToUse = card;
         
+
         if (card.GetCardEntity() == (int)CardEntityType.Tile)
         {
-            //animazione che risponde se la carta selezionata funziona sugli alleati
-            transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+            if (card.hasToPlaceSomethingOnTile)
+            {
+                UnityEngine.Vector2 allyPosition = GridManager.Instance.GetAllyShipPosition();
+                if (allyPosition == UnityEngine.Vector2.negativeInfinity)
+                {
+                    Debug.LogError("La nave alleata non è stata trovata.");
+                    return;
+                }
 
-            isTileSelectable = true;
-            tileCollider.enabled = true;
+                //Non so come posso farlo meglio, ma per ora funziona
+                if (tilePosition.x == allyPosition.x + 1 ||
+                    tilePosition.x == allyPosition.x - 1 ||
+                    tilePosition.y == allyPosition.y + 1 ||
+                    tilePosition.y == allyPosition.y - 1 ||
+                    (tilePosition.x == allyPosition.x + 1 && tilePosition.y == allyPosition.y + 1) ||
+                    (tilePosition.x == allyPosition.x - 1 && tilePosition.y == allyPosition.y - 1) ||
+                    (tilePosition.x == allyPosition.x + 1 && tilePosition.y == allyPosition.y - 1) ||
+                    (tilePosition.x == allyPosition.x - 1 && tilePosition.y == allyPosition.y + 1))
+                {
+                    //animazione per il tile
+                    transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+
+                    isTileSelectable = true;
+                    tileCollider.enabled = true;
+                }
+            }
+            else
+            {
+                transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+
+                isTileSelectable = true;
+                tileCollider.enabled = true;
+            }
+
         }
     }
 

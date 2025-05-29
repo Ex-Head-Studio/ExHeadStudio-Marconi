@@ -64,7 +64,7 @@ public abstract class AShip : MonoBehaviour
 
     protected int oldStatValue;
     protected string oldStatName;
-    public float timeToMove=3f;
+    public float timeToMove = 3f;
     protected bool hasStatChanged = false;
 
 
@@ -78,7 +78,7 @@ public abstract class AShip : MonoBehaviour
     [SerializeField] ParticleSystem dodgeEffect;
 
     [SerializeField] protected Animator shipAnimator;
-    
+
     void Awake()
     {
         mapHeight = GridManager.Instance._height;
@@ -87,6 +87,26 @@ public abstract class AShip : MonoBehaviour
         shipMoves = new List<Move>();
         displayHealthScript = GetComponent<DisplayHealth>();
 
+        if (shipAnimator == null)
+        {
+            // Prima provo a trovarlo su questo oggetto
+            shipAnimator = GetComponent<Animator>();
+
+            // Se non lo trovo, cerco nei figli
+            if (shipAnimator == null)
+            {
+                shipAnimator = GetComponentInChildren<Animator>();
+
+                if (shipAnimator == null)
+                {
+                    Debug.LogWarning("Animator non trovato per la nave: " + name);
+                }
+                else
+                {
+                    Debug.Log("Animator trovato nei figli per la nave: " + name);
+                }
+            }
+        }
 
         GetComponent<OnShipAttackEventListener>().AddMethodToExecute(OnAttacked);
         GetComponent<StartedTurnEventListener>().AddMethodToExecute(RestoreStat);
@@ -113,7 +133,8 @@ public abstract class AShip : MonoBehaviour
 
     public void OnAttacked(ShipAttackStruct attackStruct)
     {
-        if (position.x != attackStruct.gridPosition.x || position.y != attackStruct.gridPosition.y) {
+        if (position.x != attackStruct.gridPosition.x || position.y != attackStruct.gridPosition.y)
+        {
             return;
         }
         int dodgeChance = Random.Range(0, 4);
@@ -123,7 +144,7 @@ public abstract class AShip : MonoBehaviour
             return;
         }
 
-        
+
         //Test per la creazione dei particle
         //calcolo dell'angolo
         Quaternion correctAngle = Quaternion.FromToRotation(shipSO.attackReceivedParticle.gameObject.transform.up, gameObject.transform.up);
@@ -143,7 +164,7 @@ public abstract class AShip : MonoBehaviour
             GetComponentInChildren<Animator>().SetTrigger("Death");
             shipSO.shipDestroyedEvent?.Invoke(new ShipDestroyedStruct(shipName, faction, position, this));
         }
-        
+
     }
 
     private FMOD.Studio.EventInstance shipDamage;
@@ -229,15 +250,129 @@ public abstract class AShip : MonoBehaviour
 
     private void ChangeClassModel(ShipSO newClass)
     {
-        //la ricerca del children viene fatta a partire dall'animator perchè non posso fare diversamente
+        // Verifica se esiste un animator
         if (gameObject.GetComponentInChildren<Animator>() != null)
         {
+            // Ottieni l'animator attuale e il suo GameObject
             Animator shipAnim = gameObject.GetComponentInChildren<Animator>();
-            ShipModelMaterialAssignement shipModelMaterial = shipAnim.gameObject.GetComponentInChildren<ShipModelMaterialAssignement>();
-            GameObject newModel = Instantiate(newClass.shipClassModel, shipAnim.gameObject.transform, false);
-            Material oldMat = shipModelMaterial.GetMaterial();
-            newModel.GetComponentInChildren<ShipModelMaterialAssignement>().AssignMaterialToMeshRenderers(oldMat);
-            Destroy(shipModelMaterial.gameObject);
+            GameObject animatorObject = shipAnim.gameObject;
+            
+            Debug.Log($"Animator corrente: {shipAnim.name} su GameObject: {animatorObject.name}");
+            
+            // Cerca l'oggetto "Ship" nella gerarchia
+            Transform shipTransform = null;
+            
+            // Prima cerca tra i figli diretti di questo GameObject
+            for (int i = 0; i < transform.childCount; i++)
+            {
+                if (transform.GetChild(i).name.ToLower().Contains("ship"))
+                {
+                    shipTransform = transform.GetChild(i);
+                    break;
+                }
+            }
+            
+            // Se non lo troviamo direttamente, cerchiamo di risalire la gerarchia dell'animator
+            if (shipTransform == null)
+            {
+                Transform current = animatorObject.transform;
+                while (current != null && current != transform)
+                {
+                    if (current.name.ToLower().Contains("ship"))
+                    {
+                        shipTransform = current;
+                        break;
+                    }
+                    current = current.parent;
+                }
+            }
+            
+            // Se ancora non troviamo Ship, usiamo il parent dell'animator come fallback
+            if (shipTransform == null)
+            {
+                shipTransform = animatorObject.transform.parent;
+                Debug.Log($"Oggetto Ship non trovato, usando parent dell'animator: {shipTransform.name}");
+            }
+            else
+            {
+                Debug.Log($"Trovato oggetto Ship: {shipTransform.name}");
+            }
+            
+            // Troviamo il modello attuale (con il ShipModelMaterialAssignement)
+            ShipModelMaterialAssignement shipModelMaterial = animatorObject.GetComponentInChildren<ShipModelMaterialAssignement>();
+            GameObject oldModelObject = shipModelMaterial ? shipModelMaterial.gameObject : animatorObject;
+            
+            // Prendi il materiale originale
+            Material oldMat = shipModelMaterial ? shipModelMaterial.GetMaterial() : null;
+            
+            // Trova tutti i vecchi modelli sotto Ship e distruggili
+            List<GameObject> oldModelsToDestroy = new List<GameObject>();
+            for (int i = 0; i < shipTransform.childCount; i++)
+            {
+                Transform child = shipTransform.GetChild(i);
+                // Non distruggere i componenti che non fanno parte del modello
+                if (child.GetComponentInChildren<ShipModelMaterialAssignement>() != null)
+                {
+                    oldModelsToDestroy.Add(child.gameObject);
+                }
+            }
+            
+            // Istanzia il nuovo modello sotto l'oggetto Ship
+            GameObject newModel = Instantiate(newClass.shipClassModel, shipTransform, false);
+            
+            Debug.Log($"Nuovo modello istanziato: {newModel.name} con parent: {newModel.transform.parent.name}");
+            
+            // Applica il materiale al nuovo modello
+            ShipModelMaterialAssignement newMaterialAssigner = newModel.GetComponentInChildren<ShipModelMaterialAssignement>();
+            if (newMaterialAssigner != null && oldMat != null)
+            {
+                newMaterialAssigner.AssignMaterialToMeshRenderers(oldMat);
+            }
+            else if (newMaterialAssigner == null)
+            {
+                Debug.LogError($"ShipModelMaterialAssignement non trovato nel nuovo modello: {newModel.name}");
+            }
+            
+            // Cerca l'animator nel nuovo modello
+            Animator newAnimator = newModel.GetComponent<Animator>();
+            if (newAnimator == null)
+            {
+                newAnimator = newModel.GetComponentInChildren<Animator>();
+            }
+            
+            // Se abbiamo trovato un animator nel nuovo modello, aggiorna il riferimento
+            if (newAnimator != null)
+            {
+                Debug.Log($"Trovato nuovo animator: {newAnimator.name} su GameObject: {newAnimator.gameObject.name}");
+                
+                // Trasferisci il controller dall'animator vecchio al nuovo
+                if (shipAnim.runtimeAnimatorController != null)
+                {
+                    Debug.Log($"Controller trasferito: {shipAnim.runtimeAnimatorController.name}");
+                    newAnimator.runtimeAnimatorController = shipAnim.runtimeAnimatorController;
+                }
+                
+                // Aggiorna il riferimento all'animator nella classe
+                shipAnimator = newAnimator;
+                
+                Debug.Log($"Animator aggiornato con quello del nuovo modello: {newModel.name}");
+            }
+            else
+            {
+                Debug.LogError($"Nessun animator trovato nel nuovo modello: {newModel.name}");
+            }
+            
+            // Ora che abbiamo sostituito il modello e aggiornato l'animator, 
+            // possiamo distruggere i vecchi modelli
+            foreach (GameObject objToDestroy in oldModelsToDestroy)
+            {
+                Debug.Log($"Distruggo vecchio modello: {objToDestroy.name}");
+                Destroy(objToDestroy);
+            }
+        }
+        else
+        {
+            Debug.LogError("Nessun animator trovato nella nave corrente");
         }
     }
 
@@ -318,6 +453,11 @@ public abstract class AShip : MonoBehaviour
         return GridManager.Instance.GetTileAtPosition(position);
     }
 
+    public void SetShipAnimator(Animator animator)
+    {
+        shipAnimator = animator;
+        Debug.Log($"Animator assegnato manualmente alla nave: {shipName}");
+    }
 }
 
 
