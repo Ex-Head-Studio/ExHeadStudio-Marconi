@@ -122,6 +122,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
        
         Debug.Log("Esecuzione turno nemico");
         for(int j=0 ;j<shipManagerSO.initialEnemyShips; j++){
+            if (j > enemies.Count) j = 0;
             enemies[j].LookForMoves();
         }
         StartCoroutine(EndEnemyTurn());
