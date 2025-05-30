@@ -1,0 +1,121 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1001 &6350139948349217521
+PrefabInstance:
+  m_ObjectHideFlags: 0
+  serializedVersion: 2
+  m_Modification:
+    serializedVersion: 3
+    m_TransformParent: {fileID: 0}
+    m_Modifications:
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalPosition.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalPosition.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalPosition.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalRotation.w
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalRotation.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalRotation.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalRotation.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.x
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.y
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 3563655218787837249, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalEulerAnglesHint.z
+      value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_Name
+      value: BarrierObstaclePrefab2
+      objectReference: {fileID: 0}
+    m_RemovedComponents: []
+    m_RemovedGameObjects: []
+    m_AddedGameObjects: []
+    m_AddedComponents:
+    - targetCorrespondingSourceObject: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: -9091640629875902306}
+    - targetCorrespondingSourceObject: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      insertIndex: -1
+      addedObject: {fileID: 5652963535081345621}
+  m_SourcePrefab: {fileID: 100100000, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+--- !u!1 &567488941700774413 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 6899543821610524924, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+  m_PrefabInstance: {fileID: 6350139948349217521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!1 &2832146131443869211 stripped
+GameObject:
+  m_CorrespondingSourceObject: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+  m_PrefabInstance: {fileID: 6350139948349217521}
+  m_PrefabAsset: {fileID: 0}
+--- !u!114 &-9091640629875902306
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832146131443869211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 4f89c1674f58a5d4eb3a52e0119e728e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  color: {r: 0.6014151, g: 0.77922785, b: 0.8018868, a: 1}
+  obstaclePosition: {x: 0, y: 0}
+  tile: {fileID: 0}
+  healthBarPrefab: {fileID: 5625949989435475814, guid: b55440878e3e5d6458df9eb2294425b5, type: 3}
+  healthBarCanvasPrefab: {fileID: 567488941700774413}
+  obstacleHealth: 2
+--- !u!114 &5652963535081345621
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2832146131443869211}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 0b6d7cf1e54f24d45ac4e708955fe478, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  eventToListen: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
+  onEvent:
+    m_PersistentCalls:
+      m_Calls:
+      - m_Target: {fileID: -9091640629875902306}
+        m_TargetAssemblyTypeName: BarrierObstacle, Assembly-CSharp
+        m_MethodName: OnAttacked
+        m_Mode: 0
+        m_Arguments:
+          m_ObjectArgument: {fileID: 0}
+          m_ObjectArgumentAssemblyTypeName: UnityEngine.Object, UnityEngine
+          m_IntArgument: 0
+          m_FloatArgument: 0
+          m_StringArgument: 
+          m_BoolArgument: 0
+        m_CallState: 2

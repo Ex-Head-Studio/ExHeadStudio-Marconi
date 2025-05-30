@@ -113,7 +113,8 @@ MonoBehaviour:
   isInteractable: 0
   tileCollider: {fileID: 2568195697258624638}
   highlightEffect: {fileID: 7800389564038900551}
-  obstaclePrefab: {fileID: 519244878604188145, guid: b498137ea08635e42adf7e4e0937efd7, type: 3}
+  selectableColor: {r: 1, g: 0.92156863, b: 0.015686275, a: 1}
+  obstaclePrefab: {fileID: 2832146131443869211, guid: 16bc9ad58b9a4b64f84d39f8d55b7bec, type: 3}
 --- !u!1 &4542769645225694533 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 7425577909506764158, guid: b7bc4d5932a267f40a299d2751cdd372, type: 3}
