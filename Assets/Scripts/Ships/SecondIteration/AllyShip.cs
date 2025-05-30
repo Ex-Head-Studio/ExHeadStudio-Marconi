@@ -311,6 +311,36 @@ public class AllyShip : AShip
                 AttackInLine(false);
             }
         }
+        else if (effectSO is DamageEffect damageEffect)
+        {
+            // Se la tile è una nave nemica, applicare il danno
+            if (tile._type == TileType.Enemy && tile.GetShip() != null)
+            {
+                AShip shipComponent = tile.GetShip().GetComponent<AShip>();
+                if (shipComponent != null)
+                {
+                    shipComponent.TakeDamage(damageEffect.damage);
+                    Debug.Log("Danno applicato alla nave: " + shipComponent.gameObject.name);
+                }
+                else
+                {
+                    Debug.LogError("La nave non ha un componente AShip!");
+                }
+            }
+            else
+            {
+                Debug.LogWarning("Non è possibile applicare danno a questa casella");
+            }
+            
+            // Disattiva il sistema di targeting
+            foreach (Move move in shipMoves)
+            {
+                GridManager.Instance.GetTileAtPosition(move.GetTargetPos()).SetTileNotInteractable(faction);
+            }
+            
+            // Comunica che l'effetto è terminato
+            effectSO.EndEffect(0);
+        }
         else if (tile._type == TileType.Empty)
         {
             Debug.Log("Movement in tile: " + tile.name);

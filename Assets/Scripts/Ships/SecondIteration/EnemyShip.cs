@@ -6,7 +6,7 @@ public class EnemyShip : AShip
 {
     Move initialMove;
     int idMove = 0;
-    
+
     //Quando viene chiamata la fine del turno, Execute Instructions fa fare l'azione migliore alla nave, a meno che non sia stata bloccata
     //dal giocatore, in quel caso non fa nulla
     public override void ExecuteMove()
@@ -27,7 +27,7 @@ public class EnemyShip : AShip
             case MessageType.movement:
 
                 StartCoroutine(MoveShip());
-                
+
                 break;
         }
         moveDone = true;
@@ -42,22 +42,22 @@ public class EnemyShip : AShip
         yield return new WaitForSeconds(0);
         shipSO.attackEvent?.Invoke(new ShipAttackStruct(initialMove.GetTargetPos(), shipSO.attackPower));
     }
-    
+
     IEnumerator MoveShip()
     {
         // Impostiamo la destinazione del movimento
         Vector3 targetPosition = GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).transform.position;
-        
+
         GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).SetType(TileType.Enemy, faction);
         GridManager.Instance.GetTileAtPosition(position).SetTypeEmpty();
-        
+
         // Calcoliamo la direzione verso cui la nave deve guardare
         Vector3 direction = targetPosition - transform.position;
-        
+
         // Cerchiamo l'oggetto ship e il suo figlio da ruotare
         Transform shipObject = null;
         Transform shipChild = null;
-        
+
         // Cerchiamo prima l'oggetto ship tra i figli diretti
         for (int i = 0; i < transform.childCount; i++)
         {
@@ -72,7 +72,7 @@ public class EnemyShip : AShip
                 break;
             }
         }
-        
+
         // Se non abbiamo trovato l'oggetto ship nei figli diretti, lo cerchiamo ricorsivamente
         if (shipObject == null)
         {
@@ -86,7 +86,7 @@ public class EnemyShip : AShip
                     {
                         return child;
                     }
-                    
+
                     Transform result = FindShipRecursive(child);
                     if (result != null)
                     {
@@ -95,26 +95,26 @@ public class EnemyShip : AShip
                 }
                 return null;
             }
-            
+
             shipObject = FindShipRecursive(transform);
             if (shipObject != null && shipObject.childCount > 0)
             {
                 shipChild = shipObject.GetChild(0);
             }
         }
-        
+
         // Se ancora non abbiamo trovato nulla, usiamo l'animator come riferimento
         if (shipObject == null && shipAnimator != null)
         {
             shipObject = shipAnimator.transform;
-            
+
             // Cerca il padre che contiene "ship" nel nome
             Transform current = shipAnimator.transform;
             while (current != null && !current.name.ToLower().Contains("ship"))
             {
                 current = current.parent;
             }
-            
+
             if (current != null)
             {
                 shipObject = current;
@@ -130,39 +130,39 @@ public class EnemyShip : AShip
                 shipChild = shipAnimator.transform.GetChild(0);
             }
         }
-        
-        Debug.Log("ShipObject: " + (shipObject != null ? shipObject.name : "null") + 
+
+        Debug.Log("ShipObject: " + (shipObject != null ? shipObject.name : "null") +
                 ", ShipChild: " + (shipChild != null ? shipChild.name : "null") +
                 ", Animator: " + (shipAnimator != null ? shipAnimator.name : "null"));
-        
+
         // Oggetto da ruotare (il figlio dell'oggetto ship se esiste, altrimenti l'oggetto ship stesso)
         Transform objectToRotate = shipChild != null ? shipChild : shipObject;
-        
+
         // Ruotiamo l'oggetto trovato, se presente
         if (direction != Vector3.zero && objectToRotate != null)
         {
             // Calcola la rotazione guardando verso la direzione target
             Quaternion targetRotation = Quaternion.LookRotation(direction, Vector3.up);
-            
+
             // Log della direzione per debug
             Debug.Log($"Direzione movimento: {direction}, angolo Y originale: {targetRotation.eulerAngles.y}");
-            
+
             // Testa se la direzione è invertita
             bool isInverted = false;
-            
+
             // Controlla se il modello è invertito nella gerarchia
             Transform modelTransform = objectToRotate;
             while (modelTransform != null)
             {
                 // Se troviamo una rotazione di circa 180° sull'asse X o Z, consideriamo il modello invertito
-                if (Mathf.Approximately(Mathf.Abs(modelTransform.localRotation.eulerAngles.x), 180f) || 
+                if (Mathf.Approximately(Mathf.Abs(modelTransform.localRotation.eulerAngles.x), 180f) ||
                     Mathf.Approximately(Mathf.Abs(modelTransform.localRotation.eulerAngles.z), 180f))
                 {
                     isInverted = !isInverted; // Toggle l'inversione
                 }
                 modelTransform = modelTransform.parent;
             }
-            
+
             // Se necessario, inverti l'angolo Y (giro di 180°)
             float yAngle = targetRotation.eulerAngles.y;
             if (isInverted)
@@ -170,7 +170,7 @@ public class EnemyShip : AShip
                 yAngle = (yAngle + 180f) % 360f;
                 Debug.Log($"Modello invertito: rotazione Y corretta a {yAngle}");
             }
-            
+
             // Gestione speciale in base alla direzione di movimento
             if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
             {
@@ -200,12 +200,12 @@ public class EnemyShip : AShip
                     targetRotation = Quaternion.Euler(90f, 0f, 90f);
                 }
             }
-            
+
             Debug.Log($"Rotazione finale applicata: {targetRotation.eulerAngles}");
-            
+
             // Cerca l'oggetto Ship per applicare la rotazione direttamente ad esso
             Transform shipTransform = null;
-            
+
             // Cerca prima nei figli diretti
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -215,22 +215,22 @@ public class EnemyShip : AShip
                     break;
                 }
             }
-            
+
             // Se non l'abbiamo trovato nei figli diretti, controlliamo se shipObject è valido
             if (shipTransform == null && shipObject != null)
             {
                 shipTransform = shipObject;
             }
-            
+
             // Salva la rotazione iniziale dell'oggetto Ship
             Quaternion startRotation = shipTransform != null ? shipTransform.rotation : objectToRotate.rotation;
-            
+
             // Avviamo l'animazione di Startup
             if (shipAnimator != null)
             {
                 shipAnimator.SetBool("Move", true);
                 shipAnimator.Play("Startup");
-                
+
                 // Ottieni la durata dell'animazione
                 float animDuration = 0;
                 if (shipAnimator.GetCurrentAnimatorClipInfo(0).Length > 0)
@@ -245,16 +245,16 @@ public class EnemyShip : AShip
                 {
                     animDuration = 0.5f;
                 }
-                
+
                 // Variabili per la rotazione
                 float startTime = Time.time;
                 float elapsedTime = 0f;
-                
+
                 // Ruotiamo gradualmente l'oggetto Ship durante l'animazione di Startup
                 while (elapsedTime < animDuration)
                 {
                     float t = elapsedTime / animDuration;
-                    
+
                     // Applica la rotazione graduale all'oggetto Ship
                     if (shipTransform != null)
                     {
@@ -265,11 +265,11 @@ public class EnemyShip : AShip
                         // Fallback all'oggetto objectToRotate se Ship non è stato trovato
                         objectToRotate.rotation = Quaternion.Slerp(startRotation, targetRotation, t);
                     }
-                    
+
                     elapsedTime = Time.time - startTime;
                     yield return null;
                 }
-                
+
                 // Assicuriamoci che la rotazione finale sia esatta
                 if (shipTransform != null)
                 {
@@ -279,14 +279,14 @@ public class EnemyShip : AShip
                 {
                     objectToRotate.rotation = targetRotation;
                 }
-                
+
                 // Aspettiamo che l'animatore passi effettivamente allo stato "Move"
                 while (!shipAnimator.GetCurrentAnimatorStateInfo(0).IsName("Move"))
                 {
                     yield return null;
                 }
 
-                
+
 
                 // Minima attesa per assicurarci che l'animazione di Move sia iniziata
                 while (shipAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.05f)
@@ -303,7 +303,7 @@ public class EnemyShip : AShip
                 float rotationDuration = 0.5f;
                 float elapsedTime = 0f;
                 float startTime = Time.time;
-                
+
                 while (elapsedTime < rotationDuration)
                 {
                     float t = elapsedTime / rotationDuration;
@@ -311,11 +311,11 @@ public class EnemyShip : AShip
                     elapsedTime = Time.time - startTime;
                     yield return null;
                 }
-                
+
                 objectToRotate.rotation = targetRotation;
                 yield return new WaitForSeconds(0.2f);
             }
-            
+
             // Iniziamo il movimento immediatamente dopo che la rotazione è completa
             Debug.Log("Starting movement immediately after rotation");
             startMovement = true;
@@ -334,19 +334,19 @@ public class EnemyShip : AShip
         {
             yield return null;
         }
-        
+
         // Quando siamo abbastanza vicini, fermiamo l'animazione di movimento
         if (shipAnimator != null)
         {
             shipAnimator.SetBool("Move", false);
         }
-        
+
         // Completiamo il movimento con uno scatto finale
         startMovement = false;
-        
+
         // Posizionamento finale immediato
         transform.position = targetPosition;
-        
+
         // Aggiorniamo la posizione della nave sulla griglia
         GridManager.Instance.MoveShip(this.position, initialMove.GetTargetPos(), faction);
         this.position = initialMove.GetTargetPos();
@@ -358,20 +358,20 @@ public class EnemyShip : AShip
         {
             // Destinazione del movimento
             Vector3 targetPosition = GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).transform.position;
-            
+
             // Aumentiamo considerevolmente la velocità base
             float baseSpeed = 1.0f; // Velocità base aumentata (era basata su timeToMove)
-            
+
             // Calcolo della distanza per determinare una velocità proporzionale
             float distance = Vector3.Distance(transform.position, targetPosition);
-            
+
             // Impostiamo una velocità minima più alta per evitare rallentamenti
             float speed = Mathf.Max(baseSpeed, distance * 2.0f);
-            
+
             // Movimento a velocità aumentata
             transform.position = Vector3.MoveTowards(
-                transform.position, 
-                targetPosition, 
+                transform.position,
+                targetPosition,
                 speed * Time.deltaTime
             );
         }
@@ -613,33 +613,33 @@ public class EnemyShip : AShip
 
 
         //Cerca a sx
-        for (int x = position.x - 1; x >= position.x - attackRange && x>=0 && x < GridManager.Instance._width; x--)
+        for (int x = position.x - 1; x >= position.x - attackRange && x >= 0 && x < GridManager.Instance._width; x--)
         {
             if (GridManager.Instance.GetTileAtPosition(new Vector2Int(x, position.y)).GetType() == TileType.Ally)
-                {
+            {
 
-                    Vector2Int pos = new Vector2Int(x, position.y);
-                    if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
-                    {
+                Vector2Int pos = new Vector2Int(x, position.y);
+                if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                {
                     Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     shipMoves.Add(move);
                     canAttack = true;
                     break;
-                    }
-                    Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
-                    if (Vector2Int.Distance(position, pos) == shipSO.attackRange)
-                    {
-
-                        newMove.value += 6;
-
-
-                    }
-                    else if (Vector2Int.Distance(position, pos) < shipSO.attackRange && Vector2Int.Distance(position, pos) > 0)
-                    {
-                        newMove.value += 5;
-                    }
-                    shipMoves.Add(newMove);
                 }
+                Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                if (Vector2Int.Distance(position, pos) == shipSO.attackRange)
+                {
+
+                    newMove.value += 6;
+
+
+                }
+                else if (Vector2Int.Distance(position, pos) < shipSO.attackRange && Vector2Int.Distance(position, pos) > 0)
+                {
+                    newMove.value += 5;
+                }
+                shipMoves.Add(newMove);
+            }
         }
         //Cerca a dx
         for (int x = position.x + 1; x <= position.x + attackRange && x >= 0 && x < GridManager.Instance._width; x++)
@@ -647,13 +647,13 @@ public class EnemyShip : AShip
             if (GridManager.Instance.GetTileAtPosition(new Vector2Int(x, position.y)).GetType() == TileType.Ally)
             {
                 Vector2Int pos = new Vector2Int(x, position.y);
-                if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
-                    {
+                if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                {
                     Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     shipMoves.Add(move);
                     canAttack = true;
                     break;
-                    }
+                }
                 Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
                 if (Vector2Int.Distance(position, pos) == shipSO.attackRange)
                 {
@@ -673,65 +673,65 @@ public class EnemyShip : AShip
         for (int y = position.y - 1; y >= position.y - attackRange && y >= 0 && y < GridManager.Instance._height; y--)
         {
             if (GridManager.Instance.GetTileAtPosition(new Vector2Int(position.x, y))._type == TileType.Ally)
+            {
+                Vector2Int pos = new Vector2Int(position.x, y);
+                if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                 {
-                    Vector2Int pos = new Vector2Int(position.x, y);
-                    if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
-                    {
                     Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     shipMoves.Add(move);
                     canAttack = true;
                     break;
-                    }
-                    Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
-                    if (Vector2Int.Distance(position, pos) == attackRange)
-                    {
-
-                        newMove.value += 6;
-                    }
-                    else if (Vector2Int.Distance(position, pos) < attackRange && Vector2Int.Distance(position, pos) > 0)
-                    {
-
-                        newMove.value += 5;
-                    }
-                    shipMoves.Add(newMove);
                 }
+                Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                if (Vector2Int.Distance(position, pos) == attackRange)
+                {
+
+                    newMove.value += 6;
+                }
+                else if (Vector2Int.Distance(position, pos) < attackRange && Vector2Int.Distance(position, pos) > 0)
+                {
+
+                    newMove.value += 5;
+                }
+                shipMoves.Add(newMove);
+            }
         }
-        for (int y = position.y + 1 ; y <= position.y + attackRange && y >= 0 && y < GridManager.Instance._height; y++)
+        for (int y = position.y + 1; y <= position.y + attackRange && y >= 0 && y < GridManager.Instance._height; y++)
         {
-            
-                //Controlla se la tile è occupata da un nemico, se si, aggiungi il valore della mossa
-                if (GridManager.Instance.GetTileAtPosition(new Vector2Int(position.x, y)).GetType() == TileType.Ally)
+
+            //Controlla se la tile è occupata da un nemico, se si, aggiungi il valore della mossa
+            if (GridManager.Instance.GetTileAtPosition(new Vector2Int(position.x, y)).GetType() == TileType.Ally)
+            {
+                Vector2Int pos = new Vector2Int(position.x, y);
+                if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                 {
-                    Vector2Int pos = new Vector2Int(position.x, y);
-                    if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
-                    {
                     Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
                     shipMoves.Add(move);
                     canAttack = true;
                     break;
-                    }
-                    Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
-                    if (Vector2Int.Distance(position, pos) == shipSO.attackRange)
-                    {
-
-                        newMove.value += 6;
-                    }
-                    else if (Vector2Int.Distance(position, pos) < shipSO.attackRange && Vector2Int.Distance(position, pos) > 0)
-                    {
-
-                        newMove.value += 5;
-                    }
-                    shipMoves.Add(newMove);
                 }
-            
+                Move newMove = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                if (Vector2Int.Distance(position, pos) == shipSO.attackRange)
+                {
+
+                    newMove.value += 6;
+                }
+                else if (Vector2Int.Distance(position, pos) < shipSO.attackRange && Vector2Int.Distance(position, pos) > 0)
+                {
+
+                    newMove.value += 5;
+                }
+                shipMoves.Add(newMove);
+            }
+
         }
 
 
 
-        
+
         //Ordina le mosse per valore decrescente, in modo da avere prima le mosse più vantaggiose.
         shipMoves = shipMoves.OrderByDescending(x => x.value).ToList();
-        
+
         if (shipMoves.Count > 0 && shipMoves.Where(x => x.GetMessageType() == MessageType.attack).ToList().Count > 0)
         {
             canAttack = true;
@@ -744,7 +744,7 @@ public class EnemyShip : AShip
             initialMove = shipMoves[0];
         }
         Debug.Log(shipMoves.Count);
-        
+
         //GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos()).SetTileInteractable(faction, initialMove);
         //Debug.Log("Ship: " + shipName + " performs: " + initialMove.GetMessageType() + " on: " + initialMove.GetTargetPos());
         return canAttack;
@@ -799,5 +799,92 @@ public class EnemyShip : AShip
         shipMove = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipMoving");
         shipMove.start();
         shipMove.release();
+    }
+    
+
+    // Nella classe EnemyShip, aggiungi questo metodo
+    public void ResetAction()
+    {
+        // Resetta lo stato della nave nemica alla fine del turno
+        Debug.Log($"Resettando nave nemica: {shipName}");
+        
+        // Implementa qui la tua logica di reset specifica
+        // Ad esempio:
+        // - Resetta i punti azione
+        // - Riattiva le abilità
+        // - Resetta i contatori di cooldown
+        // - ecc.
+    }
+
+    // Modifica il metodo TakeDamage per usare i membri della classe base
+
+    public override void TakeDamage(int damage)
+    {
+        // Chiama il metodo della classe base per aggiornare gli HP
+        base.TakeDamage(damage);
+        
+        // Aggiungi feedback visivo e sonoro
+        Debug.Log($"EnemyShip {shipName} ha subito {damage} danni! HP rimanenti: {health}");
+        
+        // Riproduzione effetto sonoro di danno
+        PlayDamageSound();
+        
+        // Effetto visivo di danno (cambia il materiale temporaneamente per mostrare il danno)
+        StartCoroutine(FlashDamage());
+    }
+
+    // Aggiungi questo metodo se manca
+    private void PlayDamageSound()
+    {
+        // Verifica se FMOD è disponibile
+        if (FMODUnity.RuntimeManager.HasBankLoaded("event:/SFX/ShipDamage"))
+        {
+            FMOD.Studio.EventInstance damageSound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipDamage");
+            damageSound.start();
+            damageSound.release();
+        }
+        else
+        {
+            // Fallback per audio standard Unity se FMOD non è disponibile
+            AudioSource audioSource = GetComponent<AudioSource>();
+            if (audioSource != null && audioSource.clip != null)
+            {
+                audioSource.Play();
+            }
+        }
+    }
+
+    // Aggiungi questo metodo
+    private IEnumerator FlashDamage()
+    {
+        // Cerca tutti i renderer nella gerarchia
+        Renderer[] renderers = GetComponentsInChildren<Renderer>();
+        List<Material> originalMaterials = new List<Material>();
+        List<Color> originalColors = new List<Color>();
+        
+        // Salva i materiali e i colori originali
+        foreach (Renderer renderer in renderers)
+        {
+            if (renderer != null && renderer.material != null)
+            {
+                originalMaterials.Add(renderer.material);
+                originalColors.Add(renderer.material.color);
+                
+                // Cambia il colore in rosso per mostrare il danno
+                renderer.material.color = Color.red;
+            }
+        }
+        
+        // Attendi un breve periodo
+        yield return new WaitForSeconds(0.2f);
+        
+        // Ripristina i colori originali
+        for (int i = 0; i < renderers.Length; i++)
+        {
+            if (renderers[i] != null && i < originalColors.Count)
+            {
+                renderers[i].material.color = originalColors[i];
+            }
+        }
     }
 }

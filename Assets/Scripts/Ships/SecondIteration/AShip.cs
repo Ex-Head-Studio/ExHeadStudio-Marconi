@@ -31,9 +31,9 @@ public abstract class AShip : MonoBehaviour
         Waiting
     }
 
-    public string shipName;
-    public IShipManager manager;
-
+    // Variabili che devono essere accessibili alle classi derivate
+    public string shipName; // Era protected
+    public int faction;     // Era protected
 
     // questa va inserita nella logica delle navi
     protected int health;
@@ -51,7 +51,7 @@ public abstract class AShip : MonoBehaviour
     public List<Move> shipMoves;
     protected bool canMove;
     protected bool canAttack;
-    public int faction;
+    //public int faction;
     public bool startMovement = false;
 
     //per il camera shake
@@ -207,7 +207,6 @@ public abstract class AShip : MonoBehaviour
 
     public void SetupShip(ShipSO shipData, string name, int faction, ShipManager2 shipManager2)
     {
-
         this.shipSO = shipData;
         this.shipName = name;
         this.gameObject.name = this.shipName;
@@ -388,12 +387,73 @@ public abstract class AShip : MonoBehaviour
     /// <summary>
     /// The damage the ship has to take
     /// </summary></remark>
-    public void TakeDamage(int damage)
+    public virtual void TakeDamage(int damage)
     {
-        Debug.Log("Damage received");
-        shipSO.attackEvent?.Invoke(new ShipAttackStruct(this.position, damage));
+        // Riduce gli HP della nave
+        health -= damage;
+        
+        Debug.Log($"AShip {shipName} ha subito {damage} danni. HP rimanenti: {health}");
+        
+        // Aggiorna l'UI della salute, se disponibile
+        UpdateHealthDisplay(damage);
+        
+        // Verifica se la nave è stata distrutta
+        CheckForDestruction();
     }
 
+    private void UpdateHealthDisplay(int damage)
+    {
+        if (displayHealthScript != null)
+        {
+            displayHealthScript.UpdateHealthBar(damage);
+        }
+    }
+
+    private void CheckForDestruction()
+    {
+        if (health <= 0)
+        {
+            OnDestroyed();
+        }
+    }
+
+    // Metodo chiamato quando la nave viene distrutta
+    protected virtual void OnDestroyed()
+    {
+        Debug.Log($"La nave {shipName} è stata distrutta!");
+        
+        NotifyDestruction();
+        RemoveFromGrid();
+        DestroyShip();
+    }
+
+    private void NotifyDestruction()
+    {
+        if (shipSO != null && shipSO.shipDestroyedEvent != null)
+        {
+            ShipDestroyedStruct shipDestroyedStruct = new ShipDestroyedStruct(
+                shipName,
+                faction,
+                position,
+                this
+            );
+            
+            shipSO.shipDestroyedEvent.Invoke(shipDestroyedStruct);
+        }
+    }
+
+    private void RemoveFromGrid()
+    {
+        if (GridManager.Instance != null)
+        {
+            GridManager.Instance.RemoveShip(this);
+        }
+    }
+
+    private void DestroyShip()
+    {
+        Destroy(gameObject);
+    }
 
     public void ChangeStat(string statName, int amount)
     {
@@ -471,6 +531,16 @@ public abstract class AShip : MonoBehaviour
         }
         return false;
     }
+
+    // Aggiungi una proprietà che espone healthPoints pubblicamente
+    public int HealthPoints
+    {
+        get { return health; }
+        set { health = value; }
+    }
+
+    // Aggiungi questo campo se non esiste già
+    public ShipManager2 manager;
 }
 
 

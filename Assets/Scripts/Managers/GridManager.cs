@@ -316,4 +316,94 @@ public class GridManager : MonoBehaviour, ICardDropArea
         //throw new NotImplementedException();
     }
 
+    // Metodi per la gestione della selezione delle tile
+private List<Tile> selectableTiles = new List<Tile>();
+private AbstractEffectSO currentEffect;
+
+public void EnableTileSelection(TileType tileType)
+{
+    DisableTileSelection();
+    Debug.Log($"Abilitazione selezione tile di tipo {tileType}");
+    
+    foreach (var tilePair in _tiles)
+    {
+        Tile tile = tilePair.Value;
+        bool isSelectable = false;
+        
+        // Seleziona tile del tipo richiesto o tile con nave nemica
+        if (tile.GetType() == tileType)
+        {
+            isSelectable = true;
+        }
+        else if (tileType == TileType.Enemy && IsTileWithEnemyShip(tile))
+        {
+            isSelectable = true;
+        }
+        
+        if (isSelectable)
+        {
+            tile.SetSelectable(true);
+            selectableTiles.Add(tile);
+        }
+    }
+    
+    Debug.Log($"Abilitate {selectableTiles.Count} tile per la selezione");
+}
+
+private bool IsTileWithEnemyShip(Tile tile)
+{
+    if (tile.GetShip() == null) return false;
+    
+    AShip ship = tile.GetShip().GetComponent<AShip>();
+    return ship != null && ship.faction == (int)Tile.Entity.enemy;
+}
+
+public void DisableTileSelection()
+{
+    foreach (var tile in selectableTiles)
+    {
+        if (tile != null)
+            tile.SetSelectable(false);
+    }
+    
+    selectableTiles.Clear();
+    currentEffect = null;
+}
+
+public void SetCurrentEffect(AbstractEffectSO effect)
+{
+    currentEffect = effect;
+}
+
+public AbstractEffectSO GetCurrentEffect()
+{
+    return currentEffect;
+}
+
+// Metodo chiamato quando una tile viene selezionata
+public void OnTileSelected(Tile selectedTile)
+{
+    if (currentEffect == null)
+    {
+        Debug.LogWarning("Nessun effetto corrente da applicare!");
+        return;
+    }
+    
+    // Applica l'effetto alla tile o alla nave sulla tile
+    if (selectedTile.GetShip() != null)
+    {
+        EffectStruct effectStruct = new EffectStruct();
+        effectStruct.obj = selectedTile.GetShip();
+        currentEffect.PerformEffect(effectStruct);
+    }
+    else
+    {
+        EffectStruct effectStruct = new EffectStruct();
+        effectStruct.obj = selectedTile.gameObject;
+        currentEffect.PerformEffect(effectStruct);
+    }
+    
+    // Disabilita la selezione delle tile dopo aver applicato l'effetto
+    DisableTileSelection();
+}
 }

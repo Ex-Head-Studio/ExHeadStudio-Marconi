@@ -18,6 +18,7 @@ public abstract class AbstractCard : MonoBehaviour
     [Tooltip("If true, the card will be placed on a ship-range")]
     public bool hasToPlaceSomethingOnTile = false;
 
+    private static AbstractCard selectedCard = null;
 
     private void Start()
     {
@@ -41,7 +42,7 @@ public abstract class AbstractCard : MonoBehaviour
 
     //Getters
 
-    
+
     public Sprite GetCardImage()
     {
         return cardData.cardImage;
@@ -103,5 +104,59 @@ public abstract class AbstractCard : MonoBehaviour
             UICardScript.SetNotInteractable();
         }
         
+    }
+
+    // Metodo chiamato quando una carta viene selezionata
+    public void OnCardSelected()
+    {
+        // Deseleziona la carta precedente se presente
+        if (selectedCard != null && selectedCard != this)
+        {
+            selectedCard.DeselectCard();
+        }
+        
+        // Imposta questa carta come selezionata
+        selectedCard = this;
+        
+        // Verifica se la carta ha effetti
+        if (cardData.cardEffects != null && cardData.cardEffects.Count > 0)
+        {
+            // Applica il primo effetto della lista
+            AbstractEffectSO effect = cardData.cardEffects[0];
+            
+            if (effect != null)
+            {
+                // Imposta l'effetto corrente nel GridManager
+                if (GridManager.Instance != null)
+                {
+                    GridManager.Instance.SetCurrentEffect(effect);
+                }
+                
+                EffectStruct effectStruct = new EffectStruct();
+                effectStruct.obj = gameObject; // Inizialmente, l'oggetto è la carta stessa
+                effect.PerformEffect(effectStruct);
+            }
+        }
+    }
+
+    // Metodo chiamato quando una carta viene deselezionata
+    public void DeselectCard()
+    {
+        if (selectedCard == this)
+        {
+            selectedCard = null;
+            
+            // Disabilita qualsiasi sistema di targeting attivo
+            if (GridManager.Instance != null)
+            {
+                GridManager.Instance.DisableTileSelection();
+            }
+        }
+    }
+
+    // Metodo statico per ottenere la carta selezionata
+    public static AbstractCard GetSelectedCard()
+    {
+        return selectedCard;
     }
 }

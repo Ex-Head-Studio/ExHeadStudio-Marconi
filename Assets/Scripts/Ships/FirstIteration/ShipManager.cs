@@ -80,7 +80,7 @@ public class ShipManager : MonoBehaviour, IShipManager
             AShip newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<AShip>();
             newShip.shipName=shipName;
             newShip.name=shipName;
-            newShip.manager=this;
+            //newShip.manager=this;
             ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(0);
             newShip.shipSO = shipManagerSO.shipSOarray[modelIndex];
@@ -97,7 +97,7 @@ public class ShipManager : MonoBehaviour, IShipManager
             AShip newShip=Instantiate(shipManagerSO.shipSOarray[modelIndex].shipModelPrefab, transform.position, Quaternion.Euler(90,0,0)).GetComponent<AShip>();
             newShip.shipName=shipName;
             newShip.name=shipName;
-            newShip.manager=this;
+            //newShip.manager=this;
             ships.Add(newShip.shipName, newShip);
             newShip.SetFaction(1);
             newShip.shipSO = shipManagerSO.shipSOarray[modelIndex];

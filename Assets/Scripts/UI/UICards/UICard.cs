@@ -173,6 +173,30 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
             transform.DOLocalMoveY(transform.localPosition.y - 0.3f, 0.5f);
         }
     }
+    public void SetInteractable(bool interactable)
+    {
+        // Disabilita/abilita il componente Button o EventTrigger
+        Button button = GetComponent<Button>();
+        if (button != null)
+        {
+            button.interactable = interactable;
+        }
+        
+        // Se usi EventTrigger, disabilita/abilita quello
+        EventTrigger eventTrigger = GetComponent<EventTrigger>();
+        if (eventTrigger != null)
+        {
+            eventTrigger.enabled = interactable;
+        }
+        
+        // Modifica l'aspetto visivo delle carte
+        // per indicare che non sono selezionabili
+        CanvasGroup canvasGroup = GetComponent<CanvasGroup>();
+        if (canvasGroup != null)
+        {
+            canvasGroup.alpha = interactable ? 1f : 0.6f;  // Rendi la carta semi-trasparente quando non è interattiva
+        }
+    }
     public bool IsCardSelected()
     {
         return isCardSelected;

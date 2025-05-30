@@ -3,7 +3,10 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using Random=UnityEngine.Random;
+using Random = UnityEngine.Random;
+using System.Linq; // Aggiungi questa riga
+
+[RequireComponent(typeof(EndedTurnEventListener))]
 public class ShipManager2 : MonoBehaviour, IShipManager
 {
 
@@ -118,25 +121,51 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
     }
     //Il metodo viene chiamato dall'evento di fine turno giocatore e fa eseguire alle navi la loro mossa preferita
-    public void EnemyMovesExecution(){
-       
+    public void EnemyMovesExecution(VoidEvent voidEvent)
+    {
+        EnemyMovesExecution();
+    }
+
+    // Mantieni anche la versione senza parametri per le chiamate dirette
+    public void EnemyMovesExecution()
+    {
         Debug.Log("Esecuzione turno nemico");
-        for(int j=0 ;j<shipManagerSO.initialEnemyShips; j++){
-            if (j > enemies.Count) j = 0;
+        
+        // Verifica se ci sono navi nemiche
+        if (enemies.Count == 0)
+        {
+            Debug.Log("Nessuna nave nemica presente, salto il turno");
+            StartCoroutine(EndEnemyTurn());
+            return;
+        }
+        
+        // Esegui le mosse per tutte le navi nemiche esistenti
+        for (int j = 0; j < Mathf.Min(shipManagerSO.initialEnemyShips, enemies.Count); j++)
+        {
             enemies[j].LookForMoves();
         }
+        
         StartCoroutine(EndEnemyTurn());
     }
 
     public IEnumerator EndEnemyTurn()
     {
+        // Attendi il tempo configurato prima di terminare il turno
         yield return new WaitForSeconds(timeBeforeEndEnemyTurn);
-        shipManagerSO.onEndEnemyTurn.Invoke(new VoidEvent(0));
-        foreach (EnemyShip enemy in enemies)
+        
+        // Resetta tutte le navi nemiche
+        foreach (AShip enemy in enemies)
         {
-            //enemy.ResetAction();
+            if (enemy is EnemyShip)
+            {
+                ((EnemyShip)enemy).ResetAction();
+            }
         }
+        
         Debug.Log("Fine turno nemico");
+        
+        // Invoca l'evento di fine turno nemico
+        shipManagerSO.onEndEnemyTurn.Invoke(new VoidEvent(0));
     }
 
     //Questa serve ancora?

@@ -52,6 +52,10 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     [Tooltip("Effetto che si attiva quando la nave che sta sopra la tile può essere attività")]
     [SerializeField] protected ParticleSystem highlightEffect;
 
+    private bool isSelectable = false;
+    private Color originalColor;
+    [SerializeField] private Color selectableColor = Color.yellow;
+
     void Awake()
     {
         //Forse si può migliorare, ma per ora va bene
@@ -65,6 +69,9 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         tileCollider.providesContacts = true;
 
         SetTileHighlight(false);
+
+        if (_mesh != null)
+            originalColor = _mesh.material.color;
     }
 
     #region Iscrizione agli eventi
@@ -365,5 +372,100 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
             Gizmos.color = Color.white;
         }
         Gizmos.DrawWireCube(transform.position, new Vector3(tileCollider.bounds.size.x, tileCollider.bounds.size.y, tileCollider.bounds.size.z));
+    }
+
+    public void SetSelectable(bool selectable)
+    {
+        isSelectable = selectable;
+        
+        if (_mesh == null) return;
+        
+        if (selectable)
+        {
+            EnableSelection();
+        }
+        else
+        {
+            DisableSelection();
+        }
+    }
+
+    private void EnableSelection()
+    {
+        // Salva il colore originale se necessario
+        if (originalColor == Color.clear)
+        {
+            originalColor = _mesh.material.color;
+        }
+        
+        // Imposta il colore di selezione
+        _mesh.material.color = selectableColor;
+        
+        // Attiva l'highlight se esiste
+        if (_highlight != null)
+        {
+            _highlight.SetActive(true);
+        }
+    }
+
+    private void DisableSelection()
+    {
+        // Ripristina il colore originale
+        if (originalColor != Color.clear)
+        {
+            _mesh.material.color = originalColor;
+        }
+        else
+        {
+            _mesh.material.color = _emptyColor;
+        }
+        
+        // Disattiva l'highlight
+        if (_highlight != null)
+        {
+            _highlight.SetActive(false);
+        }
+    }
+
+    // Assicurati che OnMouseDown() chiami OnSelected() quando la tile è selezionabile
+    public void OnMouseDown()
+    {
+        if (isSelectable)
+        {
+            Debug.Log($"Tile selezionabile cliccata: {name}");
+            OnSelected();
+        }
+    }
+
+    public void OnSelected()
+    {
+        // Notifica tutti gli ascoltatori che questa tile è stata selezionata
+        tileSelected?.Invoke(this);
+        
+        ApplyEffectIfShipPresent();
+    }
+
+    private void ApplyEffectIfShipPresent()
+    {
+        // Se la tile contiene una nave, applica l'effetto alla nave
+        GameObject ship = GetShip();
+        if (ship == null) return;
+        
+        AbstractEffectSO currentEffect = GridManager.Instance.GetCurrentEffect();
+        if (currentEffect == null) return;
+        
+        if (currentEffect is DamageEffect damageEffect)
+        {
+            AShip shipComponent = ship.GetComponent<AShip>();
+            if (shipComponent != null)
+            {
+                shipComponent.TakeDamage(damageEffect.damage);
+                damageEffect.EndEffect(0);
+            }
+            else
+            {
+                Debug.LogError("La nave non ha un componente AShip!");
+            }
+        }
     }
 }
