@@ -42,10 +42,10 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.strings.bank
   Name: Desktop/Master.strings
   StudioPath: bank:/Master.strings
-  lastModified: 638830121904446493
+  lastModified: 638842244500028623
   FileSizes:
   - Name: 
-    Value: 1634
+    Value: 1810
   Exists: 1
 --- !u!114 &-7545578330973327430
 MonoBehaviour:
@@ -62,7 +62,7 @@ MonoBehaviour:
   Path: Assets/FMODBanks/Desktop/Master.bank
   Name: Desktop/Master
   StudioPath: bank:/Master
-  lastModified: 638836233749187475
+  lastModified: 638842244499998638
   FileSizes: []
   Exists: 1
 --- !u!114 &-6303109462738554844
@@ -110,6 +110,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 750
+--- !u!114 &-5227692554212009471
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cards/Heal
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cards/Heal
+  Guid:
+    Data1: 587797316
+    Data2: 1114794548
+    Data3: -1694708563
+    Data4: -1765900830
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &-5211294307489387100
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -439,14 +466,72 @@ MonoBehaviour:
   - {fileID: -5211294307489387100}
   - {fileID: 2569674889849407631}
   - {fileID: -1194212527948179628}
+  - {fileID: 154544803561692227}
+  - {fileID: -5227692554212009471}
+  - {fileID: 4470130077496841012}
+  - {fileID: 1309428445699344005}
   EditorParameters:
   - {fileID: 6883603748077967008}
   MasterBanks:
   - {fileID: -7545578330973327430}
   StringsBanks:
   - {fileID: -8517476599244968727}
-  cacheTime: 638836233749187475
+  cacheTime: 638842244500028623
   cacheVersion: 131846
+--- !u!114 &154544803561692227
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cards/Obstacle
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cards/Obstacle
+  Guid:
+    Data1: 942071599
+    Data2: 1307651944
+    Data3: 768710320
+    Data4: 896034149
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 441
+--- !u!114 &1309428445699344005
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Energy
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Energy
+  Guid:
+    Data1: 1834827416
+    Data2: 1327911555
+    Data3: 176457377
+    Data4: 1653987966
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 1
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 1012
 --- !u!114 &1500750082751055525
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -555,6 +640,33 @@ MonoBehaviour:
   MinDistance: 1
   MaxDistance: 20
   Length: 500
+--- !u!114 &4470130077496841012
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 0}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ceb653cd98e289a4e8697a1af55201f2, type: 3}
+  m_Name: event:/SFX/Cards/ClassChange
+  m_EditorClassIdentifier: 
+  Path: event:/SFX/Cards/ClassChange
+  Guid:
+    Data1: -1337702769
+    Data2: 1281285443
+    Data3: -421454456
+    Data4: 169509219
+  Banks:
+  - {fileID: -7545578330973327430}
+  IsStream: 0
+  Is3D: 0
+  IsOneShot: 1
+  Parameters: []
+  MinDistance: 1
+  MaxDistance: 20
+  Length: 0
 --- !u!114 &5625964929855728779
 MonoBehaviour:
   m_ObjectHideFlags: 0

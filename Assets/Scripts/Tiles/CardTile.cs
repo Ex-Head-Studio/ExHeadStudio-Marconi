@@ -88,21 +88,18 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
                     return;
                 }
 
-                //Non so come posso farlo meglio, ma per ora funziona
-                if (tilePosition.x == allyPosition.x + 1 ||
-                    tilePosition.x == allyPosition.x - 1 ||
-                    tilePosition.y == allyPosition.y + 1 ||
-                    tilePosition.y == allyPosition.y - 1 ||
-                    (tilePosition.x == allyPosition.x + 1 && tilePosition.y == allyPosition.y + 1) ||
-                    (tilePosition.x == allyPosition.x - 1 && tilePosition.y == allyPosition.y - 1) ||
-                    (tilePosition.x == allyPosition.x + 1 && tilePosition.y == allyPosition.y - 1) ||
-                    (tilePosition.x == allyPosition.x - 1 && tilePosition.y == allyPosition.y + 1))
+                for (int x = (int)allyPosition.x - 1; x < (int)allyPosition.x + 1; x++)
                 {
-                    //animazione per il tile
-                    transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
-
-                    isTileSelectable = true;
-                    tileCollider.enabled = true;
+                    for (int y = (int)allyPosition.y - 1; y < (int)allyPosition.y + 1; y++)
+                    {
+                        if (tilePosition.x == x && tilePosition.y == y)
+                        {
+                            //animazione per il tile
+                            transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+                            isTileSelectable = true;
+                            tileCollider.enabled = true;
+                        }
+                    }
                 }
             }
             else
