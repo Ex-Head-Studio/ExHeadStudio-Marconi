@@ -222,6 +222,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
     // Funzione per gestire cosa fare quando il mazzo viene cliccato
     public void OnPointerClick(PointerEventData pointerEventData)
     {
+        /*
         Debug.Log(cardsInDeck.Count);
         Debug.Log(string.Join(", ", cardsInDeck.Select(card => card.cardData.name)));
 
@@ -247,6 +248,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
             drawingCost = energySystem.defaultEnergy;
         }
         deckCostIcon.text = "Cost: " + drawingCost.ToString();
+        */
     }
     public void OnPointerEnter(PointerEventData pointerEventData)
     {

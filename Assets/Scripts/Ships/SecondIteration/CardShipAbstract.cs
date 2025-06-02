@@ -160,6 +160,20 @@ public abstract class CardShipAbstract : MonoBehaviour, IPointerClickHandler
         }
 
     }
+
+    private void OnDestroy()
+    {
+        if (effectQueue.Count > 0)
+        {
+            effectQueue.Clear();
+
+            //invoco l'evento di carta usata dopo tutti gli effetti
+            cardToUse.InvokeCardUsed(cardToUse);
+            isShipSelectable = false;
+            isShipSelected = false;
+            shipCollider.enabled = false;
+        }
+    }
     #endregion
 
 }

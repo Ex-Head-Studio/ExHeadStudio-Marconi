@@ -57,13 +57,13 @@ public class GameManager2 : MonoBehaviour
     {
         numberOfRounds++;
         StartCoroutine(WaitPlanningPhase());
-        planningPhaseStartEvent?.Invoke(new VoidEvent(0));
+        //planningPhaseStartEvent?.Invoke(new VoidEvent(0));
     }
 
     public void OnPlanningPhaseEnded()
     {
         StartCoroutine(WaitActionPhase());
-        actionPhaseStartEvent?.Invoke(new VoidEvent(0));
+        //actionPhaseStartEvent?.Invoke(new VoidEvent(0));
     }
 
     public void OnActionPhaseEnded()

@@ -1694,7 +1694,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: cardsInDeck.Array.size
-      value: 6
+      value: 7
       objectReference: {fileID: 0}
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: scriptedCards.Array.size
@@ -1746,6 +1746,14 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 44d96f3d3bae69d41819d7dc549bf2ce, type: 2}
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
       propertyPath: cardsInDeck.Array.data[5].quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
+      propertyPath: cardsInDeck.Array.data[6].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 44d96f3d3bae69d41819d7dc549bf2ce, type: 2}
+    - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
+      propertyPath: cardsInDeck.Array.data[6].quantity
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 4340317098694916344, guid: 3a08f47907fe0a14aa28fe40b984fad1, type: 3}
@@ -1929,7 +1937,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: drawModeEnum
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: cardsGivenAtTurn
@@ -1997,6 +2005,14 @@ PrefabInstance:
       objectReference: {fileID: 11400000, guid: 931c0595b031f0345bdc0ced354cc6d8, type: 2}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
       propertyPath: cardsInDeck.Array.data[6].quantity
+      value: 1
+      objectReference: {fileID: 0}
+    - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
+      propertyPath: cardsInDeck.Array.data[7].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 931c0595b031f0345bdc0ced354cc6d8, type: 2}
+    - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
+      propertyPath: cardsInDeck.Array.data[7].quantity
       value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 9199607181351492344, guid: 4c6eda014a5e398488fea2fea255255b, type: 3}
@@ -5205,7 +5221,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: generationMode
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: numberOfObstacles

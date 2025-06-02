@@ -13,5 +13,5 @@ MonoBehaviour:
   m_Name: CreateObstacleEffectSOB
   m_EditorClassIdentifier: 
   obstacleList:
-  - {fileID: 919132149155446097, guid: 9f5bf2c5c9ec43e4fb400ad5444a4d67, type: 3}
+  - {fileID: 2832146131443869211, guid: 16bc9ad58b9a4b64f84d39f8d55b7bec, type: 3}
   generationMode: 1

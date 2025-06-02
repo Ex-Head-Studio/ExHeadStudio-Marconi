@@ -812,6 +812,10 @@ public class AllyShip : AShip
 
     public void AddHealth(int healthToAdd)
     {
+        if (healthToAdd + health >= shipSO.health)
+        {
+            healthToAdd = shipSO.health - health;
+        }
         health += healthToAdd;
         displayHealthScript.AddHealth(healthToAdd);
     }
@@ -819,64 +823,24 @@ public class AllyShip : AShip
     /// <remark><summary>
     /// The function deals 1 damage to all entities in a square (1 tile) area around the ship.
     /// </summary></remark>
-    public void SquareDamage()
-    {
-        CicloX();
-        CicloY();
-        CicloDiagonaliQuadrato();
-    }
-
-    private void CicloDiagonaliQuadrato()
+    public void SquareDamage(int damageRange)
     {
 
-        //diagonale
-        for (int x = (int)position.x - 1, y = (int)position.y - 1;
-            x < (int)position.x + 1 && y < (int)position.y + 1;
-            x++, y++)
-        {
-            if (x != (int)position.x && y != (int)position.y)
-            {
-                shipSO.attackEvent.Invoke(new ShipAttackStruct(new Vector2(x, y), 1));
-                InstantiateEffect(new Vector2(x, y));
-            }
-        }
+        //calcolo la posizione del vertice sinistro e poi faccio partire due cicli da questa
 
-        //antidiagonale
-        for (int x = (int)position.x - 1, y = (int)position.y + 1;
-            x < (int)position.x + 1 && y > (int)position.y - 1;
-            x++, y--)
+        for (int x = position.x - damageRange; x < position.x + damageRange; x++)
         {
-            if (x != (int)position.x && y != (int)position.y)
+            for (int y = position.y - damageRange; y < position.y + damageRange; y++)
             {
-                shipSO.attackEvent.Invoke(new ShipAttackStruct(new Vector2(x, y), 1));
-                InstantiateEffect(new Vector2(x, y));
+                if (x < GridManager.Instance._width && y < GridManager.Instance._height &&
+                    x != position.x && y != position.y)
+                {
+                    PerformAttack(new Vector2(x, y));    
+                }
             }
         }
     }
 
-    private void CicloX()
-    {
-        for (int x = (int)position.x - 1; x < (int)position.x + 1; x++)
-        {
-            if (x != (int)position.x)
-            {
-                shipSO.attackEvent.Invoke(new ShipAttackStruct(new Vector2(x, position.y), 1));
-                InstantiateEffect(new Vector2(x, (int)position.y));
-            }
-        }
-    }
-
-    private void CicloY()
-    {
-        for (int y = (int)position.y - 1; y < (int)position.y + 1; y++)
-        {
-            if (y != (int)position.y)
-            {
-                shipSO.attackEvent.Invoke(new ShipAttackStruct(new Vector2(position.x, y), 1));
-                InstantiateEffect(new Vector2((int)position.x, y));
-            }
-        }
-    }
 
     private void InstantiateEffect(Vector2 position)
     {
