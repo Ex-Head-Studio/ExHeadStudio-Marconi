@@ -79,28 +79,12 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
 
         if (card.GetCardEntity() == (int)CardEntityType.Tile)
         {
-            if (card.hasToPlaceSomethingOnTile)
+            if (card.hasToPlaceSomethingOnTile&& GridManager.Instance.tilesForPlacingObstacles.Contains(this.tileScript))
             {
-                UnityEngine.Vector2 allyPosition = GridManager.Instance.GetAllyShipPosition();
-                if (allyPosition == UnityEngine.Vector2.negativeInfinity)
-                {
-                    Debug.LogError("La nave alleata non è stata trovata.");
-                    return;
-                }
-
-                for (int x = (int)allyPosition.x - 1; x < (int)allyPosition.x + 1; x++)
-                {
-                    for (int y = (int)allyPosition.y - 1; y < (int)allyPosition.y + 1; y++)
-                    {
-                        if (tilePosition.x == x && tilePosition.y == y)
-                        {
-                            //animazione per il tile
-                            transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
-                            isTileSelectable = true;
-                            tileCollider.enabled = true;
-                        }
-                    }
-                }
+                //animazione per il tile
+                transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+                isTileSelectable = true;
+                tileCollider.enabled = true;
             }
             else
             {

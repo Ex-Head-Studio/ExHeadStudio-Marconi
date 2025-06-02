@@ -29,6 +29,7 @@ public class BaseCardData : ScriptableObject
     [SerializeField] public bool isWorldInteractive = false;
     [Header("Card Placement")]
     public bool hasToPlaceSomethingOnTile = false;
+    [SerializeField] public int placementRange = 1;
     
     [SerializeField] public int lastingTurns = 1;
 

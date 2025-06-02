@@ -14,9 +14,9 @@ public abstract class AbstractCard : MonoBehaviour
 
     private UICard UICardScript;
 
-    [Header("If entity == tile")]
-    [Tooltip("If true, the card will be placed on a ship-range")]
     public bool hasToPlaceSomethingOnTile = false;
+    public int placementRange;
+
 
 
     private void Start()
@@ -28,7 +28,8 @@ public abstract class AbstractCard : MonoBehaviour
             cardDragNDropHandler.SetEnergySystem(energySystem);
         }
 
-        hasToPlaceSomethingOnTile = cardData;
+        hasToPlaceSomethingOnTile = cardData.hasToPlaceSomethingOnTile;
+        placementRange = cardData.placementRange;
         energyUsedEvent = cardData.energyUsedEvent;
         energySystem = cardData.energySystem;
     }

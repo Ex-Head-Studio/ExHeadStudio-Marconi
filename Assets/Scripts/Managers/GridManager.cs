@@ -41,6 +41,10 @@ public class GridManager : MonoBehaviour, ICardDropArea
 
     public Dictionary<Vector2, Tile> _tiles;
 
+    //Lista di tile sulle quali è possibile piazzare ostacoli, viene calcolata in risposta
+    //all'evento di selezione di una carta che ha un effetto di piazzamento
+    public List<Tile> tilesForPlacingObstacles;
+
     private Collider gridCollider;
 
     //mi serve a tenere traccia del numero di tentativi per il riposizionamento
@@ -60,6 +64,18 @@ public class GridManager : MonoBehaviour, ICardDropArea
         }
     }
 
+
+    private void OnEnable()
+    {
+        UICard.cardSelectedEvent += SearchTileForPlacing;
+        UICard.cardDeselectedEvent += ClearTiles;
+    }
+
+    private void OnDisable()
+    {
+        UICard.cardSelectedEvent -= SearchTileForPlacing;
+        UICard.cardDeselectedEvent -= ClearTiles;
+    }
     void Awake()
     {
         if (instance != null && instance != this)
@@ -157,8 +173,7 @@ public class GridManager : MonoBehaviour, ICardDropArea
                 //spawnedTile.transform.SetParent(pivotGrid.transform);
                 spawnedTile.transform.localScale = Vector3.one;
 
-                //non è corretto, i nomi non corrispondo alle posizioni
-                spawnedTile.name = $"Tile {x} {y}";
+                spawnedTile.name = $"Tile {spawnedTile.transform.position.x} {spawnedTile.transform.position.z}";
 
 
                 /*var isOffset = (x + y) % 2 == 1;
@@ -307,6 +322,36 @@ public class GridManager : MonoBehaviour, ICardDropArea
     #region Gestione Ostacoli
 
 
+    public void SearchTileForPlacing(AbstractCard card)
+    {
+        if (card.hasToPlaceSomethingOnTile)
+        {
+            int range = card.placementRange;
+            //calcolo delle posizioni relative a quella alleata
+
+            Vector2 allyPos = GetAllyShipPosition();
+
+            for (int x = (int)allyPos.x - range; x < (int)allyPos.x + range; x++)
+            {
+                for (int y = (int)allyPos.y - range; y < (int)allyPos.y + range; y++)
+                {
+                    if ((x > 0 && x < _width) && (y > 0 && y < _height)
+                        && (x != allyPos.x && y != allyPos.y))
+                    {
+                        tilesForPlacingObstacles.Add(_tiles[new Vector2(x, y)]);
+                    }
+                }
+            }
+        }
+    }
+
+    public void ClearTiles(AbstractCard card)
+    {
+        if (tilesForPlacingObstacles.Count > 0)
+        {
+            tilesForPlacingObstacles.Clear();
+        }
+    }
 
     #endregion
 
