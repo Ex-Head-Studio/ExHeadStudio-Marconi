@@ -62,7 +62,7 @@ public class PlayerHandManagerScript : MonoBehaviour
     {
         //aggiungo al prefab lo script della carta corrsipondente, per ora solo command. Si può fare uno switch sul tipo
         newCard.AddComponent<CommandCard>();
-        AbstractCard cardScript = newCard.GetComponent<AbstractCard>(); 
+        AbstractCard cardScript = newCard.GetComponent<AbstractCard>();
         cardScript.SetCardData(cardData);
         newCard.GetComponent<UICard>().SetupUICard(cardScript);
     }
@@ -85,9 +85,9 @@ public class PlayerHandManagerScript : MonoBehaviour
 
     private void UpdateCardPosition()
     {
-        if(cardsInHand.Count == 0) return;
-        float cardSpacing = 1f/maxCardsInHand;
-        float firstCardPosition = 0.5f - (cardsInHand.Count-1) * cardSpacing / 2f;
+        if (cardsInHand.Count == 0) return;
+        float cardSpacing = 1f / maxCardsInHand;
+        float firstCardPosition = 0.5f - (cardsInHand.Count - 1) * cardSpacing / 2f;
         Spline spline = splineContainer.Spline;
         for (int i = 0; i < cardsInHand.Count; i++)
         {
@@ -112,18 +112,18 @@ public class PlayerHandManagerScript : MonoBehaviour
     }
 
     //funzione ricorsiva per distruggere le carte
-    private IEnumerator WaitBeforeDestroy(float waitTime,int iterationIndex, int cardIndex)
+    private IEnumerator WaitBeforeDestroy(float waitTime, int iterationIndex, int cardIndex)
     {
 
-        if(iterationIndex < 0)
+        if (iterationIndex < 0)
         {
             yield break;
         }
-            yield return WaitBeforeDestroy(waitTime, iterationIndex - 1, cardIndex + 1);
-            yield return new WaitForSeconds(waitTime);
-            Destroy(cardsInHand.ElementAt(cardIndex));
-            cardsInHand.RemoveAt(cardIndex);
-            UpdateCardPosition();
+        yield return WaitBeforeDestroy(waitTime, iterationIndex - 1, cardIndex + 1);
+        yield return new WaitForSeconds(waitTime);
+        Destroy(cardsInHand.ElementAt(cardIndex));
+        cardsInHand.RemoveAt(cardIndex);
+        UpdateCardPosition();
     }
 
 
@@ -133,9 +133,9 @@ public class PlayerHandManagerScript : MonoBehaviour
     /// </summary>
     private void OnCardSelected(AbstractCard card)
     {
-        foreach(GameObject cardInHand in cardsInHand)
+        foreach (GameObject cardInHand in cardsInHand)
         {
-            if(cardInHand.GetComponent<UICard>().IsCardSelected() && cardInHand != card.gameObject)
+            if (cardInHand.GetComponent<UICard>().IsCardSelected() && cardInHand != card.gameObject)
             {
                 cardInHand.GetComponent<UICard>().DeselectCard(cardInHand.GetComponent<AbstractCard>());
             }
@@ -153,10 +153,15 @@ public class PlayerHandManagerScript : MonoBehaviour
         cartDraw.start();
         cartDraw.release();
     }
-    
+
     public int GetHandCardsCount()
     {
         return cardsInHand.Count;
+    }
+    
+    public List<GameObject> GetCardsInHand()
+    {
+        return cardsInHand;
     }
 
 }
