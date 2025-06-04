@@ -142,6 +142,30 @@ public class PlayerHandManagerScript : MonoBehaviour
         }
     }
 
+    // Aggiungi questo metodo
+    public void SetAllCardsSelectable(bool selectable)
+    {
+        foreach (GameObject card in cardsInHand)
+        {
+            UICard uiCard = card.GetComponent<UICard>();
+            if (uiCard != null)
+            {
+                uiCard.SetSelectable(selectable);
+                Debug.Log($"Card {card.name} selectable set to: {selectable}");
+            }
+        }
+    }
+
+    public int GetHandCardsCount()
+    {
+        return cardsInHand.Count;
+    }
+    
+    public List<GameObject> GetCardsInHand()
+    {
+        return cardsInHand;
+    }
+
     // <summary>
     // Play the card draw sound
     // </summary>
@@ -154,14 +178,6 @@ public class PlayerHandManagerScript : MonoBehaviour
         cartDraw.release();
     }
 
-    public int GetHandCardsCount()
-    {
-        return cardsInHand.Count;
-    }
-    
-    public List<GameObject> GetCardsInHand()
-    {
-        return cardsInHand;
-    }
+   
 
 }

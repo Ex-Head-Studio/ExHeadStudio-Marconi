@@ -117,14 +117,41 @@ public class ShipManager2 : MonoBehaviour, IShipManager
 
 
     }
+    
+
     //Il metodo viene chiamato dall'evento di fine turno giocatore e fa eseguire alle navi la loro mossa preferita
-    public void EnemyMovesExecution(){
-       
-        Debug.Log("Esecuzione turno nemico");
-        for(int j=0 ;j<shipManagerSO.initialEnemyShips; j++){
+    public void EnemyMovesExecution()
+    {
+        //VECCHIO CODICE
+        /* Debug.Log("Esecuzione turno nemico");
+        for (int j = 0; j < shipManagerSO.initialEnemyShips; j++)
+        {
             if (j > enemies.Count) j = 0;
             enemies[j].LookForMoves();
         }
+        StartCoroutine(EndEnemyTurn()); */
+
+
+        //CODICE NUOVO DI COPILOT
+        Debug.Log("Esecuzione turno nemico");
+
+        // Verifica innanzitutto se ci sono navi nemiche
+        if (enemies.Count == 0)
+        {
+            Debug.Log("Nessuna nave nemica da eseguire");
+            StartCoroutine(EndEnemyTurn());
+            return;
+        }
+
+        // Usa un approccio più sicuro iterando solo sulle navi effettivamente esistenti
+        int shipsToProcess = Mathf.Min(shipManagerSO.initialEnemyShips, enemies.Count);
+        for (int j = 0; j < shipsToProcess; j++)
+        {
+            // Usa il modulo per ciclare tra le navi disponibili
+            int shipIndex = j % enemies.Count;
+            enemies[shipIndex].LookForMoves();
+        }
+
         StartCoroutine(EndEnemyTurn());
     }
 

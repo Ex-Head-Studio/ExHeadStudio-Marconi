@@ -59,6 +59,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     
     [Header("Energy System")]
     [SerializeField] private EnergySystem energySystem;
+    [SerializeField] private GameObject canBeUsedBorder;
 
     [Header("Colori Carta")]
     [SerializeField] private Color colorCommandCard;
@@ -69,6 +70,8 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     private bool drawGizmos;
 
     private bool isCardSelected = false;
+
+    private bool isSelectable = false;
 
     private SortingGroup sortingGroup;
 
@@ -108,6 +111,18 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
         Invoke("UpdateStartingPosition", 0.1f);
     }
 
+    private void Update()
+    {
+        if (energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
+        {
+            canBeUsedBorder.SetActive(false);
+        }
+        else
+        {
+            canBeUsedBorder.SetActive(true);
+        }
+    }
+
     public void SetupUICard(AbstractCard card)
     {
         //Assegno lo script
@@ -130,7 +145,7 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
             default:
                 Assert.IsTrue(false, "Card type not supported");
                 break;
-            
+
         }
 
         //Compilo il display
@@ -143,20 +158,54 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
         visualImage.GetComponent<SpriteRenderer>().sprite = cardScript.GetCardImage();
 
-       
+
     }
 
 
     #region Gestione della selezione
 
+    // Metodo pubblico per impostare la selezionabilità
+    public void SetSelectable(bool selectable)
+    {
+        isSelectable = selectable;
+        
+        // Se la carta non è più selezionabile e attualmente è selezionata, deselezionala
+        if (!selectable && isCardSelected)
+        {
+            DeselectCard(cardScript);
+        }
+    }
+    
     void IPointerClickHandler.OnPointerClick(PointerEventData eventData)
     {
+        // Se la carta non è selezionabile, non fare nulla
+        if (!isSelectable) return;
+        
         if (energySystem != null && energySystem.currentEnergy < cardScript.GetCardCost())
         {
-            transform.DOShakePosition(1f, 0.5f, 10, 90, false, true);
-            //cambiare colore
-
-
+            // Riproduci il suono di errore
+            PlayCardError();
+            
+            // Esegui lo shake e poi torna alla posizione iniziale
+            transform.DOShakePosition(0.5f, 0.2f, 10, 90, false, true)
+                .OnComplete(() => {
+                    // Se per caso la carta era già selezionata, deselezionala
+                    if (isCardSelected)
+                    {
+                        DeselectCard(cardScript);
+                    }
+                    else
+                    {
+                        // Altrimenti assicurati solo che torni alla posizione iniziale
+                        transform.DOScale(startingScale, 0.3f);
+                        sortingGroup.sortingOrder = 0;
+                        
+                        DOTween.To(() => transform.localPosition,
+                            position => transform.localPosition = position,
+                            new Vector3(transform.localPosition.x, startingPosition.y, transform.localPosition.z),
+                            0.3f);
+                    }
+                });
         }
         else
         {
@@ -221,6 +270,9 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     //funzioni di hover
     public void OnPointerEnter(PointerEventData eventData)
     {
+        // Se la carta non è selezionabile, non fare effetto hover
+        if (!isSelectable) return;
+        
         if (!isCardSelected)
         {
             transform.DOScale(hoverScale, 0.3f);
@@ -237,6 +289,9 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
     public void OnPointerExit(PointerEventData eventData)
     {
+        // Se la carta non è selezionabile, non fare nulla
+        if (!isSelectable) return;
+        
         if (!isCardSelected)
         {
             transform.DOScale(startingScale, 0.3f);

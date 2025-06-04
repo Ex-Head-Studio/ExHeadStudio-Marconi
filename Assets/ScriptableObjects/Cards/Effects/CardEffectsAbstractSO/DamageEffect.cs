@@ -8,8 +8,9 @@ public class DamageEffect : AbstractEffectSO
     {
         if (effectStruct.obj.TryGetComponent<AShip>(out AShip shipScript))
         {
-            shipScript.TakeDamage(damage);
             EndEffect(0);
+            shipScript.TakeDamage(damage);
+            
         }
     }
 }

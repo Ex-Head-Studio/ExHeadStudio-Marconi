@@ -5,6 +5,7 @@ using DG.Tweening;
 using UnityEngine.EventSystems;
 using System.Collections.Generic;
 using TMPro;
+using System.Collections;
 
 [RequireComponent(typeof(PlanningPhaseStartListener))]
 [RequireComponent(typeof(ActionPhaseStartListener))]
@@ -239,30 +240,16 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         // Nessuna carta giocabile
         return false;
     }
-
-    #endregion
-
-    #region Iscrizione agli eventi senza Listener
     
-    /* private void OnEnable()
+    private void OnEnable()
     {
-        UICard.cardSelectedEvent += DisableButton;
-        UICard.cardDeselectedEvent += EnableButton;
-        AbstractCard.abstractCardUsed += EnableButton;
-        
-        // Controlla energia all'attivazione
         CheckEnergyAndBlink();
     }
 
     private void OnDisable()
     {
-        UICard.cardSelectedEvent -= DisableButton;
-        UICard.cardDeselectedEvent -= EnableButton;
-        AbstractCard.abstractCardUsed -= EnableButton;
-        
-        // Ferma tutte le animazioni quando disattivato
         StopBlinking();
-    } */
+    }
 
     #endregion
 
@@ -293,32 +280,58 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (buttonGameObject != null)
             buttonGameObject.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f); // Rotazione LOCALE
-        
-        button.interactable = true;
+
+        // Disabilita inizialmente il bottone
+        button.interactable = false;
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(PlanningPhaseEnd);
-        
+
         currentActiveMaterial = materialButtonTactic;
-        
+
         // Aggiorna il testo della fase
         UpdatePhaseText(tacticPhaseText);
-        
+
         // Aggiorna il colore di sfondo
         UpdateCameraBackground(tacticPhaseBackground);
-        
+
         PlayPhaseButton();
+
+        if (handManager != null)
+            StartCoroutine(EnableCardsAndButtonAfterDelay());
+    }
+
+    private IEnumerator EnableCardsAndButtonAfterDelay()
+    {
+        // Attendi che la distribuzione delle carte sia completata
+        yield return new WaitForSeconds(1.2f); // Aumentato a 1.2 secondi per garantire che tutte le carte siano distribuite
+        
+        // Abilita le carte
+        handManager.SetAllCardsSelectable(true);
+        
+        // Verifica se ci sono carte giocabili e abilita il bottone
+        button.interactable = true;
+        
+        // Controlla se il bottone deve lampeggiare
         CheckEnergyAndBlink();
+        
+        Debug.Log("Carte e bottone abilitati dopo la distribuzione");
     }
 
     public void PlanningPhaseEnd()
     {
-        planningPhaseEndEvent?.Invoke(new VoidEvent(0));
+        // Disabilita immediatamente il bottone come prima azione
         button.interactable = false;
+        
+        // Poi procedi con il resto delle operazioni
+        planningPhaseEndEvent?.Invoke(new VoidEvent(0));
         
         if (buttonGameObject != null)
             buttonGameObject.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.5f); // Rotazione LOCALE
         
         StopBlinking();
+
+        if (handManager != null)
+            handManager.SetAllCardsSelectable(false);
     }
 
     public void OnActionPhaseStart()
@@ -326,7 +339,8 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         if (buttonGameObject != null)
             buttonGameObject.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.5f); // Rotazione LOCALE
         
-        button.interactable = true;
+        // Disabilita inizialmente il bottone
+        button.interactable = false;
         button.onClick.RemoveAllListeners();
         button.onClick.AddListener(ActionPhaseEnded);
         
@@ -339,22 +353,31 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         UpdateCameraBackground(actionPhaseBackground);
         
         PlayPhaseButton();
-        CheckEnergyAndBlink();
+        
+        if (handManager != null)
+            StartCoroutine(EnableCardsAndButtonAfterDelay());
     }
 
     public void ActionPhaseEnded()
     {
-        actionPhaseEndEvent?.Invoke(new VoidEvent(0));
+        // Disabilita immediatamente il bottone come prima azione
         button.interactable = false;
         
+        // Poi procedi con il resto delle operazioni
+        actionPhaseEndEvent?.Invoke(new VoidEvent(0));
+        
         if (buttonGameObject != null)
-            buttonGameObject.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f); // Rotazione LOCALE
+            buttonGameObject.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f);
         
         // Imposta il testo per il turno nemico
         UpdatePhaseText(enemyTurnText);
         
         // Aggiorna il colore di sfondo per il turno nemico
         UpdateCameraBackground(enemyTurnBackground);
+        
+        // Disabilita tutte le carte quando finisce la fase di azione
+        if (handManager != null)
+            handManager.SetAllCardsSelectable(false);
         
         StopBlinking();
     }
@@ -391,6 +414,8 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         );
     }
 
+    
+
     private FMOD.Studio.EventInstance bigButton;
     public void PlayPhaseButton()
     {
@@ -401,13 +426,5 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
 
     #endregion
 
-    private void OnEnable()
-    {
-        CheckEnergyAndBlink();
-    }
-
-    private void OnDisable()
-    {
-        StopBlinking();
-    }
+  
 }
