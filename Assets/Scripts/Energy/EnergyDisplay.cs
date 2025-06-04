@@ -2,7 +2,8 @@ using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using DG.Tweening; // Aggiungiamo DOTween per l'animazione fluida della rotazione
+using DG.Tweening;
+using TMPro; // Aggiungiamo il namespace per TextMeshPro
 
 public class EnergyDisplay : MonoBehaviour
 {
@@ -23,6 +24,9 @@ public class EnergyDisplay : MonoBehaviour
     [SerializeField] private float rotationDuration = 1f; // Durata dell'animazione di rotazione
     [SerializeField] private float degreesPerEnergyUnit = -60f; // Gradi di rotazione per unità di energia
 
+    [Header("Energy Text")]
+    [SerializeField] private TextMeshProUGUI energyText; // Riferimento al testo che mostra l'energia
+    [SerializeField] private string energyTextFormat = "{0}/{1}"; // Formato del testo (es. "3/6")
    
     private void Start()
     {
@@ -39,6 +43,7 @@ public class EnergyDisplay : MonoBehaviour
                             energySystem.defaultEnergy : energySystem.maxEnergy;
         
         UpdateLightsDisplay(initialEnergy);
+        UpdateEnergyText(initialEnergy); // Aggiorniamo anche il testo
         
         // Imposta immediatamente la rotazione corretta della manopola senza animazioni
         if (dialTransform != null)
@@ -104,6 +109,15 @@ public class EnergyDisplay : MonoBehaviour
     }
 
 
+    // Metodo dedicato per aggiornare il testo dell'energia
+    private void UpdateEnergyText(int currentEnergy)
+    {
+        if (energyText != null)
+        {
+            energyText.text = string.Format(energyTextFormat, currentEnergy, energySystem.maxEnergy);
+        }
+    }
+    
     public void AddTurnEnergy(VoidEvent numberOfRound)
     {
         switch (energyRechargeType)
@@ -119,6 +133,7 @@ public class EnergyDisplay : MonoBehaviour
                 UpdateLightsDisplay(energySystem.maxEnergy);
                 RotateDial(energySystem.currentEnergy, energySystem.maxEnergy);
                 energySystem.ResetEnergy();
+                UpdateEnergyText(energySystem.maxEnergy); // Aggiungiamo l'aggiornamento del testo
                 break;
                 
             case EnergyRechargeType.PartialIncrement:
@@ -134,6 +149,7 @@ public class EnergyDisplay : MonoBehaviour
                 
                 // Aggiorna le luci per mostrare l'energia aggiunta
                 UpdateLightsDisplay(newEnergy);
+                UpdateEnergyText(newEnergy); // Aggiungiamo l'aggiornamento del testo
                 
                 // Ruota la manopola indietro (meno rotazione = più energia)
                 RotateDial(prevEnergy, newEnergy);
@@ -144,7 +160,6 @@ public class EnergyDisplay : MonoBehaviour
         }
     }
    
-    
     public void RemoveEnergy(int amount)
     {
         if (amount <= 0) return;
@@ -156,6 +171,7 @@ public class EnergyDisplay : MonoBehaviour
 
         // Spegni le luci direttamente, senza effetti
         UpdateLightsDisplay(energySystem.currentEnergy);
+        UpdateEnergyText(energySystem.currentEnergy); // Aggiungiamo l'aggiornamento del testo
 
         // Ruota la manopola in avanti (più rotazione = meno energia)
         RotateDial(prevEnergy, energySystem.currentEnergy);

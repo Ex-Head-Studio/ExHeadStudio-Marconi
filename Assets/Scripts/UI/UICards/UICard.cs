@@ -28,10 +28,20 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     private Transform cardTransform;
 
     [Header("Visual References")]
-
     [Range(1, 2)]
     [Tooltip("Fattore che aumenta la scale dell'oggetto quando si va in hover")]
     [SerializeField] private float hoverScaleFactor = 1.7f;
+    
+    [Range(1, 2.5f)]
+    [Tooltip("Fattore che aumenta la scale dell'oggetto quando viene selezionato")]
+    [SerializeField] private float selectionScaleFactor = 1.8f;
+    
+    [Tooltip("Quanto la carta si sposta verso l'alto durante l'hover")]
+    [SerializeField] private float hoverYOffset = 0.15f;
+    
+    [Tooltip("Quanto la carta si sposta verso l'alto quando selezionata")]
+    [SerializeField] private float selectionYOffset = 0.3f;
+    
     [SerializeField] private TMP_Text nameText;
     [SerializeField] private TMP_Text costText;
     [SerializeField] private TMP_Text descriptionText;
@@ -43,7 +53,10 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     private Vector3 selectionScale;
     private Vector3 startingScale;
     private Vector3 hoverScale;
-
+    private Vector3 startingPosition;
+    private Vector3 hoverPosition;
+    private Vector3 selectionPosition;
+    
     [Header("Energy System")]
     [SerializeField] private EnergySystem energySystem;
 
@@ -66,16 +79,33 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     }
     void Awake()
     {
-        selectionScale = transform.localScale * (hoverScaleFactor + 0.1f);
-        hoverScale = transform.localScale * hoverScaleFactor;
-        startingScale = transform.localScale;  
+        startingScale = transform.localScale;
+        hoverScale = startingScale * hoverScaleFactor;
+        selectionScale = startingScale * selectionScaleFactor;
+        
+        startingPosition = transform.localPosition;
+        // Modifica solo la componente Y mantenendo X e Z originali
+        hoverPosition = new Vector3(
+            startingPosition.x,
+            startingPosition.y + hoverYOffset,
+            startingPosition.z
+        );
+        selectionPosition = new Vector3(
+            startingPosition.x,
+            startingPosition.y + selectionYOffset,
+            startingPosition.z
+        );
     }
 
+    // Modifica il metodo Start per memorizzare la posizione iniziale dopo un piccolo ritardo
     private void Start()
     {
         cardTransform = GetComponent<Transform>();
         drawGizmos = true;
         sortingGroup = GetComponent<SortingGroup>();
+        
+        // Aggiungi un ritardo per assicurare che la prima carta sia correttamente posizionata
+        Invoke("UpdateStartingPosition", 0.1f);
     }
 
     public void SetupUICard(AbstractCard card)
@@ -145,33 +175,43 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
     private void SelectCard()
     {
-        transform.DOLocalMoveY(transform.localPosition.y + 0.3f, 0.5f);
-
+        // Animazione solo dell'asse Y per selezione
+        DOTween.To(() => transform.localPosition,
+            position => transform.localPosition = position,
+            new Vector3(transform.localPosition.x, startingPosition.y + selectionYOffset, transform.localPosition.z),
+            0.5f);
+        
+        // Resto del codice invariato
         tempColor = spriteRendererBorder.color;
-
-        sortingGroup.sortingOrder = 10;
-
+        
+        // Imposta il sorting order a 2 (massima priorità)
+        sortingGroup.sortingOrder = 2;
+        
         spriteRendererBorder.color = highlightColor;
         spriteRendererCost.color = highlightColor;
 
         cardSelectedEvent?.Invoke(cardScript);
-        transform.localScale = selectionScale;
+        transform.DOScale(selectionScale, 0.5f);
         isCardSelected = true;
     }
+    
     public void DeselectCard(AbstractCard cardScript)
     {
-        if (this.cardScript.gameObject != null)
-        {
-            sortingGroup.sortingOrder = 0;
+        // Ripristina il sorting order a 0
+        sortingGroup.sortingOrder = 0;
+        spriteRendererBorder.color = tempColor;
+        spriteRendererCost.color = tempColor;
 
-            spriteRendererBorder.color = tempColor;
-            spriteRendererCost.color = tempColor;
-
-            cardDeselectedEvent?.Invoke(cardScript);
-            transform.localScale = startingScale;
-            isCardSelected = false;
-            transform.DOLocalMoveY(transform.localPosition.y - 0.3f, 0.5f);
-        }
+        cardDeselectedEvent?.Invoke(cardScript);
+        
+        transform.DOScale(startingScale, 0.5f);
+        
+        DOTween.To(() => transform.localPosition,
+            position => transform.localPosition = position,
+            new Vector3(transform.localPosition.x, startingPosition.y, transform.localPosition.z),
+            0.5f);
+        
+        isCardSelected = false;
     }
     public bool IsCardSelected()
     {
@@ -183,7 +223,15 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     {
         if (!isCardSelected)
         {
-            transform.localScale = hoverScale;
+            transform.DOScale(hoverScale, 0.3f);
+            
+            // Imposta il sorting order a 1 durante l'hover
+            sortingGroup.sortingOrder = 1;
+            
+            DOTween.To(() => transform.localPosition,
+                position => transform.localPosition = position,
+                new Vector3(transform.localPosition.x, startingPosition.y + hoverYOffset, transform.localPosition.z),
+                0.3f);
         }
     }
 
@@ -191,7 +239,15 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     {
         if (!isCardSelected)
         {
-            transform.localScale = startingScale;
+            transform.DOScale(startingScale, 0.3f);
+            
+            // Ripristina il sorting order a 0
+            sortingGroup.sortingOrder = 0;
+            
+            DOTween.To(() => transform.localPosition,
+                position => transform.localPosition = position,
+                new Vector3(transform.localPosition.x, startingPosition.y, transform.localPosition.z),
+                0.3f);
         }
     }
 
@@ -245,4 +301,21 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
     #endregion
 
+    public void UpdateStartingPosition()
+    {
+        // Aggiorna la posizione di partenza dopo il posizionamento della carta
+        startingPosition = transform.localPosition;
+        
+        // Aggiorna anche le posizioni di hover e selezione
+        hoverPosition = new Vector3(
+            startingPosition.x,
+            startingPosition.y + hoverYOffset,
+            startingPosition.z
+        );
+        selectionPosition = new Vector3(
+            startingPosition.x,
+            startingPosition.y + selectionYOffset,
+            startingPosition.z
+        );
+    }
 }
