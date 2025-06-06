@@ -483,7 +483,7 @@ ParticleSystem:
   emitterVelocityMode: 1
   looping: 1
   prewarm: 0
-  playOnAwake: 1
+  playOnAwake: 0
   useUnscaledTime: 0
   autoRandomSeed: 1
   startDelay:
@@ -5570,7 +5570,6 @@ MonoBehaviour:
   enemyAttackSignal: {fileID: 7803537846272620116}
   isInteractable: 0
   tileCollider: {fileID: -1841351686871509975}
-  highlightEffect: {fileID: 3767076175559152508}
 --- !u!65 &-1841351686871509975
 BoxCollider:
   m_ObjectHideFlags: 0
@@ -5633,6 +5632,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   tileCollider: {fileID: -1841351686871509975}
+  tileHighlightParticle: {fileID: 5444369723765556731}
+  allyMovementSignal: {fileID: 1003079049219748415}
+  enemyMovementSignal: {fileID: 7425577909506764158}
+  allyAttackSignal: {fileID: 8150155357449518266}
+  enemyAttackSignal: {fileID: 7803537846272620116}
 --- !u!1 &8150155357449518266
 GameObject:
   m_ObjectHideFlags: 0
