@@ -16,3 +16,4 @@ MonoBehaviour:
   arrayIdx: 0
   statName: Attack Range
   amount: 1
+  changeStatParticle: {fileID: 3337905222051100615, guid: 5ca00a51a31e56f4c9bc2c16d6585454, type: 3}

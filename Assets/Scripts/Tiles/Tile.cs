@@ -48,9 +48,9 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     public static event Action<Tile> tileSelected;
 
-    [Header("Highlight Effects")]
+    /* [Header("Highlight Effects")]
     [Tooltip("Effetto che si attiva quando la nave che sta sopra la tile può essere attività")]
-    [SerializeField] protected ParticleSystem highlightEffect;
+    [SerializeField] protected ParticleSystem highlightEffect; */
 
     void Awake()
     {
@@ -199,7 +199,7 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     public void SetTileHighlight(bool value)
     {
-        highlightEffect.gameObject.SetActive(value);
+        //highlightEffect.gameObject.SetActive(value);
     }
 
 

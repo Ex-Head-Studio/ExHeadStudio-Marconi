@@ -8,6 +8,13 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
 {
     protected AbstractCard cardToUse;
     [SerializeField] protected Collider tileCollider;
+    [SerializeField] private GameObject tileHighlightParticle;
+
+    [Header("Interaction")]
+    [SerializeField] protected GameObject allyMovementSignal;
+    [SerializeField] protected GameObject enemyMovementSignal;
+    [SerializeField] protected GameObject allyAttackSignal;
+    [SerializeField] protected GameObject enemyAttackSignal;
 
     protected bool isTileSelectable = false;
 
@@ -20,6 +27,8 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
 
     private Tile tileScript;
     private UnityEngine.Vector2 tilePosition;
+
+    private GameObject tileParticleHighlightInstance;
 
     private void Start()
     {
@@ -75,25 +84,37 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
     protected virtual void OnCardSelected(AbstractCard card)
     {
         cardToUse = card;
-        
 
         if (card.GetCardEntity() == (int)CardEntityType.Tile)
         {
-            if (card.hasToPlaceSomethingOnTile&& GridManager.Instance.tilesForPlacingObstacles.Contains(this.tileScript))
+            if (card.hasToPlaceSomethingOnTile && GridManager.Instance.tilesForPlacingObstacles.Contains(this.tileScript))
             {
+                Debug.Log("La carta è una carta di piazzamento ostacolo.");
                 //animazione per il tile
-                transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+                //transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+                allyMovementSignal.SetActive(true);
                 isTileSelectable = true;
                 tileCollider.enabled = true;
             }
-            else
+            /* else
             {
-                transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
-
+                Debug.Log("La carta non è una carta di piazzamento ostacolo.");
+                //transform.DOPunchPosition(Vector3.up * 0.1f, 0.5f, 10, 1).SetLoops(-1, LoopType.Yoyo);
+                allyMovementSignal.SetActive(true);
                 isTileSelectable = true;
                 tileCollider.enabled = true;
-            }
+            } */
 
+        }
+        else if (card.GetCardEntity() == (int)CardEntityType.AllyShip && this.GetComponent<Tile>().GetType() == TileType.Ally)
+        {
+            tileParticleHighlightInstance = Instantiate(tileHighlightParticle, transform.position, Quaternion.identity);
+            tileParticleHighlightInstance.GetComponent<ParticleSystem>().Play();
+        }
+        else if ((card.GetCardEntity() == (int)CardEntityType.EnemyShip || card.GetCardEntity() == (int)CardEntityType.AllyAndEnemyShip) && this.GetComponent<Tile>().GetType() == TileType.Enemy)
+        {
+            tileParticleHighlightInstance = Instantiate(tileHighlightParticle, transform.position, Quaternion.identity);
+            tileParticleHighlightInstance.GetComponent<ParticleSystem>().Play();
         }
     }
 
@@ -101,10 +122,11 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
     protected virtual void OnCardDeselected(AbstractCard card)
     {
         transform.DOKill(this.gameObject);
-
+        allyMovementSignal.SetActive(false);
         isTileSelectable = false;
         tileCollider.enabled = false;
         cardToUse = null;
+        Destroy(tileParticleHighlightInstance);
     }
 
     #endregion
@@ -116,22 +138,24 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
         {
             cardToUse.SetNotInteractable();
 
-                //animazione per la selezione della nave
-                transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {transform.DOKill(true);});
+            //animazione per la selezione della nave
+            //transform.DOShakePosition(0.5f, 0.1f, 10, 90, false, true).OnKill(() => {transform.DOKill(true);});
 
-                isTileSelected = true;
-                
-                if (cardToUse.GetCardEffects() != null)
+            isTileSelected = true;
+
+            if (cardToUse.GetCardEffects() != null)
+            {
+                foreach (AbstractEffectSO effect in cardToUse.GetCardEffects())
                 {
-                    foreach (AbstractEffectSO effect in cardToUse.GetCardEffects())
-                    {
-                        //aggiungo gli effetti alla coda
-                        effectQueue.Enqueue(effect);
-                    }       
-                    
-                    //Eseguo gli effetti della coda
-                    ResolveEffectQueue();                              
+                    //aggiungo gli effetti alla coda
+                    effectQueue.Enqueue(effect);
                 }
+
+                //Eseguo gli effetti della coda
+                ResolveEffectQueue();
+            }
+                
+            Destroy(tileParticleHighlightInstance);
         }
     }
 
@@ -178,6 +202,7 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
                 isTileSelectable = false;
                 isTileSelected = false;
                 tileCollider.enabled = false;
+                Destroy(tileParticleHighlightInstance);
             }
         }
 

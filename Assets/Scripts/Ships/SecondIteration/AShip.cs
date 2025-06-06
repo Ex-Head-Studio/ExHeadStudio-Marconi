@@ -144,7 +144,10 @@ public abstract class AShip : MonoBehaviour
         int dodgeChance = Random.Range(0, 4);
         if (dodgeChance == 0)
         {
+            Debug.Log("Dodge chance: " + dodgeChance);
             Debug.Log(dodgeChance);
+            particleSystemInstance = Instantiate(shipSO.dodgeEffect, transform.position + new Vector3(0f,5f,0f), Quaternion.identity);
+            particleSystemInstance.Play();
             return;
         }
 
