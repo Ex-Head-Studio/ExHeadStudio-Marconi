@@ -202,7 +202,8 @@ public class GridManager : MonoBehaviour, ICardDropArea
                 spawnedTile.transform.localScale = Vector3.one;
 
                 //non è corretto, i nomi non corrispondo alle posizioni
-                spawnedTile.name = $"Tile {Mathf.Abs(y - 4)} {x}";
+                //spawnedTile.name = $"Tile {Mathf.Abs(y - 4)} {x}";
+                spawnedTile.name = $"Tile {x} {y}";
 
                 _tiles[new Vector2(x, y)] = spawnedTile;
 
@@ -266,7 +267,7 @@ public class GridManager : MonoBehaviour, ICardDropArea
     {
         foreach (var tile in _tiles.Values)
         {
-            if (tile.GetShip() != null && tile.GetShip().GetComponent<AShip>().faction == (int)Entity.ally)
+            if (tile.GetType() == TileType.Ally)
             {
                 return GetPositionFromTile(tile);
             }
@@ -330,14 +331,18 @@ public class GridManager : MonoBehaviour, ICardDropArea
             //calcolo delle posizioni relative a quella alleata
 
             Vector2 allyPos = GetAllyShipPosition();
-
-            for (int x = (int)allyPos.x - range; x < (int)allyPos.x + range; x++)
+            Debug.Log($"Posizione alleata: {allyPos}");
+            
+            for (int x = (int)allyPos.x - range; x <= (int)allyPos.x + range; x++)
             {
-                for (int y = (int)allyPos.y - range; y < (int)allyPos.y + range; y++)
+                for (int y = (int)allyPos.y - range; y <= (int)allyPos.y + range; y++)
                 {
-                    if ((x > 0 && x < _width) && (y > 0 && y < _height)
-                        && (x != allyPos.x && y != allyPos.y))
+
+                    Debug.LogWarning($"Pre IF: Tile {x}, {y}");
+                    if ((x >= 0 && x < _width) && (y >= 0 && y < _height)
+                        && (new Vector2(x,y)!= allyPos) && GetTileAtPosition(new Vector2(x, y)).GetType() == TileType.Empty)
                     {
+                         Debug.LogWarning($"POST IF: Tile {x}, {y}");
                         tilesForPlacingObstacles.Add(_tiles[new Vector2(x, y)]);
                     }
                 }

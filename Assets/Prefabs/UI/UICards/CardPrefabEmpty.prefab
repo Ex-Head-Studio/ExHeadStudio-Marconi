@@ -61,8 +61,8 @@ MonoBehaviour:
   highlightColor: {r: 0.6171452, g: 0.72955966, b: 0.24440247, a: 1}
   energySystem: {fileID: 11400000, guid: 136cca535f0baba46ab62bf1a16ce78d, type: 2}
   canBeUsedBorder: {fileID: 2441223954347744579}
-  colorCommandCard: {r: 0, g: 0.051980734, b: 1, a: 1}
-  colorSupportCard: {r: 1, g: 0.5954143, b: 0, a: 1}
+  colorCommandCard: {r: 0.8117647, g: 0.47301498, b: 0, a: 1}
+  colorSupportCard: {r: 0, g: 0.39665735, b: 0.64705884, a: 1}
   colorSpySupportCard: {r: 1, g: 0, b: 0, a: 1}
 --- !u!65 &2030590410521117760
 BoxCollider:

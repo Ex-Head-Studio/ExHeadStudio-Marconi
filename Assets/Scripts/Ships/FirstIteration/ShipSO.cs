@@ -25,6 +25,7 @@ public class ShipSO : ScriptableObject
     [Header("Effects")]
     [SerializeField] public ParticleSystem attackReceivedParticle;
     [SerializeField] public ParticleSystem changeClassParticle = null;
+    [SerializeField] public ParticleSystem attackParticle = null;
 
     public Dictionary<string, int> statsDictionary = new Dictionary<string, int>();
     public float shipInfluence;

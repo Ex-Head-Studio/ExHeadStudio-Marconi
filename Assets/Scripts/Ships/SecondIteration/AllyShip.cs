@@ -266,7 +266,9 @@ public class AllyShip : AShip
     public void PerformAttack(Vector2 targetPos)
     {
         shipSO.attackEvent.Invoke(new ShipAttackStruct(targetPos, shipSO.attackPower));
+        InstantiateEffect(targetPos);
     }
+
     void Update()
     {
         if (startMovement)
@@ -828,14 +830,14 @@ public class AllyShip : AShip
 
         //calcolo la posizione del vertice sinistro e poi faccio partire due cicli da questa
 
-        for (int x = position.x - damageRange; x < position.x + damageRange; x++)
+        for (int x = position.x - damageRange; x <= position.x + damageRange; x++)
         {
-            for (int y = position.y - damageRange; y < position.y + damageRange; y++)
+            for (int y = position.y - damageRange; y <= position.y + damageRange; y++)
             {
-                if (x < GridManager.Instance._width && y < GridManager.Instance._height &&
-                    x != position.x && y != position.y)
+                if ((x >= 0 && x < GridManager.Instance._width) && (y >= 0 && y < GridManager.Instance._height) &&
+                    (new Vector2(x,y)!= position))
                 {
-                    PerformAttack(new Vector2(x, y));    
+                    PerformAttack(new Vector2(x, y));
                 }
             }
         }
@@ -845,6 +847,10 @@ public class AllyShip : AShip
     private void InstantiateEffect(Vector2 position)
     {
         //Istanziare qui l'effetto visivo dell'attacco
+        if( shipSO.attackParticle == null) return;
+
+        Instantiate(shipSO.attackParticle, position, Quaternion.identity);
+
     }
 
 
