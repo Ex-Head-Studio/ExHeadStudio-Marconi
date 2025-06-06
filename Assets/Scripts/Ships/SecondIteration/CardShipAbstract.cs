@@ -73,7 +73,7 @@ public abstract class CardShipAbstract : MonoBehaviour, IPointerClickHandler
     protected virtual void OnCardDeselected(AbstractCard card)
     {
         transform.DOKill(gameObject);
-
+        effectQueue.Clear();
         isShipSelectable = false;
         shipCollider.enabled = false;
         cardToUse = null;
