@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.Cinemachine;
+using DG.Tweening;
 
 public abstract class AShip : MonoBehaviour
 {
@@ -157,6 +158,7 @@ public abstract class AShip : MonoBehaviour
         Quaternion correctAngle = Quaternion.FromToRotation(shipSO.attackReceivedParticle.gameObject.transform.up, gameObject.transform.up);
         particleSystemInstance = Instantiate(shipSO.attackReceivedParticle, transform.position, correctAngle);
         particleSystemInstance.Play();
+        DoShakeDamageAnimation();
 
         PlayShipDamage();
 
@@ -394,7 +396,29 @@ public abstract class AShip : MonoBehaviour
     public void TakeDamage(int damage)
     {
         Debug.Log("Damage received");
+
+
+       
+
+        DoShakeDamageAnimation();
+        
         shipSO.attackEvent?.Invoke(new ShipAttackStruct(this.position, damage));
+    }
+
+    public void DoShakeDamageAnimation()
+    {
+
+        Transform shipTransform = transform;
+        // Aggiungi effetto vibrazione con DOTween
+        transform.DOShakePosition(0.5f, 0.3f, 10, 90, false, true)
+            .SetEase(Ease.OutElastic)
+            .OnComplete(() =>
+            {
+                // Assicurati che la nave torni esattamente alla posizione originale
+                transform.DOKill(false);
+                transform.localPosition = shipTransform.localPosition;
+
+        });
     }
 
 

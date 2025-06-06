@@ -24,7 +24,7 @@ MonoBehaviour:
   messageSentEvent: {fileID: 11400000, guid: e7a8e4cdd3c77634898bd0d9cade733f, type: 2}
   shipDestroyedEvent: {fileID: 11400000, guid: 4fbf4a5aee078414db68df3b63f2e6fe, type: 2}
   attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
-  attackReceivedParticle: {fileID: 7679892832704549551, guid: 15bae1f0410a69d4ca8b2a0aa3cf1d68, type: 3}
+  attackReceivedParticle: {fileID: 8194992990867289333, guid: 99bc28c0d45f51c4fbac01080b73edc7, type: 3}
   changeClassParticle: {fileID: 0}
   attackParticle: {fileID: 2504214343621411456, guid: 3ed0d324122d7b24eaec75c55c74aafc, type: 3}
   dodgeEffect: {fileID: 3337905222051100615, guid: dfec37acbf4d1914b97fdc060f7578dd, type: 3}
