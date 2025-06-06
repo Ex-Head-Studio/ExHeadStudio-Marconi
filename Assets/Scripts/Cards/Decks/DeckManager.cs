@@ -97,7 +97,7 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
             drawingCost = 0;
         }
         deckCostIcon.text = "Cost: " + drawingCost.ToString();
-        ShuffleDeck();
+        //ShuffleDeck();
     }
 
     #region Gestione eventi
@@ -203,12 +203,11 @@ public class DeckManager : MonoBehaviour, IPointerClickHandler, IPointerEnterHan
         }
         else
         {
-            randomIndex = UnityEngine.Random.Range(fixedIndex, cardsInDeck.Count);
+            randomIndex = UnityEngine.Random.Range(1, cardsInDeck.Count);
             while (alreadyDrawedIndexes.Contains(randomIndex))
             {
-                randomIndex = UnityEngine.Random.Range(fixedIndex, cardsInDeck.Count);
+                randomIndex = UnityEngine.Random.Range(1, cardsInDeck.Count);
             }
-
             alreadyDrawedIndexes.Add(randomIndex);
 
             drawnCard = cardsInDeck[randomIndex].cardData;
