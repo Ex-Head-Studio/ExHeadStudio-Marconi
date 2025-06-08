@@ -8,8 +8,12 @@ public class RemoveObstacleEffect : AbstractEffectSO
     {
         if (effectStruct.obj.TryGetComponent<Tile>(out tileScript))
         {
-
-            tileScript.RemoveObstacle();
+            // ora ha effetto solo sulle mine
+            var obstacle = tileScript.GetObstacle();
+            if (obstacle != null && obstacle is MineObstacle)
+            {
+                tileScript.RemoveObstacle();   
+            }
         }
         EndEffect(0);
     }

@@ -104,6 +104,7 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
 
     public void AreaDamage()
     {
+        /*
         switch (areaDamageType)
         {
             case AreaDamageType.Circle:
@@ -128,6 +129,51 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
             default:
                 Debug.LogError("Area Damage Type not set");
                 break;
+        }
+        */
+
+        int radius = areaDamageRadius;
+        if (areaDamageType == AreaDamageType.Square)
+            radius = 1;
+
+        Vector2 center = obstaclePosition;
+
+        for (int dx = -radius; dx <= radius; dx++)
+        {
+            for (int dy = -radius; dy <= radius; dy++)
+            {
+                Vector2 target = new Vector2(center.x + dx, center.y + dy);
+
+                // Salta la posizione centrale (la mina stessa)
+                if (dx == 0 && dy == 0)
+                    continue;
+
+                bool doAttack = false;
+
+                switch (areaDamageType)
+                {
+                    case AreaDamageType.Circle:
+                        // Cerchio: distanza euclidea <= raggio
+                        if (Mathf.Sqrt(dx * dx + dy * dy) <= radius)
+                            doAttack = true;
+                        break;
+                    case AreaDamageType.Cross:
+                        // Croce: solo assi X e Y
+                        if ((dx == 0 || dy == 0) && !(dx == 0 && dy == 0))
+                            doAttack = true;
+                        break;
+                    case AreaDamageType.Square:
+                        // Quadrato: tutte le celle nell'area quadrata
+                        doAttack = true;
+                        break;
+                }
+
+                if (doAttack)
+                {
+                    attackEvent.Invoke(new ShipAttackStruct(target, areaDamage));
+                    InstantiateEffect(target);
+                }
+            }
         }
     }
 

@@ -14,8 +14,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   movementRange: 1
   attackRange: 3
-  attackPower: 2
-  health: 2
+  attackPower: 1
+  health: 3
   statNames:
   - Movement Range
   - Attack Range

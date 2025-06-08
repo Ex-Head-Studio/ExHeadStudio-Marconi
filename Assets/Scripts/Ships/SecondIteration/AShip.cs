@@ -439,6 +439,7 @@ public abstract class AShip : MonoBehaviour
         else if (statName == "Attack Power")
         {
             attackPower = oldStatValue + amount;
+            shipSO.statsDictionary[statName] = attackPower;
         }
     }
 
@@ -459,6 +460,7 @@ public abstract class AShip : MonoBehaviour
             else if (oldStatName == "Attack Power")
             {
                 attackPower = oldStatValue;
+                shipSO.statsDictionary[oldStatName] = oldStatValue;
             }
             hasStatChanged = false;
         }
