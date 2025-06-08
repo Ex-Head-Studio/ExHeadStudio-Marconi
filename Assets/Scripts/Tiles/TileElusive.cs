@@ -17,6 +17,7 @@ public class TileElusive : Tile, ITileElusionArea
 
     public void ElusiveArea()
     {
-        tileShip.GetComponent<AShip>().hitChance = 0.5f;
+        Debug.Log("Set dodgechance to 1 in tile: " + name);
+        tileShip.GetComponent<AShip>().dodgeChance = 1;
     }
 }

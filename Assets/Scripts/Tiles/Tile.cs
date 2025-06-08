@@ -90,42 +90,43 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     /// </summary>
     /// <param name="shipFaction"></param>
     /// </remarks>
-    public void SetTileInteractable(int shipFaction, Move move = null) 
+    public void
+    SetTileInteractable(int shipFaction, Move move = null)
     {
-        if(shipFaction == (int)Entity.ally)
+        if (shipFaction == (int)Entity.ally)
         {
             isInteractable = true;
             tileCollider.enabled = true;
-            if(move != null)
+            if (move != null)
             {
-                if(move.GetMessageType() == MessageType.attack)
+                if (move.GetMessageType() == MessageType.attack)
                 {
                     allyAttackSignal.SetActive(true);
                     activeSignal = allyAttackSignal;
                 }
-                else if(move.GetMessageType() == MessageType.movement)
+                else if (move.GetMessageType() == MessageType.movement)
                 {
                     allyMovementSignal.SetActive(true);
                     activeSignal = allyMovementSignal;
                 }
             }
         }
-        else if(shipFaction == (int)Entity.enemy)
+        else if (shipFaction == (int)Entity.enemy)
         {
 
-            if(move != null)
+            if (move != null)
             {
-                if(move.GetMessageType() == MessageType.attack)
+                if (move.GetMessageType() == MessageType.attack)
                 {
                     //enemyAttackSignal.SetActive(true);
                     activeSignal = enemyAttackSignal;
                 }
-                else if(move.GetMessageType() == MessageType.movement)
+                else if (move.GetMessageType() == MessageType.movement)
                 {
 
                     //attenzione!!
                     _type = TileType.Enemy;
-                    
+
 
                     //enemyMovementSignal.SetActive(true);
                     activeSignal = enemyMovementSignal;
@@ -241,7 +242,8 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
             tileShip = ship;
             tileShip.transform.position = gameObject.transform.position;
             SetType(this._type, ship.GetComponent<AShip>().faction);
-            ship.GetComponent<AShip>().hitChance = 1f;
+            ship.GetComponent<AShip>().dodgeChance = -1;
+            Debug.Log("Set dodgeChance to -1 in tile: " + name);
         }
        
     }

@@ -79,7 +79,7 @@ public abstract class AShip : MonoBehaviour
     [Header("Ship Chances")]
 
     [Tooltip("Parametro per gestire la probabilità di essere colpiti da un attacco")]
-    [SerializeField] public float hitChance = 0.25f;
+    [SerializeField] public int dodgeChance = -1;
     [SerializeField] ParticleSystem dodgeEffect;
 
     [SerializeField] protected Animator shipAnimator;
@@ -142,8 +142,8 @@ public abstract class AShip : MonoBehaviour
         {
             return;
         }
-        int dodgeChance = Random.Range(0, 4);
-        if (dodgeChance == 0)
+        int dodge = Random.Range(0, 4);
+        if (dodgeChance >= 0 && dodge <= dodgeChance )
         {
             Debug.Log("Dodge chance: " + dodgeChance);
             Debug.Log(dodgeChance);

@@ -398,8 +398,7 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(x, position.y);
 
-                if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle ||
-                    GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Ally)
+                if (GridManager.Instance.GetTileAtPosition(pos).GetType() != TileType.Empty)
                 {
                     break;
                 }
@@ -419,8 +418,7 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(x, position.y);
 
-                if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle ||
-                    GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Ally)
+                if (GridManager.Instance.GetTileAtPosition(pos).GetType() != TileType.Empty)
                 {
                     break;
                 }
@@ -440,8 +438,7 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(position.x, y);
 
-                if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle ||
-                    GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Ally)
+                if (GridManager.Instance.GetTileAtPosition(pos).GetType() != TileType.Empty)
                 {
                     break;
                 }
@@ -461,8 +458,7 @@ public class EnemyShip : AShip
             {
                 Vector2Int pos = new Vector2Int(position.x, y);
 
-                if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle ||
-                    GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Ally)
+                if (GridManager.Instance.GetTileAtPosition(pos).GetType() != TileType.Empty)
                 {
                     break;
                 }
@@ -514,7 +510,7 @@ public class EnemyShip : AShip
 
                         if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                         {
-                            Debug.Log("Break");
+                            //Debug.Log("Break");
                             break;
                         }
 
@@ -543,7 +539,7 @@ public class EnemyShip : AShip
 
                         if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                         {
-                            Debug.Log("Break");
+                            //Debug.Log("Break");
                             break;
                         }
 
@@ -570,6 +566,11 @@ public class EnemyShip : AShip
                     {
                         Vector2Int pos = new Vector2Int(move.GetTargetPos().x, y);
 
+                        if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                        {
+                            //Debug.Log("Break");
+                            break;
+                        }
 
                         if (Vector2Int.Distance(move.GetTargetPos(), pos) == attackRange)
                         {
@@ -594,6 +595,12 @@ public class EnemyShip : AShip
                     {
                         Vector2Int pos = new Vector2Int(move.GetTargetPos().x, y);
 
+                        if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
+                        {
+                            //Debug.Log("Break");
+                            break;
+                        }
+                        
                         if (Vector2Int.Distance(move.GetTargetPos(), pos) == attackRange)
                         {
                             move.value += 2;

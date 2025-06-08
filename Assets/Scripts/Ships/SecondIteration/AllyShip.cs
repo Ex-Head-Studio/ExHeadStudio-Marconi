@@ -495,6 +495,7 @@ public class AllyShip : AShip
     {
         //Setto il bool di movimento
         isMoving = true;
+        dodgeChance = -1;
         // Impostiamo la destinazione del movimento
         targetPosition = tile.transform.position;
         

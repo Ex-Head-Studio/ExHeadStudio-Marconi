@@ -15,7 +15,7 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
     [SerializeField] protected GameObject enemyMovementSignal;
     [SerializeField] protected GameObject allyAttackSignal;
     [SerializeField] protected GameObject enemyAttackSignal;
-
+    
     protected bool isTileSelectable = false;
 
     //questo bool permette alla tile di riconoscere se è selezionata o meno, per evitare di selezionarla più volte
@@ -126,6 +126,7 @@ public class CardTile : MonoBehaviour, IPointerClickHandler
         isTileSelectable = false;
         tileCollider.enabled = false;
         cardToUse = null;
+        tileScript.SetTileNotInteractable(0);
         Destroy(tileParticleHighlightInstance);
     }
 
