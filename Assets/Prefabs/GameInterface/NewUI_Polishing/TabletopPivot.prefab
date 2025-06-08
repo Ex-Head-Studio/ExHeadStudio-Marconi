@@ -1255,7 +1255,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'END
 
-    action'
+    TURN'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64f108c474fc69e449111806674ff164, type: 2}
   m_sharedMaterial: {fileID: -1072116930524599005, guid: 64f108c474fc69e449111806674ff164, type: 2}
@@ -3141,7 +3141,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'END
 
-    Tactic'
+    PHASE'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64f108c474fc69e449111806674ff164, type: 2}
   m_sharedMaterial: {fileID: -1072116930524599005, guid: 64f108c474fc69e449111806674ff164, type: 2}
