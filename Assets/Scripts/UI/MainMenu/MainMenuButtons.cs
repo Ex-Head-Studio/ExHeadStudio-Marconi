@@ -20,8 +20,8 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] private GameObject title;
 
     [Header("Animazione Transizione")]
-    [SerializeField] private GameObject cardineScatola1;
-    [SerializeField] private GameObject cardineScatola2;
+    /* [SerializeField] private GameObject cardineScatola1;
+    [SerializeField] private GameObject cardineScatola2; */
     [SerializeField] private GameObject cameraIniziale;
     [SerializeField] private GameObject cameraTransizione;
     [SerializeField] private float durataTotaleAnimazione = 2f;
@@ -41,29 +41,16 @@ public class MainMenuButtons : MonoBehaviour
     }
     public void StartGame()
     {
-        this.GetComponent<Canvas>().enabled = false; // Disabilita il canvas per evitare interazioni durante l'animazione
         // Riproduci il suono del pulsante Start
         AudioManager.PlayOneShot(startButtonSound, this.transform.position);
         
-        // Disabilita l'interazione con altri pulsanti durante l'animazione
-        GetComponent<CanvasGroup>().interactable = false;
+        // Disabilita il canvas per evitare interazioni durante la transizione
+        this.GetComponent<Canvas>().enabled = false;
         
-        // Avvia la sequenza di animazione
+        // Avvia la sequenza di animazione semplificata
         Sequence animazioneTransizione = DOTween.Sequence();
         
-        // Usa DOLocalRotate per rotazioni locali del primo cardine
-        animazioneTransizione.Join(
-            cardineScatola1.transform.DOLocalRotate(new Vector3(0, 360, 0), durataTotaleAnimazione)
-            .SetEase(tipoEasing)
-        );
-        
-        // Usa DOLocalRotate per rotazioni locali del secondo cardine
-        animazioneTransizione.Join(
-            cardineScatola2.transform.DOLocalRotate(new Vector3(0, 0, 0), durataTotaleAnimazione)
-            .SetEase(tipoEasing)
-        );
-        
-        // Dopo un breve ritardo, cambia la telecamera
+        // Cambia la telecamera dopo il ritardo configurato
         animazioneTransizione.InsertCallback(ritardoCambioCamera, () => {
             // Spegni la camera iniziale
             cameraIniziale.SetActive(false);
@@ -71,14 +58,15 @@ public class MainMenuButtons : MonoBehaviour
             cameraTransizione.SetActive(true);
         });
         
-        // Aggiungi un ritardo dopo l'animazione
-        animazioneTransizione.AppendInterval(ritardoDopoAnimazione);
+        // Aggiungi un ritardo dopo il cambio camera
+        animazioneTransizione.AppendInterval(durataTotaleAnimazione + ritardoDopoAnimazione);
         
-        // Al termine dell'animazione e del ritardo, carica la scena successiva
+        // Al termine della sequenza, carica la scena successiva
         animazioneTransizione.OnComplete(() => {
             SceneManager.LoadScene(1);
         });
     }
+
     public void ExitGame()
     {
         Application.Quit();
