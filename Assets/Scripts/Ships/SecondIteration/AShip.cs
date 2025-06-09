@@ -246,16 +246,20 @@ public abstract class AShip : MonoBehaviour
         ChangeClassModel(newClass);
 
         //cambiare la salute nel display
-
+        
 
         //aggiungere particellare/suono/animazione di cambio classe
         if (newClass.changeClassParticle != null)
         {
             ParticleSystem tmpParticle = Instantiate(newClass.changeClassParticle, transform.position, Quaternion.identity);
             tmpParticle.Play();
+            
         }
 
     }
+
+    
+
 
     private void ChangeClassModel(ShipSO newClass)
     {

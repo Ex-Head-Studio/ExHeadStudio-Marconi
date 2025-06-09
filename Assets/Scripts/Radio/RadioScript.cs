@@ -19,7 +19,7 @@ public class RadioScript : MonoBehaviour
     private EventInstance radioInstance;
 
     [SerializeField] private Transform knobVisual;
-[SerializeField] private float rotationMultiplier = 90f; // Gradi di rotazione per unità (puoi regolare)
+    [SerializeField] private float rotationMultiplier = 90f; // Gradi di rotazione per unità (puoi regolare)
 
     private void Start()
     {

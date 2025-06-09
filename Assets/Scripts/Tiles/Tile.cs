@@ -185,17 +185,8 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
             tileSelected?.Invoke(this);
             SetTileNotInteractable((int)Entity.ally);
         }
-        PlayShipMove();
 
         //La tile comunica con un evento che è stata selezionata, lo riceverà una nave
-    }
-
-    private FMOD.Studio.EventInstance shipMove;
-    public void PlayShipMove()
-    {
-        shipMove = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipMoving");
-        shipMove.start();
-        shipMove.release();
     }
 
     public void SetTileHighlight(bool value)

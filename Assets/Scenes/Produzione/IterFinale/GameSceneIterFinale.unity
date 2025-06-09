@@ -266,6 +266,7 @@ GameObject:
   - component: {fileID: 32825321}
   - component: {fileID: 32825320}
   - component: {fileID: 32825319}
+  - component: {fileID: 32825324}
   m_Layer: 0
   m_Name: Main Camera
   m_TagString: MainCamera
@@ -380,7 +381,7 @@ AudioListener:
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 32825316}
-  m_Enabled: 1
+  m_Enabled: 0
 --- !u!20 &32825323
 Camera:
   m_ObjectHideFlags: 0
@@ -432,6 +433,20 @@ Camera:
   m_OcclusionCulling: 1
   m_StereoConvergence: 10
   m_StereoSeparation: 0.022
+--- !u!114 &32825324
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 32825316}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 86c6556701af9e04380698b89f691b6e, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  nonRigidbodyVelocity: 0
+  attenuationObject: {fileID: 0}
 --- !u!1 &46333606
 GameObject:
   m_ObjectHideFlags: 0
@@ -4659,7 +4674,7 @@ RectTransform:
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 1, y: 1}
-  m_AnchoredPosition: {x: -694, y: 204}
+  m_AnchoredPosition: {x: -694.00006, y: 204}
   m_SizeDelta: {x: -1458, y: -828.11865}
   m_Pivot: {x: 0.5, y: 0.5}
 --- !u!114 &1435187321

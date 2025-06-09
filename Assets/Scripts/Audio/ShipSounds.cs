@@ -19,6 +19,15 @@ public class ShipSounds: MonoBehaviour
         shipMove.release();
     }
 
+    private FMOD.Studio.EventInstance shipMoveStart;
+
+    public void PlayMoveStartSound()
+    {
+        shipMoveStart = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/MovementStart");
+        shipMoveStart.start();
+        shipMoveStart.release();
+    }
+
     private FMOD.Studio.EventInstance shipDamage;
 
     public void PlayShipDamage()

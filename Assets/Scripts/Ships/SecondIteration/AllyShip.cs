@@ -678,7 +678,8 @@ public class AllyShip : AShip
             {
                 shipAnimator.SetBool("Move", true);
                 shipAnimator.Play("Startup");
-                
+                PlayMoveStartSound();
+                Debug.Log("Suono");
                 // Ottieni la durata dell'animazione
                 float animDuration = 0;
                 if (shipAnimator.GetCurrentAnimatorClipInfo(0).Length > 0)
@@ -697,7 +698,9 @@ public class AllyShip : AShip
                 // Variabili per la rotazione
                 float startTime = Time.time;
                 float elapsedTime = 0f;
+
                 
+
                 // Ruotiamo gradualmente l'oggetto Ship durante l'animazione di Startup
                 while (elapsedTime < animDuration)
                 {
@@ -762,6 +765,10 @@ public class AllyShip : AShip
             // Iniziamo il movimento immediatamente dopo che la rotazione è completa
             Debug.Log("Starting movement immediately after rotation");
             startMovement = true;
+
+            // suono di movimento
+            shipMoveStart.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            PlayShipMove();
         }
         else
         {
@@ -808,6 +815,23 @@ public class AllyShip : AShip
         effectSO.EndEffect(0);
     }
 
+    
+    private FMOD.Studio.EventInstance shipMove;
+    public void PlayShipMove()
+    {
+        shipMove = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipMoving");
+        shipMove.start();
+        shipMove.release();
+    }
+
+    private FMOD.Studio.EventInstance shipMoveStart;
+
+    public void PlayMoveStartSound()
+    {
+        shipMoveStart = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/MovementStart");
+        shipMoveStart.start();
+        shipMoveStart.release();
+    }
 
 
     #region Effetti richiamabili dalle carte

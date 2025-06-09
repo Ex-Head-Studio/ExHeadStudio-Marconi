@@ -399,6 +399,9 @@ public class EnemyShip : AShip
                 float startTime = Time.time;
                 float elapsedTime = 0f;
                 
+                // suono di movimento iniziale
+                PlayMoveStartSound();
+
                 // Ruotiamo gradualmente l'oggetto Ship durante l'animazione di Startup
                 while (elapsedTime < animDuration)
                 {
@@ -437,14 +440,17 @@ public class EnemyShip : AShip
 
                 
 
+
                 // Minima attesa per assicurarci che l'animazione di Move sia iniziata
                 while (shipAnimator.GetCurrentAnimatorStateInfo(0).normalizedTime < 0.05f)
                 {
                     yield return null;
                 }
-                // suono di movimento
 
+                // suono di movimento
+                shipMoveStart.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
                 PlayShipMove();
+
             }
             else
             {
@@ -468,6 +474,8 @@ public class EnemyShip : AShip
             // Iniziamo il movimento immediatamente dopo che la rotazione è completa
             Debug.Log("Starting movement immediately after rotation");
             startMovement = true;
+
+            
         }
         else
         {
@@ -483,7 +491,9 @@ public class EnemyShip : AShip
         {
             yield return null;
         }
+
         
+
         // Quando siamo abbastanza vicini, fermiamo l'animazione di movimento
         if (shipAnimator != null)
         {
@@ -949,11 +959,21 @@ public class EnemyShip : AShip
         throw new System.NotImplementedException();
     }
 
+    // suoni di movimento e inizio movimento
     private FMOD.Studio.EventInstance shipMove;
     public void PlayShipMove()
     {
         shipMove = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipMoving");
         shipMove.start();
         shipMove.release();
+    }
+
+    private FMOD.Studio.EventInstance shipMoveStart;
+
+    public void PlayMoveStartSound()
+    {
+        shipMoveStart = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/MovementStart");
+        shipMoveStart.start();
+        shipMoveStart.release();
     }
 }

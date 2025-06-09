@@ -27,6 +27,7 @@ public class ChangeClassEffect : AbstractEffectSO
                     shipScript.ChangeClass(newClass);
                     changeClassParticleInstance = Instantiate(changeClassParticle, shipScript.transform.position, Quaternion.identity);
                     changeClassParticleInstance.Play();
+                    PlayClassChange();
                 }
 
                 break;
@@ -46,4 +47,15 @@ public class ChangeClassEffect : AbstractEffectSO
 
         EndEffect(0);
     }
+private FMOD.Studio.EventInstance soundChange;
+
+public void PlayClassChange()
+    {
+        soundChange = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/ClassChange");
+        soundChange.start();
+        soundChange.release();
+    }
 }
+
+
+
