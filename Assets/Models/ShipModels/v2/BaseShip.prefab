@@ -163,7 +163,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: a85e82c1f9f795442b69129823aeb994, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  attackVFX: {fileID: 5408746174225313418}
+  attackVFX:
+  - {fileID: 5408746174225313418}
 --- !u!23 &1468268967935236960 stripped
 MeshRenderer:
   m_CorrespondingSourceObject: {fileID: -8457977909295818252, guid: 1d73769af9ee56c42b22bba80c31240e, type: 3}

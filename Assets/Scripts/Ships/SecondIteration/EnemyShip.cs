@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using System.Linq;
 using System.Collections;
+using DG.Tweening; // Aggiungi questa riga
 public class EnemyShip : AShip
 {
     Move initialMove;
@@ -36,11 +37,159 @@ public class EnemyShip : AShip
     }
     IEnumerator Attack()
     {
-
-        //shipAnimator.Play("Attack");
-        //yield return new WaitForSeconds(shipAnimator.GetCurrentAnimatorClipInfo(0)[0].clip.length);
-        yield return new WaitForSeconds(0);
+        // Imposta lo stato della nave come "in attacco"
+        currentState = ShipState.Attacking;
+        
+        // Ottieni la tile bersaglio usando initialMove
+        Tile targetTile = GridManager.Instance.GetTileAtPosition(initialMove.GetTargetPos());
+        
+        // Calcola la direzione verso il bersaglio
+        Vector3 targetPosition = targetTile.transform.position;
+        Vector3 direction = targetPosition - transform.position;
+        
+        // Cerchiamo l'oggetto ship e il suo figlio da ruotare (codice simile a MoveShip)
+        Transform shipObject = null;
+        Transform shipChild = null;
+        
+        // Cerchiamo prima l'oggetto ship tra i figli diretti
+        for (int i = 0; i < transform.childCount; i++)
+        {
+            if (transform.GetChild(i).name.ToLower().Contains("ship"))
+            {
+                shipObject = transform.GetChild(i);
+                if (shipObject.childCount > 0)
+                {
+                    shipChild = shipObject.GetChild(0);
+                }
+                break;
+            }
+        }
+        
+        // Se non abbiamo trovato l'oggetto ship nei figli diretti, lo cerchiamo ricorsivamente
+        if (shipObject == null)
+        {
+            // Funzione ricorsiva per cercare un oggetto con "ship" nel nome
+            Transform FindShipRecursive(Transform parent)
+            {
+                for (int i = 0; i < parent.childCount; i++)
+                {
+                    Transform child = parent.GetChild(i);
+                    if (child.name.ToLower().Contains("ship"))
+                    {
+                        return child;
+                    }
+                    
+                    Transform result = FindShipRecursive(child);
+                    if (result != null)
+                    {
+                        return result;
+                    }
+                }
+                return null;
+            }
+            
+            shipObject = FindShipRecursive(transform);
+            if (shipObject != null && shipObject.childCount > 0)
+            {
+                shipChild = shipObject.GetChild(0);
+            }
+        }
+        
+        // Se ancora non abbiamo trovato nulla, usiamo l'animator come riferimento
+        if (shipObject == null && shipAnimator != null)
+        {
+            shipObject = shipAnimator.transform;
+            
+            // Cerca il padre che contiene "ship" nel nome
+            Transform current = shipAnimator.transform;
+            while (current != null && !current.name.ToLower().Contains("ship"))
+            {
+                current = current.parent;
+            }
+            
+            if (current != null)
+            {
+                shipObject = current;
+                if (shipObject.childCount > 0)
+                {
+                    shipChild = shipObject.GetChild(0);
+                }
+            }
+            else if (shipAnimator.transform.childCount > 0)
+            {
+                shipChild = shipAnimator.transform.GetChild(0);
+            }
+        }
+        
+        // Oggetto da ruotare (il figlio dell'oggetto ship se esiste, altrimenti l'oggetto ship stesso)
+        Transform objectToRotate = shipChild != null ? shipChild : shipObject;
+        
+        // Ruotiamo l'oggetto trovato, se presente
+        if (direction != Vector3.zero && objectToRotate != null)
+        {
+            // Calcola la rotazione target in base alla direzione
+            Quaternion targetRotation;
+            
+            // Gestione speciale in base alla direzione di movimento
+            if (Mathf.Abs(direction.x) > Mathf.Abs(direction.z))
+            {
+                // Movimento principalmente orizzontale (lungo X)
+                if (direction.x > 0)
+                {
+                    // Obiettivo a destra
+                    targetRotation = Quaternion.Euler(90f, 0f, 180f);
+                }
+                else
+                {
+                    // Obiettivo a sinistra
+                    targetRotation = Quaternion.Euler(90f, 0f, 0f);
+                }
+            }
+            else
+            {
+                // Movimento principalmente verticale (lungo Z)
+                if (direction.z > 0)
+                {
+                    // Obiettivo in alto
+                    targetRotation = Quaternion.Euler(90f, 0f, -90f);
+                }
+                else
+                {
+                    // Obiettivo in basso
+                    targetRotation = Quaternion.Euler(90f, 0f, 90f);
+                }
+            }
+            
+            // Cerca l'oggetto Ship per applicare la rotazione direttamente ad esso
+            Transform shipTransform = shipObject != null ? shipObject : objectToRotate;
+            
+            // Salva la rotazione iniziale
+            Quaternion startRotation = shipTransform.rotation;
+            
+            // Utilizziamo DOTween per ruotare la nave verso il bersaglio
+            float rotationDuration = 0.3f; // Durata più breve per l'attacco
+            
+            yield return shipTransform.DORotateQuaternion(targetRotation, rotationDuration)
+                .SetEase(Ease.InOutSine)
+                .SetId("ShipAttackRotation")
+                .WaitForCompletion();
+            
+            Debug.Log("Rotazione verso il bersaglio completata, inizio attacco");
+        }
+        
+        // Ora che la nave è orientata verso il bersaglio, iniziamo l'attacco
+        if (shipAnimator != null)
+        {
+            shipAnimator.Play("Attack");
+        }
+        
+        yield return new WaitForSeconds(0.5f); // Tempo di default
+        
+        // Eseguiamo l'attacco originale usando initialMove.GetTargetPos()
         shipSO.attackEvent?.Invoke(new ShipAttackStruct(initialMove.GetTargetPos(), shipSO.attackPower));
+        
+        // Impostiamo lo stato della nave come "disponibile"
+        currentState = ShipState.Waiting;
     }
     
     IEnumerator MoveShip()

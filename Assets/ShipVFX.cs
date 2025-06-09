@@ -1,16 +1,20 @@
 using UnityEngine;
+using System.Collections.Generic;
 
 public class ShipVFX : MonoBehaviour
 {
 
     [Header("Ship VFX")]
-    [SerializeField] private GameObject attackVFX;
+    [SerializeField] private List<GameObject> attackVFX;
     
     public void PlayAttackVFX()
     {
-        if (attackVFX != null)
+        foreach (GameObject vfx in attackVFX)
         {
-            attackVFX.GetComponent<ParticleSystem>().Play();
+            if (vfx != null)
+            {
+                vfx.SetActive(true);
+            }
         }
     }
 }
