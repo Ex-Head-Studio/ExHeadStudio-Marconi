@@ -1,29 +1,31 @@
-using System.Collections;
-using System.Collections.Generic;
 using UnityEngine;
 using FMODUnity;
 using FMOD.Studio;
 
 public class RadioScript : MonoBehaviour
 {
-    [Header("Radio Sound")]  
+    [Header("Radio Sound")]
     [SerializeField] private EventReference radioSound;
+    [SerializeField] private EventReference knobSound;
 
     [Header("Knob Settings")]
     [SerializeField] private float knobSpeed = 1f;
-    [SerializeField] private float minValue = 0f;
-    [SerializeField] private float maxValue = 3f;
-    [SerializeField] private AnimationCurve introCurve = AnimationCurve.Linear(0, 0, 1, 1); // curva solo per inizio intervalli
+    [SerializeField] private float rotationMultiplier = 90f;
 
     private float radioKnobValue = 0f;
     private EventInstance radioInstance;
+    private EventInstance knobInstance;
+    private bool isKnobPlaying = false;
+    private float knobLastPlayTime = 0f;
+    private float knobCooldown = 0.1f;
 
     [SerializeField] private Transform knobVisual;
-    [SerializeField] private float rotationMultiplier = 90f; // Gradi di rotazione per unità (puoi regolare)
-
+        
     private void Start()
     {
         PlayRadio();
+        knobInstance = RuntimeManager.CreateInstance(knobSound);
+        knobInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
     }
 
     public void PlayRadio()
@@ -31,7 +33,6 @@ public class RadioScript : MonoBehaviour
         radioInstance = RuntimeManager.CreateInstance(radioSound);
         radioInstance.set3DAttributes(RuntimeUtils.To3DAttributes(gameObject));
         radioInstance.start();
-        radioInstance.release(); // rilascio gestito da FMOD internamente
     }
 
     private void Update()
@@ -56,35 +57,38 @@ public class RadioScript : MonoBehaviour
         {
             radioKnobValue += delta;
 
-            // Loop continuo da 0 a 3
-            float loopedValue = Mathf.Repeat(radioKnobValue, 3f);
-
-            int station = Mathf.FloorToInt(loopedValue);
-            float local = loopedValue - station;
-
-            float finalValue = loopedValue;
-
-            // Applica curva solo nei tratti [x, x + 0.1]
-            if (local >= 0f && local <= 0.1f && station >= 0 && station <= 2)
+            // Gestione suono manopola
+            if (!isKnobPlaying && Time.time - knobLastPlayTime > knobCooldown)
             {
-                float normalized = Mathf.InverseLerp(0f, 0.1f, local);
-                float curved = delta >= 0f 
-                    ? introCurve.Evaluate(normalized)
-                    : introCurve.Evaluate(1f - normalized);
-
-                finalValue = station + Mathf.Lerp(0f, 0.1f, curved);
+                knobInstance.start();
+                isKnobPlaying = true;
+                knobLastPlayTime = Time.time;
             }
 
-            RuntimeManager.StudioSystem.setParameterByName("RadioKnob", finalValue);
-            Debug.Log("Valore Manopola (FMOD): " + finalValue.ToString("F3"));
+            // Loop continuo da 0 a 3
+            float loopedValue = Mathf.Repeat(radioKnobValue, 3f);
+            RuntimeManager.StudioSystem.setParameterByName("RadioKnob", loopedValue);
 
             // Ruota il knob visivo
-            // Ruota il knob visivo in modo continuo
             if (knobVisual != null)
             {
-                float rotationX = (loopedValue / 3f) * 360f; // Mappatura 0–3 → 0–360°
+                float rotationX = (loopedValue / 3f) * 360f;
                 knobVisual.localRotation = Quaternion.Euler(-rotationX, 0f, 0f);
             }
         }
+        else if (isKnobPlaying)
+        {
+            // Ferma il suono quando la manopola smette di girare
+            knobInstance.stop(FMOD.Studio.STOP_MODE.ALLOWFADEOUT);
+            isKnobPlaying = false;
+        }
+    }
+
+    private void OnDestroy()
+    {
+        radioInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        radioInstance.release();
+        knobInstance.stop(FMOD.Studio.STOP_MODE.IMMEDIATE);
+        knobInstance.release();
     }
 }
