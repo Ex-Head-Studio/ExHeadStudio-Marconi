@@ -20,7 +20,7 @@ namespace CartoonFX
         public bool isDynamic;
 
         [Header("Text")]
-        [SerializeField] string text;
+        [SerializeField] public string text;
         [SerializeField] float size = 1f;
         [SerializeField] float letterSpacing = 0.44f;
 

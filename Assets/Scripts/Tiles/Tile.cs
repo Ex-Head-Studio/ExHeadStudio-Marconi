@@ -48,9 +48,9 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
 
     public static event Action<Tile> tileSelected;
 
-    [Header("Highlight Effects")]
+    /* [Header("Highlight Effects")]
     [Tooltip("Effetto che si attiva quando la nave che sta sopra la tile può essere attività")]
-    [SerializeField] protected ParticleSystem highlightEffect;
+    [SerializeField] protected ParticleSystem highlightEffect; */
 
     void Awake()
     {
@@ -90,42 +90,43 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     /// </summary>
     /// <param name="shipFaction"></param>
     /// </remarks>
-    public void SetTileInteractable(int shipFaction, Move move = null) 
+    public void
+    SetTileInteractable(int shipFaction, Move move = null)
     {
-        if(shipFaction == (int)Entity.ally)
+        if (shipFaction == (int)Entity.ally)
         {
             isInteractable = true;
             tileCollider.enabled = true;
-            if(move != null)
+            if (move != null)
             {
-                if(move.GetMessageType() == MessageType.attack)
+                if (move.GetMessageType() == MessageType.attack)
                 {
                     allyAttackSignal.SetActive(true);
                     activeSignal = allyAttackSignal;
                 }
-                else if(move.GetMessageType() == MessageType.movement)
+                else if (move.GetMessageType() == MessageType.movement)
                 {
                     allyMovementSignal.SetActive(true);
                     activeSignal = allyMovementSignal;
                 }
             }
         }
-        else if(shipFaction == (int)Entity.enemy)
+        else if (shipFaction == (int)Entity.enemy)
         {
 
-            if(move != null)
+            if (move != null)
             {
-                if(move.GetMessageType() == MessageType.attack)
+                if (move.GetMessageType() == MessageType.attack)
                 {
                     //enemyAttackSignal.SetActive(true);
                     activeSignal = enemyAttackSignal;
                 }
-                else if(move.GetMessageType() == MessageType.movement)
+                else if (move.GetMessageType() == MessageType.movement)
                 {
 
                     //attenzione!!
                     _type = TileType.Enemy;
-                    
+
 
                     //enemyMovementSignal.SetActive(true);
                     activeSignal = enemyMovementSignal;
@@ -184,22 +185,13 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
             tileSelected?.Invoke(this);
             SetTileNotInteractable((int)Entity.ally);
         }
-        PlayShipMove();
 
         //La tile comunica con un evento che è stata selezionata, lo riceverà una nave
     }
 
-    private FMOD.Studio.EventInstance shipMove;
-    public void PlayShipMove()
-    {
-        shipMove = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/ShipMoving");
-        shipMove.start();
-        shipMove.release();
-    }
-
     public void SetTileHighlight(bool value)
     {
-        highlightEffect.gameObject.SetActive(value);
+        //highlightEffect.gameObject.SetActive(value);
     }
 
 
@@ -241,7 +233,8 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
             tileShip = ship;
             tileShip.transform.position = gameObject.transform.position;
             SetType(this._type, ship.GetComponent<AShip>().faction);
-            ship.GetComponent<AShip>().hitChance = 1f;
+            ship.GetComponent<AShip>().dodgeChance = -1;
+            Debug.Log("Set dodgeChance to -1 in tile: " + name);
         }
        
     }

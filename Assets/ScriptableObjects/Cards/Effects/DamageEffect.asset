@@ -13,3 +13,8 @@ MonoBehaviour:
   m_Name: DamageEffect
   m_EditorClassIdentifier: 
   damage: 1
+  incomingFire: {fileID: 8891297334280618237, guid: c4ed38c72957f2241ad144a1614956d9, type: 3}
+  heightOffset: 100
+  animationDuration: 2
+  particleLifetime: 1
+  easeType: 5

@@ -112,7 +112,6 @@ MonoBehaviour:
   enemyAttackSignal: {fileID: 3768500769710198383}
   isInteractable: 0
   tileCollider: {fileID: 2568195697258624638}
-  highlightEffect: {fileID: 7800389564038900551}
   obstaclePrefab: {fileID: 519244878604188145, guid: b498137ea08635e42adf7e4e0937efd7, type: 3}
 --- !u!1 &4542769645225694533 stripped
 GameObject:
@@ -127,10 +126,5 @@ GameObject:
 --- !u!1 &6191460189134686724 stripped
 GameObject:
   m_CorrespondingSourceObject: {fileID: 1003079049219748415, guid: b7bc4d5932a267f40a299d2751cdd372, type: 3}
-  m_PrefabInstance: {fileID: 6343279566432876603}
-  m_PrefabAsset: {fileID: 0}
---- !u!198 &7800389564038900551 stripped
-ParticleSystem:
-  m_CorrespondingSourceObject: {fileID: 3767076175559152508, guid: b7bc4d5932a267f40a299d2751cdd372, type: 3}
   m_PrefabInstance: {fileID: 6343279566432876603}
   m_PrefabAsset: {fileID: 0}

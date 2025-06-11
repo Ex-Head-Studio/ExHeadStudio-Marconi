@@ -11,6 +11,9 @@ public class ChangeClassEffect : AbstractEffectSO
     }
     [SerializeField] private List<ShipSO> shipClasses = new List<ShipSO>();
     [SerializeField] private ClassSelectionMode classSelectionMode;
+    
+    [SerializeField] private ParticleSystem changeClassParticle;
+    private ParticleSystem changeClassParticleInstance;
     public override void PerformEffect(EffectStruct effectStruct)
     {
 
@@ -22,7 +25,9 @@ public class ChangeClassEffect : AbstractEffectSO
                 {
                     ShipSO newClass = shipClasses[Random.Range(0, shipClasses.Count)];
                     shipScript.ChangeClass(newClass);
-
+                    changeClassParticleInstance = Instantiate(changeClassParticle, shipScript.transform.position, Quaternion.identity);
+                    changeClassParticleInstance.Play();
+                    PlayClassChange();
                 }
 
                 break;
@@ -30,7 +35,7 @@ public class ChangeClassEffect : AbstractEffectSO
             case ClassSelectionMode.chooseByPlayer:
 
                 //capire come faccio a visualizzarlo???
-                
+
 
                 break;
 
@@ -38,7 +43,19 @@ public class ChangeClassEffect : AbstractEffectSO
             default:
                 break;
         }
+        
 
         EndEffect(0);
     }
+private FMOD.Studio.EventInstance soundChange;
+
+public void PlayClassChange()
+    {
+        soundChange = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/ClassChange");
+        soundChange.start();
+        soundChange.release();
+    }
 }
+
+
+

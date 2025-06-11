@@ -60,6 +60,18 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 6611894528999065105, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611894528999065105, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 1.1
+      objectReference: {fileID: 0}
+    - target: {fileID: 6611894528999065105, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 1.1
+      objectReference: {fileID: 0}
     - target: {fileID: 9182267094290021610, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
       propertyPath: m_Name
       value: RockObstaclePrefab

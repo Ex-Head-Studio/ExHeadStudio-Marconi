@@ -17,3 +17,5 @@ MonoBehaviour:
   - {fileID: 11400000, guid: a6a74b98722011c488fca974bf86454b, type: 2}
   - {fileID: 11400000, guid: dc867e7cbd11b5245ac60b00014265c6, type: 2}
   - {fileID: 11400000, guid: 2fbe1eeb15352c841b681056495d7110, type: 2}
+  classSelectionMode: 0
+  changeClassParticle: {fileID: 8771972552311404798, guid: ba289df30ee5270458c5dcc50e65f169, type: 3}

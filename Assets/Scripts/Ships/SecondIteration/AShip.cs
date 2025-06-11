@@ -2,6 +2,7 @@ using UnityEngine;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using Unity.Cinemachine;
+using DG.Tweening;
 
 public abstract class AShip : MonoBehaviour
 {
@@ -78,7 +79,7 @@ public abstract class AShip : MonoBehaviour
     [Header("Ship Chances")]
 
     [Tooltip("Parametro per gestire la probabilità di essere colpiti da un attacco")]
-    [SerializeField] public float hitChance = 0.25f;
+    [SerializeField] public int dodgeChance = -1;
     [SerializeField] ParticleSystem dodgeEffect;
 
     [SerializeField] protected Animator shipAnimator;
@@ -141,10 +142,13 @@ public abstract class AShip : MonoBehaviour
         {
             return;
         }
-        int dodgeChance = Random.Range(0, 4);
-        if (dodgeChance == 0)
+        int dodge = Random.Range(0, 4);
+        if (dodgeChance >= 0 && dodge <= dodgeChance )
         {
+            Debug.Log("Dodge chance: " + dodgeChance);
             Debug.Log(dodgeChance);
+            particleSystemInstance = Instantiate(shipSO.dodgeEffect, transform.position + new Vector3(0f,5f,0f), Quaternion.identity);
+            particleSystemInstance.Play();
             return;
         }
 
@@ -154,6 +158,7 @@ public abstract class AShip : MonoBehaviour
         Quaternion correctAngle = Quaternion.FromToRotation(shipSO.attackReceivedParticle.gameObject.transform.up, gameObject.transform.up);
         particleSystemInstance = Instantiate(shipSO.attackReceivedParticle, transform.position, correctAngle);
         particleSystemInstance.Play();
+        DoShakeDamageAnimation();
 
         PlayShipDamage();
 
@@ -241,16 +246,20 @@ public abstract class AShip : MonoBehaviour
         ChangeClassModel(newClass);
 
         //cambiare la salute nel display
-
+        
 
         //aggiungere particellare/suono/animazione di cambio classe
         if (newClass.changeClassParticle != null)
         {
             ParticleSystem tmpParticle = Instantiate(newClass.changeClassParticle, transform.position, Quaternion.identity);
             tmpParticle.Play();
+            
         }
 
     }
+
+    
+
 
     private void ChangeClassModel(ShipSO newClass)
     {
@@ -391,7 +400,29 @@ public abstract class AShip : MonoBehaviour
     public void TakeDamage(int damage)
     {
         Debug.Log("Damage received");
+
+
+       
+
+        DoShakeDamageAnimation();
+        
         shipSO.attackEvent?.Invoke(new ShipAttackStruct(this.position, damage));
+    }
+
+    public void DoShakeDamageAnimation()
+    {
+
+        Transform shipTransform = transform;
+        // Aggiungi effetto vibrazione con DOTween
+        transform.DOShakePosition(0.5f, 0.3f, 10, 90, false, true)
+            .SetEase(Ease.OutElastic)
+            .OnComplete(() =>
+            {
+                // Assicurati che la nave torni esattamente alla posizione originale
+                transform.DOKill(false);
+                transform.localPosition = shipTransform.localPosition;
+
+        });
     }
 
 
@@ -412,6 +443,7 @@ public abstract class AShip : MonoBehaviour
         else if (statName == "Attack Power")
         {
             attackPower = oldStatValue + amount;
+            shipSO.statsDictionary[statName] = attackPower;
         }
     }
 
@@ -432,6 +464,7 @@ public abstract class AShip : MonoBehaviour
             else if (oldStatName == "Attack Power")
             {
                 attackPower = oldStatValue;
+                shipSO.statsDictionary[oldStatName] = oldStatValue;
             }
             hasStatChanged = false;
         }

@@ -19,6 +19,8 @@ MonoBehaviour:
   cardDescription: Attack Power +1 for this turn
   cardCost: 2
   isWorldInteractive: 0
+  hasToPlaceSomethingOnTile: 0
+  placementRange: 1
   lastingTurns: 1
   cardEffects:
   - {fileID: 11400000, guid: 8d505f1a13bebe944a00f395c60dcc64, type: 2}

@@ -2,6 +2,7 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using DG.Tweening;
 public class GameMenuManager2 : MonoBehaviour
 {
     //TODO provare ad inserire un contextmenu per le funzioni dei bottoni
@@ -73,11 +74,93 @@ public class GameMenuManager2 : MonoBehaviour
     }
 
 
-    //TODO migliorare questo evento e il parametro che passa
+    [Header("End Game Settings")]
+    [Tooltip("Valore finale dell'opacità del pannello di sfondo")]
+    [SerializeField] [Range(0, 1)] private float endGamePanelAlpha = 0.5f;
+    [Tooltip("Durata dell'animazione di fade in")]
+    [SerializeField] private float fadeInDuration = 1.0f;
+    [Tooltip("Tipo di easing per l'animazione")]
+    [SerializeField] private Ease fadeEase = Ease.InOutSine;
+    [Tooltip("Testo da mostrare in caso di vittoria")]
+    [SerializeField] private GameObject victoryText;
+    [Tooltip("Testo da mostrare in caso di sconfitta")]
+    [SerializeField] private GameObject defeatText;
+    [Tooltip("Ritardo prima di mostrare il testo del risultato")]
+    [SerializeField] private float resultTextDelay = 0.5f;
+
+    /// <summary>
+    /// Gestisce la fine del gioco e mostra il pannello appropriato con animazione
+    /// </summary>
+    /// <param name="loser">0 se ha perso l'alleato, 1 se ha perso il nemico</param>
     public void OnEndGame(int loser)
     {
+        // Attiva il pannello ma imposta l'opacità a 0
         endGamePanel.SetActive(true);
+        CanvasGroup panelCanvasGroup = endGamePanel.GetComponent<CanvasGroup>();
+        
+        // Se non c'è un CanvasGroup, aggiungilo
+        if (panelCanvasGroup == null)
+        {
+            panelCanvasGroup = endGamePanel.AddComponent<CanvasGroup>();
+        }
+        
+        // Imposta l'opacità iniziale a 0
+        panelCanvasGroup.alpha = 0f;
+        
+        // Nascondi entrambi i testi di risultato
+        if (victoryText != null) victoryText.SetActive(false);
+        if (defeatText != null) defeatText.SetActive(false);
+        
+        // Crea la sequenza di animazione
+        Sequence endGameSequence = DOTween.Sequence();
+        
+        // Animazione di fade in del pannello
+        endGameSequence.Append(
+            panelCanvasGroup.DOFade(endGamePanelAlpha, fadeInDuration)
+            .SetEase(fadeEase)
+        );
+        
+        // Dopo un ritardo, mostra il testo appropriato
+        endGameSequence.InsertCallback(fadeInDuration + resultTextDelay, () => {
+            // Determina se è vittoria o sconfitta
+            if (loser == (int)Entity.enemy && victoryText != null)
+            {
+                // Il nemico ha perso = vittoria
+                victoryText.SetActive(true);
+                
+                // Animazione opzionale per il testo di vittoria
+                AnimateResultText(victoryText);
+            }
+            else if (loser == (int)Entity.ally && defeatText != null)
+            {
+                // L'alleato ha perso = sconfitta
+                defeatText.SetActive(true);
+                
+                // Animazione opzionale per il testo di sconfitta
+                AnimateResultText(defeatText);
+            }
+        });
+        
         confirmPanel.SetActive(false);
+    }
+
+    /// <summary>
+    /// Animazione per il testo del risultato
+    /// </summary>
+    private void AnimateResultText(GameObject textObject)
+    {
+        // Ottiene il componente RectTransform
+        RectTransform textTransform = textObject.GetComponent<RectTransform>();
+        
+        if (textTransform != null)
+        {
+            // Imposta la scala iniziale a zero
+            textTransform.localScale = Vector3.zero;
+            
+            // Animazione di scala con rimbalzo
+            textTransform.DOScale(Vector3.one, 0.5f)
+                .SetEase(Ease.OutBack);
+        }
     }
 
     public void OnPause()
@@ -169,6 +252,56 @@ public class GameMenuManager2 : MonoBehaviour
     public void ExitGame()
     {
         Application.Quit();
+    }
+    #endregion
+
+    #region Next Scene Transition
+    [Header("Next Scene Transition")]
+    [Tooltip("Camera che verrà attivata durante la transizione alla prossima scena")]
+    [SerializeField] private GameObject transitionCamera;
+    [Tooltip("Indice della scena da caricare")]
+    [SerializeField] private int nextSceneIndex = 0;
+    [Tooltip("Ritardo prima di caricare la scena successiva")]
+    [SerializeField] private float sceneLoadDelay = 1.5f;
+
+    /// <summary>
+    /// Metodo da assegnare al bottone nell'UI per transizione alla scena successiva
+    /// </summary>
+    public void OnNextSceneButtonClick()
+    {
+        // Verifica se la camera di transizione esiste
+        if (transitionCamera == null)
+        {
+            Debug.LogWarning("Camera di transizione non assegnata! Caricamento scena immediato.");
+            SceneManager.LoadScene(nextSceneIndex);
+            return;
+        }
+        
+        // Disattiva il pannello di fine gioco con fade out
+        if (endGamePanel != null)
+        {
+            CanvasGroup panelCanvasGroup = endGamePanel.GetComponent<CanvasGroup>();
+            if (panelCanvasGroup != null)
+            {
+                // Fade out del pannello
+                panelCanvasGroup.DOFade(0f, fadeInDuration / 2)
+                    .SetEase(fadeEase)
+                    .OnComplete(() => endGamePanel.SetActive(false));
+            }
+            else
+            {
+                // Se non c'è CanvasGroup, disattiva subito
+                endGamePanel.SetActive(false);
+            }
+        }
+        
+        // Attiva la camera di transizione
+        transitionCamera.SetActive(true);
+        
+        // Carica la nuova scena dopo un ritardo
+        DOVirtual.DelayedCall(sceneLoadDelay, () => {
+            SceneManager.LoadScene(nextSceneIndex);
+        });
     }
     #endregion
 }

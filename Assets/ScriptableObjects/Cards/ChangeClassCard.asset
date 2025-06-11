@@ -17,8 +17,10 @@ MonoBehaviour:
   cardImage: {fileID: 21300000, guid: a07ef07cbc302624ea688f033047e26d, type: 3}
   cardName: Rushed Training
   cardDescription: Assign a random Class to your ship
-  cardCost: 3
+  cardCost: 2
   isWorldInteractive: 0
+  hasToPlaceSomethingOnTile: 0
+  placementRange: 1
   lastingTurns: 1
   cardEffects:
   - {fileID: 11400000, guid: 02afc347105c2c14a94a7c000cd194b2, type: 2}
