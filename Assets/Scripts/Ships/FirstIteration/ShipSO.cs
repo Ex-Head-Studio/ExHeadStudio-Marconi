@@ -33,6 +33,9 @@ public class ShipSO : ScriptableObject
     [SerializeField] public GameObject shipClassModel;
     [SerializeField] public GameObject shipModelMesh;
 
+    [Header("Ship Class Image")]
+    [SerializeField] public Sprite shipClassImage = null;
+
     private void OnEnable()
     {
         statsDictionary["Movement Range"] = movementRange;

@@ -14,9 +14,23 @@ public class StatsPanelScript : MonoBehaviour
     [SerializeField] private GameObject genericStatPrefab;
     [SerializeField] private GameObject taccaPrefab;
 
+    [Header("Parameters to display")]
+
+    //classe
+    [SerializeField] private TMP_Text shipClassName;
+    [SerializeField] private Image shipClassImageSprite;
+
+    //vita
+    [SerializeField] private TMP_Text shipHealth;
+
+    //statistiche
+
+    //effetti
+
+    //immagine della classe
+    [SerializeField] private Sprite shipClassImage;
 
     [Header("Display parameters")]
-    [SerializeField] private TMP_Text shipClassName;
     [SerializeField] private int fontSize = 3;
     [SerializeField] private float waitTimeBeforeShow = 0.5f;
 
@@ -24,32 +38,36 @@ public class StatsPanelScript : MonoBehaviour
 
     private bool isDisplaying = false;
 
+    #region Iscrizione agli eventi
     private void OnEnable()
     {
-        DisplayStats.OnShipOverStarted += ShowStatsPanel;
-        DisplayStats.OnShipOverEnded += HideStatsPanel;
+        DisplayStats.OnEntityHoverStarted += ShowStatsPanel;
+        DisplayStats.OnEntityHoverEnded += HideStatsPanel;
     }
 
     private void OnDisable()
     {
-        DisplayStats.OnShipOverStarted -= ShowStatsPanel;
-        DisplayStats.OnShipOverEnded -= HideStatsPanel;
+        DisplayStats.OnEntityHoverStarted -= ShowStatsPanel;
+        DisplayStats.OnEntityHoverEnded -= HideStatsPanel;
     }
-    private void ShowStatsPanel(ShipSO shipSO)
+
+    #endregion
+
+    #region  Metodi di display
+    private void ShowStatsPanel(DisplayStatsClass displayStats)
     {
-        if(!isDisplaying)
+        if (!isDisplaying)
         {
+            //mettere il discrimine qui
             isDisplaying = true;
-            StartCoroutine(WaitBeforeShow(waitTimeBeforeShow, shipSO));
         }
 
     }
-    private void HideStatsPanel(ShipSO shipSO)
+    private void HideStatsPanel(DisplayStatsClass displayStats)
     {
-        shipClassName.text = "";
-        StopCoroutine(WaitBeforeShow(waitTimeBeforeShow, shipSO));
         foreach (Transform child in statsParent)
         {
+            //mettere il discrimine qui
             Destroy(child.gameObject);
         }
         isDisplaying = false;
@@ -88,11 +106,5 @@ public class StatsPanelScript : MonoBehaviour
             }
         }
    }
-
-   private IEnumerator WaitBeforeShow(float time, ShipSO shipSO)
-   {
-        yield return new WaitForSeconds(time);
-        SetShipClass(shipSO);
-   }
-
+    #endregion
 }
