@@ -2410,7 +2410,6 @@ MonoBehaviour:
   shipClassName: {fileID: 0}
   shipClassImageSprite: {fileID: 0}
   shipHealth: {fileID: 0}
-  shipClassImage: {fileID: 0}
   fontSize: 3
   waitTimeBeforeShow: 0.5
 --- !u!114 &470126019
@@ -4679,7 +4678,7 @@ GameObject:
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
   m_StaticEditorFlags: 0
-  m_IsActive: 0
+  m_IsActive: 1
 --- !u!224 &1435187317
 RectTransform:
   m_ObjectHideFlags: 0
@@ -4757,7 +4756,6 @@ MonoBehaviour:
   shipClassName: {fileID: 1447409321}
   shipClassImageSprite: {fileID: 0}
   shipHealth: {fileID: 0}
-  shipClassImage: {fileID: 0}
   fontSize: 25
   waitTimeBeforeShow: 0.5
 --- !u!114 &1435187324

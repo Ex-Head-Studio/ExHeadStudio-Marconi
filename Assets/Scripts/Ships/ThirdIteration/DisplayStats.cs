@@ -7,13 +7,11 @@ using System.Collections.Generic;
 
 public class DisplayStatsClass
 {
+    public MonoBehaviour script;
 
-    //T objScript;
-    //dati da aggiungere
-
-    public DisplayStatsClass()
+    public DisplayStatsClass(MonoBehaviour script)
     {
-       //this.objScript = objScript;
+        this.script = script;
     }
     
 
@@ -37,11 +35,6 @@ public class DisplayStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
         TryGetComponent<AShip>(out shipScript);
         TryGetComponent<Tile>(out tileScript);
         TryGetComponent<AbstractObstacle>(out obstacleScript);
-
-        if (shipScript.faction == (int)Entity.ally)
-        {
-
-        }
     }
 
 
@@ -49,15 +42,15 @@ public class DisplayStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (shipScript != null)
         {
-            OnEntityHoverStarted?.Invoke(new DisplayStatsClass());
+            OnEntityHoverStarted?.Invoke(new DisplayStatsClass(shipScript));
         }
         else if (tileScript != null)
         {
-            OnEntityHoverStarted?.Invoke(new DisplayStatsClass());
+            OnEntityHoverStarted?.Invoke(new DisplayStatsClass(tileScript));
         }
         else if (obstacleScript != null)
         {
-            OnEntityHoverStarted?.Invoke(new DisplayStatsClass());
+            OnEntityHoverStarted?.Invoke(new DisplayStatsClass(obstacleScript));
         }
     }
 
@@ -65,7 +58,7 @@ public class DisplayStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     {
         if (shipScript != null || tileScript != null || obstacleScript != null)
         {
-            OnEntityHoverEnded?.Invoke(new DisplayStatsClass());
+            OnEntityHoverEnded?.Invoke(new DisplayStatsClass(null));
         }
     }
 

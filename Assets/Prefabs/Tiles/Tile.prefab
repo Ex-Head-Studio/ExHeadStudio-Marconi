@@ -5445,6 +5445,7 @@ GameObject:
   - component: {fileID: -1841351686871509975}
   - component: {fileID: 2595778905530319872}
   - component: {fileID: 2468502449942355650}
+  - component: {fileID: 3727045378549353094}
   m_Layer: 0
   m_Name: Tile
   m_TagString: Untagged
@@ -5637,6 +5638,18 @@ MonoBehaviour:
   enemyMovementSignal: {fileID: 7425577909506764158}
   allyAttackSignal: {fileID: 8150155357449518266}
   enemyAttackSignal: {fileID: 7803537846272620116}
+--- !u!114 &3727045378549353094
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 8046514618781660489}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: e72494c42de9fb24c88b0f67803dc064, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
 --- !u!1 &8150155357449518266
 GameObject:
   m_ObjectHideFlags: 0

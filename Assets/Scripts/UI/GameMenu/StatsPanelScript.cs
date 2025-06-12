@@ -17,22 +17,25 @@ public class StatsPanelScript : MonoBehaviour
     [Header("Parameters to display")]
 
     //classe
-    [SerializeField] private TMP_Text shipClassName;
-    [SerializeField] private Image shipClassImageSprite;
+    [SerializeField] private TMP_Text shipClassName = null;
+    [SerializeField] private Image shipClassImageSprite = null;
 
     //vita
-    [SerializeField] private TMP_Text shipHealth;
+    [SerializeField] private TMP_Text shipHealth = null;
 
     //statistiche
 
     //effetti
 
-    //immagine della classe
-    [SerializeField] private Sprite shipClassImage;
 
     [Header("Display parameters")]
     [SerializeField] private int fontSize = 3;
     [SerializeField] private float waitTimeBeforeShow = 0.5f;
+
+    //Classi da usare per convertire gli script passati dagli eventi
+    AShip shipScript = null;
+    AbstractObstacle obstacleScript = null;
+    Tile tileScript = null;
 
     private HorizontalLayoutGroup horizontalLayoutGroup;
 
@@ -58,7 +61,28 @@ public class StatsPanelScript : MonoBehaviour
     {
         if (!isDisplaying)
         {
-            //mettere il discrimine qui
+            //qui l'ordine degli if è importante!!
+            
+            if (displayStats.script is AShip)
+            {
+                Debug.Log("Ho preso una nave");
+                shipScript = (AShip)displayStats.script;
+                //SetShipClass(displayStats.script.gameObject.GetComponent<AShip>().GetShipSO());
+                shipClassName.text = shipScript.GetShipSO().name;
+            }
+            else if (displayStats.script is AbstractObstacle)
+            {
+                Debug.Log("Qui ho preso un ostacolo ");
+                obstacleScript = (AbstractObstacle)displayStats.script;
+            }
+            else if (displayStats.script is Tile)
+            {
+                Debug.Log("Qui ho preso una tile");
+                tileScript = (Tile)displayStats.script;
+
+            }
+
+
             isDisplaying = true;
         }
 
@@ -67,7 +91,6 @@ public class StatsPanelScript : MonoBehaviour
     {
         foreach (Transform child in statsParent)
         {
-            //mettere il discrimine qui
             Destroy(child.gameObject);
         }
         isDisplaying = false;
