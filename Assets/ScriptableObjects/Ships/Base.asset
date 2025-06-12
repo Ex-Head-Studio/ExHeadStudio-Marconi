@@ -15,7 +15,7 @@ MonoBehaviour:
   movementRange: 2
   attackRange: 2
   attackPower: 1
-  health: 4
+  health: 3
   statNames:
   - Movement Range
   - Attack Range
@@ -32,3 +32,4 @@ MonoBehaviour:
   shipModelPrefab: {fileID: 4912451739719525359, guid: a4722112e218a7a45934fb6510052f6e, type: 3}
   shipClassModel: {fileID: 1314495762236522437, guid: f3b3db4c3b1c9c948bc746a971824056, type: 3}
   shipModelMesh: {fileID: 919132149155446097, guid: 1d73769af9ee56c42b22bba80c31240e, type: 3}
+  shipClassImage: {fileID: 0}
