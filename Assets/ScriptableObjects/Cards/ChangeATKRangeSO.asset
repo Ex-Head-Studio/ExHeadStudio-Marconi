@@ -14,11 +14,13 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardEntityType: 0
   cardType: 0
-  cardImage: {fileID: 21300000, guid: a07ef07cbc302624ea688f033047e26d, type: 3}
+  cardImage: {fileID: 21300000, guid: 7f427f1d6bc609c4f86dca0b7207c57f, type: 3}
   cardName: Long Barrel
   cardDescription: Attack Range +1 for this turn
   cardCost: 1
   isWorldInteractive: 0
+  hasToPlaceSomethingOnTile: 0
+  placementRange: 1
   lastingTurns: 1
   cardEffects:
   - {fileID: 11400000, guid: 5c8680ab6c733194293a7061405d8647, type: 2}

@@ -14,7 +14,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   cardEntityType: 1
   cardType: 0
-  cardImage: {fileID: 21300000, guid: a07ef07cbc302624ea688f033047e26d, type: 3}
+  cardImage: {fileID: 21300000, guid: a5800b292bafb144b8e9a3ffab821f42, type: 3}
   cardName: Mortar
   cardDescription: Deal 1 Damage to any ship
   cardCost: 3
