@@ -38,7 +38,7 @@ public class GameManager2 : MonoBehaviour
     [SerializeField] private ActionPhaseStartEvent actionPhaseStartEvent;
 
     private int numberOfRounds = 0;
-    private void Awake()
+    private void Start()
     {
         StartCoroutine(StartGame());
     }

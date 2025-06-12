@@ -83,8 +83,8 @@ public abstract class AShip : MonoBehaviour
     [SerializeField] ParticleSystem dodgeEffect;
 
     [SerializeField] protected Animator shipAnimator;
-    
-    void Awake()
+
+    void Start()
     {
         mapHeight = GridManager.Instance._height;
         mapWidth = GridManager.Instance._width;
@@ -118,10 +118,6 @@ public abstract class AShip : MonoBehaviour
 
         //camera shake
         impulseSource = GetComponent<CinemachineImpulseSource>();
-    }
-
-    void Start()
-    {
         displayHealthScript = GetComponent<DisplayHealth>();
     }
 

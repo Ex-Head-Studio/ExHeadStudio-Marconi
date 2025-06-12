@@ -69,12 +69,25 @@ public class GridManager : MonoBehaviour, ICardDropArea
     {
         UICard.cardSelectedEvent += SearchTileForPlacing;
         UICard.cardDeselectedEvent += ClearTiles;
+
+        //evento per la distruzione del singleton
+        GameMenuManager.GameRestarted += DestroySingleton;
+        GameMenuManager.GameQuitted += DestroySingleton;
+
+        instance = this;
+
     }
 
     private void OnDisable()
     {
         UICard.cardSelectedEvent -= SearchTileForPlacing;
         UICard.cardDeselectedEvent -= ClearTiles;
+
+        //evento per la distruzione del singleton
+        GameMenuManager.GameRestarted -= DestroySingleton;
+        GameMenuManager.GameQuitted -= DestroySingleton;
+
+        instance = null;
     }
     void Awake()
     {
@@ -85,7 +98,7 @@ public class GridManager : MonoBehaviour, ICardDropArea
         else
         {
             instance = this;
-            DontDestroyOnLoad(gameObject);
+           // DontDestroyOnLoad(gameObject);
         }
     }
 
@@ -97,12 +110,17 @@ public class GridManager : MonoBehaviour, ICardDropArea
             GameObject gridManagerObject = new GameObject();
             gridManagerObject.name = "GridManager";
             instance = gridManagerObject.AddComponent<GridManager>();
-            DontDestroyOnLoad(gridManagerObject);
+           // DontDestroyOnLoad(gridManagerObject);
         }
     }
 
     #endregion
 
+    private void DestroySingleton(int param)
+    {
+        Destroy(gameObject);
+        instance = null;
+    }
 
     void Start()
     {

@@ -16,6 +16,7 @@ public class MainMenuButtons : MonoBehaviour
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject optionsPanel;
+    [SerializeField] private GameObject levelPanel;
     [SerializeField] private GameObject classSelectionPanel;
     [SerializeField] private GameObject title;
 
@@ -38,6 +39,7 @@ public class MainMenuButtons : MonoBehaviour
         mainMenuPanel.SetActive(true);
         creditsPanel.SetActive(false);
         optionsPanel.SetActive(false);
+        levelPanel.SetActive(false);
     }
     public void StartGame()
     {
@@ -78,12 +80,25 @@ public class MainMenuButtons : MonoBehaviour
         mainMenuPanel.SetActive(false);
         optionsPanel.SetActive(false);
         title.SetActive(false);
+        levelPanel.SetActive(false);
         AudioManager.PlayOneShot(menuButtonSound, this.transform.position);
     }
 
     public void OpensOptions()
     {
         optionsPanel.SetActive(true);
+        mainMenuPanel.SetActive(false);
+        creditsPanel.SetActive(false);
+        title.SetActive(false);
+        levelPanel.SetActive(false);
+        AudioManager.PlayOneShot(menuButtonSound, this.transform.position);
+
+    }
+
+    public void OpenLevels()
+    {
+        levelPanel.SetActive(true);
+        optionsPanel.SetActive(false);
         mainMenuPanel.SetActive(false);
         creditsPanel.SetActive(false);
         title.SetActive(false);

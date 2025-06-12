@@ -2,6 +2,9 @@ using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
+using UnityEngine.Events;
+using UnityEngine.EventSystems;
+using System;
 
 public class GameMenuManager : MonoBehaviour
 {
@@ -49,10 +52,16 @@ public class GameMenuManager : MonoBehaviour
     private int enemyShips;
     private int allyShips;
 
-        
+
     //TODO verificare se è possibile usare ancora esc per muoversi tra i menu (edit: non tanto)
 
-        //TODO verificare se può essere fatto meglio e senza stringhe
+    //TODO verificare se può essere fatto meglio e senza stringhe
+
+
+    //eventi di servizio per gestire il ciclo di vita del singleton.
+    //prendono un parametro intero perchè non posso farne di void.
+    public static event Action<int> GameRestarted;
+    public static event Action<int> GameQuitted;
     private void OnEnable()
     {
         inputs.FindActionMap("UI").FindAction("PauseGame").performed += ctx => OnPause();
@@ -189,6 +198,7 @@ public class GameMenuManager : MonoBehaviour
     {
         //questo forse va modificato
         Time.timeScale = 1;
+        GameRestarted?.Invoke(1);
         SceneManager.LoadScene(1);
     }
 
@@ -201,6 +211,7 @@ public class GameMenuManager : MonoBehaviour
     public void BackToMainMenu()
     {
         Time.timeScale = 1;
+        GameQuitted?.Invoke(1);
         SceneManager.LoadScene(0);
     }
     public void BackToPauseMenu()

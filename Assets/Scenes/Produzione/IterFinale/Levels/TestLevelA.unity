@@ -5259,7 +5259,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: generationMode
-      value: 1
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: numberOfObstacles
@@ -5267,11 +5267,11 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: canGenerateObstacles
-      value: 0
+      value: 1
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: obstaclePrefabsList.Array.size
-      value: 1
+      value: 2
       objectReference: {fileID: 0}
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: 'obstaclePrefabsList.Array.data[0]'
@@ -5280,7 +5280,7 @@ PrefabInstance:
     - target: {fileID: 1918087842170044028, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: 'obstaclePrefabsList.Array.data[1]'
       value: 
-      objectReference: {fileID: 1233278570776886759, guid: 65dbb31edfdfa754db296b6345ee04c2, type: 3}
+      objectReference: {fileID: 2832146131443869211, guid: 16bc9ad58b9a4b64f84d39f8d55b7bec, type: 3}
     - target: {fileID: 1923256824063914048, guid: 88cd1f8ec26a023468d3bc19debce6f2, type: 3}
       propertyPath: m_LocalScale.x
       value: 5

@@ -3,7 +3,8 @@ using System.Collections;
 using System.Collections.Generic;
 using Unity.VisualScripting;
 using UnityEngine;
-using Random=UnityEngine.Random;
+using Random = UnityEngine.Random;
+
 public class ShipManager2 : MonoBehaviour, IShipManager
 {
 
@@ -30,10 +31,17 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     void Awake()
     {
 
+    }
 
+    private void Start()
+    {
+        //taglio le mani a chi modifica le prossime due variabili
+        allyCount = 0;
+        enemyCount = 0;
+        
         shipsD = new Dictionary<string, AShip>();
         shipManagerSO.RandomizeShips();
-
+        //spostata qui la ricerca della griglia per sicurezza
         influenceMap = new InfluenceMap(GridManager.Instance._width, GridManager.Instance._height, shipManagerSO.influenceDecay, shipManagerSO.decayMomentum);
     }
 
@@ -41,6 +49,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     //Funzione che viene chiamata all'inizio del gioco per generare le navi
     public void GenerateShips()
     {
+
         StartCoroutine(ShipGeneration());
     }
 
@@ -85,9 +94,11 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     public void InstantiateAllyShip(string shipName, int faction)
     {
         AShip newShip = SetupShip(shipName, faction);
+
         shipsD.Add(newShip.shipName, newShip);
         allies.Add(newShip);
         allyCount++;
+
         GridManager.Instance.InsertShips(newShip);
         influenceMap.RegisterPropagator(newShip);
     }
@@ -103,6 +114,7 @@ public class ShipManager2 : MonoBehaviour, IShipManager
         shipsD.Add(newShip.shipName, newShip);
         enemies.Add(newShip);
         enemyCount++;
+
         GridManager.Instance.InsertShips(newShip);
         influenceMap.RegisterPropagator(newShip);
     }
@@ -114,8 +126,6 @@ public class ShipManager2 : MonoBehaviour, IShipManager
     public void EnemyMovesSelection()
     {
         //Debug.Log("Ricerca mosse del nemico");
-
-
     }
     
 

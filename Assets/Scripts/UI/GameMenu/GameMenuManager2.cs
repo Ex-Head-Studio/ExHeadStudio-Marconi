@@ -3,6 +3,7 @@ using UnityEngine;
 using UnityEngine.InputSystem;
 using UnityEngine.SceneManagement;
 using DG.Tweening;
+using System;
 public class GameMenuManager2 : MonoBehaviour
 {
     //TODO provare ad inserire un contextmenu per le funzioni dei bottoni
@@ -43,6 +44,12 @@ public class GameMenuManager2 : MonoBehaviour
     //TODO verificare se può essere fatto meglio e senza stringhe        
     //TODO verificare se è possibile usare ancora esc per muoversi tra i menu (edit: non tanto)
 
+
+    
+    //eventi di servizio per gestire il ciclo di vita del singleton.
+    //prendono un parametro intero perchè non posso farne di void.
+    public static event Action<int> GameRestarted;
+    public static event Action<int> GameQuitted;
 
     private void OnEnable()
     {
@@ -229,7 +236,8 @@ public class GameMenuManager2 : MonoBehaviour
     {
         //questo forse va modificato
         Time.timeScale = 1;
-        SceneManager.LoadScene(1);
+        GameRestarted?.Invoke(0);
+        SceneManager.LoadScene(this.gameObject.scene.buildIndex);
     }
 
     public void OpenOptions()
@@ -241,6 +249,7 @@ public class GameMenuManager2 : MonoBehaviour
     public void BackToMainMenu()
     {
         Time.timeScale = 1;
+        GameQuitted?.Invoke(1);
         SceneManager.LoadScene(0);
     }
     public void BackToPauseMenu()
