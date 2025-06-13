@@ -112,6 +112,7 @@ public class MainMenuButtons : MonoBehaviour
         mainMenuPanel.SetActive(true);
         creditsPanel.SetActive(false);
         classSelectionPanel.SetActive(false);
+        levelPanel.SetActive(false);
         title.SetActive(true);
         AudioManager.PlayOneShot(menuButtonSound, this.transform.position);
     }
