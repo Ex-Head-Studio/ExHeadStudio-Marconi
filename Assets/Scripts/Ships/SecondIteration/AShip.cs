@@ -132,6 +132,15 @@ public abstract class AShip : MonoBehaviour
     public abstract bool LookForAttacks();
     public abstract bool LookForAttacks(List<AShip> nearbyShips);
 
+    private FMOD.Studio.EventInstance dodgeSound;
+
+    public void PlayDodge()
+    {
+        dodgeSound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Dodge");
+        dodgeSound.start();
+        dodgeSound.release();
+    }
+
     public void OnAttacked(ShipAttackStruct attackStruct)
     {
         if (position.x != attackStruct.gridPosition.x || position.y != attackStruct.gridPosition.y)
@@ -145,6 +154,7 @@ public abstract class AShip : MonoBehaviour
             Debug.Log(dodgeChance);
             particleSystemInstance = Instantiate(shipSO.dodgeEffect, transform.position + new Vector3(0f,5f,0f), Quaternion.identity);
             particleSystemInstance.Play();
+            PlayDodge();  // Play the dodge sound
             return;
         }
 

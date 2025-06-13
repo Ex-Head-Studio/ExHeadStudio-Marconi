@@ -56,5 +56,14 @@ public class CardSounds: MonoBehaviour
         soundObstacle.release();
     }
 
+    private FMOD.Studio.EventInstance mineSound;
+
+    public void PlayMineExplosion()
+    {
+        mineSound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Mine");
+        mineSound.start();
+        mineSound.release();
+    }
+
 
 }

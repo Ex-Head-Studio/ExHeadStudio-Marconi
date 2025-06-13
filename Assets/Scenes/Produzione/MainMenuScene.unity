@@ -2568,6 +2568,26 @@ PrefabInstance:
       propertyPath: m_Layer
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3635717502777938716, guid: 06a83ce0c3aa9d54cb699306344ecbf5, type: 3}
+      propertyPath: knobSound.Path
+      value: event:/Musica/Knob
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635717502777938716, guid: 06a83ce0c3aa9d54cb699306344ecbf5, type: 3}
+      propertyPath: knobSound.Guid.Data1
+      value: 634606583
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635717502777938716, guid: 06a83ce0c3aa9d54cb699306344ecbf5, type: 3}
+      propertyPath: knobSound.Guid.Data2
+      value: 1104997757
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635717502777938716, guid: 06a83ce0c3aa9d54cb699306344ecbf5, type: 3}
+      propertyPath: knobSound.Guid.Data3
+      value: -1836782938
+      objectReference: {fileID: 0}
+    - target: {fileID: 3635717502777938716, guid: 06a83ce0c3aa9d54cb699306344ecbf5, type: 3}
+      propertyPath: knobSound.Guid.Data4
+      value: 629627951
+      objectReference: {fileID: 0}
     - target: {fileID: 4023039320550554163, guid: 06a83ce0c3aa9d54cb699306344ecbf5, type: 3}
       propertyPath: m_Layer
       value: 0

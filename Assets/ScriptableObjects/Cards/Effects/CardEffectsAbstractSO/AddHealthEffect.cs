@@ -10,6 +10,16 @@ public class AddHealthEffect : AbstractEffectSO
         {
             shipScript.AddHealth(healthToAdd);
             EndEffect(0);
+            PlayHeal();
         }
+    }
+
+    private FMOD.Studio.EventInstance cardHeal;
+
+    public void PlayHeal()
+    {
+        cardHeal = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Heal");
+        cardHeal.start();
+        cardHeal.release();
     }
 }

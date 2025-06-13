@@ -33,6 +33,15 @@ public class BarrierObstacle : AbstractObstacle, IObstacleHealth
             healthObjectsList.Add(healthBarInstance);
         }
     }
+
+    private FMOD.Studio.EventInstance barrierSound;
+
+    public void PlayBarriera()
+    {
+        barrierSound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Ting");
+        barrierSound.start();
+        barrierSound.release();
+    }
     public void OnAttacked(ShipAttackStruct attackStruct)
     {
         if (attackStruct.gridPosition == obstaclePosition)
@@ -48,6 +57,7 @@ public class BarrierObstacle : AbstractObstacle, IObstacleHealth
         if (obstacleHealth <= 0)
         {
             tile.RemoveObstacle();
+            PlayBarriera();
         }
         if (healthBarPrefab != null && healthBarCanvasPrefab != null)
             {

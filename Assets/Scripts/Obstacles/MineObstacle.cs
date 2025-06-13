@@ -50,6 +50,7 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
         {
             AreaDamage();
             tile.RemoveObstacle();
+            PlayMineExplosion();
         }
         if (healthBarPrefab != null && healthBarCanvasPrefab != null)
         {
@@ -76,6 +77,15 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
             }
             healthBarCount -= damage;
         }
+    }
+
+    private FMOD.Studio.EventInstance mineSound;
+
+    public void PlayMineExplosion()
+    {
+        mineSound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Mine");
+        mineSound.start();
+        mineSound.release();
     }
     #endregion
 
