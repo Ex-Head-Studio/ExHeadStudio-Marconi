@@ -33,3 +33,5 @@ MonoBehaviour:
   shipClassModel: {fileID: 1314495762236522437, guid: f3b3db4c3b1c9c948bc746a971824056, type: 3}
   shipModelMesh: {fileID: 919132149155446097, guid: 1d73769af9ee56c42b22bba80c31240e, type: 3}
   shipClassImage: {fileID: 0}
+  uiRepositionOffset: {x: 0, y: 50, z: 0}
+  uiScaleFactor: {x: 5000, y: 5800, z: 8000}

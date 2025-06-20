@@ -16,6 +16,22 @@ PrefabInstance:
       propertyPath: m_SizeDelta.y
       value: 4
       objectReference: {fileID: 0}
+    - target: {fileID: 2231429217198487572, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_Size.x
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2231429217198487572, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_Size.y
+      value: 4.030345
+      objectReference: {fileID: 0}
+    - target: {fileID: 2231429217198487572, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_Size.z
+      value: 4
+      objectReference: {fileID: 0}
+    - target: {fileID: 2231429217198487572, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
+      propertyPath: m_Center.y
+      value: 1.5151724
+      objectReference: {fileID: 0}
     - target: {fileID: 2267664617035184266, guid: 7f462a61686f9014a9922335be44a27e, type: 3}
       propertyPath: m_ProvidesContacts
       value: 1
@@ -105,6 +121,11 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   color: {r: 0.4566037, g: 0.28857878, b: 0.1886721, a: 0.88235295}
+  _obstacleName: Cliff
+  _obstacleDescription: E' proprio una gran bella roccia
+  _wireframeModel: {fileID: -7511558181221131132, guid: 1b18059bb51792f44bdbcb85c21ec187, type: 3}
+  _wireframeScaleFactor: {x: 200, y: 300, z: 200}
+  _wireframeRiposition: {x: 0, y: -50, z: 0}
   obstaclePosition: {x: 0, y: 0}
   tile: {fileID: 0}
 --- !u!1 &2853408314217768423 stripped

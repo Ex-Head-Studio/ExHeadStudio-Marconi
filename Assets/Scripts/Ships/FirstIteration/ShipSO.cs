@@ -38,6 +38,13 @@ public class ShipSO : ScriptableObject
     [Header("Ship Class Image")]
     [SerializeField] public Sprite shipClassImage = null;
 
+    [Header("UI Visualization")]
+    [Tooltip("Offset di posizione per il modello wireframe nell'UI")]
+    public Vector3 uiRepositionOffset = new Vector3(0, -50, 0);
+    [Tooltip("Fattore di scala per il modello wireframe nell'UI")]
+    public Vector3 uiScaleFactor = new Vector3(40, 40, 40);
+
+
     private void OnEnable()
     {
         statsDictionary["Movement Range"] = movementRange;

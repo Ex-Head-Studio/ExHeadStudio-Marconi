@@ -31,5 +31,7 @@ MonoBehaviour:
   shipInfluence: 1
   shipModelPrefab: {fileID: 4912451739719525359, guid: a4722112e218a7a45934fb6510052f6e, type: 3}
   shipClassModel: {fileID: 4709580188425613432, guid: 89d6f2e2f6f7a7242996c5c18aa33883, type: 3}
-  shipModelMesh: {fileID: 919132149155446097, guid: c0041bb6f9d1b914f9c35372085fdb21, type: 3}
+  shipModelMesh: {fileID: 919132149155446097, guid: 191b32cf1f957db478c8fb7fde81c44b, type: 3}
   shipClassImage: {fileID: 0}
+  uiRepositionOffset: {x: 0, y: 50, z: 0}
+  uiScaleFactor: {x: 5000, y: 5800, z: 8000}
