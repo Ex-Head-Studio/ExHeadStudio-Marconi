@@ -5196,6 +5196,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   statsPanel: {fileID: 1435187316}
+  customStatsFont: {fileID: 11400000, guid: 64f108c474fc69e449111806674ff164, type: 2}
   statsParent: {fileID: 1672238345}
   genericStatPrefab: {fileID: 4189053802981799410, guid: 3a0d408835579d24aa9a93850f0332b7, type: 3}
   taccaPrefab: {fileID: 7040301176431300408, guid: 65d70dfad85b00844aa6dd5a3f650b46, type: 3}
@@ -5956,7 +5957,7 @@ MonoBehaviour:
     m_Top: 0
     m_Bottom: 0
   m_ChildAlignment: 4
-  m_Spacing: 71.79
+  m_Spacing: 20
   m_ChildForceExpandWidth: 0
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 0
