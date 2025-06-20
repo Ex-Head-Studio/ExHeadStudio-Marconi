@@ -147,7 +147,7 @@ public abstract class AShip : MonoBehaviour
         {
             return;
         }
-        int dodge = Random.Range(0, 4);
+        int dodge = Random.Range(0, 5);
         if (dodgeChance >= 0 && dodge <= dodgeChance )
         {
             Debug.Log("Dodge chance: " + dodgeChance);

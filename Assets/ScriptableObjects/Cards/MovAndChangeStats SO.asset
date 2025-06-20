@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 1
   cardImage: {fileID: 21300000, guid: 2e70d4ae084df174cb9b7e06ae3f014b, type: 3}
   cardName: Fallback
-  cardDescription: Move, then MOV Range +1
+  cardDescription: Move, then MOV Range +1 in this turn
   cardCost: 2
   isWorldInteractive: 0
   hasToPlaceSomethingOnTile: 0

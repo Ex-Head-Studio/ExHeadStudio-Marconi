@@ -16,7 +16,7 @@ MonoBehaviour:
   cardType: 0
   cardImage: {fileID: 21300000, guid: 7f427f1d6bc609c4f86dca0b7207c57f, type: 3}
   cardName: Heavy Artillery
-  cardDescription: Attack Power +1 for this turn
+  cardDescription: Attack Power +1 in this turn
   cardCost: 2
   isWorldInteractive: 0
   hasToPlaceSomethingOnTile: 0
