@@ -16,17 +16,27 @@ public class DisplayHealth : MonoBehaviour
 
     private void Start()
     {
-
         shipScript = GetComponent<AShip>();
+        // Inizializza la barra della salute all'avvio dello script
+        InitializeHealthBar();
+    }
+
+    public void InitializeHealthBar()
+    {
+        for (int i = 0; i < healthObjectsList.Count; i++)
+        {
+            Destroy(healthObjectsList[i]);
+        }
+        healthObjectsList.Clear();
         if (shipScript != null && healthBarPrefab != null)
         {
             healthBarCount = shipScript.GetHealth();
-            for(int i = 0; i < healthBarCount; i++)
+            for (int i = 0; i < healthBarCount; i++)
             {
                 healthBarInstance = Instantiate(healthBarPrefab, transform.position, Quaternion.identity, healthBarCanvasPrefab.transform);
                 healthObjectsList.Add(healthBarInstance);
             }
-            
+
         }
     }
 

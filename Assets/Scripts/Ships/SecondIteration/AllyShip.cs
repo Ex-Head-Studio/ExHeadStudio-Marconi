@@ -845,6 +845,8 @@ public class AllyShip : AShip
         }
         health += healthToAdd;
         displayHealthScript.AddHealth(healthToAdd);
+
+        UpdateAllyPanel();
     }
 
     /// <remark><summary>

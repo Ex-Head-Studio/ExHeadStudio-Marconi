@@ -261,6 +261,7 @@ public abstract class AShip : MonoBehaviour
 
         //cambiare il modello della nave
         ChangeClassModel(newClass);
+        displayHealthScript.InitializeHealthBar(); // Reinitialize the health bar with the new class stats
 
         //cambiare la salute nel display
 
