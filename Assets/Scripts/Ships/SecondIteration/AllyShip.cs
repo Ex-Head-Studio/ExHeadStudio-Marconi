@@ -265,7 +265,7 @@ public class AllyShip : AShip
 
     public void PerformAttack(Vector2 targetPos)
     {
-        shipSO.attackEvent.Invoke(new ShipAttackStruct(targetPos, shipSO.attackPower));
+        shipSO.attackEvent.Invoke(new ShipAttackStruct(targetPos, this.attackPower));
         InstantiateEffect(targetPos);
     }
 

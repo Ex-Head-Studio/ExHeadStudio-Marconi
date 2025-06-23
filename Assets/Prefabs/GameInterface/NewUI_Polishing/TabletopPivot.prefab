@@ -885,9 +885,9 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: 'END
+  m_text: 'NEXT
 
-    TURN'
+    PHASE'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64f108c474fc69e449111806674ff164, type: 2}
   m_sharedMaterial: {fileID: -1072116930524599005, guid: 64f108c474fc69e449111806674ff164, type: 2}
@@ -2367,7 +2367,7 @@ MonoBehaviour:
       m_Calls: []
   m_text: 'END
 
-    PHASE'
+    TURN'
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 64f108c474fc69e449111806674ff164, type: 2}
   m_sharedMaterial: {fileID: -1072116930524599005, guid: 64f108c474fc69e449111806674ff164, type: 2}

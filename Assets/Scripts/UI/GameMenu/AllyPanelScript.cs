@@ -1,11 +1,10 @@
 using System.Collections;
 using TMPro;
-using Unity.VisualScripting;
 using UnityEngine;
 using UnityEngine.UI;
-using DG.Tweening; // Assicurati di avere questa direttiva using per DOTween
+using DG.Tweening;
 
-public class StatsPanelScript : MonoBehaviour
+public class AllyPanelScript : MonoBehaviour
 {
     [Header("Stats Panel")]
     [SerializeField] private GameObject statsPanel;
@@ -16,191 +15,131 @@ public class StatsPanelScript : MonoBehaviour
     [SerializeField] private GameObject genericStatPrefab;
     [SerializeField] private GameObject taccaPrefab;
 
+    [Header("Ship Reference")]
+    [SerializeField] private AllyShip targetShip;
 
     [Header("Parameters to display")]
-
-    //classe
     [SerializeField] private TMP_Text shipClassName = null;
     [SerializeField] private Image shipClassImageSprite = null;
     [SerializeField] private TMP_Text _objectDescription = null;
-    //vita
-    [SerializeField] private TMP_Text shipHealth = null;
-
-    //statistiche
-
-    //effetti
-
 
     [Header("Display parameters")]
     [SerializeField] private int fontSize = 3;
-    [SerializeField] private float waitTimeBeforeShow = 0.5f;
 
-    //Classi da usare per convertire gli script passati dagli eventi
-    AShip shipScript = null;
-    AbstractObstacle obstacleScript = null;
-    Tile tileScript = null;
-
-    private HorizontalLayoutGroup horizontalLayoutGroup;
-
-    private bool isDisplaying = false;
-
-    // Per tenere traccia del modello correntemente visualizzato
+    // Per il modello 3D
     private MeshRenderer _currentDisplayedModel;
     [SerializeField] private Transform _pivotObjectModel;
     [SerializeField] private Material _wireframeMaterial;
-
-    // Aggiungi queste variabili per tenere traccia dell'animazione di rotazione
     private Tweener _rotationTween;
     private GameObject _currentModelContainer;
 
-    #region Iscrizione agli eventi
-    private void OnEnable()
-    {
-        DisplayStats.OnEntityHoverStarted += ShowStatsPanel;
-        DisplayStats.OnEntityHoverEnded += HideStatsPanel;
-    }
+    // Riferimenti alle statistiche
+    private GameObject healthStat;
+    private GameObject attackPowerStat;
+    private GameObject attackRangeStat;
+    private GameObject movementRangeStat;
 
-    private void OnDisable()
-    {
-        DisplayStats.OnEntityHoverStarted -= ShowStatsPanel;
-        DisplayStats.OnEntityHoverEnded -= HideStatsPanel;
-    }
+    private HorizontalLayoutGroup horizontalLayoutGroup;
 
-    #endregion
-
-    #region  Metodi di display
-    private void ShowStatsPanel(DisplayStatsClass displayStats)
+    /* void Start()
     {
-        if (!isDisplaying)
+        // Trova automaticamente una nave alleata nella scena
+        targetShip = FindObjectOfType<AllyShip>();
+        
+        // Se abbiamo trovato una nave, mostra le sue statistiche
+        if (targetShip != null)
         {
-            // Qui l'ordine degli if è importante!!
-
-            if (displayStats.script is AShip)
-            {
-                Debug.Log("Ho preso una nave");
-                shipScript = (AShip)displayStats.script;
-
-                // Passa l'oggetto ship direttamente invece che lo ShipSO
-                SetShipClass(shipScript);
-
-                // Visualizza il modello della nave se disponibile
-                if (shipScript.shipSO.shipModelMesh != null)
-                {
-                    // Valori predefiniti per il posizionamento e la scala
-                    Vector3 repositionOffset = shipScript.shipSO.uiRepositionOffset;
-                    Vector3 scaleFactor = shipScript.shipSO.uiScaleFactor;
-
-                    // Aggiungi la rotazione di 90 gradi sull'asse X
-                    Quaternion shipRotation = Quaternion.Euler(-90f, 0f, 0f);
-
-                    // Chiamata al metodo con la rotazione specificata
-                    SpawnModelInUI(shipScript.shipSO.shipModelMesh, repositionOffset, scaleFactor, shipRotation);
-                }
-            }
-            else if (displayStats.script is AbstractObstacle)
-            {
-                Debug.Log("Qui ho preso un ostacolo");
-                obstacleScript = (AbstractObstacle)displayStats.script;
-                shipClassName.text = obstacleScript.GetObstacleName();
-                _objectDescription.text = obstacleScript.GetObstacleDescription();
-
-                // Ottieni il modello wireframe dall'ostacolo
-                MeshRenderer wireframeModel = obstacleScript.GetWireframeModel();
-
-                // Se il modello esiste, visualizzalo
-                if (wireframeModel != null)
-                {
-                    SpawnModelInUI(
-                        wireframeModel.gameObject,
-                        obstacleScript.GetWireframeRepositionOffset(),
-                        obstacleScript.GetWireframeScaleFactor(),
-                        Quaternion.identity // Nessuna rotazione aggiuntiva
-                    );
-                }
-            }
-            else if (displayStats.script is Tile)
-            {
-                Debug.Log("Qui ho preso una tile");
-                tileScript = (Tile)displayStats.script;
-                shipClassName.text = "Fog";
-            }
-
-
-            isDisplaying = true;
+            Debug.Log("Nave alleata trovata: " + targetShip.name);
+            ShowShipStats(targetShip);
         }
-
-    }
-    private void HideStatsPanel(DisplayStatsClass displayStats)
-    {
-        CleanupPreviousModel();
-        foreach (Transform child in statsParent)
+        else
         {
-            Destroy(child.gameObject);
+            Debug.LogWarning("Nessuna nave alleata trovata nella scena!");
         }
-        _objectDescription.text = "";
-        shipClassName.text = "searching...";
-        isDisplaying = false;
-    }
+    } */
 
-    private void SetShipClass(ShipSO shipClass)
+    // Metodo pubblico per impostare una nuova nave da visualizzare
+    public void SetShip(AllyShip ship)
     {
-        foreach (string statName in shipClass.statNames)
-        {
-            GameObject statObject = Instantiate(genericStatPrefab, statsParent, false);
-            statObject.name = statName;
-            statObject.GetComponentInChildren<TMP_Text>().text = statName;
-            statObject.GetComponentInChildren<TMP_Text>().fontSize = fontSize;
-            statObject.GetComponentInChildren<TMP_Text>().font = customStatsFont;
-
-            horizontalLayoutGroup = statObject.GetComponentInChildren<HorizontalLayoutGroup>();
-            horizontalLayoutGroup.childScaleHeight = true;
-            horizontalLayoutGroup.childScaleWidth = true;
-            horizontalLayoutGroup.childForceExpandWidth = false;
-            horizontalLayoutGroup.childForceExpandWidth = false;
-            horizontalLayoutGroup.childAlignment = TextAnchor.MiddleLeft;
-            horizontalLayoutGroup.padding.left = 10;
-            horizontalLayoutGroup.padding.right = 10;
-
-            // Cerca l'oggetto "Tacche" come figlio del Transform di statObject
-            Transform taccheContainer = statObject.transform.Find("Tacche");
-            if (taccheContainer == null)
-            {
-                // Se il contenitore non esiste, crealo
-                GameObject taccheObj = new GameObject("Tacche");
-                taccheObj.transform.SetParent(statObject.transform, false);
-                taccheContainer = taccheObj.transform;
-            }
-
-            // Ora istanzia le tacche come figlie di taccheContainer
-            for (int i = 0; i < shipClass.statsDictionary[statName]; i++)
-            {
-                GameObject tacca = Instantiate(taccaPrefab, taccheContainer);
-                tacca.transform.localPosition = new Vector3(i * 20, 0, 0);
-                tacca.name = "Tacca" + i;
-            }
-        }
-    }
-
-    private void SetShipClass(AShip ship)
-    {
-        // Usa il nome della nave direttamente dalla nave
-        shipClassName.text = ship.shipSO.className;
+        targetShip = ship;
 
         // Pulisci eventuali statistiche precedenti
+        ClearStats();
+
+        if (targetShip != null)
+        {
+            ShowShipStats(targetShip);
+        }
+    }
+
+    // Pulisce tutte le statistiche visualizzate
+    private void ClearStats()
+    {
+        CleanupPreviousModel();
+
         foreach (Transform child in statsParent)
         {
             Destroy(child.gameObject);
         }
 
-        // Crea le quattro statistiche specifiche richieste
-        CreateStatObject("Health", ship.GetHealth());
-        CreateStatObject("AttackPower", ship.attackPower);
-        CreateStatObject("AttackRange", ship.attackRange);
-        CreateStatObject("MovementRange", ship.movementRange);
+        _objectDescription.text = "";
+        shipClassName.text = "No ship selected";
+
+        // Reset dei riferimenti alle statistiche
+        healthStat = null;
+        attackPowerStat = null;
+        attackRangeStat = null;
+        movementRangeStat = null;
     }
 
-    // Nuovo metodo helper per creare gli oggetti statistica
-    private void CreateStatObject(string statName, int value)
+    // Mostra le statistiche della nave specificata
+    private void ShowShipStats(AllyShip ship)
+    {
+        if (ship == null)
+            return;
+
+        // Imposta le statistiche della nave direttamente dall'oggetto AllyShip
+        SetShipClass(ship);
+
+        // Se serve la descrizione, puoi comunque prenderla da shipSO
+        if (ship.shipSO != null)
+        {
+
+            // Visualizza il modello 3D della nave se disponibile
+            if (ship.shipSO.shipModelMesh != null)
+            {
+                Vector3 repositionOffset = ship.shipSO.uiRepositionOffset;
+                Vector3 scaleFactor = ship.shipSO.uiScaleFactor;
+                Quaternion shipRotation = Quaternion.Euler(-90f, 0f, 0f);
+
+                SpawnModelInUI(ship.shipSO.shipModelMesh, repositionOffset, scaleFactor, shipRotation);
+            }
+        }
+
+        // Mostra il pannello se non è già attivo
+        if (!statsPanel.activeSelf)
+        {
+            statsPanel.SetActive(true);
+        }
+    }
+
+    // Imposta le informazioni di classe della nave
+    private void SetShipClass(AllyShip ship)
+    {
+        if (ship == null)
+            return;
+
+        shipClassName.text = ship.shipSO.className;
+
+        // Crea le quattro statistiche specifiche richieste usando i valori dalla nave
+        healthStat = CreateStatObject("Health", ship.GetHealth());
+        attackPowerStat = CreateStatObject("AttackPower", ship.attackPower);
+        attackRangeStat = CreateStatObject("AttackRange", ship.attackRange);
+        movementRangeStat = CreateStatObject("MovementRange", ship.movementRange);
+    }
+
+    // Metodo helper per creare un oggetto statistica con tacche
+    private GameObject CreateStatObject(string statName, int value)
     {
         GameObject statObject = Instantiate(genericStatPrefab, statsParent, false);
         statObject.name = statName;
@@ -214,29 +153,53 @@ public class StatsPanelScript : MonoBehaviour
             statText.font = customStatsFont;
         }
 
+        // Configura il layout
         horizontalLayoutGroup = statObject.GetComponentInChildren<HorizontalLayoutGroup>();
         if (horizontalLayoutGroup != null)
         {
             horizontalLayoutGroup.childScaleHeight = true;
             horizontalLayoutGroup.childScaleWidth = true;
             horizontalLayoutGroup.childForceExpandWidth = false;
-            horizontalLayoutGroup.childForceExpandWidth = false;
             horizontalLayoutGroup.childAlignment = TextAnchor.MiddleLeft;
             horizontalLayoutGroup.padding.left = 10;
             horizontalLayoutGroup.padding.right = 10;
         }
 
-        // Cerca l'oggetto "Tacche" come figlio del Transform di statObject
+        // Cerca o crea il contenitore delle tacche
         Transform taccheContainer = statObject.transform.Find("Tacche");
         if (taccheContainer == null)
         {
-            // Se il contenitore non esiste, crealo
             GameObject taccheObj = new GameObject("Tacche");
             taccheObj.transform.SetParent(statObject.transform, false);
             taccheContainer = taccheObj.transform;
         }
 
-        // Ora istanzia le tacche come figlie di taccheContainer
+        // Crea le tacche
+        for (int i = 0; i < value; i++)
+        {
+            GameObject tacca = Instantiate(taccaPrefab, taccheContainer);
+            tacca.transform.localPosition = new Vector3(i * 20, 0, 0);
+            tacca.name = "Tacca" + i;
+        }
+
+        return statObject;
+    }
+
+    // Aggiorna le tacche per una statistica specifica
+    private void UpdateStatTacche(GameObject statObject, int value)
+    {
+        if (statObject == null) return;
+
+        Transform taccheContainer = statObject.transform.Find("Tacche");
+        if (taccheContainer == null) return;
+
+        // Rimuovi tutte le tacche esistenti
+        foreach (Transform child in taccheContainer)
+        {
+            Destroy(child.gameObject);
+        }
+
+        // Crea nuove tacche in base al valore aggiornato
         for (int i = 0; i < value; i++)
         {
             GameObject tacca = Instantiate(taccaPrefab, taccheContainer);
@@ -244,27 +207,18 @@ public class StatsPanelScript : MonoBehaviour
             tacca.name = "Tacca" + i;
         }
     }
-    #endregion
 
-    // Modifica anche la funzione di pulizia per fermare l'animazione
-    public void HidePanel()
+    // Metodo per aggiornare i valori delle statistiche
+    public void UpdateStats()
     {
-        // Interrompi l'animazione di rotazione
-        if (_rotationTween != null)
-        {
-            _rotationTween.Kill();
-            _rotationTween = null;
-        }
+        if (targetShip == null)
+            return;
 
-        // Distruggi il contenitore se esiste
-        if (_currentModelContainer != null)
-        {
-            Destroy(_currentModelContainer);
-            _currentModelContainer = null;
-            _currentDisplayedModel = null;
-        }
-
-        // Resto del codice esistente...
+        // Aggiorna le tacche per ogni statistica in base ai valori attuali della nave
+        UpdateStatTacche(healthStat, targetShip.GetHealth());
+        UpdateStatTacche(attackPowerStat, targetShip.attackPower);
+        UpdateStatTacche(attackRangeStat, targetShip.attackRange);
+        UpdateStatTacche(movementRangeStat, targetShip.movementRange);
     }
 
     // Metodo per lo spawn dei modelli wireframe nell'UI
@@ -327,7 +281,7 @@ public class StatsPanelScript : MonoBehaviour
             .SetRelative(true);
     }
 
-    // Nuovo metodo per applicare il materiale wireframe a tutti i renderer nell'oggetto e suoi figli
+    // Metodo per applicare il materiale wireframe a tutti i renderer nell'oggetto e suoi figli
     private void ApplyWireframeMaterial(GameObject obj)
     {
         // Applica il materiale a tutti i MeshRenderer
@@ -342,7 +296,7 @@ public class StatsPanelScript : MonoBehaviour
             renderer.materials = newMaterials;
         }
 
-        // Applica il materiale anche a tutti gli SkinnedMeshRenderer (spesso usati nei modelli di personaggi/navi)
+        // Applica il materiale anche a tutti gli SkinnedMeshRenderer
         SkinnedMeshRenderer[] skinnedRenderers = obj.GetComponentsInChildren<SkinnedMeshRenderer>(true);
         foreach (SkinnedMeshRenderer renderer in skinnedRenderers)
         {
@@ -380,10 +334,8 @@ public class StatsPanelScript : MonoBehaviour
     // Metodo per impostare il layer in modo ricorsivo su un GameObject e tutti i suoi figli
     private void SetLayerRecursively(GameObject obj, int newLayer)
     {
-        // Imposta il layer dell'oggetto corrente
         obj.layer = newLayer;
 
-        // Imposta il layer su tutti i figli in modo ricorsivo
         foreach (Transform child in obj.transform)
         {
             SetLayerRecursively(child.gameObject, newLayer);

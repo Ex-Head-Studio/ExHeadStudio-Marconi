@@ -6,7 +6,7 @@ using Unity.Mathematics;
 [CreateAssetMenu(fileName = "ShipSO", menuName = "Scriptable Objects/ShipSO")]
 public class ShipSO : ScriptableObject
 {
-
+    [SerializeField] public string className;
     [SerializeField] public int movementRange;
     [SerializeField] public int attackRange;
     [SerializeField] public int attackPower;

@@ -12,6 +12,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 76197b39508ec9b49b2f36c36decb8fb, type: 3}
   m_Name: Scout
   m_EditorClassIdentifier: 
+  className: Scout
   movementRange: 3
   attackRange: 1
   attackPower: 1

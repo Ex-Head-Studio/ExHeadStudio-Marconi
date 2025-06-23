@@ -23,7 +23,7 @@ public class DisplayStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
 
     //tipi di classe a cui fa riferimento
     private TileElusive tileScript; //TODO fare in modo che funzioni anche su altri tipi di Tile
-    private AShip shipScript;
+    private EnemyShip shipScript;
     private AbstractObstacle obstacleScript;
 
     public static event Action<DisplayStatsClass> OnEntityHoverStarted;
@@ -34,7 +34,7 @@ public class DisplayStats : MonoBehaviour, IPointerEnterHandler, IPointerExitHan
     private void Start()
     {
         //controlli per prendere lo script corretto
-        TryGetComponent<AShip>(out shipScript);
+        TryGetComponent<EnemyShip>(out shipScript);
         TryGetComponent<TileElusive>(out tileScript);
         TryGetComponent<AbstractObstacle>(out obstacleScript);
     }

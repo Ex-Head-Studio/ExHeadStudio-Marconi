@@ -84,6 +84,8 @@ public abstract class AShip : MonoBehaviour
 
     [SerializeField] protected Animator shipAnimator;
 
+    private AllyPanelScript panelScript;
+
     void Start()
     {
         mapHeight = GridManager.Instance._height;
@@ -119,6 +121,15 @@ public abstract class AShip : MonoBehaviour
         //camera shake
         impulseSource = GetComponent<CinemachineImpulseSource>();
         displayHealthScript = GetComponent<DisplayHealth>();
+
+        panelScript = FindObjectOfType<AllyPanelScript>();
+
+        
+
+        if (this is AllyShip allyShip)
+        {
+            panelScript.SetShip(allyShip);
+        }
     }
 
     public virtual void ExecuteMove() { }
@@ -148,11 +159,11 @@ public abstract class AShip : MonoBehaviour
             return;
         }
         int dodge = Random.Range(0, 5);
-        if (dodgeChance >= 0 && dodge <= dodgeChance )
+        if (dodgeChance >= 0 && dodge <= dodgeChance)
         {
             Debug.Log("Dodge chance: " + dodgeChance);
             Debug.Log(dodgeChance);
-            particleSystemInstance = Instantiate(shipSO.dodgeEffect, transform.position + new Vector3(0f,5f,0f), Quaternion.identity);
+            particleSystemInstance = Instantiate(shipSO.dodgeEffect, transform.position + new Vector3(0f, 5f, 0f), Quaternion.identity);
             particleSystemInstance.Play();
             PlayDodge();  // Play the dodge sound
             return;
@@ -252,19 +263,19 @@ public abstract class AShip : MonoBehaviour
         ChangeClassModel(newClass);
 
         //cambiare la salute nel display
-        
+
 
         //aggiungere particellare/suono/animazione di cambio classe
         if (newClass.changeClassParticle != null)
         {
             ParticleSystem tmpParticle = Instantiate(newClass.changeClassParticle, transform.position, Quaternion.identity);
             tmpParticle.Play();
-            
-        }
 
+        }
+        UpdateAllyPanel(true);
     }
 
-    
+
 
 
     private void ChangeClassModel(ShipSO newClass)
@@ -275,12 +286,12 @@ public abstract class AShip : MonoBehaviour
             // Ottieni l'animator attuale e il suo GameObject
             Animator shipAnim = gameObject.GetComponentInChildren<Animator>();
             GameObject animatorObject = shipAnim.gameObject;
-            
+
             Debug.Log($"Animator corrente: {shipAnim.name} su GameObject: {animatorObject.name}");
-            
+
             // Cerca l'oggetto "Ship" nella gerarchia
             Transform shipTransform = null;
-            
+
             // Prima cerca tra i figli diretti di questo GameObject
             for (int i = 0; i < transform.childCount; i++)
             {
@@ -290,7 +301,7 @@ public abstract class AShip : MonoBehaviour
                     break;
                 }
             }
-            
+
             // Se non lo troviamo direttamente, cerchiamo di risalire la gerarchia dell'animator
             if (shipTransform == null)
             {
@@ -305,7 +316,7 @@ public abstract class AShip : MonoBehaviour
                     current = current.parent;
                 }
             }
-            
+
             // Se ancora non troviamo Ship, usiamo il parent dell'animator come fallback
             if (shipTransform == null)
             {
@@ -316,14 +327,14 @@ public abstract class AShip : MonoBehaviour
             {
                 Debug.Log($"Trovato oggetto Ship: {shipTransform.name}");
             }
-            
+
             // Troviamo il modello attuale (con il ShipModelMaterialAssignement)
             ShipModelMaterialAssignement shipModelMaterial = animatorObject.GetComponentInChildren<ShipModelMaterialAssignement>();
             GameObject oldModelObject = shipModelMaterial ? shipModelMaterial.gameObject : animatorObject;
-            
+
             // Prendi il materiale originale
             Material oldMat = shipModelMaterial ? shipModelMaterial.GetMaterial() : null;
-            
+
             // Trova tutti i vecchi modelli sotto Ship e distruggili
             List<GameObject> oldModelsToDestroy = new List<GameObject>();
             for (int i = 0; i < shipTransform.childCount; i++)
@@ -335,12 +346,12 @@ public abstract class AShip : MonoBehaviour
                     oldModelsToDestroy.Add(child.gameObject);
                 }
             }
-            
+
             // Istanzia il nuovo modello sotto l'oggetto Ship
             GameObject newModel = Instantiate(newClass.shipClassModel, shipTransform, false);
-            
+
             Debug.Log($"Nuovo modello istanziato: {newModel.name} con parent: {newModel.transform.parent.name}");
-            
+
             // Applica il materiale al nuovo modello
             ShipModelMaterialAssignement newMaterialAssigner = newModel.GetComponentInChildren<ShipModelMaterialAssignement>();
             if (newMaterialAssigner != null && oldMat != null)
@@ -351,36 +362,36 @@ public abstract class AShip : MonoBehaviour
             {
                 Debug.LogError($"ShipModelMaterialAssignement non trovato nel nuovo modello: {newModel.name}");
             }
-            
+
             // Cerca l'animator nel nuovo modello
             Animator newAnimator = newModel.GetComponent<Animator>();
             if (newAnimator == null)
             {
                 newAnimator = newModel.GetComponentInChildren<Animator>();
             }
-            
+
             // Se abbiamo trovato un animator nel nuovo modello, aggiorna il riferimento
             if (newAnimator != null)
             {
                 Debug.Log($"Trovato nuovo animator: {newAnimator.name} su GameObject: {newAnimator.gameObject.name}");
-                
+
                 // Trasferisci il controller dall'animator vecchio al nuovo
                 if (shipAnim.runtimeAnimatorController != null)
                 {
                     Debug.Log($"Controller trasferito: {shipAnim.runtimeAnimatorController.name}");
                     newAnimator.runtimeAnimatorController = shipAnim.runtimeAnimatorController;
                 }
-                
+
                 // Aggiorna il riferimento all'animator nella classe
                 shipAnimator = newAnimator;
-                
+
                 Debug.Log($"Animator aggiornato con quello del nuovo modello: {newModel.name}");
             }
             else
             {
                 Debug.LogError($"Nessun animator trovato nel nuovo modello: {newModel.name}");
             }
-            
+
             // Ora che abbiamo sostituito il modello e aggiornato l'animator, 
             // possiamo distruggere i vecchi modelli
             foreach (GameObject objToDestroy in oldModelsToDestroy)
@@ -408,11 +419,12 @@ public abstract class AShip : MonoBehaviour
         Debug.Log("Damage received");
 
 
-       
+
 
         DoShakeDamageAnimation();
-        
+
         shipSO.attackEvent?.Invoke(new ShipAttackStruct(this.position, damage));
+        UpdateAllyPanel();
     }
 
     public void DoShakeDamageAnimation()
@@ -428,7 +440,7 @@ public abstract class AShip : MonoBehaviour
                 transform.DOKill(false);
                 transform.localPosition = shipTransform.localPosition;
 
-        });
+            });
     }
 
 
@@ -440,17 +452,19 @@ public abstract class AShip : MonoBehaviour
 
         if (statName == "Movement Range")
         {
-            movementRange = oldStatValue + amount;
+            movementRange = movementRange + amount;
         }
         else if (statName == "Attack Range")
         {
-            attackRange = oldStatValue + amount;
+            attackRange = attackRange + amount;
         }
         else if (statName == "Attack Power")
         {
-            attackPower = oldStatValue + amount;
-            shipSO.statsDictionary[statName] = attackPower;
+            attackPower = attackPower + amount;
+            //shipSO.statsDictionary[statName] = attackPower;
         }
+
+        UpdateAllyPanel();
     }
 
 
@@ -459,22 +473,15 @@ public abstract class AShip : MonoBehaviour
     {
         if (hasStatChanged)
         {
-            if (oldStatName == "Movement Range")
-            {
-                movementRange = oldStatValue;
-            }
-            else if (oldStatName == "Attack Range")
-            {
-                attackRange = oldStatValue;
-            }
-            else if (oldStatName == "Attack Power")
-            {
-                attackPower = oldStatValue;
-                shipSO.statsDictionary[oldStatName] = oldStatValue;
-            }
+            movementRange = shipSO.movementRange;
+            attackRange = shipSO.attackRange;
+            attackPower = shipSO.attackPower;
             hasStatChanged = false;
+            Debug.Log("Movement Range: " + movementRange);
+            Debug.Log("Attack Range: " + attackRange);
+            Debug.Log("Attack Power: " + attackPower);
         }
-
+        UpdateAllyPanel();
     }
     public int GetHealth()
     {
@@ -504,11 +511,34 @@ public abstract class AShip : MonoBehaviour
 
     public bool IsMoving()
     {
-        if(faction == (int)Entity.ally)
+        if (faction == (int)Entity.ally)
         {
             return isMoving;
         }
         return false;
+    }
+    
+    // Modifica il metodo UpdateAllyPanel in AShip.cs
+    protected void UpdateAllyPanel(bool modelChanged = false)
+    {
+        // Controlla se questa istanza è un AllyShip
+        if (this is AllyShip allyShip)
+        {
+            // Se ha un riferimento al pannello, aggiornalo
+            if (panelScript != null)
+            {
+                if (modelChanged && allyShip.shipSO != null)
+                {
+                    // Reinizializza completamente il pannello quando cambia il modello
+                    panelScript.SetShip(allyShip);
+                }
+                else
+                {
+                    // Aggiorna solo le statistiche per cambiamenti minori
+                    panelScript.UpdateStats();
+                }
+            }
+        }
     }
 }
 
