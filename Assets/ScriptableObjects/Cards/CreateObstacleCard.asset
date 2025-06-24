@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: CreateObstacleCard
   m_EditorClassIdentifier: 
   cardEntityType: 5
-  cardType: 1
+  cardType: 10
   cardImage: {fileID: 21300000, guid: 922c9636f1e889144b49f138030c601e, type: 3}
   cardName: Barrier
   cardDescription: Place an Obstacle on the grid

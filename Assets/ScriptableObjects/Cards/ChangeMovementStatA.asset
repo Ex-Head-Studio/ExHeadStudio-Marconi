@@ -13,7 +13,7 @@ MonoBehaviour:
   m_Name: ChangeMovementStatA
   m_EditorClassIdentifier: 
   cardEntityType: 0
-  cardType: 1
+  cardType: 8
   cardImage: {fileID: 21300000, guid: 7f427f1d6bc609c4f86dca0b7207c57f, type: 3}
   cardName: Favorable Wind
   cardDescription: Movement Range +1 in this turn
