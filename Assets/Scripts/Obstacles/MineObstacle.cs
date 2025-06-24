@@ -50,6 +50,7 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
         {
             AreaDamage();
             tile.RemoveObstacle();
+            Instantiate(explosionPrefab, transform.position, Quaternion.identity);
             PlayMineExplosion();
         }
         if (healthBarPrefab != null && healthBarCanvasPrefab != null)
@@ -110,7 +111,7 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
     [SerializeField] private OnShipAttackEvent attackEvent;
 
     [Header("Effects")]
-    [SerializeField] private ParticleSystem explosionPrefab;
+    [SerializeField] private GameObject explosionPrefab;
 
     public void AreaDamage()
     {
@@ -181,7 +182,7 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
                 if (doAttack)
                 {
                     attackEvent.Invoke(new ShipAttackStruct(target, areaDamage));
-                    InstantiateEffect(target);
+                    //InstantiateEffect(target);
                 }
             }
         }
@@ -270,7 +271,8 @@ public class MineObstacle : AbstractObstacle, IObstacleHealth, IObstacleAreaDama
     {
         if (explosionPrefab != null)
         {
-            ParticleSystem explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
+            GameObject explosion = Instantiate(explosionPrefab, position, Quaternion.identity);
+            explosion.SetActive(true);
             Destroy(explosion, 2f);
         }
     }   

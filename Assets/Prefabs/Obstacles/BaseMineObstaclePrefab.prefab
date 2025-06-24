@@ -288,7 +288,7 @@ MonoBehaviour:
   areaDamageRadius: 1
   areaDamageType: 2
   attackEvent: {fileID: 11400000, guid: 983d773d0ed4ff045bf2cd6741010978, type: 2}
-  explosionPrefab: {fileID: 2770211866682839690, guid: 606e5509842850445bde19a5693b1256, type: 3}
+  explosionPrefab: {fileID: 725748389856807714, guid: 4bda94453d2ca7444a0fff05b2d425f5, type: 3}
 --- !u!114 &-3818410615878564393
 MonoBehaviour:
   m_ObjectHideFlags: 0
