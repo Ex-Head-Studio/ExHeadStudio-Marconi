@@ -784,7 +784,7 @@ public class EnemyShip : AShip
                 Vector2Int pos = new Vector2Int(x, position.y);
                 if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                 {
-                    Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                    Move move = new Move(idMove++, shipName, pos, MessageType.attack, -100f);
                     shipMoves.Add(move);
                     canAttack = true;
                     break;
@@ -813,7 +813,7 @@ public class EnemyShip : AShip
                 Vector2Int pos = new Vector2Int(x, position.y);
                 if(GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                     {
-                        Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                        Move move = new Move(idMove++, shipName, pos, MessageType.attack, -100f);
                         shipMoves.Add(move);
                         canAttack = true;
                         break;
@@ -842,7 +842,7 @@ public class EnemyShip : AShip
                 Vector2Int pos = new Vector2Int(position.x, y);
                 if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
                 {
-                    Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                    Move move = new Move(idMove++, shipName, pos, MessageType.attack, -100f);
                     shipMoves.Add(move);
                     canAttack = true;
                     break;
@@ -869,7 +869,7 @@ public class EnemyShip : AShip
             Vector2Int pos = new Vector2Int(position.x, y);
             if (GridManager.Instance.GetTileAtPosition(pos).GetType() == TileType.Obstacle)
             {
-                Move move = new Move(idMove++, shipName, pos, MessageType.attack, 0);
+                Move move = new Move(idMove++, shipName, pos, MessageType.attack, -100f);
                 shipMoves.Add(move);
                 canAttack = true;
                 break;
