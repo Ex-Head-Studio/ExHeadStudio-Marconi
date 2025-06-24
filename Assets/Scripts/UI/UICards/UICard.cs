@@ -62,9 +62,14 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
     [SerializeField] private GameObject canBeUsedBorder;
 
     [Header("Colori Carta")]
-    [SerializeField] private Color colorCommandCard;
-    [SerializeField] private Color colorSupportCard;
-    [SerializeField] private Color colorSpySupportCard;
+    [SerializeField] private Color colorAttackCard;
+    [SerializeField] private Color colorAttackCardFixed;
+    [SerializeField] private Color colorMovementCard;
+    [SerializeField] private Color colorMovementCardFixed;
+    [SerializeField] private Color colorStatsCardEngage;
+    [SerializeField] private Color colorStatsCardTactic;
+    [SerializeField] private Color colorObstacleCard;
+
     private Color tempColor;
 
     private bool drawGizmos;
@@ -130,19 +135,37 @@ public class UICard : MonoBehaviour, IPointerClickHandler, IPointerEnterHandler,
 
         switch (card.GetCardType())
         {
-            case (int)DeckType.CommandDeck:
-                spriteRendererBorder.color = colorCommandCard;
-                spriteRendererCost.color = colorCommandCard;
+            case (int)DeckType.AttackCard:
+                spriteRendererBorder.color = colorAttackCard;
+                spriteRendererCost.color = colorAttackCard;
                 break;
-            case (int)DeckType.SupportDeck:
-                spriteRendererBorder.color = colorSupportCard;
-                spriteRendererCost.color = colorSupportCard;
+            case (int)DeckType.AttackCardFixed:
+                spriteRendererBorder.color = colorAttackCardFixed;
+                spriteRendererCost.color = colorAttackCardFixed;
                 break;
-            case (int)DeckType.SpyAndSupportDeck:
-                spriteRendererBorder.color = colorSpySupportCard;
-                spriteRendererCost.color = colorSpySupportCard;
+            case (int)DeckType.MovementCard:
+                spriteRendererBorder.color = colorMovementCard;
+                spriteRendererCost.color = colorMovementCard;
+                break;
+            case (int)DeckType.MovementCardFixed:
+                spriteRendererBorder.color = colorMovementCardFixed;
+                spriteRendererCost.color = colorMovementCardFixed;
+                break;
+            case (int)DeckType.StatsCardEngage:
+                spriteRendererBorder.color = colorStatsCardEngage;
+                spriteRendererCost.color = colorStatsCardEngage;
+                break;
+            case (int)DeckType.StatsCardTactic:
+                spriteRendererBorder.color = colorStatsCardTactic;
+                spriteRendererCost.color = colorStatsCardTactic;
+                break;
+            case (int)DeckType.ObstacleCard:
+                spriteRendererBorder.color = colorObstacleCard;
+                spriteRendererCost.color = colorObstacleCard;
                 break;
             default:
+                Debug.LogError("Card type not supported: " + card.GetCardType());
+                Debug.LogError("Card name: " + card.GetCardName());
                 Assert.IsTrue(false, "Card type not supported");
                 break;
 

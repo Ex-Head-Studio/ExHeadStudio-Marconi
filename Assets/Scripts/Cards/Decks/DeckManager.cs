@@ -9,13 +9,20 @@ using System.Linq;
 using System.Collections;
 using UnityEngine.Assertions;
 
-public enum DeckType 
+public enum DeckType
 {
     CommandDeck,
     SupportDeck,
     SpyDeck,
 
     SpyAndSupportDeck,
+    AttackCard,
+    MovementCard,
+    AttackCardFixed,
+    MovementCardFixed,
+    StatsCardTactic,
+    StatsCardEngage,
+    ObstacleCard
 }
 
 //permette di aggiornare la mano del giocatore ad ogni turno
