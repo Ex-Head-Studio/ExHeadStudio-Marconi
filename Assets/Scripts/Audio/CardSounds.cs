@@ -1,6 +1,6 @@
 using UnityEngine;
 
-public class CardSounds: MonoBehaviour
+public class CardSounds : MonoBehaviour
 {
     private FMOD.Studio.EventInstance cardSelection;
 
@@ -65,5 +65,12 @@ public class CardSounds: MonoBehaviour
         mineSound.release();
     }
 
+    private FMOD.Studio.EventInstance cardStats;
 
+    public void PlayCardStats()
+    {
+        cardStats = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Stats");
+        cardStats.start();
+        cardStats.release();
+    }
 }

@@ -280,7 +280,9 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (buttonGameObject != null)
             buttonGameObject.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f); // Rotazione LOCALE
-
+        
+        PlayPhaseButton();
+        
         // Disabilita inizialmente il bottone
         button.interactable = false;
         button.onClick.RemoveAllListeners();
@@ -294,7 +296,7 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         // Aggiorna il colore di sfondo
         UpdateCameraBackground(tacticPhaseBackground);
 
-        PlayPhaseButton();
+        
 
         if (handManager != null)
             StartCoroutine(EnableCardsAndButtonAfterDelay());
@@ -327,7 +329,9 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         
         if (buttonGameObject != null)
             buttonGameObject.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.5f); // Rotazione LOCALE
-        
+
+        PlayPhaseButton();
+
         StopBlinking();
 
         if (handManager != null)
@@ -338,6 +342,8 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
     {
         if (buttonGameObject != null)
             buttonGameObject.transform.DOLocalRotate(new Vector3(0, 0, 0), 0.5f); // Rotazione LOCALE
+
+        
         
         // Disabilita inizialmente il bottone
         button.interactable = false;
@@ -352,7 +358,7 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         // Aggiorna il colore di sfondo
         UpdateCameraBackground(actionPhaseBackground);
         
-        PlayPhaseButton();
+        
         
         if (handManager != null)
             StartCoroutine(EnableCardsAndButtonAfterDelay());
@@ -368,7 +374,9 @@ public class EndTurnButton2 : MonoBehaviour, IPointerEnterHandler, IPointerExitH
         
         if (buttonGameObject != null)
             buttonGameObject.transform.DOLocalRotate(new Vector3(0, 180, 0), 0.5f);
-        
+
+        PlayPhaseButton();
+
         // Imposta il testo per il turno nemico
         UpdatePhaseText(enemyTurnText);
         

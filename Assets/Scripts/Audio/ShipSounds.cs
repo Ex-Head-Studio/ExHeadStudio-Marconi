@@ -46,5 +46,12 @@ public class ShipSounds: MonoBehaviour
         dodgeSound.release();
     }
 
+    private FMOD.Studio.EventInstance attackBuildUp;
 
+    public void PlayAttackBuildUp()
+    {
+        attackBuildUp = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/AttackBuildUp");
+        attackBuildUp.start();
+        attackBuildUp.release();
+    }
 }
