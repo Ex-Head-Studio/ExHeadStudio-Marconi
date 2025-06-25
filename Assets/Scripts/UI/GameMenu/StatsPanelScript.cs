@@ -122,7 +122,20 @@ public class StatsPanelScript : MonoBehaviour
             {
                 Debug.Log("Qui ho preso una tile");
                 tileScript = (Tile)displayStats.script;
+                _objectDescription.text = tileScript.GetTileDescription();
                 shipClassName.text = "Fog";
+                MeshRenderer wireframeModel = tileScript.GetWireframeModel();
+                if (wireframeModel != null)
+                {
+                    Quaternion fogRotation = Quaternion.Euler(-90f, 0f, 0f);
+                    // Usa il metodo SpawnModelInUI per visualizzare il modello wireframe della tile
+                    SpawnModelInUI(
+                        wireframeModel.gameObject,
+                        tileScript.GetWireframeRepositionOffset(),
+                        tileScript.GetWireframeScaleFactor(),
+                        fogRotation
+                    );
+                }
             }
 
 

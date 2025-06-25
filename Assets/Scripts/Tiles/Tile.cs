@@ -27,6 +27,15 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
     [SerializeField] protected Color _emptyColor;
     [SerializeField] protected MeshRenderer _mesh;
     [SerializeField] protected GameObject _highlight;
+    [SerializeField] protected string _tileDescription;
+    
+
+    [Header("Wireframe Display Settings")]
+    [Tooltip("Fattore di scala per il modello wireframe quando visualizzato nell'UI")]
+    [SerializeField] private Vector3 _wireframeScaleFactor = new Vector3(0.5f, 0.5f, 0.5f);
+    [SerializeField] private Vector3 _wireframeRiposition = new Vector3();
+    [SerializeField] private MeshRenderer _tileWireframe;
+
     protected static List<Tile> _selectedTiles = new List<Tile>();
 
     //messo public per debug
@@ -65,6 +74,26 @@ public class Tile : MonoBehaviour, IPointerExitHandler, IPointerEnterHandler, IP
         tileCollider.providesContacts = true;
 
         SetTileHighlight(false);
+    }
+
+    public string GetTileDescription()
+    {
+        return _tileDescription;
+    }
+
+    public MeshRenderer GetWireframeModel()
+    {
+        return _tileWireframe;
+    }
+
+    public Vector3 GetWireframeScaleFactor()
+    {
+        return _wireframeScaleFactor;
+    }
+
+    public Vector3 GetWireframeRepositionOffset()
+    {
+        return _wireframeRiposition;
     }
 
     #region Iscrizione agli eventi
