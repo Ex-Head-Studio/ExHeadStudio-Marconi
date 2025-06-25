@@ -113,7 +113,8 @@ MonoBehaviour:
   _emptyColor: {r: 0, g: 0, b: 0, a: 1}
   _mesh: {fileID: 2248186710715474168}
   _highlight: {fileID: 5039793893246255022}
-  _tileDescription: This fog gives you a chance of dodging attacks
+  _tileDescription: a fog bank. increases a ship's elusiveness by giving it a chance
+    to dodge attacks
   _wireframeScaleFactor: {x: 5000, y: 5000, z: 5000}
   _wireframeRiposition: {x: 0, y: 50, z: 0}
   _tileWireframe: {fileID: 2518118191913170099, guid: ff3efb11bc0e33343aa58924b682ee6f, type: 3}
