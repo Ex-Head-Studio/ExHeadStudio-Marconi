@@ -3652,12 +3652,24 @@ PrefabInstance:
       value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 4119303024773626895, guid: b4bf7a0d79d8b524cb696cef8e1897a0, type: 3}
+      propertyPath: m_LocalScale.x
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119303024773626895, guid: b4bf7a0d79d8b524cb696cef8e1897a0, type: 3}
+      propertyPath: m_LocalScale.y
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119303024773626895, guid: b4bf7a0d79d8b524cb696cef8e1897a0, type: 3}
+      propertyPath: m_LocalScale.z
+      value: 2.5
+      objectReference: {fileID: 0}
+    - target: {fileID: 4119303024773626895, guid: b4bf7a0d79d8b524cb696cef8e1897a0, type: 3}
       propertyPath: m_AnchoredPosition.x
       value: -3.600006
       objectReference: {fileID: 0}
     - target: {fileID: 4119303024773626895, guid: b4bf7a0d79d8b524cb696cef8e1897a0, type: 3}
       propertyPath: m_AnchoredPosition.y
-      value: -3.7000008
+      value: -1.7000008
       objectReference: {fileID: 0}
     - target: {fileID: 5009573276794952468, guid: b4bf7a0d79d8b524cb696cef8e1897a0, type: 3}
       propertyPath: m_text
@@ -3826,6 +3838,14 @@ PrefabInstance:
     - target: {fileID: 4010983349854484694, guid: aa48c5d45cfdacb4abce74e11d678dfc, type: 3}
       propertyPath: m_Name
       value: InspectorCanvas
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438135724138372366, guid: aa48c5d45cfdacb4abce74e11d678dfc, type: 3}
+      propertyPath: m_lineSpacing
+      value: 70
+      objectReference: {fileID: 0}
+    - target: {fileID: 4438135724138372366, guid: aa48c5d45cfdacb4abce74e11d678dfc, type: 3}
+      propertyPath: m_VerticalAlignment
+      value: 256
       objectReference: {fileID: 0}
     - target: {fileID: 5401552721683970452, guid: aa48c5d45cfdacb4abce74e11d678dfc, type: 3}
       propertyPath: m_Camera

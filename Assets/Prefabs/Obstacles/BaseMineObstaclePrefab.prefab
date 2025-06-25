@@ -275,7 +275,8 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 1, g: 0.4186892, b: 0, a: 1}
   _obstacleName: Mine
-  _obstacleDescription: This mine will destroy everthing!!!!
+  _obstacleDescription: Underwater mine. If attacked it explodes, damaging ships
+    around it.
   _wireframeModel: {fileID: -7511558181221131132, guid: e4dddb762d332a946b2d3454f75376da, type: 3}
   _wireframeScaleFactor: {x: 7000, y: 10000, z: 7000}
   _wireframeRiposition: {x: 0, y: 50, z: 0}

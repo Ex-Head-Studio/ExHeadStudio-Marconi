@@ -350,7 +350,7 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   color: {r: 0.06415099, g: 0.005688858, b: 0.005688858, a: 1}
   _obstacleName: Barrier
-  _obstacleDescription: Ostacolinio Biricchino
+  _obstacleDescription: Artificial obstacle. destroyed if attacked
   _wireframeModel: {fileID: 1355248606050376051}
   _wireframeScaleFactor: {x: 400, y: 400, z: 400}
   _wireframeRiposition: {x: 0, y: 0, z: 0}
