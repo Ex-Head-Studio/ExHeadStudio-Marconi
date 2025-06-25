@@ -133,9 +133,9 @@ public class AllyPanelScript : MonoBehaviour
 
         // Crea le quattro statistiche specifiche richieste usando i valori dalla nave
         healthStat = CreateStatObject("Health", ship.GetHealth());
-        attackPowerStat = CreateStatObject("AttackPower", ship.attackPower);
-        attackRangeStat = CreateStatObject("AttackRange", ship.attackRange);
-        movementRangeStat = CreateStatObject("MovementRange", ship.movementRange);
+        attackPowerStat = CreateStatObject("AtkPower", ship.attackPower);
+        attackRangeStat = CreateStatObject("AtkRange", ship.attackRange);
+        movementRangeStat = CreateStatObject("MovRange", ship.movementRange);
     }
 
     // Metodo helper per creare un oggetto statistica con tacche

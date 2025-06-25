@@ -207,9 +207,9 @@ public class StatsPanelScript : MonoBehaviour
 
         // Crea le quattro statistiche specifiche richieste
         CreateStatObject("Health", ship.GetHealth());
-        CreateStatObject("AttackPower", ship.attackPower);
-        CreateStatObject("AttackRange", ship.attackRange);
-        CreateStatObject("MovementRange", ship.movementRange);
+        CreateStatObject("AtkPower", ship.attackPower);
+        CreateStatObject("AtkRange", ship.attackRange);
+        CreateStatObject("MovRange", ship.movementRange);
     }
 
     // Nuovo metodo helper per creare gli oggetti statistica

@@ -3847,6 +3847,10 @@ PrefabInstance:
       propertyPath: m_VerticalAlignment
       value: 256
       objectReference: {fileID: 0}
+    - target: {fileID: 4992250199032204324, guid: aa48c5d45cfdacb4abce74e11d678dfc, type: 3}
+      propertyPath: fontSize
+      value: 30
+      objectReference: {fileID: 0}
     - target: {fileID: 5401552721683970452, guid: aa48c5d45cfdacb4abce74e11d678dfc, type: 3}
       propertyPath: m_Camera
       value: 
@@ -4072,6 +4076,10 @@ PrefabInstance:
     - target: {fileID: 3572071746384201981, guid: cfc4b3f5d4295b94fa4aea4dc6e3d8d0, type: 3}
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
+      objectReference: {fileID: 0}
+    - target: {fileID: 6454699791096135950, guid: cfc4b3f5d4295b94fa4aea4dc6e3d8d0, type: 3}
+      propertyPath: fontSize
+      value: 30
       objectReference: {fileID: 0}
     - target: {fileID: 6897515638513950090, guid: cfc4b3f5d4295b94fa4aea4dc6e3d8d0, type: 3}
       propertyPath: m_Camera
