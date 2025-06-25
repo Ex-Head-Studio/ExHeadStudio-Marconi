@@ -73,4 +73,13 @@ public class CardSounds : MonoBehaviour
         cardStats.start();
         cardStats.release();
     }
+
+    private FMOD.Studio.EventInstance meteorSound;
+
+    public void PlayMeteorSound()
+    {
+        meteorSound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Meteor");
+        meteorSound.start();
+        meteorSound.release();
+    }
 }

@@ -159,7 +159,9 @@ public class EnemyShip : AShip
                     targetRotation = Quaternion.Euler(90f, 0f, 90f);
                 }
             }
-            
+
+            PlayAttackBuildUp();
+
             // Cerca l'oggetto Ship per applicare la rotazione direttamente ad esso
             Transform shipTransform = shipObject != null ? shipObject : objectToRotate;
             
@@ -969,5 +971,14 @@ public class EnemyShip : AShip
         shipMoveStart = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/MovementStart");
         shipMoveStart.start();
         shipMoveStart.release();
+    }
+
+    private FMOD.Studio.EventInstance attackBuildUp;
+
+    public void PlayAttackBuildUp()
+    {
+        attackBuildUp = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/AttackBuildUp");
+        attackBuildUp.start();
+        attackBuildUp.release();
     }
 }

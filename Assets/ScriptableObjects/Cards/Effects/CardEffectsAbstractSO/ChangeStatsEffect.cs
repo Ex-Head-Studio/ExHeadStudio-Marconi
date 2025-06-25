@@ -23,6 +23,16 @@ public class ChangeStatsEffect : AbstractEffectSO
             changeStatParticleInstance.Play();
             shipScript.ChangeStat(statName, amount);
             EndEffect(0);
+            PlayCardStats();
         }
+    }
+
+    private FMOD.Studio.EventInstance cardStats;
+
+    public void PlayCardStats()
+    {
+        cardStats = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Stats");
+        cardStats.start();
+        cardStats.release();
     }
 }
