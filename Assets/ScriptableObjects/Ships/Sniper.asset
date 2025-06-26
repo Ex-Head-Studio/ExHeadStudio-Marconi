@@ -16,7 +16,7 @@ MonoBehaviour:
   movementRange: 1
   attackRange: 3
   attackPower: 1
-  health: 2
+  health: 3
   statNames:
   - Movement Range
   - Attack Range

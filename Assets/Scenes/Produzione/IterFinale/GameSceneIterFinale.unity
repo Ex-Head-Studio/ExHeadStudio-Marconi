@@ -3880,6 +3880,10 @@ PrefabInstance:
       propertyPath: m_Name
       value: UITabellone
       objectReference: {fileID: 0}
+    - target: {fileID: 909023604288689352, guid: 9b3f91884ac33a94fb4c3f4317f00ae8, type: 3}
+      propertyPath: cardsInDeck.Array.data[6].cardData
+      value: 
+      objectReference: {fileID: 11400000, guid: 024281b8b380e9b4cb426776053ca44f, type: 2}
     - target: {fileID: 4485118969983523597, guid: 9b3f91884ac33a94fb4c3f4317f00ae8, type: 3}
       propertyPath: m_Pivot.x
       value: 0
