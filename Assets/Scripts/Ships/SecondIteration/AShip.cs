@@ -253,11 +253,29 @@ public abstract class AShip : MonoBehaviour
 
     public void ChangeClass(ShipSO newClass)
     {
+       
+        int maxHealth = shipSO.health;
+
+
         shipSO = newClass;
         attackRange = shipSO.attackRange;
         movementRange = shipSO.movementRange;
-        health = shipSO.health;
+
+        if (maxHealth < shipSO.health)
+        {
+            // Se la nuova nave ha più salute, aumenta la salute attuale
+            health += shipSO.health - maxHealth;
+        }
+        else if (maxHealth > shipSO.health)
+        {
+            // Se la nuova nave ha meno salute, riduci la salute attuale
+            health = Mathf.Min(health, shipSO.health);
+        }
+
+        
+
         attackPower = shipSO.attackPower;
+
 
         //cambiare il modello della nave
         ChangeClassModel(newClass);
