@@ -12,11 +12,12 @@ public class MainMenuButtons : MonoBehaviour
     /// </summary>
 
     [Header("Main Menu Panels")]
- 
+
     [SerializeField] private GameObject mainMenuPanel;
     [SerializeField] private GameObject creditsPanel;
     [SerializeField] private GameObject optionsPanel;
     [SerializeField] private GameObject levelPanel;
+    [SerializeField] private GameObject tutorialPanel;
     [SerializeField] private GameObject classSelectionPanel;
     [SerializeField] private GameObject title;
 
@@ -39,32 +40,35 @@ public class MainMenuButtons : MonoBehaviour
         mainMenuPanel.SetActive(true);
         creditsPanel.SetActive(false);
         optionsPanel.SetActive(false);
+        tutorialPanel.SetActive(false);
         levelPanel.SetActive(false);
     }
     public void StartGame()
     {
         // Riproduci il suono del pulsante Start
         AudioManager.PlayOneShot(startButtonSound, this.transform.position);
-        
+
         // Disabilita il canvas per evitare interazioni durante la transizione
         this.GetComponent<Canvas>().enabled = false;
-        
+
         // Avvia la sequenza di animazione semplificata
         Sequence animazioneTransizione = DOTween.Sequence();
-        
+
         // Cambia la telecamera dopo il ritardo configurato
-        animazioneTransizione.InsertCallback(ritardoCambioCamera, () => {
+        animazioneTransizione.InsertCallback(ritardoCambioCamera, () =>
+        {
             // Spegni la camera iniziale
             cameraIniziale.SetActive(false);
             // Accendi la camera di transizione
             cameraTransizione.SetActive(true);
         });
-        
+
         // Aggiungi un ritardo dopo il cambio camera
         animazioneTransizione.AppendInterval(durataTotaleAnimazione + ritardoDopoAnimazione);
-        
+
         // Al termine della sequenza, carica la scena successiva
-        animazioneTransizione.OnComplete(() => {
+        animazioneTransizione.OnComplete(() =>
+        {
             SceneManager.LoadScene(1);
         });
     }
@@ -76,6 +80,7 @@ public class MainMenuButtons : MonoBehaviour
 
     public void OpenCredits()
     {
+        tutorialPanel.SetActive(false);
         creditsPanel.SetActive(true);
         mainMenuPanel.SetActive(false);
         optionsPanel.SetActive(false);
@@ -86,6 +91,7 @@ public class MainMenuButtons : MonoBehaviour
 
     public void OpensOptions()
     {
+        tutorialPanel.SetActive(false);
         optionsPanel.SetActive(true);
         mainMenuPanel.SetActive(false);
         creditsPanel.SetActive(false);
@@ -97,6 +103,7 @@ public class MainMenuButtons : MonoBehaviour
 
     public void OpenLevels()
     {
+        tutorialPanel.SetActive(false);
         levelPanel.SetActive(true);
         optionsPanel.SetActive(false);
         mainMenuPanel.SetActive(false);
@@ -108,6 +115,7 @@ public class MainMenuButtons : MonoBehaviour
 
     public void BackToMainMenu()
     {
+        tutorialPanel.SetActive(false);
         optionsPanel.SetActive(false);
         mainMenuPanel.SetActive(true);
         creditsPanel.SetActive(false);
@@ -123,5 +131,17 @@ public class MainMenuButtons : MonoBehaviour
         title.SetActive(false);
         classSelectionPanel.SetActive(true);
         AudioManager.PlayOneShot(menuButtonSound, this.transform.position);
+    }
+    
+    public void OpenTutorial()
+    {
+        tutorialPanel.SetActive(true);
+        levelPanel.SetActive(false);
+        optionsPanel.SetActive(false);
+        mainMenuPanel.SetActive(false);
+        creditsPanel.SetActive(false);
+        title.SetActive(false);
+        AudioManager.PlayOneShot(menuButtonSound, this.transform.position);
+
     }
 }
