@@ -507,6 +507,11 @@ public abstract class AShip : MonoBehaviour
         return health;
     }
 
+    public int GetMaxHealth()
+    {
+        return shipSO.health;
+    }
+
     public Vector2Int GetPosition()
     {
         return position;

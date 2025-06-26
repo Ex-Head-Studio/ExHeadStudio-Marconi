@@ -212,7 +212,7 @@ MonoBehaviour:
   faction: 0
   startMovement: 0
   timeToMove: 3
-  hitChance: 0.25
+  dodgeChance: -1
   dodgeEffect: {fileID: 0}
   shipAnimator: {fileID: 5795590934267584470}
 --- !u!114 &5487482312963662779

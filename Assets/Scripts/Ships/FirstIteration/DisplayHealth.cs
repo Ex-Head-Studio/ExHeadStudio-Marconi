@@ -7,6 +7,11 @@ public class DisplayHealth : MonoBehaviour
     [SerializeField] private GameObject healthBarPrefab;
     [SerializeField] private GameObject healthBarCanvasPrefab;
 
+    [SerializeField] private RectTransform healthBarBackground;
+    [SerializeField] private RectTransform healthPanel;
+    [SerializeField] private float segmentWidth = 20f; // Larghezza di ogni segmento della barra della salute
+    [SerializeField] private float backgroundPadding = 10f; // Padding per lo sfondo della barra della salute
+
     private AShip shipScript;
     private Vector2Int position;
 
@@ -30,12 +35,17 @@ public class DisplayHealth : MonoBehaviour
         healthObjectsList.Clear();
         if (shipScript != null && healthBarPrefab != null)
         {
+            int maxHealth = shipScript.GetMaxHealth(); // Calcola la larghezza totale della barra della salute
+
             healthBarCount = shipScript.GetHealth();
             for (int i = 0; i < healthBarCount; i++)
             {
                 healthBarInstance = Instantiate(healthBarPrefab, transform.position, Quaternion.identity, healthBarCanvasPrefab.transform);
                 healthObjectsList.Add(healthBarInstance);
             }
+
+            // Calcola la larghezza totale della barra della salute
+            UpdateBackgroundSize(maxHealth);
 
         }
     }
@@ -54,33 +64,43 @@ public class DisplayHealth : MonoBehaviour
     //funzione da chiamare quando la nave subisce danni, in concomitanza con l'evento
     public void UpdateHealthBar(int damage)
     {
-        
-            int endIndex = healthBarCount - damage - 1;
-            if (endIndex < 0) endIndex = 0;
 
-            for(int i = 0; i < damage; i++)
+        int endIndex = healthBarCount - damage - 1;
+        if (endIndex < 0) endIndex = 0;
+
+        for (int i = 0; i < damage; i++)
+        {
+
+            int index = healthBarCount - i - 1;
+            if (index < 0)
             {
-
-                int index = healthBarCount - i - 1;
-                if(index < 0)
-                {
-                    index = 0;
-                }
-                if(healthObjectsList.Count>0)
-                {
-                    GameObject healthBar = healthObjectsList[index];
-                    healthObjectsList.RemoveAt(index);
-                    Destroy(healthBar);
-                }
-                else
-                {
-                    break;
-                }
-
+                index = 0;
             }
-            healthBarCount -= damage;
-        
+            if (healthObjectsList.Count > 0)
+            {
+                GameObject healthBar = healthObjectsList[index];
+                healthObjectsList.RemoveAt(index);
+                Destroy(healthBar);
+            }
+            else
+            {
+                break;
+            }
+
+        }
+        healthBarCount -= damage;
+
     }
 
+    private void UpdateBackgroundSize(int maxHealth)
+    {
+        if (healthBarBackground != null)
+        {
+            float totalWidth = (maxHealth * segmentWidth) + backgroundPadding * 2f;
+            Vector2 size = healthBarBackground.sizeDelta;
+            size.x = totalWidth;
+            healthBarBackground.sizeDelta = size;
+        }
+    }
 
 }
