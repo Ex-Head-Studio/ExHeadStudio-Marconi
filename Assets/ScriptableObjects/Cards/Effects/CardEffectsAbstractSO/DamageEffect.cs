@@ -32,6 +32,7 @@ public class DamageEffect : AbstractEffectSO
             // Termina l'effetto della carta
             EndEffect(0);
             
+            PlayMeteorSound();
             // Inizia l'animazione di discesa
             particleInstance.transform.DOMove(shipPosition, animationDuration)
                 .SetEase(easeType)
@@ -56,5 +57,14 @@ public class DamageEffect : AbstractEffectSO
             // In caso non ci sia una nave, termina subito l'effetto
             EndEffect(0);
         }
+    }
+
+    private FMOD.Studio.EventInstance meteorSound;
+
+    public void PlayMeteorSound()
+    {
+        meteorSound = FMODUnity.RuntimeManager.CreateInstance("event:/SFX/Cards/Meteor");
+        meteorSound.start();
+        meteorSound.release();
     }
 }
