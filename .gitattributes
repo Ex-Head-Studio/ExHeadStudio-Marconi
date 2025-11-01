@@ -1,0 +1,106 @@
+# Unity-specific .gitattributes
+
+# Normalize line endings for all text-based files
+* text=auto
+
+# Unity YAML
+*.meta text eol=lf
+*.unity text eol=lf
+*.asset text eol=lf
+*.prefab text eol=lf
+*.mat text eol=lf
+*.anim text eol=lf
+*.controller text eol=lf
+*.overrideController text eol=lf
+*.physicMaterial text eol=lf
+*.physicsMaterial2D text eol=lf
+*.playable text eol=lf
+*.mask text eol=lf
+*.brush text eol=lf
+*.flare text eol=lf
+*.fontsettings text eol=lf
+*.giparams text eol=lf
+*.guiskin text eol=lf
+*.mixer text eol=lf
+*.renderTexture text eol=lf
+*.shadervariants text eol=lf
+*.preset text eol=lf
+*.asmdef text eol=lf
+
+# Unity text-based scene files
+*.unity text eol=lf merge=unityyamlmerge diff
+
+# C# source files
+*.cs text eol=lf diff=csharp
+
+# Shader files
+*.shader text eol=lf
+*.cginc text eol=lf
+*.compute text eol=lf
+*.hlsl text eol=lf
+
+# Text files
+*.txt text eol=lf
+*.md text eol=lf
+*.json text eol=lf
+*.xml text eol=lf
+
+# Image formats
+*.png binary
+*.jpg binary
+*.jpeg binary
+*.gif binary
+*.psd binary
+*.ai binary
+*.tga binary
+*.tif binary
+*.tiff binary
+*.exr binary
+*.hdr binary
+
+# Audio formats
+*.mp3 binary
+*.ogg binary
+*.wav binary
+*.aiff binary
+
+# Video formats
+*.mp4 binary
+*.mov binary
+*.avi binary
+*.webm binary
+
+# 3D model formats
+*.fbx binary
+*.obj binary
+*.max binary
+*.blend binary
+*.dae binary
+*.mb binary
+*.ma binary
+
+# Archive formats
+*.zip binary
+*.7z binary
+*.gz binary
+*.rar binary
+
+# Font formats
+*.ttf binary
+*.otf binary
+
+# Unity-specific binary formats
+*.cubemap binary
+*.unitypackage binary
+
+# Executable formats
+*.exe binary
+*.dll binary
+*.so binary
+*.dylib binary
+*.a binary
+*.bundle binary
+
+# Collapse Unity-generated files in GitHub
+*.asset linguist-generated
+*.meta linguist-generated
